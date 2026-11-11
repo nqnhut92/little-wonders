@@ -17,3 +17,7 @@ Môi trường triển khai đã chạy Chromium, Vitest, typecheck, lint và pr
 Trước phát hành, kiểm iPad Safari thật: multi-touch, xoay, safe area, bàn phím nickname, reduced motion, giọng Việt, thêm màn hình chính và mở offline. Kiểm Google thật, xung đột hai thiết bị, cô lập tài khoản khác và retry sau hết session.
 
 `scripts/capture.mjs` dùng chạm thật từ vườn trống đến đủ 18 khám phá, chụp 19 ảnh, reload thiết kế và ghi page error. Không cấy progress fixture. Kết quả ở `artifacts/screenshots/` được ignore.
+
+## API giả lập và service worker
+
+Hai regression test tài khoản dùng `page.route` để giả lập hết session và phản hồi hồ sơ sai thứ tự. Khối describe của chúng tắt service worker để fetch WebKit không đi qua worker đang điều khiển và né routing của Playwright. Chỉ test giả lập áp dụng cấu hình này; test offline vẫn dùng worker production thật. Test phản hồi trễ chờ request đầu thực sự bị chặn rồi mới chọn hồ sơ thứ hai; không dùng sleep hoặc handler rỗng thay cho race.

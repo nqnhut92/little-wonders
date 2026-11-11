@@ -167,68 +167,80 @@ test("dragging rain waters only the target bed", async ({ page }) => {
     page.getByRole("button", { name: "Luống đất 2" }).locator(".water-dot"),
   ).toHaveCount(0);
 });
-test("expired session exposes sign-in again behind the parent gate", async ({
-  page,
-}) => {
-  let expired = false;
-  await page.route("**/api/profiles", (route) =>
-    route.fulfill({
-      status: expired ? 401 : 200,
-      contentType: "application/json",
-      body: expired ? "{}" : JSON.stringify({ profiles: [] }),
-    }),
-  );
-  await page.goto("/");
-  await page.getByRole("button", { name: "Dành cho người lớn" }).click();
-  await page.getByRole("button", { name: "12", exact: true }).click();
-  await expect(
-    page.getByRole("button", { name: "Tạo khu vườn cho bé" }),
-  ).toBeVisible();
-  await page.getByRole("button", { name: "Trở về vườn" }).click();
-  expired = true;
-  await page.getByRole("button", { name: "Dành cho người lớn" }).click();
-  await page.getByRole("button", { name: "12", exact: true }).click();
-  await expect(
-    page.getByRole("link", { name: "Tiếp tục với Google" }),
-  ).toBeVisible();
-});
-
-test("late profile response cannot undo the latest selection", async ({
-  page,
-}) => {
-  let finishFirst: () => Promise<void> = async () => {};
-  await page.route("**/api/profiles", (r) =>
-    r.fulfill({
-      json: {
-        profiles: [
-          { id: "first", nickname: "Mây" },
-          { id: "second", nickname: "Nắng" },
-        ],
-      },
-    }),
-  );
-  await page.route("**/api/progress?profile=*", async (r) => {
-    const respond = () =>
-      r.fulfill({
-        json: { world: { schema: 1, discoveries: [], fields: {} } },
-      });
-    if (r.request().url().endsWith("first")) finishFirst = respond;
-    else await respond();
+test.describe("mocked account requests", () => {
+  // WebKit may send fetches through the controlling worker, bypassing page.route.
+  // Only mocked API tests block workers; the offline tests keep real workers enabled.
+  test.use({ serviceWorkers: "block" });
+  test("expired session exposes sign-in again behind the parent gate", async ({
+    page,
+  }) => {
+    let expired = false;
+    await page.route("**/api/profiles", (route) =>
+      route.fulfill({
+        status: expired ? 401 : 200,
+        contentType: "application/json",
+        body: expired ? "{}" : JSON.stringify({ profiles: [] }),
+      }),
+    );
+    await page.goto("/");
+    await page.getByRole("button", { name: "Dành cho người lớn" }).click();
+    await page.getByRole("button", { name: "12", exact: true }).click();
+    await expect(
+      page.getByRole("button", { name: "Tạo khu vườn cho bé" }),
+    ).toBeVisible();
+    await page.getByRole("button", { name: "Trở về vườn" }).click();
+    expired = true;
+    await page.getByRole("button", { name: "Dành cho người lớn" }).click();
+    await page.getByRole("button", { name: "12", exact: true }).click();
+    await expect(
+      page.getByRole("link", { name: "Tiếp tục với Google" }),
+    ).toBeVisible();
   });
-  await page.goto("/");
-  await page.getByRole("button", { name: "Dành cho người lớn" }).click();
-  await page.getByRole("button", { name: "12", exact: true }).click();
-  await page.getByRole("button", { name: "Mây", exact: true }).click();
-  await page.getByRole("button", { name: "Nắng", exact: true }).click();
-  await expect(page.getByRole("dialog")).toHaveCount(0);
-  await finishFirst();
-  await expect
-    .poll(() =>
-      page.evaluate(
-        () => JSON.parse(localStorage.getItem("little-wonders-v1")!).profile,
-      ),
-    )
-    .toBe("second");
+
+  test("late profile response cannot undo the latest selection", async ({
+    page,
+  }) => {
+    let finishFirst!: () => Promise<void>;
+    let firstStarted!: () => void;
+    const firstRequest = new Promise<void>((resolve) => {
+      firstStarted = resolve;
+    });
+    await page.route("**/api/profiles", (r) =>
+      r.fulfill({
+        json: {
+          profiles: [
+            { id: "first", nickname: "Mây" },
+            { id: "second", nickname: "Nắng" },
+          ],
+        },
+      }),
+    );
+    await page.route("**/api/progress?profile=*", async (r) => {
+      const respond = () =>
+        r.fulfill({
+          json: { world: { schema: 1, discoveries: [], fields: {} } },
+        });
+      if (r.request().url().endsWith("first")) {
+        finishFirst = respond;
+        firstStarted();
+      } else await respond();
+    });
+    await page.goto("/");
+    await page.getByRole("button", { name: "Dành cho người lớn" }).click();
+    await page.getByRole("button", { name: "12", exact: true }).click();
+    await page.getByRole("button", { name: "Mây", exact: true }).click();
+    await firstRequest;
+    await page.getByRole("button", { name: "Nắng", exact: true }).click();
+    await expect(page.getByRole("dialog")).toHaveCount(0);
+    await finishFirst();
+    await expect
+      .poll(() =>
+        page.evaluate(
+          () => JSON.parse(localStorage.getItem("little-wonders-v1")!).profile,
+        ),
+      )
+      .toBe("second");
+  });
 });
 
 test("unfinished lunch and visual request survive reopening and reload", async ({

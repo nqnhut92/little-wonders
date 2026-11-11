@@ -17,3 +17,7 @@ The implementation environment has run Chromium, Vitest, typecheck, lint and pro
 Before release, test physical iPad Safari multi-touch, rotation, safe areas, nickname keyboard, reduced motion, Vietnamese voice availability, home-screen installation and offline relaunch. Verify real Google login, two-device conflicts, unrelated-account isolation and session-expiry retry.
 
 `scripts/capture.mjs` drives real touch interactions from an empty garden through all 18 discoveries, captures 19 screens, reloads saved designs and records page errors. It injects no progress fixtures. Output goes to ignored `artifacts/screenshots/`.
+
+## Mocked API requests and service workers
+
+The two account regression tests use `page.route` to simulate session expiry and out-of-order profile responses. Their describe block disables service workers so WebKit fetches cannot bypass Playwright routing through a controlling worker. This is isolated to mocked tests; offline tests continue to use the real production worker. The late-response test waits until the first request is actually intercepted before choosing the second profile; no sleep or no-op response handler substitutes for the race.
