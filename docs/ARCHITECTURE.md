@@ -13,7 +13,7 @@ Garden/Activities → typed Action → apply → World → immediate localStorag
 - `src/game/hints.ts`: hints based on the current plant, basket, pal and discovery state.
 - `src/game/visitors.ts` & `src/game/events.ts`: pure selectors for garden visitors and injected-RNG surprise events.
 - `src/data`: discovery inventory, crops, pals, recipes, regions, data-driven region scenes (`scenes.ts`), and interaction rules.
-- `src/components`: SVG artwork (`Art.tsx`), data-driven scene renderer (`Garden.tsx`), valley map (`ValleyMap.tsx`), kitchen, pals, house, xylophone and notebook.
+- `src/components`: flat SVG artwork (`Art.tsx` with drawings in `ArtFlat.tsx` and `ArtFlatMore.tsx`, backdrops in `SceneBackdrop.tsx`), data-driven scene renderer (`Garden.tsx`), valley map (`ValleyMap.tsx`), kitchen, pals, house, xylophone and notebook.
 - `src/services`: persistence, retry and audio/polyphony (`little-wonders-audio` stored per browser, off by default). `App.tsx` coordinates profiles and navigation.
 - `src/styles`: design tokens (`tokens.css`) and local copies of the shared focus and scrollbar blocks. `src/ui`: framework-independent theme and scroll-region controllers. `src/components/Icons.tsx`: interface icons.
 - `api/index.ts` and `api/_lib/security.ts`: OAuth, signed sessions, ownership and CSRF.

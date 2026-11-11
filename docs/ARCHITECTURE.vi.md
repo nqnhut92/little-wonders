@@ -13,7 +13,7 @@ Garden/Activities → Action có kiểu → apply → World → localStorage t�
 - `src/game/hints.ts`: gợi ý theo trạng thái cây, giỏ, bạn thú và khám phá hiện tại.
 - `src/game/visitors.ts` và `src/game/events.ts`: bộ chọn thuần cho khách thăm vườn và sự kiện bất ngờ nhận RNG tiêm từ ngoài.
 - `src/data`: danh mục khám phá, cây trồng, bạn thú, công thức, khu vực, cảnh theo dữ liệu (`scenes.ts`) và quy tắc tương tác.
-- `src/components`: SVG (`Art.tsx`), trình dựng cảnh theo dữ liệu (`Garden.tsx`), bản đồ thung lũng (`ValleyMap.tsx`), bếp, bạn thú, nhà, đàn gỗ và sổ tay.
+- `src/components`: tranh SVG phẳng (`Art.tsx`, hình vẽ trong `ArtFlat.tsx` và `ArtFlatMore.tsx`, nền cảnh trong `SceneBackdrop.tsx`), trình dựng cảnh theo dữ liệu (`Garden.tsx`), bản đồ thung lũng (`ValleyMap.tsx`), bếp, bạn thú, nhà, đàn gỗ và sổ tay.
 - `src/services`: lưu, retry, âm thanh/giới hạn đa âm (`little-wonders-audio` lưu theo trình duyệt, mặc định tắt). `App.tsx` điều phối hồ sơ và navigation.
 - `src/styles`: token thiết kế (`tokens.css`) và bản sao cục bộ của các khối focus và thanh cuộn dùng chung. `src/ui`: bộ điều khiển theme và vùng cuộn, không phụ thuộc framework. `src/components/Icons.tsx`: icon giao diện.
 - `api/index.ts`, `api/_lib/security.ts`: OAuth, session ký, ownership và CSRF.

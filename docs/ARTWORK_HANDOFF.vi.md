@@ -6,7 +6,7 @@
 
 Chưa tạo artwork production hoặc ảnh Gemini. Game dùng vector tạm tự vẽ nhất quán và vẫn chơi được khi chưa nâng cấp hình. Cập nhật cả hai ngôn ngữ mỗi khi đổi asset hoặc tương tác của nó.
 
-Truyện tranh cổ tích ấm áp cho trẻ Việt 4–6 tuổi: viền rêu mềm #52684e, trời nhạt #dceceb, cỏ #d1dfa9, hoa vàng #e9bd58, cún trắng kem #fffaf0 má hồng #f6b9b0, mái đất đỏ #bc7f70. Dùng silhouette tròn, ánh sáng tản từ trên phải. Tránh tương phản gắt, mặt đáng sợ, chi tiết nhỏ rối, chữ, logo và watermark.
+Truyện tranh phẳng, thân thiện cho trẻ Việt 4–6 tuổi: hình khối tròn đơn giản, màu phẳng tươi, không viền, một tông đậm hơn làm bóng, mắt chấm to #4a3b35 có đốm sáng trắng và má hồng #ffb3a7. Trời #bfe6f7, cỏ #8fd083, vàng #ffc93c, đỏ #f0605d, xanh dương #5fb4e0, tím #9b6bd6, cún trắng kem #fff6e5 đeo nơ tím nhỏ #9b6bd6. Tránh tương phản gắt, mặt đáng sợ, chi tiết nhỏ rối, chữ, logo và watermark.
 
 ## Danh mục đầy đủ và quy cách file
 
@@ -63,7 +63,7 @@ Icon app hiện có: `public/favicon.ico` (16/32/48), `public/favicon.svg`, `pub
 
 ## Một phong cách vẽ (hiện trạng)
 
-Mọi hình trong game hiện là vector do dự án tự vẽ trong `src/components/Art.tsx`, nền cảnh và bản đồ thung lũng nằm trong `src/components/SceneBackdrop.tsx`, tất cả đi qua bộ lọc màu nước dùng chung trong `PaintFilters.tsx` nên cả game là một phong cách. Các tranh Gemini từng được dùng ngắn (nền, bản đồ, Lucky, tuần lộc, nhà, cây, mặt trời, mây, hoa, giỏ, đá, cú, ếch và một chú thỏ không dùng) được giữ ở `art-archive/gemini/` và không được đóng gói. Chỉ còn bộ icon app là tranh Gemini. Tranh thay thế phải là một bộ đầy đủ, đồng nhất; đừng trộn lẻ vài ảnh vẽ trở lại.
+Mọi hình trong game hiện là vector do dự án tự vẽ trong `src/components/Art.tsx`, nền cảnh và bản đồ thung lũng nằm trong `src/components/SceneBackdrop.tsx`, tất cả theo một phong cách phẳng: màu phẳng, không viền, không bộ lọc chất liệu (hình vẽ nằm trong `ArtFlat.tsx` và `ArtFlatMore.tsx`; `PaintFilters.tsx` chỉ còn hiệu ứng phát sáng cho đèn). Lucky đeo nơ tím nhỏ, không phải vòng cổ. Các tranh Gemini từng được dùng ngắn (nền, bản đồ, Lucky, tuần lộc, nhà, cây, mặt trời, mây, hoa, giỏ, đá, cú, ếch và một chú thỏ không dùng) được giữ ở `art-archive/gemini/` và không được đóng gói. Chỉ còn bộ icon app là tranh Gemini. Tranh thay thế phải là một bộ đầy đủ, đồng nhất; đừng trộn lẻ vài ảnh vẽ trở lại.
 
 ## Các khu sau (vector tạm)
 
@@ -95,14 +95,14 @@ Giao diện theo chế độ Sáng, Tối và Theo hệ thống; tranh thì khô
 
 - Cảnh phủ kín màn hình, từ khoảng 4:3 (iPad) đến 21:9 (desktop siêu rộng). Nền phải kéo tới mọi mép và chịu được bị cắt; vật co giãn theo giá trị nhỏ hơn giữa chiều rộng và 1,9 lần chiều cao. Nút nổi ở góc trên trái (Lucky hướng dẫn, khoảng 460×72px) và dọc góc trên phải (cột rộng 70px); tránh đặt chi tiết nền quan trọng ở các vùng đó.
 - Các bảng kính nổi trên cảnh (khay hạt, Lucky hướng dẫn). Tranh phía sau bị làm mờ và sáng lên; đừng đặt chi tiết cần thấy ở đó.
-- Trên hộp thoại, tranh nằm trên nền sáng ở cả hai chế độ nên viền xanh rêu luôn rõ. Không tự thêm hình nền hay bóng đổ.
+- Trên hộp thoại, tranh nằm trên nền sáng ở cả hai chế độ nên các hình màu nhạt vẫn rõ. Không tự thêm hình nền hay bóng đổ.
 - Bản đêm của các nền cảnh và vùng mờ trên bản đồ cho các khu đánh dấu sắp có sẽ được mô tả tại đây khi các tính năng đó được làm.
 - Icon giao diện (loa, sổ, cài đặt, gợi ý, đóng, trạng thái lưu, chế độ giao diện) là vector trong repo ở `src/components/Icons.tsx`, không thuộc phần bàn giao này.
 - Icon app chốt sẽ được vẽ lại cùng bộ tranh: bản gốc 1024px, bản nền kín tràn viền cho icon Apple 180px, bản maskable riêng với chủ thể nằm trong 80% ở giữa, và SVG vector cho favicon. `favicon.svg` hiện tại bọc một bản raster nhỏ, còn các file maskable do `scripts/make-icons.mjs` tạo ra.
 
 ## Nhất quán nhân vật
 
-Cún Lucky: nhỏ, tròn trịa, lông trắng kem, đầu tròn, tai cụp màu nâu nhạt, mắt chấm có đốm sáng, mũi nhỏ sẫm, lưỡi hồng và má hồng, đuôi ngắn cong; kiểu hoạt hình bo tròn, không phải chó thật. Tuần Lộc nhỏ: nâu ấm, bụng và mõm màu kem, hai sừng nhỏ, mũi nâu đỏ và má hồng. Không đổi quần áo giữa pose. Giữ tỉ lệ đầu/tai theo SVG tham chiếu. Chim: thân bầu xanh xám, mỏ vàng hướng phải, chân ngắn. Bướm: cánh trên hồng, dưới vàng, thân rêu mảnh, hai râu. Bọ rùa: áo đất đỏ chấm rêu; sâu xanh nhạt; cá vàng cam hướng phải. Mây/nắng mắt chấm và cười nhẹ. Duyệt reference sheet trước; dùng lại reference/seed nếu model hỗ trợ.
+Cún Lucky: nhỏ, tròn trịa, lông trắng kem, đầu tròn, tai cụp màu nâu nhạt, mắt chấm có đốm sáng, mũi nhỏ sẫm, lưỡi hồng và má hồng, nơ tím nhỏ ở cổ, đuôi ngắn cong; kiểu hoạt hình bo tròn, không phải chó thật. Tuần Lộc nhỏ: nâu ấm, bụng và mõm màu kem, hai sừng nhỏ, mũi nâu đỏ và má hồng. Không đổi quần áo giữa pose. Giữ tỉ lệ đầu/tai theo SVG tham chiếu. Chim: thân bầu xanh xám, mỏ vàng hướng phải, chân ngắn. Bướm: cánh trên hồng, dưới vàng, thân rêu mảnh, hai râu. Bọ rùa: áo đất đỏ chấm rêu; sâu xanh nhạt; cá vàng cam hướng phải. Mây/nắng mắt chấm và cười nhẹ. Duyệt reference sheet trước; dùng lại reference/seed nếu model hỗ trợ.
 
 ## Animation và lớp
 
@@ -118,9 +118,9 @@ Thứ tự: trời, cầu vồng, đồi xa, đồi gần/lối, cây/nhà, ao/c
 
 ## Prompt Gemini sao chép dùng ngay
 
-> Tạo artwork thay thế cho Little Wonders, game vườn cho trẻ Việt 4–6 tuổi. Phong cách truyện tranh cổ tích ấm áp, silhouette tròn mềm, viền rêu #52684e và ánh sáng tản trên phải. Trời #dceceb, cỏ #d1dfa9, hoa vàng #e9bd58, cún trắng kem #fffaf0 má #f6b9b0, mái đất đỏ #bc7f70. Ảnh phải rõ khi hiển thị 60–200 pixel. Không chữ, logo, watermark. Không bắt chước họa sĩ đang sống hoặc dùng nhân vật thương mại.
+> Tạo artwork thay thế cho Little Wonders, game vườn cho trẻ Việt 4–6 tuổi. Phong cách truyện tranh phẳng, thân thiện: hình khối tròn đơn giản, màu phẳng tươi, không viền, một tông đậm hơn làm bóng, mắt chấm to có đốm sáng. Trời #bfe6f7, cỏ #8fd083, vàng #ffc93c, đỏ #f0605d, cún trắng kem #fff6e5 má #ffb3a7. Ảnh phải rõ khi hiển thị 60–200 pixel. Không chữ, logo, watermark. Không bắt chước họa sĩ đang sống hoặc dùng nhân vật thương mại.
 >
-> Khớp SVG tham chiếu thuộc dự án được cung cấp. Cún Lucky: nhỏ, tròn trịa, lông trắng kem, đầu tròn, tai cụp màu nâu nhạt, mắt chấm có đốm sáng, mũi nhỏ sẫm, lưỡi hồng và má hồng, đuôi ngắn cong; kiểu hoạt hình bo tròn, không phải chó thật. Tuần Lộc nhỏ: nâu ấm, bụng và mõm màu kem, hai sừng nhỏ, mũi nâu đỏ và má hồng. Chim xanh xám/mỏ vàng; bướm cánh trên hồng/dưới vàng; bọ rùa đất đỏ/chấm rêu; sâu xanh nhạt; cá vàng cam hướng phải. Giữ tỉ lệ, nét và sáng giống nhau giữa pose. Đầu tiên đưa character reference sheet để duyệt, rồi xuất từng file.
+> Khớp SVG tham chiếu thuộc dự án được cung cấp. Cún Lucky: nhỏ, tròn trịa, lông trắng kem, đầu tròn, tai cụp màu nâu nhạt, mắt chấm có đốm sáng, mũi nhỏ sẫm, lưỡi hồng và má hồng, nơ tím nhỏ ở cổ, đuôi ngắn cong; kiểu hoạt hình bo tròn, không phải chó thật. Tuần Lộc nhỏ: nâu ấm, bụng và mõm màu kem, hai sừng nhỏ, mũi nâu đỏ và má hồng. Chim xanh xám/mỏ vàng; bướm cánh trên hồng/dưới vàng; bọ rùa đất đỏ/chấm rêu; sâu xanh nhạt; cá vàng cam hướng phải. Giữ tỉ lệ, hình khối và bảng màu giống nhau giữa pose. Đầu tiên đưa character reference sheet để duyệt, rồi xuất từng file.
 >
 > ID đối tượng: tree, cloud, sun, flower, carrot, berry, butterfly, worm, bug, bird, puppy, reindeer, fish, apple, house, rainbow, rock, grass, pond, basket, star, tomato, pumpkin, corn, watermelon. Xuất mỗi ID.png, RGBA trong suốt 512×512, padding khoảng 7%, neo giữa đáy khớp (60,112) trong canvas 120×120 hiện tại. Không crop/đổi tỉ lệ. Cà rốt phải rõ màu cam; dâu đỏ/hồng. Nhà cần mask tường đổi màu riêng. Tách thân/tán/táo, mây/mưa, bờ/nước/gợn/lá/cá, mái/tường/cửa và trang trí. Không nhúng UI, vùng chạm hoặc luật chơi.
 >

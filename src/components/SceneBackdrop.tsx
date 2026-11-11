@@ -1,8 +1,7 @@
 import { cn } from "../styles";
-// Drawn backdrops for regions that have no painted background yet. Vector shapes go through the shared
-// watercolor filter (PaintFilters.tsx) and sit under a paper and light layer; animated details stay outside
-// the filter so the browser does not re-filter every frame. The canvas is 1600×900, cropped never stretched,
-// so every screen from 4:3 to 21:9 stays filled. Painted art will replace these (docs/ARTWORK_HANDOFF.md).
+// Drawn backdrops for every region, in the same flat storybook style as Art: bright flat fills, no
+// outlines, no texture filters. The canvas is 1600×900, cropped never stretched, so every screen from
+// 4:3 to 21:9 stays filled.
 export const drawnVariants = [
   "garden",
   "pond",
@@ -69,7 +68,7 @@ function Fir({
         width={14 * s}
         height={26 * s}
         rx={4 * s}
-        fill="#7d5d45"
+        fill="#915a31"
       />
       {tiers.map((t, i) => (
         <g key={i}>
@@ -103,7 +102,7 @@ function Oak({ x, y, s }: { x: number; y: number; s: number }) {
     <g>
       <path
         d={`M${x - 10 * s} ${y} q4 ${-70 * s} ${-2 * s} ${-120 * s} h${24 * s} q-6 ${50 * s} ${-2 * s} ${120 * s}Z`}
-        fill="#7a5b43"
+        fill="#8d5930"
       />
       {[
         [-50, -150, 62],
@@ -117,7 +116,7 @@ function Oak({ x, y, s }: { x: number; y: number; s: number }) {
           cx={x + dx * s}
           cy={y + dy * s}
           r={r * s}
-          fill={i % 2 ? "#6f9a5c" : "#7fab68"}
+          fill={i % 2 ? "#66b145" : "#78c350"}
         />
       ))}
       {[
@@ -129,7 +128,7 @@ function Oak({ x, y, s }: { x: number; y: number; s: number }) {
           cx={x + dx * s}
           cy={y + dy * s}
           r={r * s}
-          fill="#a9cf86"
+          fill="#a8e66f"
           opacity="0.6"
         />
       ))}
@@ -154,39 +153,25 @@ function Night({ dots = true }: { dots?: boolean }) {
     </g>
   );
 }
-// Paper grain and a soft vignette, shared by every drawn scene.
-function Paper() {
-  return (
-    <>
-      <defs>
-        <radialGradient id="bd-vignette" cx="0.5" cy="0.45" r="0.75">
-          <stop offset="0.6" stopColor="#3b2f1f" stopOpacity="0" />
-          <stop offset="1" stopColor="#3b2f1f" stopOpacity="0.22" />
-        </radialGradient>
-      </defs>
-      <rect width="1600" height="900" fill="url(#bd-vignette)" />
-    </>
-  );
-}
 function Forest({ night }: { night: boolean }) {
   return (
     <>
       <defs>
         <linearGradient id="bd-forest-sky" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#d4e6d2" />
-          <stop offset="0.55" stopColor="#eef0cf" />
-          <stop offset="1" stopColor="#f6e7bd" />
+          <stop offset="0" stopColor="#ceedcb" />
+          <stop offset="0.55" stopColor="#f7fac5" />
+          <stop offset="1" stopColor="#ffebb4" />
         </linearGradient>
         <linearGradient id="bd-forest-ground" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#bfd896" />
-          <stop offset="1" stopColor="#97ba72" />
+          <stop offset="0" stopColor="#c4ed81" />
+          <stop offset="1" stopColor="#98d25a" />
         </linearGradient>
         <linearGradient id="bd-shaft" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0" stopColor="#fff7d6" stopOpacity="0.75" />
           <stop offset="1" stopColor="#fff7d6" stopOpacity="0" />
         </linearGradient>
       </defs>
-      <g filter="url(#lw-paint-scene)">
+      <g>
         <rect
           x="-80"
           y="-80"
@@ -197,7 +182,7 @@ function Forest({ night }: { night: boolean }) {
 
         <path
           d="M0 450 Q260 340 520 410 T1040 390 T1600 400 V980 H-80Z"
-          fill="#b8d1a2"
+          fill="#b7e192"
         />
         {[...Array(20)].map((_, i) => (
           <Fir
@@ -205,18 +190,18 @@ function Forest({ night }: { night: boolean }) {
             x={-40 + i * 86}
             y={500 + (i % 3) * 14}
             s={0.75}
-            fill="#9dbb8c"
+            fill="#98cc7b"
           />
         ))}
-        <path d="M0 520 Q320 470 700 505 T1600 490 V980 H-80Z" fill="#a9c78d" />
+        <path d="M0 520 Q320 470 700 505 T1600 490 V980 H-80Z" fill="#a8db79" />
         {[...Array(13)].map((_, i) => (
           <Fir
             key={"mid" + i}
             x={20 + i * 130}
             y={560 + (i % 2) * 18}
             s={1.0}
-            fill="#7da36c"
-            light="#a6c889"
+            fill="#75b857"
+            light="#a4dd74"
           />
         ))}
         <path
@@ -226,27 +211,27 @@ function Forest({ night }: { night: boolean }) {
         <path
           d="M760 900 Q830 770 770 655 Q735 590 800 548"
           fill="none"
-          stroke="#ead7ad"
+          stroke="#fcde9b"
           strokeWidth="78"
           strokeLinecap="round"
         />
         <path
           d="M760 900 Q830 770 770 655 Q735 590 800 548"
           fill="none"
-          stroke="#f6e6c2"
+          stroke="#ffe9b9"
           strokeWidth="30"
           strokeLinecap="round"
           opacity="0.7"
         />
         <Oak x={90} y={760} s={1.35} />
         <Oak x={1520} y={780} s={1.5} />
-        <Fir x={300} y={700} s={1.25} fill="#6a955c" light="#9cc283" />
-        <Fir x={1300} y={690} s={1.15} fill="#6a955c" light="#9cc283" />
+        <Fir x={300} y={700} s={1.25} fill="#5faa47" light="#98d76e" />
+        <Fir x={1300} y={690} s={1.15} fill="#5faa47" light="#98d76e" />
         {scatter(34, 3, [0, 650, 1600, 885]).map((p, i) => (
           <path
             key={"fern" + i}
             d={`M${p.x} ${p.y} q-14 -24 -30 -28 M${p.x} ${p.y} q14 -26 30 -30 M${p.x} ${p.y} q0 -30 2 -40`}
-            stroke={i % 3 ? "#6f9d5d" : "#86b26e"}
+            stroke={i % 3 ? "#65b545" : "#7fca56"}
             strokeWidth="6"
             strokeLinecap="round"
             fill="none"
@@ -258,7 +243,7 @@ function Forest({ night }: { night: boolean }) {
             cx={p.x}
             cy={p.y}
             r={5 + p.r}
-            fill={i % 2 ? "#f3d27a" : "#f3b7a8"}
+            fill={i % 2 ? "#ffd76e" : "#ffb09c"}
           />
         ))}
       </g>
@@ -291,7 +276,7 @@ function Forest({ night }: { night: boolean }) {
             cy={p.y}
             rx="12"
             ry="6"
-            fill={i % 3 ? "#e3a24f" : "#c9703f"}
+            fill={i % 3 ? "#ffa533" : "#f36415"}
             opacity="0.85"
           />
         ))}
@@ -312,7 +297,6 @@ function Forest({ night }: { night: boolean }) {
           ))}
         </g>
       )}
-      <Paper />
     </>
   );
 }
@@ -321,21 +305,21 @@ function Beach({ night }: { night: boolean }) {
     <>
       <defs>
         <linearGradient id="bd-beach-sky" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#bfe2f0" />
-          <stop offset="0.7" stopColor="#e8f1e6" />
-          <stop offset="1" stopColor="#fbefd2" />
+          <stop offset="0" stopColor="#b0e8ff" />
+          <stop offset="0.7" stopColor="#e6f5e2" />
+          <stop offset="1" stopColor="#fff1ce" />
         </linearGradient>
         <linearGradient id="bd-beach-sea" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#5fb1c8" />
-          <stop offset="0.6" stopColor="#86cbd6" />
-          <stop offset="1" stopColor="#b7e3e2" />
+          <stop offset="0" stopColor="#3ec3e9" />
+          <stop offset="0.6" stopColor="#6dddef" />
+          <stop offset="1" stopColor="#a9f1ef" />
         </linearGradient>
         <linearGradient id="bd-beach-sand" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#f1dba4" />
-          <stop offset="1" stopColor="#e4c286" />
+          <stop offset="0" stopColor="#ffe196" />
+          <stop offset="1" stopColor="#ffc96b" />
         </linearGradient>
       </defs>
-      <g filter="url(#lw-paint-scene)">
+      <g>
         <rect
           x="-80"
           y="-80"
@@ -358,7 +342,7 @@ function Beach({ night }: { night: boolean }) {
         ))}
         <path
           d="M1080 410 q70 -70 150 -20 q60 -30 110 20Z"
-          fill="#8fb58c"
+          fill="#81c57c"
           opacity="0.7"
         />
         <rect y="405" width="1600" height="225" fill="url(#bd-beach-sea)" />
@@ -374,7 +358,7 @@ function Beach({ night }: { night: boolean }) {
         ))}
         <path
           d="M0 610 Q200 585 420 610 T860 605 T1300 610 T1600 600 V980 H-80Z"
-          fill="#c9d9c8"
+          fill="#c3e0c1"
           opacity="0.9"
         />
         <path
@@ -383,7 +367,7 @@ function Beach({ night }: { night: boolean }) {
         />
         <path
           d="M0 645 Q300 625 640 650 T1240 640 T1600 650 V690 Q900 660 0 690Z"
-          fill="#d8b678"
+          fill="#f5bf5b"
           opacity="0.45"
         />
         {scatter(55, 11, [0, 690, 1600, 890]).map((p, i) => (
@@ -392,7 +376,7 @@ function Beach({ night }: { night: boolean }) {
             cx={p.x}
             cy={p.y}
             r={p.r * 1.5}
-            fill={i % 4 ? "#d7b273" : "#f7ead0"}
+            fill={i % 4 ? "#f5ba55" : "#ffedc8"}
             opacity="0.6"
           />
         ))}
@@ -404,7 +388,7 @@ function Beach({ night }: { night: boolean }) {
           <path
             key={"st" + i}
             d={`M${x} ${y - 16}l5 11 12 1-9 8 3 12-11-6-11 6 3-12-9-8 12-1Z`}
-            fill="#f2a46f"
+            fill="#ffa262"
           />
         ))}
       </g>
@@ -433,7 +417,6 @@ function Beach({ night }: { night: boolean }) {
         />
       </g>
       {night && <Night />}
-      <Paper />
     </>
   );
 }
@@ -442,16 +425,16 @@ function Snow({ night }: { night: boolean }) {
     <>
       <defs>
         <linearGradient id="bd-snow-sky" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#c9dcf0" />
+          <stop offset="0" stopColor="#bddcfc" />
           <stop offset="0.7" stopColor="#eef4fb" />
           <stop offset="1" stopColor="#fbf6ee" />
         </linearGradient>
         <linearGradient id="bd-snow-mtn" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#b7c9e2" />
-          <stop offset="1" stopColor="#d6e2f0" />
+          <stop offset="0" stopColor="#a9c7f0" />
+          <stop offset="1" stopColor="#cee1f8" />
         </linearGradient>
       </defs>
-      <g filter="url(#lw-paint-scene)">
+      <g>
         <rect
           x="-80"
           y="-80"
@@ -474,13 +457,13 @@ function Snow({ night }: { night: boolean }) {
             x={10 + i * 112}
             y={530 + (i % 2) * 14}
             s={0.66}
-            fill="#8eabc0"
+            fill="#7caed2"
             snow
           />
         ))}
         <path d="M0 560 Q380 480 820 560 T1600 540 V980 H-80Z" fill="#fbfdff" />
         <g>
-          <path d="M1060 560 v-60 l60 -46 l60 46 v60Z" fill="#c98c64" />
+          <path d="M1060 560 v-60 l60 -46 l60 46 v60Z" fill="#e98544" />
           <path
             d="M1050 504 l70 -56 l70 56"
             fill="none"
@@ -489,10 +472,10 @@ function Snow({ night }: { night: boolean }) {
             strokeLinecap="round"
           />
           <rect x="1100" y="516" width="34" height="30" rx="4" fill="#ffd37a" />
-          <path d="M1160 470 v-40 h18 v40" fill="#9b6a50" />
+          <path d="M1160 470 v-40 h18 v40" fill="#b56236" />
         </g>
         <path d="M0 690 Q420 630 900 700 T1600 680 V980 H-80Z" fill="#eef4fb" />
-        <path d="M200 900 Q520 740 980 900" fill="#e0e9f4" />
+        <path d="M200 900 Q520 740 980 900" fill="#dae8fa" />
         {[
           [70, 690, 1.35],
           [1500, 700, 1.5],
@@ -504,8 +487,8 @@ function Snow({ night }: { night: boolean }) {
             x={x}
             y={y}
             s={s}
-            fill="#5f8e7d"
-            light="#8fb8a4"
+            fill="#4ca182"
+            light="#7fc8a4"
             snow
           />
         ))}
@@ -565,7 +548,6 @@ function Snow({ night }: { night: boolean }) {
         )}
       </g>
       {night && <Night />}
-      <Paper />
     </>
   );
 }
@@ -574,22 +556,22 @@ function Stars() {
     <>
       <defs>
         <linearGradient id="bd-stars-sky" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#141d45" />
-          <stop offset="0.55" stopColor="#323a76" />
-          <stop offset="1" stopColor="#6b5a94" />
+          <stop offset="0" stopColor="#051454" />
+          <stop offset="0.55" stopColor="#1c298c" />
+          <stop offset="1" stopColor="#6244aa" />
         </linearGradient>
         <radialGradient id="bd-stars-band" cx="0.5" cy="0.5" r="0.5">
-          <stop offset="0" stopColor="#cdbff2" stopOpacity="0.5" />
-          <stop offset="1" stopColor="#cdbff2" stopOpacity="0" />
+          <stop offset="0" stopColor="#c7b2ff" stopOpacity="0.5" />
+          <stop offset="1" stopColor="#c7b2ff" stopOpacity="0" />
         </radialGradient>
         <linearGradient id="bd-aurora" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0" stopColor="#7ef0c4" stopOpacity="0" />
-          <stop offset="0.3" stopColor="#7ef0c4" stopOpacity="0.55" />
-          <stop offset="0.7" stopColor="#b59cf5" stopOpacity="0.5" />
-          <stop offset="1" stopColor="#b59cf5" stopOpacity="0" />
+          <stop offset="0" stopColor="#6fffc7" stopOpacity="0" />
+          <stop offset="0.3" stopColor="#6fffc7" stopOpacity="0.55" />
+          <stop offset="0.7" stopColor="#b192ff" stopOpacity="0.5" />
+          <stop offset="1" stopColor="#b192ff" stopOpacity="0" />
         </linearGradient>
       </defs>
-      <g filter="url(#lw-paint-scene)">
+      <g>
         <rect
           x="-80"
           y="-80"
@@ -607,23 +589,23 @@ function Stars() {
         />
         <path
           d="M0 640 L260 470 L420 560 L640 420 L860 560 L1080 450 L1300 580 L1600 470 V980 H-80Z"
-          fill="#2f3866"
+          fill="#1d2c78"
         />
         <path
           d="M260 470 L230 500 L270 496 L300 516Z M640 420 L606 456 L650 450 L680 470Z M1080 450 L1050 482 L1090 478 L1120 498Z"
-          fill="#8f97c9"
+          fill="#7c89dc"
           opacity="0.6"
         />
         <path
           d="M0 720 Q300 640 640 700 Q760 720 860 660 Q980 600 1120 690 T1600 680 V980 H-80Z"
-          fill="#252e57"
+          fill="#152467"
         />
-        <path d="M560 900 Q700 700 820 690 Q980 690 1060 900Z" fill="#39447a" />
+        <path d="M560 900 Q700 700 820 690 Q980 690 1060 900Z" fill="#233690" />
         {[
           [180, 760, 1],
           [1420, 770, 1.2],
         ].map(([x, y, s], i) => (
-          <Fir key={i} x={x} y={y} s={s} fill="#1f2a4d" />
+          <Fir key={i} x={x} y={y} s={s} fill="#10225c" />
         ))}
       </g>
       <g className={cn("backdrop-aurora")} filter="url(#lw-soft)">
@@ -660,7 +642,6 @@ function Stars() {
           />
         ))}
       </g>
-      <Paper />
     </>
   );
 }
@@ -669,7 +650,7 @@ function Bush({
   x,
   y,
   s,
-  fill = "#86b06c",
+  fill = "#80c854",
 }: {
   x: number;
   y: number;
@@ -685,7 +666,7 @@ function Bush({
         cx={x - 6 * s}
         cy={y - 24 * s}
         r={14 * s}
-        fill="#b4d491"
+        fill="#b5e97c"
         opacity="0.6"
       />
     </g>
@@ -706,7 +687,7 @@ function Tufts({
         <path
           key={i}
           d={`M${p.x} ${p.y} q-8 -18 -18 -22 M${p.x} ${p.y} q8 -20 18 -24 M${p.x} ${p.y} q0 -22 2 -30`}
-          stroke={i % 3 ? "#7fae63" : "#96c078"}
+          stroke={i % 3 ? "#78c849" : "#92d860"}
           strokeWidth="5"
           strokeLinecap="round"
           fill="none"
@@ -715,112 +696,125 @@ function Tufts({
     </>
   );
 }
+// Flat storybook garden: broad bright shapes in layers, no filter.
+function FlatBush({
+  x,
+  y,
+  s,
+  fill = "#4fae5a",
+  light = "#74c877",
+}: {
+  x: number;
+  y: number;
+  s: number;
+  fill?: string;
+  light?: string;
+}) {
+  return (
+    <g>
+      <circle cx={x - 28 * s} cy={y} r={28 * s} fill={fill} />
+      <circle cx={x + 26 * s} cy={y + 2 * s} r={26 * s} fill={fill} />
+      <circle cx={x} cy={y - 18 * s} r={32 * s} fill={fill} />
+      <circle cx={x - 8 * s} cy={y - 26 * s} r={13 * s} fill={light} />
+    </g>
+  );
+}
+function FlatCloud({ x, y, s }: { x: number; y: number; s: number }) {
+  return (
+    <path
+      d={`M${x} ${y}a${26 * s} ${26 * s} 0 0 1 ${6 * s} ${-52 * s} ${40 * s} ${40 * s} 0 0 1 ${76 * s} ${-8 * s} ${30 * s} ${30 * s} 0 0 1 ${28 * s} ${60 * s}Z`}
+      fill="#ffffff"
+      opacity="0.9"
+    />
+  );
+}
 function GardenScene({ night }: { night: boolean }) {
   return (
     <>
-      <defs>
-        <linearGradient id="bd-garden-sky" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#c9e4ee" />
-          <stop offset="0.6" stopColor="#eaf2dc" />
-          <stop offset="1" stopColor="#f8efcf" />
-        </linearGradient>
-        <linearGradient id="bd-garden-grass" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#cfe2a2" />
-          <stop offset="1" stopColor="#a5c67e" />
-        </linearGradient>
-      </defs>
-      <g filter="url(#lw-paint-scene)">
+      <rect x="-80" y="-80" width="1760" height="1060" fill="#bfe6f7" />
+      <rect x="-80" y="300" width="1760" height="300" fill="#d7f0fa" />
+      <FlatCloud x={150} y={210} s={1.1} />
+      <FlatCloud x={720} y={150} s={0.8} />
+      <FlatCloud x={1330} y={250} s={1} />
+      <path
+        d="M-80 500 Q200 380 520 450 T1100 420 T1680 450 V980 H-80Z"
+        fill="#a5d99b"
+      />
+      {[
+        [120, 470, 1],
+        [430, 440, 0.8],
+        [900, 425, 0.9],
+        [1260, 430, 1.1],
+        [1530, 450, 0.9],
+      ].map(([x, y, s], i) => (
+        <FlatBush key={i} x={x} y={y} s={s} fill="#7cc67f" light="#9bd89a" />
+      ))}
+      <path d="M-80 590 Q400 480 900 545 T1680 525 V980 H-80Z" fill="#8fd083" />
+      {[...Array(26)].map((_, i) => (
         <rect
-          x="-80"
-          y="-80"
-          width="1760"
-          height="1060"
-          fill="url(#bd-garden-sky)"
+          key={i}
+          x={-60 + i * 68}
+          y={522 - Math.sin(i / 4) * 22}
+          width="14"
+          height="56"
+          rx="7"
+          fill="#fff8ea"
         />
-        {[
-          [180, 170, 1],
-          [760, 120, 0.8],
-          [1380, 210, 0.9],
-        ].map(([x, y, s], i) => (
-          <path
-            key={i}
-            d={`M${x} ${y} q${40 * s} ${-50 * s} ${90 * s} ${-10 * s} q${50 * s} ${-30 * s} ${90 * s} ${10 * s} q${40 * s} 0 ${30 * s} ${30 * s}H${x - 20 * s}q${-20 * s} ${-20 * s} ${20 * s} ${-30 * s}Z`}
-            fill="#ffffff"
-            opacity="0.75"
-          />
-        ))}
+      ))}
+      <path
+        d="M-80 550 Q400 472 900 522 T1680 502"
+        fill="none"
+        stroke="#fff8ea"
+        strokeWidth="10"
+      />
+      <path
+        d="M-80 660 Q500 590 1000 640 T1680 630 V980 H-80Z"
+        fill="#78c26b"
+      />
+      <path
+        d="M-80 700 Q500 640 1000 690 T1680 680"
+        fill="none"
+        stroke="#8fd083"
+        strokeWidth="14"
+        strokeLinecap="round"
+      />
+      <path
+        d="M1230 590 Q1040 680 930 770 T800 980"
+        fill="none"
+        stroke="#f4d9a0"
+        strokeWidth="96"
+        strokeLinecap="round"
+      />
+      <FlatBush x={1570} y={730} s={1.5} />
+      <FlatBush x={20} y={890} s={1.3} />
+      {scatter(26, 3, [0, 700, 1600, 890]).map((p, i) => (
         <path
-          d="M-80 500 Q200 380 520 450 T1100 420 T1680 450 V980 H-80Z"
-          fill="#b7d3a0"
+          key={"t" + i}
+          d={`M${p.x - 14} ${p.y}q6 -24 14 -30q8 6 14 30Z`}
+          fill="#5fb55a"
         />
-        {[
-          [120, 470, 1],
-          [420, 440, 0.8],
-          [900, 425, 0.9],
-          [1250, 430, 1.1],
-          [1520, 450, 0.9],
-        ].map(([x, y, s], i) => (
-          <Bush key={i} x={x} y={y} s={s} fill="#9fc189" />
-        ))}
-        <path
-          d="M-80 590 Q400 480 900 545 T1680 525 V980 H-80Z"
-          fill="#c4dc9b"
-        />
-        {[...Array(26)].map((_, i) => (
-          <g key={"f" + i}>
-            <rect
-              x={-60 + i * 68}
-              y={520 - Math.sin(i / 4) * 22}
-              width="12"
-              height="54"
-              rx="5"
-              fill="#f3e6c8"
-            />
-          </g>
-        ))}
-        <path
-          d="M-80 548 Q400 470 900 520 T1680 500"
-          fill="none"
-          stroke="#f3e6c8"
-          strokeWidth="9"
-          opacity="0.9"
-        />
-        <path
-          d="M-80 660 Q500 590 1000 640 T1680 630 V980 H-80Z"
-          fill="url(#bd-garden-grass)"
-        />
-        <path
-          d="M1230 590 Q1040 680 930 770 T800 980"
-          fill="none"
-          stroke="#e9d5a8"
-          strokeWidth="96"
-          strokeLinecap="round"
-        />
-        <path
-          d="M1230 590 Q1040 680 930 770 T800 980"
-          fill="none"
-          stroke="#f6e7c4"
-          strokeWidth="40"
-          strokeLinecap="round"
-          opacity="0.7"
-        />
-        <Bush x={1560} y={720} s={1.5} />
-        <Bush x={30} y={880} s={1.3} />
-        <Tufts seed={3} area={[0, 690, 1600, 890]} count={30} />
-        {scatter(24, 13, [40, 700, 1560, 885]).map((p, i) => (
-          <g key={"fl" + i}>
+      ))}
+      {scatter(22, 13, [40, 705, 1560, 885]).map((p, i) => (
+        <g key={"fl" + i}>
+          {[0, 72, 144, 216, 288].map((r) => (
             <circle
+              key={r}
               cx={p.x}
-              cy={p.y}
-              r={7 + p.r}
-              fill={["#f3d27a", "#f3b7a8", "#ffffff"][i % 3]}
+              cy={p.y - 8}
+              r="6"
+              fill={["#ffd24d", "#ff9eb0", "#ffffff"][i % 3]}
+              transform={`rotate(${r} ${p.x} ${p.y})`}
             />
-            <circle cx={p.x} cy={p.y} r="3" fill="#e9a23f" />
-          </g>
-        ))}
-      </g>
+          ))}
+          <circle
+            cx={p.x}
+            cy={p.y}
+            r="5"
+            fill={i % 3 === 0 ? "#f08a3c" : "#ffd24d"}
+          />
+        </g>
+      ))}
       {night && <Night dots={false} />}
-      <Paper />
     </>
   );
 }
@@ -829,15 +823,15 @@ function PondScene({ night }: { night: boolean }) {
     <>
       <defs>
         <linearGradient id="bd-pond-sky" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#cfe6e4" />
-          <stop offset="1" stopColor="#f3f0d2" />
+          <stop offset="0" stopColor="#c7eeeb" />
+          <stop offset="1" stopColor="#fdf8c8" />
         </linearGradient>
         <linearGradient id="bd-pond-water" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#9fd0d4" />
-          <stop offset="1" stopColor="#6fb0bd" />
+          <stop offset="0" stopColor="#8edfe5" />
+          <stop offset="1" stopColor="#55c1d7" />
         </linearGradient>
       </defs>
-      <g filter="url(#lw-paint-scene)">
+      <g>
         <rect
           x="-80"
           y="-80"
@@ -847,7 +841,7 @@ function PondScene({ night }: { night: boolean }) {
         />
         <path
           d="M-80 470 Q300 370 700 430 T1680 410 V980 H-80Z"
-          fill="#b5d2a2"
+          fill="#b2e292"
         />
         {[
           [260, 430, 1.1],
@@ -855,21 +849,21 @@ function PondScene({ night }: { night: boolean }) {
           [1040, 410, 1],
           [1420, 420, 1.2],
         ].map(([x, y, s], i) => (
-          <Bush key={i} x={x} y={y} s={s} fill="#9cbf8a" />
+          <Bush key={i} x={x} y={y} s={s} fill="#96d277" />
         ))}
         <path
           d="M-80 560 Q500 480 1000 530 T1680 520 V980 H-80Z"
-          fill="#bfd998"
+          fill="#c3ed84"
         />
         <path
           d="M-80 600 Q200 500 520 540 Q720 570 700 700 Q660 870 300 910 L-80 930Z"
-          fill="#e3d6a6"
+          fill="#f6e193"
         />
         <path
           d="M-80 620 Q200 525 510 562 Q690 590 672 700 Q640 850 300 888 L-80 905Z"
           fill="url(#bd-pond-water)"
         />
-        <ellipse cx="1240" cy="700" rx="250" ry="78" fill="#e3d6a6" />
+        <ellipse cx="1240" cy="700" rx="250" ry="78" fill="#f6e193" />
         <ellipse
           cx="1240"
           cy="700"
@@ -887,14 +881,14 @@ function PondScene({ night }: { night: boolean }) {
           <g key={"pad" + i}>
             <path
               d={`M${x} ${y} l${r} ${-r * 0.2} a${r} ${r * 0.5} 0 1 1 ${-r * 0.3} ${-r * 0.3}Z`}
-              fill="#7fb06a"
+              fill="#75c852"
             />
             {i % 2 === 0 && (
               <circle
                 cx={x - r * 0.3}
                 cy={y - r * 0.1}
                 r={r * 0.28}
-                fill="#f4b9c4"
+                fill="#ffaebd"
               />
             )}
           </g>
@@ -903,7 +897,7 @@ function PondScene({ night }: { night: boolean }) {
           <g key={"reed" + i}>
             <path
               d={`M${p.x} ${p.y} q-6 -60 4 -110`}
-              stroke="#6f9d5d"
+              stroke="#65b545"
               strokeWidth="6"
               fill="none"
               strokeLinecap="round"
@@ -913,13 +907,13 @@ function PondScene({ night }: { night: boolean }) {
               cy={p.y - 118}
               rx="6"
               ry="16"
-              fill="#8a6a4f"
+              fill="#9f683a"
             />
           </g>
         ))}
         <path
           d="M-80 900 Q600 850 1000 880 T1680 860 V980 H-80Z"
-          fill="#a9c784"
+          fill="#abdd6e"
         />
         <Oak x={1560} y={640} s={1.2} />
         <Tufts seed={31} area={[760, 790, 1600, 885]} count={16} />
@@ -946,7 +940,6 @@ function PondScene({ night }: { night: boolean }) {
         ))}
       </g>
       {night && <Night />}
-      <Paper />
     </>
   );
 }
@@ -962,19 +955,19 @@ export function ValleyBackdrop({ className }: { className?: string }) {
     >
       <defs>
         <linearGradient id="vm-grass" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#bcd795" />
-          <stop offset="1" stopColor="#9cc079" />
+          <stop offset="0" stopColor="#c0ec80" />
+          <stop offset="1" stopColor="#9cd861" />
         </linearGradient>
         <linearGradient id="vm-sea" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#5fb1c8" />
-          <stop offset="1" stopColor="#a9dde0" />
+          <stop offset="0" stopColor="#3ec3e9" />
+          <stop offset="1" stopColor="#98ecf1" />
         </linearGradient>
         <linearGradient id="vm-night" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#141d45" />
-          <stop offset="1" stopColor="#5b4f8c" />
+          <stop offset="0" stopColor="#051454" />
+          <stop offset="1" stopColor="#4e39a2" />
         </linearGradient>
       </defs>
-      <g filter="url(#lw-paint-scene)">
+      <g>
         <rect
           x="-80"
           y="-80"
@@ -985,7 +978,7 @@ export function ValleyBackdrop({ className }: { className?: string }) {
         {/* Sea and beach, top middle */}
         <path
           d="M560 -80 H1130 Q1120 150 980 200 Q820 240 680 170 Q590 110 560 -80Z"
-          fill="#ecd9a2"
+          fill="#ffe28f"
         />
         <path
           d="M600 -80 H1090 Q1080 110 960 150 Q830 180 720 125 Q640 80 600 -80Z"
@@ -1008,7 +1001,7 @@ export function ValleyBackdrop({ className }: { className?: string }) {
         />
         <path
           d="M1240 300 L1400 90 L1540 260 L1680 150 V400 Q1500 350 1400 280Z"
-          fill="#39447a"
+          fill="#233690"
         />
         <path
           d="M1400 90 L1370 132 L1404 124 L1430 142Z"
@@ -1027,7 +1020,7 @@ export function ValleyBackdrop({ className }: { className?: string }) {
         <path
           d="M1040 470 Q1200 400 1400 440"
           fill="none"
-          stroke="#dbe6f3"
+          stroke="#d4e5fa"
           strokeWidth="18"
         />
         {[
@@ -1037,7 +1030,7 @@ export function ValleyBackdrop({ className }: { className?: string }) {
           [1290, 640, 0.6],
           [1600, 520, 0.7],
         ].map(([x, y, s], i) => (
-          <Fir key={i} x={x} y={y} s={s} fill="#6f9a8a" snow />
+          <Fir key={i} x={x} y={y} s={s} fill="#5dac8f" snow />
         ))}
         {/* Forest, top left */}
         {[
@@ -1056,28 +1049,28 @@ export function ValleyBackdrop({ className }: { className?: string }) {
             x={x}
             y={y}
             s={s}
-            fill={i % 2 ? "#6f9a62" : "#5f8a55"}
-            light="#9cc283"
+            fill={i % 2 ? "#63b04c" : "#539e41"}
+            light="#98d76e"
           />
         ))}
         {/* River from the snow down to the pond and out of the valley */}
         <path
           d="M1160 660 Q1000 640 900 700 Q820 760 860 980"
           fill="none"
-          stroke="#e3d6a6"
+          stroke="#f6e193"
           strokeWidth="70"
           strokeLinecap="round"
         />
         <path
           d="M1160 660 Q1000 640 900 700 Q820 760 860 980"
           fill="none"
-          stroke="#8fc6d2"
+          stroke="#7ad4e7"
           strokeWidth="48"
           strokeLinecap="round"
         />
         {/* Pond */}
-        <ellipse cx="640" cy="640" rx="190" ry="100" fill="#e3d6a6" />
-        <ellipse cx="640" cy="640" rx="170" ry="84" fill="#8fc6d2" />
+        <ellipse cx="640" cy="640" rx="190" ry="100" fill="#f6e193" />
+        <ellipse cx="640" cy="640" rx="170" ry="84" fill="#7ad4e7" />
         {[
           [540, 620],
           [730, 670],
@@ -1085,31 +1078,31 @@ export function ValleyBackdrop({ className }: { className?: string }) {
           [570, 680],
         ].map(([x, y], i) => (
           <g key={i}>
-            <ellipse cx={x} cy={y} rx="24" ry="12" fill="#7fb06a" />
-            {i % 2 === 0 && <circle cx={x} cy={y - 4} r="8" fill="#f4b9c4" />}
+            <ellipse cx={x} cy={y} rx="24" ry="12" fill="#75c852" />
+            {i % 2 === 0 && <circle cx={x} cy={y - 4} r="8" fill="#ffaebd" />}
           </g>
         ))}
         {/* Trail through the six lands */}
         <path
           d="M224 700 Q420 760 600 720 M560 560 Q420 440 380 320 M440 230 Q620 260 800 250 M940 250 Q1080 330 1140 420 M1260 400 Q1330 320 1340 250"
           fill="none"
-          stroke="#f1e2b8"
+          stroke="#ffe9aa"
           strokeWidth="26"
           strokeLinecap="round"
           strokeDasharray="6 44"
         />
         {/* Home garden, bottom left */}
         <g>
-          <path d="M70 700 v-70 l66 -52 l66 52 v70Z" fill="#efcf9d" />
+          <path d="M70 700 v-70 l66 -52 l66 52 v70Z" fill="#ffd38d" />
           <path
             d="M56 634 l80 -64 l80 64"
             fill="none"
-            stroke="#bc7f70"
+            stroke="#d57057"
             strokeWidth="22"
             strokeLinecap="round"
             strokeLinejoin="round"
           />
-          <path d="M122 700 v-34 q14 -16 28 0 v34" fill="#9fbcae" />
+          <path d="M122 700 v-34 q14 -16 28 0 v34" fill="#93c8ae" />
         </g>
         {[...Array(9)].map((_, i) => (
           <rect
@@ -1119,17 +1112,17 @@ export function ValleyBackdrop({ className }: { className?: string }) {
             width="10"
             height="40"
             rx="4"
-            fill="#f3e6c8"
+            fill="#ffebbc"
           />
         ))}
-        <path d="M30 748 H392" stroke="#f3e6c8" strokeWidth="8" />
+        <path d="M30 748 H392" stroke="#ffebbc" strokeWidth="8" />
         {scatter(26, 5, [30, 780, 520, 890]).map((p, i) => (
           <circle
             key={i}
             cx={p.x}
             cy={p.y}
             r={6 + p.r}
-            fill={["#f3d27a", "#f3b7a8", "#ffffff"][i % 3]}
+            fill={["#ffd76e", "#ffb09c", "#ffffff"][i % 3]}
           />
         ))}
         {[
@@ -1146,19 +1139,18 @@ export function ValleyBackdrop({ className }: { className?: string }) {
         <path
           d="M800 740 q50 -40 110 -10"
           fill="none"
-          stroke="#a9805d"
+          stroke="#c37e43"
           strokeWidth="22"
           strokeLinecap="round"
         />
         <path
           d="M800 728 q50 -40 110 -10"
           fill="none"
-          stroke="#c9a37d"
+          stroke="#e2a364"
           strokeWidth="6"
           strokeLinecap="round"
         />
       </g>
-      <Paper />
     </svg>
   );
 }

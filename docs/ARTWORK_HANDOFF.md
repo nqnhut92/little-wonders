@@ -6,7 +6,7 @@
 
 No production artwork or Gemini images have been generated. The game uses coherent temporary authored vectors and remains playable without an art upgrade. Update both language versions whenever an asset or its interaction changes.
 
-Cozy magical storybook for Vietnamese children aged 4–6: soft moss outlines #52684e, pale sky #dceceb, grass #d1dfa9, flower yellow #e9bd58, cream-white puppy #fffaf0 with pink cheeks #f6b9b0, terracotta roof #bc7f70. Use rounded silhouettes and diffuse daylight from upper right. Avoid harsh contrast, frightening faces, tiny noisy detail, text, logos and watermarks.
+Flat, friendly storybook for Vietnamese children aged 4–6: simple rounded shapes, bright flat fills, no outlines, one darker tone for shade, big dot eyes #4a3b35 with a white highlight and pink cheeks #ffb3a7. Sky #bfe6f7, grass #8fd083, yellow #ffc93c, red #f0605d, blue #5fb4e0, purple #9b6bd6, cream-white puppy #fff6e5 with a small purple bow #9b6bd6. Avoid harsh contrast, frightening faces, tiny noisy detail, text, logos and watermarks.
 
 ## Complete inventory and file specifications
 
@@ -63,7 +63,7 @@ Existing app icons: `public/favicon.ico` (16/32/48), `public/favicon.svg`, `publ
 
 ## One drawn style (current status)
 
-Every in-game picture is now a project-authored vector in `src/components/Art.tsx`, with drawn backdrops and the valley map in `src/components/SceneBackdrop.tsx`, all passed through the shared watercolor filters in `PaintFilters.tsx` so the whole game reads as one style. The Gemini illustrations that shipped briefly (backgrounds, valley map, Lucky, reindeer, house, tree, sun, cloud, flower, basket, rock, owl, frog and an unused rabbit) are kept in `art-archive/gemini/` and are not bundled. Only the app icon set is still the Gemini illustration. Replacement art must come as one complete, consistent set; do not mix a few painted images back in.
+Every in-game picture is now a project-authored vector in `src/components/Art.tsx`, with drawn backdrops and the valley map in `src/components/SceneBackdrop.tsx`, all in one flat style: flat fills, no outlines and no texture filters (`ArtFlat.tsx` and `ArtFlatMore.tsx` hold the drawings; `PaintFilters.tsx` keeps only the glow used by lights). Lucky wears a small purple bow, not a collar. The Gemini illustrations that shipped briefly (backgrounds, valley map, Lucky, reindeer, house, tree, sun, cloud, flower, basket, rock, owl, frog and an unused rabbit) are kept in `art-archive/gemini/` and are not bundled. Only the app icon set is still the Gemini illustration. Replacement art must come as one complete, consistent set; do not mix a few painted images back in.
 
 ## Later regions (temporary vectors)
 
@@ -95,14 +95,14 @@ The interface follows Light, Dark and System appearance; artwork does not. Deliv
 
 - The scene fills the whole screen, from about 4:3 (iPad) to 21:9 (ultra-wide desktop). Backgrounds must extend to every edge and survive cropping; objects scale with the smaller of the width and 1.9 x the height. Controls float at the top left (guide, about 460×72px) and down the top right (a 70px column); keep important background detail out of those areas.
 - Glass panels float on the scene (seed tray, guide). Artwork behind them is blurred and lightened; do not rely on detail there.
-- On dialogs, artwork sits on the light plate in both appearances, so moss outlines stay visible. Do not add your own backing shape or shadow.
+- On dialogs, artwork sits on the light plate in both appearances, so pale shapes stay visible. Do not add your own backing shape or shadow.
 - A night version of the scene backgrounds and the dimmed map areas for regions marked as coming soon will be specified here when those features are built.
 - Interface icons (speaker, notebook, settings, hint, close, save state, appearance) are repository vectors in `src/components/Icons.tsx` and are not part of this handoff.
 - The final app icon will be redrawn with the rest of the artwork: a 1024px master, full-bleed opaque for the 180px Apple icon, a separate maskable version with the subject inside the central 80%, and a vector SVG for the favicon. The current `favicon.svg` wraps a small raster copy and the maskable files are derived by `scripts/make-icons.mjs`.
 
 ## Character consistency
 
-Lucky the puppy: small, chubby and cream-white, round head, floppy tan ears, dot eyes with a highlight, small dark nose, pink tongue and pink cheeks, short curled tail; a rounded cartoon, not a realistic dog. The little reindeer: warm brown, cream belly and muzzle, two small antlers, a red-brown nose and pink cheeks. No clothing changes between poses. Keep head/ear proportions from the reference SVG. Bird: blue-gray oval body, right-facing yellow beak and short legs. Butterfly: pink upper wings, yellow lower wings, thin moss body and two antennae. Ladybug: terracotta shell with moss spots; worm pale green; fish orange-yellow facing right. Cloud and sun have dot eyes and gentle smiles. Approve a reference sheet first; reuse model references/seeds where supported.
+Lucky the puppy: small, chubby and cream-white, round head, floppy tan ears, dot eyes with a highlight, small dark nose, pink tongue and pink cheeks, a small purple bow at the neck, short curled tail; a rounded cartoon, not a realistic dog. The little reindeer: warm brown, cream belly and muzzle, two small antlers, a red-brown nose and pink cheeks. No clothing changes between poses. Keep head/ear proportions from the reference SVG. Bird: blue-gray oval body, right-facing yellow beak and short legs. Butterfly: pink upper wings, yellow lower wings, thin moss body and two antennae. Ladybug: terracotta shell with moss spots; worm pale green; fish orange-yellow facing right. Cloud and sun have dot eyes and gentle smiles. Approve a reference sheet first; reuse model references/seeds where supported.
 
 ## Animation and layers
 
@@ -118,9 +118,9 @@ Layer order: sky, rainbow, distant hill, near hill/path, tree/house, pond/grass/
 
 ## Copy-ready Gemini prompt
 
-> Create replacement artwork for Little Wonders, a Vietnamese children's garden game for ages 4–6. Use a cozy magical storybook style, soft rounded silhouettes, moss outlines #52684e and diffuse upper-right daylight. Sky #dceceb, grass #d1dfa9, yellow flowers #e9bd58, cream-white puppy #fffaf0 with cheeks #f6b9b0, terracotta roof #bc7f70. Images must remain clear at 60–200 displayed pixels. No text, logos or watermarks. Do not imitate a living artist or use commercial characters.
+> Create replacement artwork for Little Wonders, a Vietnamese children's garden game for ages 4–6. Use a flat, friendly storybook style: simple rounded shapes, bright flat fills, no outlines, one darker tone for shade, big dot eyes with a highlight. Sky #bfe6f7, grass #8fd083, yellow #ffc93c, red #f0605d, cream-white puppy #fff6e5 with cheeks #ffb3a7. Images must remain clear at 60–200 displayed pixels. No text, logos or watermarks. Do not imitate a living artist or use commercial characters.
 >
-> Match the supplied project-owned SVG references. Lucky the puppy: small, chubby and cream-white, round head, floppy tan ears, dot eyes with a highlight, small dark nose, pink tongue and pink cheeks, short curled tail; a rounded cartoon, not a realistic dog. The little reindeer: warm brown, cream belly and muzzle, two small antlers, a red-brown nose and pink cheeks. Bird blue-gray/yellow beak; butterfly pink upper/yellow lower wings; ladybug terracotta/moss spots; worm pale green; fish orange-yellow facing right. Keep proportions, line weight and lighting identical across poses. First provide a character reference sheet for approval, then separate asset files.
+> Match the supplied project-owned SVG references. Lucky the puppy: small, chubby and cream-white, round head, floppy tan ears, dot eyes with a highlight, small dark nose, pink tongue and pink cheeks, a small purple bow at the neck, short curled tail; a rounded cartoon, not a realistic dog. The little reindeer: warm brown, cream belly and muzzle, two small antlers, a red-brown nose and pink cheeks. Bird blue-gray/yellow beak; butterfly pink upper/yellow lower wings; ladybug terracotta/moss spots; worm pale green; fish orange-yellow facing right. Keep proportions, shapes and palette identical across poses. First provide a character reference sheet for approval, then separate asset files.
 >
 > Object IDs: tree, cloud, sun, flower, carrot, berry, butterfly, worm, bug, bird, puppy, reindeer, fish, apple, house, rainbow, rock, grass, pond, basket, star, tomato, pumpkin, corn, watermelon. Output each as ID.png, transparent RGBA 512×512 with about 7% padding and bottom-center anchor matching (60,112) in the existing 120×120 canvas. Do not crop or change aspect ratio. Carrot must stay unmistakably orange; berries red/pink. House needs a separate wall recolor mask. Separate trunk/canopy/apple, cloud/rain, pond rim/water/ripple/leaf/fish, roof/walls/doors and decorations. Do not bake in UI, touch zones or game logic.
 >
