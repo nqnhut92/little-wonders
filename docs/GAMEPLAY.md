@@ -1,27 +1,27 @@
-# Chơi trong Khu Vườn Kỳ Diệu
+[Tiếng Việt](GAMEPLAY.vi.md)
 
-Khu vườn luôn mở, không có màn khóa hoạt động, điểm số, đếm ngược hoặc thất bại. Bé có thể nghỉ bất kỳ lúc nào.
+# Gameplay
 
-## Hạt Giống Bí Ẩn
+The garden is always open. There are no locked activities, scores, countdowns, failure screens or return-pressure rewards. A rest screen offers a natural stopping point.
 
-Ba loại hạt: hướng dương, cà rốt, dâu. Chọn rồi chạm luống, hoặc kéo hạt vào một trong ba luống. Mầm cây xuất hiện. Đưa mây tới luống để tưới, đưa mặt trời tới luống để sưởi. Chạm mây/nắng cũng chăm cả ba luống. Khi đủ hai điều kiện, cây trưởng thành ngay, không phải đợi theo ngày. Gieo hạt mới bằng cách kéo vào luống cũ. Luống đã trồng được giữ sau tải lại.
+## Mystery seeds
 
-## Những Người Bạn Đang Trốn
+Three beds and three seeds: sunflower, carrot and berry. Select then tap soil, or drag into a bed. Water and sunlight are both required for immediate growth. Dragging a cloud/sun affects only its target; tapping treats all beds. Replant by dragging a new seed over a bed. Growing a plant unlocks butterfly discovery; rain and sun unlock the rainbow.
 
-Chim ở cành cây, tiếng lá xào xạc báo táo, đá che bọ rùa, cỏ che sâu và dế, nước gợn hé cá. Hoa thu hút bướm; cây trưởng thành cũng mời bướm tới. Các khu vực dùng hình dạng và vị trí gợi ý nơi quan sát. Một con vật được hé lộ gần nhất hiện trong vườn; sổ tay giữ tất cả phát hiện lâu dài.
+## Hidden friends
 
-## Bữa Trưa Của Thỏ
+Tap the tree for rustling leaves and a falling apple, the bird for a chirp/hop, the pond for fish/ripples, the rock for a ladybug, or grass for worm/cricket discovery. Flowers attract butterflies. The most recently revealed hidden animal appears in the scene; discoveries remain in the notebook. Hiding locations are fixed in this MVP.
 
-Chạm thỏ. Thỏ cần ba củ cà rốt màu cam; dâu/táo được phản hồi nhẹ nhàng và không được tính thành cà rốt. Chọn thức ăn rồi chạm giỏ hoặc kéo thả. Ba chấm trực quan biểu diễn số lượng; sau bữa đầu có bữa sắc màu với ba món tự chọn. Bữa ăn hoàn tất được cất. Số món trong bữa đang làm chỉ tồn tại trong phiên mở hoạt động, không tính là progress dài hạn.
+## Rabbit lunch
 
-## Ngôi Nhà Sắc Màu
+Four repeating, pressure-free requests: three orange carrots; three freely chosen colorful foods; two red berries; one round apple. Picture requests show the food and quantity without reading. Drag food or select then tap the basket. Wrong foods do not count; the rabbit tilts gently and shows the desired food in a thought bubble. Accepted food produces a hop/star and visible count markers. Feedback is inside the activity. After repeated misses the correct food is highlighted. The current meal/count survives closing and reload; completed meals are also saved.
 
-Chạm nhà, chọn một trong năm màu tường. Chọn hoa, bướm hoặc ngôi sao rồi chạm sân để đặt. Kéo đồ đã đặt để đổi vị trí. Tối đa 20 đồ trong một bố cục; có thể dọn và làm lại. Màu nhà phản ánh ngoài vườn; bố cục được xem và sửa trong góc nhà. Không có đáp án đúng hoặc sai. Thiết kế lưu tự động.
+## Colorful house
 
-## Sổ Tay Khám Phá
+Choose five wall colors and flower/butterfly/star decorations. Tap the yard to place, drag existing items to reposition, or clear the arrangement. Up to 20 decorations are retained; adding beyond that replaces the oldest. The wall color and a scaled arrangement appear in the main garden. There is no right answer; changes save automatically.
 
-18 mục: mưa, nắng, ba cây trưởng thành, bướm, sâu, bọ rùa, chim, thỏ, cá, táo, bữa ba cà rốt, bữa sắc màu, màu nhà, trang trí sân, cầu vồng, dế trong cỏ. Chỉ hiện những điều đã gặp. Chạm hình để xem chuyển động nhẹ và nghe lại tên nếu có giọng Việt. Không có tỷ lệ hoàn thành 100% hoặc yêu cầu thu thập hết.
+## Notebook and help
 
-## Hỗ trợ
+18 discoveries: rain, sun, three grown plants, butterfly, worm, ladybug, bird, rabbit, fish, apple, carrot meal, colorful meal, house color, decorations, rainbow and cricket. Only discovered entries appear. Tap a picture for a short reaction and Vietnamese narration if available. No completion percentage gates play.
 
-Câu ngắn và hình ảnh là chính. Mỗi 25 giây chưa thao tác tiến trình, gợi ý đổi nội dung và các đối tượng quan trọng sáng nhẹ. Có nút nghe/gợi ý, đường thao tác chạm thay thế kéo. Âm thanh tắt mặc định. Khi không có giọng Việt, chỉ dùng hiệu ứng nhạc nhẹ và phản hồi hình ảnh; không dùng giọng nước ngoài đọc tiếng Việt.
+After 25 seconds without progress, hints refer to the current stage; further inactivity shows a pictorial seed/water/sun sequence. Tap alternatives simplify dragging. Sound is off initially. All child-facing text is Vietnamese. Long-term enjoyment still requires observation with children; more variants alone do not prove it.

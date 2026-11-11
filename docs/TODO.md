@@ -1,7 +1,11 @@
-# Việc tiếp theo
+[Tiếng Việt](TODO.vi.md)
 
-- [ ] Replace temporary artwork with consistent Gemini-generated production assets. Xem [bàn giao mỹ thuật](ARTWORK_HANDOFF.md).
-- [ ] Kiểm chứng Google OAuth và Neon trên deployment đã cấu hình, gồm hai thiết bị và session hết hạn.
-- [ ] Kiểm thử trên iPad Safari thật và thêm vào màn hình chính.
-- [ ] Bổ sung tự phục vụ xóa/xuất dữ liệu cho phụ huynh trước khi phát hành rộng rãi.
-- [ ] Thu lời thoại Việt ngoại tuyến có giấy phép nếu muốn âm thanh hướng dẫn nhất quán trên thiết bị không có giọng Việt.
+# Future work
+
+- [ ] Replace temporary artwork with consistent Gemini-generated production assets. See [artwork handoff](ARTWORK_HANDOFF.md).
+- [ ] Verify configured Google OAuth/Neon, two devices and session expiry on a deployed origin.
+- [ ] Test physical iPad Safari and home-screen installation.
+- [ ] Add self-service parent data export/deletion before broad public release.
+- [ ] Record licensed offline Vietnamese narration for devices without a Vietnamese voice.
+- [ ] Observe children playing before expanding content; prioritize useful variation over repetition.
+- [ ] Evaluate finer-grained conflict handling for concurrent decoration editing.

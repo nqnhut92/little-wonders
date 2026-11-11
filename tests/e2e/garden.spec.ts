@@ -42,7 +42,9 @@ test("rabbit gently rejects a wrong food and counts three carrots", async ({
   await activate(page, "Dâu");
   await activate(page, "Giỏ thức ăn");
   await expect(
-    page.getByText("Thỏ muốn cà rốt màu cam. Con thử lại nhé!"),
+    page
+      .getByRole("status")
+      .filter({ hasText: "Thỏ muốn cà rốt màu cam. Con thử lại nhé!" }),
   ).toBeVisible();
   await activate(page, "Cà rốt");
   for (let i = 0; i < 3; i++) await activate(page, "Giỏ thức ăn");
@@ -227,4 +229,61 @@ test("late profile response cannot undo the latest selection", async ({
       ),
     )
     .toBe("second");
+});
+
+test("unfinished lunch and visual request survive reopening and reload", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await page.getByRole("button", { name: "Bữa Trưa Của Thỏ" }).click();
+  await page.getByRole("button", { name: "Giỏ thức ăn" }).click();
+  await expect(page.locator(".filled")).toHaveCount(1);
+  await page.reload();
+  await page.getByRole("button", { name: "Bữa Trưa Của Thỏ" }).click();
+  await expect(page.locator(".filled")).toHaveCount(1);
+  await page.getByRole("button", { name: "Dâu", exact: true }).click();
+  await page.getByRole("button", { name: "Giỏ thức ăn" }).click();
+  await expect(page.locator(".rabbit-wish .art-carrot")).toBeVisible();
+  await expect(page.locator(".meal-request .art-carrot")).toHaveCount(3);
+});
+test("tabs merge discoveries and keep independent writer identities", async ({
+  page,
+  context,
+}) => {
+  await page.goto("/");
+  const other = await context.newPage();
+  await other.goto("/");
+  await page.getByRole("button", { name: "Cây táo" }).click();
+  await other.getByRole("button", { name: "Ao nước" }).click();
+  for (const p of [page, other]) {
+    await p.getByRole("button", { name: "Sổ khám phá" }).click();
+    await expect(p.getByText("Táo rơi", { exact: true })).toBeVisible();
+    await expect(p.getByText("Cá trong ao", { exact: true })).toBeVisible();
+  }
+  for (const p of [page, other])
+    await p.getByRole("button", { name: "Trở về vườn" }).click();
+  await page.getByRole("button", { name: "Luống đất 1" }).click();
+  await other.getByRole("button", { name: "Luống đất 2" }).click();
+  await expect
+    .poll(() =>
+      page.evaluate(() => {
+        const fields = JSON.parse(localStorage.getItem("little-wonders-v1")!)
+          .world.fields;
+        return Boolean(
+          fields.plant0 &&
+          fields.plant1 &&
+          fields.plant0.device !== fields.plant1.device,
+        );
+      }),
+    )
+    .toBe(true);
+});
+test("saved decorations appear outside the house", async ({ page }) => {
+  await page.goto("/");
+  await page.getByRole("button", { name: "Ngôi Nhà Sắc Màu" }).click();
+  await page.locator(".house-canvas").click({ position: { x: 40, y: 150 } });
+  await page.getByRole("button", { name: "Trở về vườn" }).click();
+  await expect(page.locator(".garden-decorations .art-flower")).toHaveCount(1);
+  await page.reload();
+  await expect(page.locator(".garden-decorations .art-flower")).toHaveCount(1);
 });

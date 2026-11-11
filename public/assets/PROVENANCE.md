@@ -1,5 +1,7 @@
-# Nguồn hình ảnh
+[Tiếng Việt](PROVENANCE.vi.md)
 
-Bản hiện tại: hình vector tạm được viết trực tiếp trong `src/components/Art.tsx`, nền bằng CSS trong `src/style.css`, icon gốc `public/icon.svg`. Icon PNG được raster hóa từ SVG đó bằng Chromium. Không dùng ảnh bên ngoài hoặc ảnh Gemini; không có nhân vật có bản quyền của bên thứ ba được chủ ý sử dụng. Chủ repository cần quyết định giấy phép phân phối dự án trước khi phát hành rộng rãi.
+# Asset provenance
 
-Khi thay bằng hình Gemini, ghi model, ngày, prompt, nguồn reference, điều khoản sử dụng áp dụng và mọi chỉnh sửa. Không tuyên bố rằng nội dung do mô hình tạo tự động không thể có vấn đề quyền sở hữu.
+Current temporary vector artwork was authored directly in `src/components/Art.tsx`; backgrounds use `src/style.module.css`. `public/icon.svg` is the icon source, rasterized with Chromium into the PNG icons. No external stock or Gemini imagery is used, and no third-party copyrighted character was intentionally incorporated. The repository owner must choose a distribution license before broad release.
+
+For future Gemini replacements, record model, date, prompt, reference sources, applicable usage terms and subsequent edits. Do not assume generated content automatically has unrestricted rights. Follow the bilingual artwork handoff in `docs`.

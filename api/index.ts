@@ -72,8 +72,18 @@ const worldSchema = z.object({
           )
           .max(20),
       ).optional(),
+      meal: stamp(
+        z.object({
+          kind: z.enum(["orange", "colors", "berries", "apples"]),
+          count: z.number().int().min(0).max(2),
+          attempts: z.number().int().min(0).max(100000),
+        }),
+      ).optional(),
       lastMeal: stamp(
-        z.object({ kind: z.enum(["orange", "colors"]), count: z.literal(3) }),
+        z.object({
+          kind: z.enum(["orange", "colors", "berries", "apples"]),
+          count: z.number().int().min(1).max(3),
+        }),
       ).optional(),
     })
     .strict(),

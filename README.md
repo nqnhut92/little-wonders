@@ -1,22 +1,24 @@
+[Tiếng Việt](README.vi.md)
+
 # Little Wonders
 
-A Vietnamese, touch-first storybook garden for children aged 4–6. React, strict TypeScript, CSS Modules and Vite render original temporary SVG characters. No paid AI, advertisements, analytics, or continuously running backend is required.
+A Vietnamese touch-first storybook garden for children aged 4–6, built with React, strict TypeScript, CSS Modules and Vite. Artwork is original temporary SVG/vector work. No paid AI, advertising, behavioral tracking or continuous backend is required.
 
-## What works
+## Implemented
 
-- A continuous garden: tree/apple, bird, moving cloud/rain, sun, pond/fish, rock/ladybug, grass/worm/cricket, flowers/butterfly and rabbit react differently.
-- Three planting beds and three plant types. Drag a seed into soil, add water and sunshine; growth unlocks a butterfly and rainbow.
-- Rabbit lunch: drag food or select and tap the basket, identify orange carrots, count to three, then try a creative meal.
-- House: recolor walls, place and reposition decorations, restore designs later.
-- An illustrated notebook with 18 discoverable entries; discoveries never lock basic activities.
-- Immediate local persistence, per-profile backups, batched retry, atomic server merges and offline shell caching.
-- Parent-gated Google OpenID Connect, child nicknames, secure session cookies, ownership-checked Neon persistence and profile selection.
+- A continuous garden with different tree, cloud, sun, pond, animal and flower reactions.
+- Three planting beds/types; both water and sunshine are required for growth.
+- Four rabbit meal variations: three carrots, three free-choice foods, two berries and one apple. Picture requests, gentle reactions and unfinished-meal persistence support non-readers.
+- Five wall colors, three decoration types and saved arrangements visible in the main garden.
+- A notebook containing 18 meaningful discoveries, with no locked basic activities.
+- Immediate local persistence, per-profile backups, same-profile multi-tab merge, batched retries and offline shell caching.
+- Google OpenID Connect for parents, nicknames for children, ownership-checked Neon APIs, CSRF and secure session cookies.
 
-Google and Neon require your own free-tier configuration. Local guest play works without credentials; `vite` alone does not run serverless APIs. Actual Google/Neon integration and physical iPad Safari are not claimed as verified. Artwork is temporary authored vector art; see [artwork handoff](docs/ARTWORK_HANDOFF.md).
+Google/Neon need external configuration. Guest play works locally; Vite alone does not run APIs. Real OAuth, live Neon, Vercel routing and physical iPad Safari are not verified. See [review](docs/SELF_REVIEW.md) and [artwork handoff](docs/ARTWORK_HANDOFF.md).
 
-## Development
+## Run and test
 
-Use Node 22+ and npm. Work in this existing checkout; no worktree is needed.
+Use Node 22+ and the existing checkout; no worktree is necessary.
 
 ```sh
 npm ci
@@ -24,31 +26,32 @@ npm run dev
 npm run typecheck
 npm run lint
 npm test
+npm run docs:check
 npm run build
 npx playwright install --with-deps chromium webkit
 npm run test:e2e
 ```
 
-If Chromium is preinstalled, `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium npm run test:e2e -- --project=chromium` uses it. Set `PLAYWRIGHT_BROWSERS_PATH` to a writable directory if needed. The browser suite serves the production build and tests the service worker.
+Use `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium` for a system Chromium, or a writable `PLAYWRIGHT_BROWSERS_PATH`. Browser tests serve the production build. For full-stack local work, copy `.env.example` to `.env.local`, configure a development Neon database and Google callback, apply `migrations/001_initial.sql`, then run `npx vercel dev`. Secure cookies require a compatible secure context.
 
-For full-stack local development, copy `.env.example` to `.env.local`, configure the values, apply `migrations/001_initial.sql` to a development Neon database, then run `npx vercel dev`. Configure the Google callback to match the local origin. Production uses HTTPS; session cookies are always Secure. Do not weaken cookie security for production.
+## Deploy
 
-## Deployment
+1. Create free-tier Neon and run `migrations/001_initial.sql` in its SQL editor.
+2. Configure a Google OAuth web client with `openid` and the exact callback `https://YOUR_HOST/api/auth/callback`.
+3. Import into Vercel using `vercel.json`: `npm ci`, `npm run build`, output `dist`.
+4. Set server-only `DATABASE_URL`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `SESSION_SECRET` (32+ random characters) and `APP_URL` (exact HTTPS origin, no trailing slash).
+5. Test sign-in, nickname creation, two-device restoration, session expiry and offline reconnection before release.
 
-1. Create a free Neon PostgreSQL database. Run `migrations/001_initial.sql` in its SQL editor.
-2. Create a Google OAuth web client and allow `https://YOUR_HOST/api/auth/callback`. The app only requests `openid`; no child email is requested or stored.
-3. Import this repository into Vercel; use the Vite build settings in `vercel.json`.
-4. Set server-only `DATABASE_URL`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `SESSION_SECRET` (at least 32 random characters), and `APP_URL` (exact HTTPS origin, no trailing slash).
-5. Deploy; check Google login, create a nickname, plant a flower, and sign in from a second device. Test session expiry and offline reconnection before releasing to children.
+Never commit secrets or use `VITE_` for them. No cloud resources were created or purchased. See [deployment](docs/DEPLOYMENT.md).
 
-No secrets belong in a `VITE_` variable. Never commit `.env` files. No resources have been created or purchased by this implementation.
+## Data policy
 
-## Data/conflicts
+Discoveries merge by union. Stamped fields use logical counters beyond all observed edits, with a unique writer ID per app mount for tie-breaking. New edits do not read wall time; legacy clocks remain compatible. Concurrent edits to the same field select one whole value, including a decoration arrangement. This is not collaborative per-object editing. Server merges are atomic and identical retries do not change revision. No per-tap history is stored. See [architecture](docs/ARCHITECTURE.md).
 
-Discoveries form a union. Each world field has a logical clock and stable device ID; the greater clock wins, then lexicographically greater device ID breaks ties. Edits advance beyond all observed clocks. Stale snapshots cannot remove discoveries or newer observed values. Concurrent edits to the same field (including the decoration arrangement) choose one complete field deterministically; this is not collaborative editing. Initial device clock skew can influence concurrent winners. Per-profile local backups retain the prior device state. Server row locking makes merge updates atomic, and retrying identical progress leaves the revision unchanged. No individual tap history is stored.
+## Documentation and screenshots
 
-See [architecture](docs/ARCHITECTURE.md), [gameplay](docs/GAMEPLAY.md), [deployment](docs/DEPLOYMENT.md), [testing](docs/TESTING.md), and [future work](docs/TODO.md).
+Every README/document has EN/VI counterparts linked at the top. Update both whenever behavior or instructions change; review their meaning, then run `npm run docs:sync` to record hashes. `npm run docs:check` runs in CI and rejects missing, unrecorded or changed translations. Hash checks detect version drift, not semantic mistranslation. See [documentation policy](docs/DOCUMENTATION.md).
 
-## Screenshots
+With production preview running, `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium node scripts/capture.mjs` uses real touch actions to discover all 18 entries and capture 19 screens, including reload persistence. It injects no progress fixtures. Files go to ignored `artifacts/screenshots/`.
 
-With the production preview running, execute `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium node scripts/capture.mjs`. It uses actual touch controls to collect all 18 discoveries and captures 19 screens, including persistence after reload. Output is an ignored local `artifacts/screenshots/` album; no fixture progress is injected.
+See [gameplay](docs/GAMEPLAY.md), [testing](docs/TESTING.md) and [future work](docs/TODO.md).

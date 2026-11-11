@@ -1,28 +1,32 @@
-# Đưa lên Vercel Hobby
+[Tiếng Việt](DEPLOYMENT.vi.md)
 
-Không có tài nguyên cloud được tự tạo. Dùng Neon free tier và Vercel Hobby theo điều khoản của nhà cung cấp; theo dõi quota của tài khoản.
+# Deployment on Vercel Hobby
 
-1. Tạo Neon PostgreSQL. Mở SQL editor và chạy toàn bộ `migrations/001_initial.sql`. Script có transaction và có thể chạy lại. Dùng connection string có TLS được Neon cung cấp.
-2. Google Cloud Console: tạo OAuth consent screen và OAuth client loại Web application. Chỉ yêu cầu scope `openid`. Thêm test users nếu ứng dụng còn ở chế độ thử nghiệm. Redirect URI phải là `https://ten-mien-cua-ban/api/auth/callback` chính xác. Không cần email cho trẻ.
-3. Import repository vào Vercel. Framework Vite, Node 22+, install `npm ci`, build `npm run build`, output `dist`. `vercel.json` chuyển các đường API về handler Node serverless.
-4. Đặt biến server-only dưới đây trong project settings rồi deploy lại. Không đặt prefix `VITE_`.
+No cloud resources were created or purchased. Use Neon free tier and Vercel Hobby within their terms and monitor quotas.
 
-| Biến                 | Giá trị                                                                       |
-| -------------------- | ----------------------------------------------------------------------------- |
-| DATABASE_URL         | Connection string Neon                                                        |
-| GOOGLE_CLIENT_ID     | ID OAuth web client                                                           |
-| GOOGLE_CLIENT_SECRET | Secret OAuth                                                                  |
-| SESSION_SECRET       | Chuỗi ngẫu nhiên tối thiểu 32 ký tự, ví dụ tạo bằng `openssl rand -base64 48` |
-| APP_URL              | Origin HTTPS chính xác, không có dấu `/` cuối                                 |
+1. Create Neon PostgreSQL and execute `migrations/001_initial.sql` in its SQL editor. It uses a transaction and is repeatable. Use the supplied TLS connection string.
+2. Configure a Google OAuth Web application with scope `openid`, consent screen and test users if required. Register the exact callback `https://YOUR_HOST/api/auth/callback`.
+3. Import the repository into Vercel, select Node 22+, install `npm ci`, build `npm run build`, output `dist`. `vercel.json` routes API paths to the Node serverless handler.
+4. Set server-only variables and redeploy:
 
-## Kiểm tra thật sau deploy
+| Variable             | Value                                                                  |
+| -------------------- | ---------------------------------------------------------------------- |
+| DATABASE_URL         | Neon connection string                                                 |
+| GOOGLE_CLIENT_ID     | Google web client ID                                                   |
+| GOOGLE_CLIENT_SECRET | Google client secret                                                   |
+| SESSION_SECRET       | At least 32 random characters; generate with `openssl rand -base64 48` |
+| APP_URL              | Exact HTTPS origin without trailing slash                              |
 
-Người lớn mở bánh răng, trả lời cổng xác nhận, chọn Tiếp tục với Google, tạo nickname. Gieo cây và trang trí. Đăng nhập cùng tài khoản trên thiết bị thứ hai, chọn hồ sơ và kiểm tra phục hồi. Đăng xuất/xóa cookie rồi tiếp tục chơi: dữ liệu phải còn trên máy, sau đăng nhập lại cùng hồ sơ phải gửi được. Tắt mạng sau khi shell đã được cache, tải lại, khám phá thêm rồi kết nối lại.
+Never use a `VITE_` prefix for secrets or commit `.env` files. No child email is needed.
 
-Không cấu hình OAuth preview URL ngẫu nhiên; dùng một origin ổn định cho môi trường thử nghiệm. Muốn thử toàn bộ local: `npx vercel dev`, `.env.local` với đúng origin/callback và Neon phát triển riêng. `npm run dev` chỉ phục vụ frontend, nên tài khoản/đồng bộ cần môi trường serverless.
+## Local and release checks
 
-## Cập nhật và dữ liệu
+For frontend-only development use `npm run dev`. For APIs, copy `.env.example` to `.env.local`, configure a separate development Neon database, apply the migration and run `npx vercel dev`. Match Google callback/origin exactly. Cookies stay Secure; test local authentication in a compatible secure context. Use a stable deployed origin rather than arbitrary preview URLs for OAuth testing.
 
-Migration mới phải có version mới. Sao lưu dữ liệu trước migration có thay đổi phá hủy. Cache ID thay theo build; worker chờ đóng tab cũ, không reload gameplay đột ngột. API không được cache. Session 30 ngày, account và progress không có TTL. Rate-limit buckets tự được dọn ở các lần POST sau. Không có cron hoặc server nền.
+Before release: authenticate, create a nickname, plant and decorate; sign in on a second device and select the same profile. Test two unrelated parents, expiry/relogin, offline reload and pending retry. An embedded PostgreSQL test is not a live Neon or OAuth test.
 
-Đăng xuất xóa cookie; khu vườn cục bộ vẫn còn để tiếp tục chơi. Dùng thiết bị tin cậy, không dùng hồ sơ trên máy công cộng. MVP chưa có giao diện xóa tài khoản/xuất dữ liệu; quản trị viên có thể xóa parent theo ID trong Neon, cascade xóa hồ sơ. Cần bổ sung quy trình tự phục vụ trước khi cung cấp rộng rãi.
+## Updates and privacy
+
+Add a new version for future migrations and back up before destructive changes. New service workers activate after old tabs close. API responses are never cached. Sessions last 30 days; accounts and progress have no TTL. Rate buckets expire and are cleaned during requests; no cron/server is required.
+
+Logout clears the cookie while local gardens remain playable. Use trusted devices. Self-service account deletion/export is not implemented; an administrator can delete a parent in Neon and cascade its profiles. Add a parent-facing procedure before broad public release.

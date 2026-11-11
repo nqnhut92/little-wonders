@@ -758,3 +758,57 @@ footer {
   width: 48px;
   height: 48px;
 }
+.meal-request {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  height: 58px;
+}
+.meal-request > .art {
+  width: 52px;
+  height: 52px;
+}
+.meal-feedback {
+  min-height: 24px;
+  color: #567950;
+}
+.rabbit-response {
+  width: 180px;
+  position: relative;
+  flex-shrink: 0;
+}
+.rabbit-happy > .art {
+  animation: hop 0.8s ease;
+}
+.rabbit-thinking > .art {
+  animation: wiggle 0.8s ease;
+}
+.rabbit-spark,
+.rabbit-wish {
+  position: absolute;
+  right: -15px;
+  top: 0;
+  width: 60px;
+  height: 60px;
+  background: #fff8e5;
+  border-radius: 50%;
+  padding: 8px;
+}
+.garden-decorations {
+  position: absolute;
+  left: 55%;
+  top: 37%;
+  width: 44%;
+  aspect-ratio: 2;
+  z-index: 4;
+  pointer-events: none;
+}
+.garden-decorations > span {
+  position: absolute;
+  width: 10.34%;
+  aspect-ratio: 1;
+}
+.garden-decorations .art {
+  width: 100%;
+  height: 100%;
+}

@@ -1,91 +1,89 @@
-# Bàn giao mỹ thuật — Little Wonders
+[Tiếng Việt](ARTWORK_HANDOFF.vi.md)
 
-Bản hiện tại dùng SVG/vector tạm do lập trình viên tạo trong dự án, không có ảnh Gemini hoặc ảnh stock. Không coi đây là mỹ thuật production. Trò chơi phải luôn chơi được trong lúc thay hình. Khi thêm hoặc thay asset, cập nhật tài liệu này trong cùng commit.
+# Artwork handoff for Gemini
 
-## Định hướng
+## Direction and current status
 
-Khu vườn cổ tích ấm áp dành cho trẻ Việt Nam 4–6 tuổi. Nét viền xanh rêu mềm, nhân vật tròn và thân thiện, ánh sáng ban ngày tản đều từ góc trên phải. Bảng màu hiện tại: trời xanh nhạt `#dceceb`, cỏ `#d1dfa9`, viền `#52684e`, hoa vàng `#e9bd58`, thỏ kem `#fff5df`, má hồng `#edb9a6`, mái nhà đỏ đất `#bc7f70`. Không dùng tương phản chói, bóng đổ cứng, chi tiết nhỏ gây nhiễu hoặc nhân vật đáng sợ. Không viết chữ trong ảnh.
+No production artwork or Gemini images have been generated. The game uses coherent temporary authored vectors and remains playable without an art upgrade. Update both language versions whenever an asset or its interaction changes.
 
-## Nguồn và quy cách chung
+Cozy magical storybook for Vietnamese children aged 4–6: soft moss outlines #52684e, pale sky #dceceb, grass #d1dfa9, flower yellow #e9bd58, cream rabbit #fff5df with pink cheeks #edb9a6, terracotta roof #bc7f70. Use rounded silhouettes and diffuse daylight from upper right. Avoid harsh contrast, frightening faces, tiny noisy detail, text, logos and watermarks.
 
-Mọi ID bên dưới hiện được vẽ tại `src/components/Art.tsx`, component `Art`, trong viewBox `0 0 120 120`. Vị trí tương tác thuộc `Garden.tsx` hoặc `Activities.tsx`, không thuộc file hình. Hiện chưa có file rời cho từng ID. Tên target dưới đây là tên dành cho lần thay artwork, không phải file đang tồn tại.
+## Complete inventory and file specifications
 
-Asset riêng: xuất PNG RGBA nền trong suốt, 512×512, tỉ lệ 1:1, kèm SVG nếu công cụ cung cấp vector sạch. Giữ nội dung chính trong khoảng 8–112/120 để không cắt khi rung. Giữ điểm neo mặc định giữa đáy (60,112); nhà và cây không di chuyển nền. Không crop alpha sát mép. Không thay kích thước hitbox theo đường alpha.
+All following object IDs currently live in `src/components/Art.tsx`, using `Art` with viewBox 0 0 120 120. There are no separate current object files. Each target filename is ID.png under `public/assets/`: 512×512, 1:1, transparent PNG RGBA; optional clean SVG master. Keep 7% padding, the established silhouette, and bottom-center anchor near (60,112). Do not crop transparent margins or derive hitboxes from alpha.
 
-## Danh mục đầy đủ
+| ID / target filename      | Purpose and interaction                                    |
+| ------------------------- | ---------------------------------------------------------- |
+| tree / tree.png           | Apple tree: shake canopy, falling apple                    |
+| cloud / cloud.png         | Movable cloud; rain on touch/drop                          |
+| sun / sun.png             | Sunshine source; touch/drop on beds                        |
+| flower / flower.png       | Sunflower, garden flower, seed selector, decoration, brand |
+| carrot / carrot.png       | Seed selector, grown crop, lunch food/request              |
+| berry / berry.png         | Seed selector, grown crop, lunch food/request              |
+| butterfly / butterfly.png | Garden visitor, decoration, notebook                       |
+| worm / worm.png           | Creature revealed from grass                               |
+| bug / bug.png             | Ladybug; shared cricket notebook illustration              |
+| bird / bird.png           | Branch bird; chirp and hop                                 |
+| rabbit / rabbit.png       | Garden, guide and meal character; happy/thinking responses |
+| fish / fish.png           | Revealed pond fish; swim reaction                          |
+| apple / apple.png         | Falling fruit, lunch food/request                          |
+| house / house.png         | Main garden and editor; five wall colors                   |
+| rainbow / rainbow.png     | Persistent rain+sun discovery backdrop                     |
+| rock / rock.png           | Tilt to reveal ladybug                                     |
+| grass / grass.png         | Rustling bush and plant sprout proxy                       |
+| pond / pond.png           | Water surface, lily leaf and ripples                       |
+| basket / basket.png       | Lunch drop target; count indicators rendered separately    |
+| star / star.png           | House decoration and positive meal sparkle                 |
 
-| ID / tên file tương lai                                     | Mục đích và vị trí hiện tại                                             | Kích thước, tỉ lệ, nền                | Trạng thái và liên kết                                                 |
-| ----------------------------------------------------------- | ----------------------------------------------------------------------- | ------------------------------------- | ---------------------------------------------------------------------- |
-| tree / tree.png                                             | Cây táo bên trái, Art.tsx                                               | 512², 1:1, trong suốt                 | Đứng yên, rung lá, táo rơi; button Cây táo ghi apple                   |
-| cloud / cloud.png                                           | Mây kéo được phía trên, Art.tsx                                         | 512², 1:1, trong suốt                 | Trôi, chạm, mưa; kéo vào data-soil tưới luống, chạm tưới cả ba         |
-| sun / sun.png                                               | Nắng kéo được, Art.tsx                                                  | 512², 1:1, trong suốt                 | Tia sáng, phản ứng; kéo/chạm cung cấp nắng                             |
-| flower / flower.png                                         | Hướng dương, hoa vườn, trang trí, logo nhỏ, Art.tsx                     | 512², 1:1, trong suốt                 | Mầm dùng grass; hoa trưởng thành, rung, gọi bướm; giữ thân/đáy cố định |
-| carrot / carrot.png                                         | Hạt đại diện, cây trưởng thành, thức ăn, Art.tsx                        | 512², 1:1, trong suốt                 | Đứng yên, kéo, được nhận vào giỏ; màu cam dễ phân biệt                 |
-| berry / berry.png                                           | Hạt dâu, cây trưởng thành, thức ăn, Art.tsx                             | 512², 1:1, trong suốt                 | Kéo, phản hồi bữa ăn; giữ màu hồng đỏ                                  |
-| butterfly / butterfly.png                                   | Bướm sau hoa, trang trí, sổ tay, Art.tsx                                | 512², 1:1, trong suốt                 | Cánh khép/mở, bay, chạm, phát hiện                                     |
-| worm / worm.png                                             | Sinh vật hé từ cỏ, Art.tsx                                              | 512², 1:1, trong suốt                 | Uốn mình, chào, xuất hiện; không gộp vào ảnh cỏ                        |
-| bug / bug.png                                               | Bọ rùa dưới đá; biểu tượng đại diện nhóm côn trùng/dế trong sổ, Art.tsx | 512², 1:1, trong suốt                 | Hé lộ, nhảy nhẹ, phát hiện; MVP dùng chung hình bọ cho mục dế          |
-| bird / bird.png                                             | Chim trên cành, Art.tsx                                                 | 512², 1:1, trong suốt                 | Đứng, nhảy, hót; giữ chân neo trên cành                                |
-| rabbit / rabbit.png                                         | Thỏ vườn, bữa ăn, hướng dẫn cuối màn, Art.tsx                           | 512², 1:1, trong suốt                 | Chớp mắt, tai vẫy, vui khi ăn, mời thử lại; không mặt buồn gay gắt     |
-| fish / fish.png                                             | Cá xuất hiện trong ao, Art.tsx                                          | 512², 1:1, trong suốt                 | Bơi/quẫy đuôi, chạm; độc lập mặt nước                                  |
-| apple / apple.png                                           | Táo rơi từ cây, thức ăn, Art.tsx                                        | 512², 1:1, trong suốt                 | Rơi, kéo, phản hồi; không gộp bóng rơi cố định                         |
-| house / house.png                                           | Nhà ngoài vườn và khung sáng tạo, Art.tsx                               | 512², 1:1, trong suốt                 | Tĩnh, chọn màu; cần tách tường thành mask để hỗ trợ năm màu hiện có    |
-| rainbow / rainbow.png                                       | Sau khi gặp mưa và nắng, Art.tsx                                        | 512², 1:1, trong suốt                 | Hiện nhẹ sau cảnh, không nhận touch ở vườn                             |
-| rock / rock.png                                             | Đá che bọ rùa, Art.tsx                                                  | 512², 1:1, trong suốt                 | Nghiêng/lật, phát hiện; sinh vật riêng                                 |
-| grass / grass.png                                           | Bụi cỏ và mầm cây, Art.tsx                                              | 512², 1:1, trong suốt                 | Rung, hé lộ; mầm nhỏ phóng theo chiều cao renderer                     |
-| pond / pond.png                                             | Ao nước trái dưới, Art.tsx                                              | 512², 1:1, trong suốt                 | Vòng gợn/động nước, cá riêng; giữ diện tích nước tương đương           |
-| basket / basket.png                                         | Drop target bữa trưa, Art.tsx                                           | 512², 1:1, trong suốt                 | Đứng, nhận thức ăn; ba chấm số lượng do app vẽ                         |
-| star / star.png                                             | Trang trí sân, Art.tsx                                                  | 512², 1:1, trong suốt                 | Đặt/kéo, không phải huy hiệu tính điểm                                 |
-| sky / sky.png                                               | Gradient .garden trong src/style.module.css                             | 2400×1400, 12:7, nền kín              | Lớp xa nhất, không nhận touch                                          |
-| hill-back / hill-back.png                                   | .hill-back, style.module.css                                            | 2400×1400, 12:7, trong suốt           | Đồi sau, độc lập tương tác                                             |
-| hill-front / hill-front.png                                 | .hill-front, style.module.css                                           | 2400×1400, 12:7, trong suốt           | Đồi trước nhưng dưới đối tượng                                         |
-| path / path.png                                             | .path, style.module.css                                                 | 1200×1400, 6:7, trong suốt            | Lối đất, không nhận touch                                              |
-| soil / soil.png                                             | .soil/.soil-mark, style.module.css                                      | 512×256, 2:1, trong suốt              | Luống trống và đã gieo, data-soil hitbox không đổi                     |
-| house-yard / house-yard.png                                 | .house-canvas gradient, style.module.css                                | 1160×560, 29:14, nền kín              | Sân để đặt đồ; tọa độ phần trăm giữ nguyên                             |
-| icon / icon.svg và icon-180.png, icon-192.png, icon-512.png | public/                                                                 | SVG 192²; PNG 180²,192²,512²; nền kín | Biểu tượng cài ứng dụng, PNG tạo từ SVG gốc, không animation           |
+Backgrounds currently live in `src/style.module.css`; target output is PNG (optional SVG master). These filenames describe future replacement files, not existing files.
 
-Cỏ/đồi/lối đi chưa có texture hoặc các lớp tiền cảnh rời ngoài danh mục trên. Không ghi các đối tượng chưa triển khai thành asset hiện có. Các nút, chữ, icon bánh răng, ký hiệu âm thanh, sổ tay, chấm đếm, dấu cộng, focus và gợi ý là UI do app render, không phải ảnh cần Gemini tạo.
+| Target         | Size / ratio     | Background  | Purpose / current selector  |
+| -------------- | ---------------- | ----------- | --------------------------- |
+| sky.png        | 2400×1400 / 12:7 | opaque      | Sky gradient / .garden      |
+| hill-back.png  | 2400×1400 / 12:7 | transparent | Distant hill / .hill-back   |
+| hill-front.png | 2400×1400 / 12:7 | transparent | Near hill / .hill-front     |
+| path.png       | 1200×1400 / 6:7  | transparent | Ground path / .path         |
+| soil.png       | 512×256 / 2:1    | transparent | Bed / .soil                 |
+| house-yard.png | 1160×560 / 29:14 | opaque      | Editor yard / .house-canvas |
 
-## Nhất quán nhân vật
+Existing app icons: `public/icon.svg` (192-square viewBox) and `public/icon-180.png`, `icon-192.png`, `icon-512.png`, opaque square PNGs rasterized from that SVG. They have no animation. UI text, settings/audio/notebook controls, dots, plus signs, focus rings and hint arrows are rendered by the app, not generated inside illustrations. The rabbit thought bubble reuses food IDs; happy sparkle reuses star. Outdoor decorations reuse the saved flower/butterfly/star IDs.
 
-Thỏ: thân kem tròn, đầu gần tròn, hai tai dài với lòng tai hồng, hai mắt chấm đen nhỏ, mũi chữ V, hai má hồng; không thêm quần áo giữa các tư thế. Giữ đầu khoảng 55% chiều cao thân kể cả tai. Chim: thân xanh xám bầu dục, mỏ vàng hướng phải, chân ngắn. Bướm: cánh trên hồng, cánh dưới vàng, thân xanh rêu mảnh, hai râu. Bọ rùa: vỏ đỏ đất, chấm rêu; sâu xanh nhạt nhiều đốt; cá vàng cam hướng phải. Mây và nắng có mắt chấm, miệng cười nhẹ. Dùng một sheet tham chiếu trước khi tạo các tư thế; giữ seed/reference của công cụ nếu có.
+## Character consistency
 
-## Animation và phân lớp
+Rabbit: cream round body/head, long pink-inner ears, dot eyes, V nose and pink cheeks; no clothing changes between poses. Keep head/ear proportions from the reference SVG. Bird: blue-gray oval body, right-facing yellow beak and short legs. Butterfly: pink upper wings, yellow lower wings, thin moss body and two antennae. Ladybug: terracotta shell with moss spots; worm pale green; fish orange-yellow facing right. Cloud and sun have dot eyes and gentle smiles. Approve a reference sheet first; reuse model references/seeds where supported.
 
-Bản tạm dùng CSS transform, không có sprite sheet. Để thay nhanh, trước tiên cung cấp một pose chuẩn khớp pivot cho mỗi ID và giữ animation CSS. Nếu nâng cấp sprite:
+## Animation and layers
 
-- Idle 2–4 frame ở 4–6 fps cho thỏ/chim/cá/sâu; tôn trọng reduced motion bằng frame tĩnh đầu tiên.
-- Touch reaction 3–4 frame ngắn dưới 0,8 giây: lá rung, tai vẫy, chim nhảy, đá nghiêng.
-- Movement 4 frame cho bướm/cá; chu kỳ không dịch vị trí collision box.
-- Discovery 3 frame xuất hiện nhẹ; không nhấp nháy sáng hoặc che các mục tiêu khác.
-- Mây tách thân/mặt, giọt mưa riêng 3 frame. Cây tách thân, tán và táo; táo rơi do renderer di chuyển, không vẽ trajectory vào nền.
-- Ao tách bờ, nước, gợn, lá nổi; cá ở lớp giữa nước và gợn. Nhà tách mái, tường có mask đổi màu, cửa/cửa sổ; đồ trang trí độc lập.
-- Cây trồng dùng cùng điểm neo cho hạt/mầm/trưởng thành. SVG tạm dùng grass cho mầm; không cần chờ hay thêm stage logic vào ảnh.
+Current animation is CSS, not sprite sheets. The required first deliverable is one matching static pose per ID that preserves CSS pivots. Optional future sprites must keep identical canvas/pivots: idle 2–4 frames at 4–6 fps for rabbit/bird/fish/worm; touch 3–4 frames under 0.8 seconds; butterfly/fish movement 4 frames; discovery 3 gentle frames. Provide an unmistakable static first frame for reduced motion. No flashing or moving collision regions.
 
-Thứ tự: trời → cầu vồng → đồi xa → đồi gần/lối → cây/nhà → ao/cỏ/đá → sinh vật → luống/cây trồng → khay hạt → gợi ý → drag ghost → modal. Ngoại lệ được quyết định trong renderer, không baked-in vào artwork.
+Separate tree trunk/canopy/apple; cloud body/face and rain drops (3 frames); pond rim/water/ripples/leaf and fish; house roof/wall recolor mask/door/windows; all decorations independently. Plant stages share a bottom anchor; the current sprout uses grass. Rabbit happy uses a CSS hop and separate star; thinking uses a gentle tilt and food bubble. Keep these layers separate from the rabbit artwork.
 
-## Prompt Gemini — sao chép nguyên khối
+Layer order: sky, rainbow, distant hill, near hill/path, tree/house, pond/grass/rock, animals, beds/plants, seed tray, hints, drag ghost, modal. Outdoor decorations are a scaled 2:1 yard overlay matching the editor arrangement. Layer exceptions belong in renderer code, never baked into a background.
 
-> Tạo bộ minh họa thay thế cho game Little Wonders dành cho trẻ Việt Nam 4–6 tuổi. Phong cách truyện tranh cổ tích ấm áp, hình dáng tròn rõ, màu pastel dịu, viền xanh rêu #52684e, ánh sáng ban ngày mềm từ trên phải, nền trời #dceceb, cỏ #d1dfa9. Nhân vật thân thiện và dễ đọc ở kích thước hiển thị 60–200 px. Không tạo chữ, logo, watermark, chữ tiếng Anh hoặc tiếng Việt trong ảnh. Không dùng nhân vật thương mại hoặc bắt chước họa sĩ đang sống.
+## Interaction mapping
+
+`Garden.tsx` owns button hitboxes, scene coordinates and pointer capture. `data-soil` identifies beds: seed drops plant, cloud drops water, sun drops warm. Taps treat all beds. `Activities.tsx` owns `data-basket`, count dots and the house yard's percentage positions. Artwork never contains game logic. Keep public Art props `id`/`color`, stable IDs, touch labels, z-index and drop target attributes when replacing art.
+
+## Copy-ready Gemini prompt
+
+> Create replacement artwork for Little Wonders, a Vietnamese children's garden game for ages 4–6. Use a cozy magical storybook style, soft rounded silhouettes, moss outlines #52684e and diffuse upper-right daylight. Sky #dceceb, grass #d1dfa9, yellow flowers #e9bd58, cream rabbit #fff5df with cheeks #edb9a6, terracotta roof #bc7f70. Images must remain clear at 60–200 displayed pixels. No text, logos or watermarks. Do not imitate a living artist or use commercial characters.
 >
-> Dùng hình tham chiếu SVG hiện tại của dự án để giữ silhouette và tỷ lệ: thỏ kem #fff5df, tai dài lòng hồng, má #edb9a6, mắt chấm và mũi V; chim xanh xám mỏ vàng; bướm cánh hồng trên/vàng dưới; bọ rùa đỏ đất chấm rêu; sâu xanh nhạt; cá vàng cam. Giữ nhân vật giống nhau tuyệt đối giữa pose và sheet, cùng nguồn sáng và độ dày viền. Trước tiên xuất một character reference sheet để kiểm tra, rồi xuất asset riêng, không gộp tất cả vào một hình.
+> Match the supplied project-owned SVG references. Rabbit: round cream body/head, long pink-inner ears, dot eyes, V nose, pink cheeks and no clothing. Bird blue-gray/yellow beak; butterfly pink upper/yellow lower wings; ladybug terracotta/moss spots; worm pale green; fish orange-yellow facing right. Keep proportions, line weight and lighting identical across poses. First provide a character reference sheet for approval, then separate asset files.
 >
-> Danh sách ID: tree, cloud, sun, flower, carrot, berry, butterfly, worm, bug, bird, rabbit, fish, apple, house, rainbow, rock, grass, pond, basket, star. Mỗi file PNG RGBA trong suốt 512×512, content padding khoảng 7%, pivot giữa đáy tương ứng (60,112) trong viewBox 120×120 hiện tại. Không crop sát hoặc đổi aspect ratio. Giữ màu cam rõ cho carrot, đỏ/hồng cho berry để trẻ phân loại. House phải có lớp tường/mask riêng đổi được năm màu. Tách tree thành thân/tán và apple; cloud và rain riêng; pond bờ/nước/gợn/lá, fish riêng. Không đưa trò chơi, vùng click hoặc chữ hướng dẫn vào hình.
+> Object IDs: tree, cloud, sun, flower, carrot, berry, butterfly, worm, bug, bird, rabbit, fish, apple, house, rainbow, rock, grass, pond, basket, star. Output each as ID.png, transparent RGBA 512×512 with about 7% padding and bottom-center anchor matching (60,112) in the existing 120×120 canvas. Do not crop or change aspect ratio. Carrot must stay unmistakably orange; berries red/pink. House needs a separate wall recolor mask. Separate trunk/canopy/apple, cloud/rain, pond rim/water/ripple/leaf/fish, roof/walls/doors and decorations. Do not bake in UI, touch zones or game logic.
 >
-> Nền riêng: sky 2400×1400 nền kín; hill-back và hill-front 2400×1400 alpha; path 1200×1400 alpha; soil 512×256 alpha; house-yard 1160×560 nền kín. Chúng phải ghép lớp liên tục, không che mục tiêu tương tác. Không vẽ sinh vật hay đồ tương tác vào nền.
+> Backgrounds: sky 2400×1400 opaque; hill-back and hill-front 2400×1400 transparent; path 1200×1400 transparent; soil 512×256 transparent; house-yard 1160×560 opaque. Do not draw interactive creatures into backgrounds. Optional sprites: idle 2–4 frames, touch 3–4, butterfly/fish movement 4, rain 3, gentle discovery 3. Every frame shares canvas/pivot. Static ID.png poses are mandatory because the MVP currently uses CSS animation. Name extra frames ID-idle-01.png, ID-touch-01.png, ID-move-01.png or ID-discover-01.png; provide a separate frame-rate manifest and reduced-motion pose.
 >
-> Với rabbit/bird/fish/worm cung cấp idle 2–4 frame, touch 3–4 frame; butterfly cung cấp 4 frame bay; tree/rock/grass cung cấp phản ứng nhẹ 3–4 frame; cloud rain 3 frame. Mỗi frame giữ cùng canvas và pivot, không tự dịch hitbox. Kèm pose tĩnh rõ cho reduced motion. Xuất từng frame PNG riêng có hậu tố -idle-01, -touch-01, -move-01, -discover-01; ghi kích thước và frame rate trong manifest riêng. Không giả lập UI thành artwork. Chưa có hệ sprite trong MVP, vì vậy file pose chuẩn tên ID.png là đầu ra bắt buộc để thay ngay mà không thay luật chơi.
->
-> Chỉ dùng nội dung được phép phân phối công khai. Ghi lại công cụ/model, ngày tạo, prompt, reference nguồn do dự án sở hữu, điều khoản sử dụng và mọi chỉnh sửa. Không khẳng định quyền sử dụng khi chưa kiểm tra điều khoản hiện hành. Không tạo ảnh cuối cùng từ tài nguyên có nguồn không rõ.
+> Use only content permitted for public distribution. Record model, generation date, full prompt, project-owned reference sources, applicable usage terms and edits. Do not assert rights without checking current terms. Avoid unclear third-party sources.
 
-## Checklist thay thế
+## Replacement checklist
 
-- [ ] Lưu provenance và quyền sử dụng trong `public/assets/PROVENANCE.md`; không lấy ảnh không rõ nguồn.
-- [ ] Chốt reference sheet và đánh giá phù hợp trẻ nhỏ, không chữ trong ảnh.
-- [ ] Đặt file theo ID ổn định dưới `public/assets/`; Art adapter giữ nguyên props `id`/`color`, viewBox và accessible label nằm ở button.
-- [ ] Giữ hitbox DOM, data-soil, pointer capture, z-index và tọa độ phần trăm. Không tính collision theo pixel ảnh.
-- [ ] Tách tường nhà đổi màu; thử đủ năm màu và các trang trí được lưu trước đó.
-- [ ] Thử các kích thước iPad, kéo chạm, reduced motion và desktop; hình không cắt hoặc che mục tiêu.
-- [ ] Chạy typecheck, lint, Vitest, production build và Playwright. Kiểm tra offline có cache các file ảnh mới: service worker hiện tự cache bundle, với PNG mới cần thêm inventory vào precache.
-- [ ] Kiểm tra icon PNG và manifest, cập nhật cache hash theo nội dung asset nếu tên URL không có hash.
-- [ ] Cập nhật tài liệu này và TODO theo asset thực tế. Chỉ đánh dấu hoàn tất khi game vẫn chơi và phục hồi tiến trình được.
+- [ ] Record provenance/rights in both `public/assets/PROVENANCE` documents.
+- [ ] Approve reference consistency, child suitability and absence of text.
+- [ ] Save under stable IDs in `public/assets`; preserve Art props, dimensions, pivots and labels.
+- [ ] Preserve DOM hitboxes, data-soil/data-basket, pointer capture, stacking and percentage positions.
+- [ ] Verify all five wall colors, old saved arrangements, outdoor decoration scale and rabbit feedback layers.
+- [ ] Check iPad/desktop bounds, touch/drag and reduced motion.
+- [ ] Add new image inventory to service-worker precaching and content hashing when URLs are not hashed; bundle-only precaching does not automatically include new PNGs.
+- [ ] Run typecheck, lint, tests, build, Playwright and offline checks; verify PNG app icons/manifest.
+- [ ] Update both handoffs, provenance and TODO; mark complete only when gameplay and restoration still work.

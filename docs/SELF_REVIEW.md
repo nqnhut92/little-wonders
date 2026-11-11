@@ -1,21 +1,19 @@
-# Tự đánh giá ngày 11/11/2026
+[Tiếng Việt](SELF_REVIEW.vi.md)
 
-## Lỗi xác định và sửa
+# Self-review — 2026-11-11
 
-- UI tài khoản không xóa trạng thái đã đăng nhập khi API trả 401. Phụ huynh có thể không thấy đường đăng nhập lại. Đã xóa trạng thái và danh sách hồ sơ khi nhận 401, giữ khu vườn cục bộ.
-- Pointer capture tạo click sau khi kéo mây/nắng; click tưới/sưởi cả ba luống ngoài ý định thả vào một luống. Đã phân biệt kéo vượt 8px và chặn click tiếp theo.
-- Chọn hồ sơ có race: phản hồi cũ có thể về sau và ghi đè lựa chọn mới; snapshot lấy trước request cũng có thể bỏ qua chỉnh sửa trong lúc chờ. Đã đánh số request, bỏ phản hồi quá hạn và đọc trạng thái mới nhất khi merge. Đóng modal hủy lựa chọn đang chờ.
+## Fixed after review
 
-## Các giới hạn còn lại
+- Expired sessions left the account UI signed in. A 401 now clears account UI state without deleting the local garden.
+- Pointer capture produced a click after dragging cloud/sun, unintentionally treating all beds. Movement beyond 8px suppresses that click.
+- A late profile request could overwrite a newer selection. Requests are numbered, obsolete results ignored, current state read at merge time, and closing the modal invalidates pending selection.
+- Unfinished lunch was ephemeral. Meal kind/count/attempts now persist and sync.
+- Wrong-food feedback was mostly outside the dialog. Picture requests, in-dialog feedback, a desired-food bubble, gentle tilt and positive hop/star now provide visible guidance. Four meal variations replace two.
+- House decorations now also appear in the main garden.
+- New edits no longer read wall time. Each app mount has a unique writer ID; same-profile storage events merge tabs. Legacy clocks stay compatible.
 
-Bản này là MVP chơi được, chưa đủ bằng chứng để coi sẵn sàng phát hành cho trẻ.
+## Remaining limits
 
-- Chưa kiểm chứng Google OAuth, Neon qua mạng, Vercel routing thực tế hoặc Safari trên iPad thật. Test PostgreSQL nhúng không thay thế các kiểm tra này.
-- Nội dung vẫn mỏng: chỉ ba cây, hai kiểu bữa ăn, ba đồ trang trí; sinh vật ẩn xuất hiện theo vị trí cố định. Bữa ăn đang làm chưa được lưu. Chưa có đủ biến thể để khẳng định chống nhàm chán dài hạn.
-- Phản hồi lựa chọn sai của thỏ chủ yếu dựa vào lời dẫn và chấm đếm; biểu cảm nhân vật và gợi ý bằng hình ảnh cần rõ hơn cho trẻ chưa đọc chữ, đặc biệt khi không có giọng Việt.
-- Đổi màu nhà phản ánh ngoài vườn, nhưng bố cục đồ trang trí chỉ hiện trong modal. Sự thay đổi thế giới dài hạn còn hạn chế.
-- Conflict policy chọn toàn bộ field, không hợp nhất từng đồ trang trí. Clock thiết bị lệch ảnh hưởng bên thắng; cùng trình duyệt nhiều tab dùng chung device ID có thể tạo tie. Chưa kiểm thử tích hợp đa tab.
-- Cổng phép tính là rào cản UX đơn giản, không phải bằng chứng người lớn; URL callback query hiện có thể mở UI tài khoản nhưng API vẫn bắt buộc session hợp lệ.
-- Test giao diện trước vòng review chưa có regression cho session hết hạn và kéo mây ảnh hưởng luống khác. Việc các test cũ đều qua không có nghĩa mọi acceptance criterion đã đạt.
+This is a playable MVP, not a release-readiness certification. Real Google OAuth, Neon networking, Vercel routing and physical iPad Safari remain unverified. Three plants, three decorations and fixed hiding positions still limit breadth. Enjoyment must be evaluated with children.
 
-Không thay artwork trong vòng review. Không push repository.
+Concurrent edits to the same field select one whole field; individual decorations are not collaboratively merged. Logical clocks do not determine real-time order between offline devices. The arithmetic gate is a UX barrier, not proof of adulthood. The callback query can open account UI, but protected APIs still require a valid session. No production artwork has been generated. No repository push has been performed.

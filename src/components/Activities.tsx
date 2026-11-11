@@ -1,7 +1,7 @@
 import { cn } from "../styles";
 import { useState, useRef, type PointerEvent } from "react";
 import { Art } from "./Art";
-import { initialMeal, offer } from "../game/lunch";
+import { initialMeal, offer, mealGoal, type Meal } from "../game/lunch";
 import { discoveries } from "../data/content";
 import { value, type Action, type World } from "../game/engine";
 type Props = {
@@ -17,17 +17,27 @@ export function Lunch({ world, act, say }: Props) {
     y: number;
   } | null>(null);
   const pointer = useRef<number | null>(null);
-  const [meal, setMeal] = useState(initialMeal);
+  const meal = value<Meal>(world, "meal", initialMeal());
+  const goal = mealGoal(meal);
+  const [feedback, setFeedback] = useState("Con chọn món ăn cho thỏ nhé!");
+  const [reaction, setReaction] = useState("idle");
+  const reactionTimer = useRef<ReturnType<typeof setTimeout> | undefined>(
+    undefined,
+  );
   const feed = (kind: string) => {
     const result = offer(meal, kind);
-    setMeal(result.meal);
+    act({ type: "set", key: "meal", value: result.meal });
+    setFeedback(result.spoken);
+    setReaction(result.accepted ? "happy" : "thinking");
+    clearTimeout(reactionTimer.current);
+    reactionTimer.current = setTimeout(() => setReaction("idle"), 1000);
     say(result.spoken, "rabbit");
     if (result.discovery) {
       act({ type: "discover", id: result.discovery });
       act({
         type: "set",
         key: "lastMeal",
-        value: { kind: meal.kind, count: 3 },
+        value: { kind: meal.kind, count: goal.total },
       });
     }
   };
@@ -41,13 +51,29 @@ export function Lunch({ world, act, say }: Props) {
   return (
     <div className={cn("lunch activity")}>
       <h2>Bữa Trưa Của Thỏ</h2>
-      <p>
-        {meal.kind === "orange"
-          ? "Giúp thỏ tìm ba củ cà rốt màu cam nhé!"
-          : "Bữa ăn sắc màu! Con chọn ba món bất kỳ nhé!"}
+      <p>{goal.text}</p>
+      <div className={cn("meal-request")} aria-label="Món thỏ đang muốn">
+        {Array.from({ length: goal.total }, (_, i) => (
+          <Art key={i} id={goal.food || ["carrot", "berry", "apple"][i]} />
+        ))}
+      </div>
+      <p role="status" className={cn("meal-feedback")}>
+        {feedback}
       </p>
       <div className={cn("lunch-scene")}>
-        <Art id="rabbit" />
+        <div className={cn(`rabbit-response rabbit-${reaction}`)}>
+          <Art id="rabbit" />
+          {reaction === "happy" && (
+            <span className={cn("rabbit-spark")}>
+              <Art id="star" />
+            </span>
+          )}
+          {reaction === "thinking" && (
+            <span className={cn("rabbit-wish")}>
+              <Art id={goal.food || "carrot"} />
+            </span>
+          )}
+        </div>
         <button
           data-basket
           aria-label="Giỏ thức ăn"
@@ -56,7 +82,7 @@ export function Lunch({ world, act, say }: Props) {
         >
           <Art id="basket" />
           <span>
-            {[0, 1, 2].map((i) => (
+            {Array.from({ length: goal.total }, (_, i) => i).map((i) => (
               <i key={i} className={cn(i < meal.count ? "filled" : "")} />
             ))}
           </span>
@@ -67,7 +93,9 @@ export function Lunch({ world, act, say }: Props) {
           <button
             key={f}
             aria-label={{ carrot: "Cà rốt", berry: "Dâu", apple: "Táo" }[f]}
-            className={cn(food === f ? "selected" : "")}
+            className={cn(
+              `${food === f ? "selected" : ""} ${meal.attempts >= 2 && goal.food === f ? "hint-glow" : ""}`,
+            )}
             onPointerDown={(e) => {
               if (pointer.current !== null) return;
               pointer.current = e.pointerId;

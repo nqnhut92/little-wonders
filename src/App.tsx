@@ -16,7 +16,10 @@ import { sound, speak } from "./services/audio";
 import { hints } from "./data/content";
 import { contextualHint } from "./game/hints";
 export default function App() {
-  const [local, setLocal] = useState(load);
+  const [local, setLocal] = useState<Local>(() => ({
+    ...load(),
+    device: crypto.randomUUID(),
+  }));
   const current = useRef(local);
   current.current = local;
   const [panel, setPanel] = useState("");
@@ -118,6 +121,27 @@ export default function App() {
     }, 25000);
     return () => clearInterval(t);
   }, [local.world, panel]);
+  useEffect(() => {
+    const receive = (event: StorageEvent) => {
+      if (event.key !== "little-wonders-v1" || !event.newValue) return;
+      try {
+        const incoming = JSON.parse(event.newValue) as Local;
+        setLocal((now) => {
+          if (incoming.profile !== now.profile || incoming.world.schema !== 1)
+            return now;
+          const world = mergeWorld(now.world, incoming.world);
+          if (JSON.stringify(world) === JSON.stringify(now.world)) return now;
+          const next = { ...now, world, pending: true };
+          persist(next);
+          return next;
+        });
+      } catch {
+        /* keep current progress when another tab contains invalid data */
+      }
+    };
+    window.addEventListener("storage", receive);
+    return () => window.removeEventListener("storage", receive);
+  }, []);
   const account = async () => {
     try {
       const r = await fetch("/api/profiles");

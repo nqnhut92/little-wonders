@@ -189,13 +189,27 @@ export function Garden({ world, act, say, open, highlight, showSteps }: Props) {
       {object(
         "house",
         "house",
-        72,
+        66,
         37,
         22,
         "Ngôi Nhà Sắc Màu",
         () => open("house"),
         { filter: "drop-shadow(0 12px 0 #597a3814)" },
       )}
+      <div
+        className={cn("garden-decorations")}
+        aria-label="Đồ trang trí đã đặt"
+      >
+        {value<{ id: string; x: number; y: number }[]>(
+          world,
+          "decorations",
+          [],
+        ).map((d, i) => (
+          <span key={i} style={{ left: d.x + "%", top: d.y + "%" }}>
+            <Art id={d.id} />
+          </span>
+        ))}
+      </div>
       <div
         className={cn("house-tint")}
         style={{ background: value(world, "houseColor", "#efcf9d") }}

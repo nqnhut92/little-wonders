@@ -159,3 +159,28 @@ it("rejects malformed world fields before they can corrupt a saved garden", asyn
     (await request("progress", owner)).data.world.fields.decorations.value,
   ).toHaveLength(1);
 });
+
+it("stores unfinished meals and accepts completed count variations", async () => {
+  const world = {
+    schema: 1,
+    discoveries: [],
+    fields: {
+      meal: {
+        value: { kind: "berries", count: 1, attempts: 0 },
+        clock: 20,
+        device: "a",
+      },
+      lastMeal: { value: { kind: "apples", count: 1 }, clock: 20, device: "a" },
+    },
+  };
+  expect(
+    (await request("progress", owner, "POST", { profile: id, world })).code,
+  ).toBe(200);
+  const saved = await request("progress", owner);
+  expect(saved.data.world.fields.meal.value).toEqual({
+    kind: "berries",
+    count: 1,
+    attempts: 0,
+  });
+  expect(saved.data.world.fields.lastMeal.value.count).toBe(1);
+});

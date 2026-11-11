@@ -29,16 +29,13 @@ export function mergeWorld(a: World, b: World): World {
   }
   return {
     schema: 1,
-    fields,
+    fields: Object.fromEntries(
+      Object.entries(fields).sort(([a], [b]) => a.localeCompare(b)),
+    ),
     discoveries: [...new Set([...a.discoveries, ...b.discoveries])].sort(),
   };
 }
-export function apply(
-  w: World,
-  a: Action,
-  device: string,
-  now = Date.now(),
-): World {
+export function apply(w: World, a: Action, device: string, now = 0): World {
   let changed = false;
   const n = { ...w, discoveries: [...w.discoveries], fields: { ...w.fields } };
   const unlock = (id: string) => {

@@ -162,3 +162,32 @@ it("keeps separate backups and does not discard a newer unsent creation", () => 
   expect(cachedProfile("child-a")?.world.fields.houseColor.value).toBe("pink");
   expect(cachedProfile("child-a")?.pending).toBe(true);
 });
+
+it("cycles through count and food variations without accepting wrong foods", () => {
+  let m = initialMeal();
+  for (let i = 0; i < 3; i++) m = offer(m, "carrot").meal;
+  for (let i = 0; i < 3; i++) m = offer(m, "apple").meal;
+  expect(m.kind).toBe("berries");
+  expect(offer(m, "carrot").accepted).toBe(false);
+  m = offer(offer(m, "berry").meal, "berry").meal;
+  expect(m.kind).toBe("apples");
+  expect(offer(m, "apple").meal.kind).toBe("orange");
+});
+it("default logical edits do not depend on the wall clock", () => {
+  const real = Date.now;
+  Date.now = () => 999999999999;
+  try {
+    const w = apply(
+      emptyWorld(),
+      { type: "set", key: "houseColor", value: "pink" },
+      "writer-a",
+    );
+    expect(w.fields.houseColor.clock).toBe(0);
+    expect(
+      apply(w, { type: "set", key: "houseColor", value: "blue" }, "writer-b")
+        .fields.houseColor.clock,
+    ).toBe(1);
+  } finally {
+    Date.now = real;
+  }
+});
