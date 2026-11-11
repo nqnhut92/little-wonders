@@ -354,3 +354,19 @@ test("shaking the tree fills the basket and a ripe plant can be harvested", asyn
   await expect(page.getByLabel("Giỏ của con")).toContainText("1");
   await expect(page.getByRole("button", { name: "Luống đất 4" })).toBeVisible();
 });
+
+test("map shows the garden lit and later regions as coming soon", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await activate(page, "Bản đồ thung lũng");
+  await expect(
+    page.getByRole("button", { name: "Vườn nhà", exact: true }),
+  ).toBeVisible();
+  const soon = page.getByRole("button", { name: "Ao sen, sắp có" });
+  await expect(soon).toBeVisible();
+  await soon.click();
+  await expect(page.getByRole("dialog")).toBeVisible();
+  await activate(page, "Vườn nhà");
+  await expect(page.getByRole("dialog")).toHaveCount(0);
+});

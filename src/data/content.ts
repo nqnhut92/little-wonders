@@ -25,6 +25,9 @@ export const discoveries = [
   ["harvest_pumpkin", "Hái bí ngô", "pumpkin"],
   ["harvest_corn", "Hái bắp", "corn"],
   ["harvest_watermelon", "Hái dưa hấu", "watermelon"],
+  ["rare_carrot_twin", "Cà rốt đôi", "carrot"],
+  ["rare_pumpkin_giant", "Bí ngô khổng lồ", "pumpkin"],
+  ["rare_berry_heart", "Dâu hình trái tim", "berry"],
 ].map(([id, name, art]) => ({ id, name, art }));
 export const seeds = crops.map((c) => ({ id: c.id, name: c.name }));
 export const hints = [

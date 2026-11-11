@@ -4,6 +4,8 @@ import { Garden } from "./components/Garden";
 import { House, Lunch, Notebook } from "./components/Activities";
 import { Art } from "./components/Art";
 import { Icon, GoogleMark, type IconName } from "./components/Icons";
+import { regions } from "./data/regions";
+import { regionState } from "./game/regions";
 import { ThemeToggle } from "./components/ThemeToggle";
 import { createScrollRegions } from "./ui/scroll-regions.js";
 import { apply, mergeWorld, assistance, type Action } from "./game/engine";
@@ -309,6 +311,15 @@ export default function App() {
         </button>
         <button
           type="button"
+          className={cn("kid-button")}
+          aria-label="Bản đồ thung lũng"
+          title="Bản đồ thung lũng"
+          onClick={() => setPanel("map")}
+        >
+          <Icon name="map" size={28} />
+        </button>
+        <button
+          type="button"
           className={cn("kid-button hold-button")}
           aria-label="Vườn mới. Giữ một giây"
           title="Vườn mới. Giữ một giây"
@@ -381,6 +392,44 @@ export default function App() {
               {panel === "lunch" && (
                 <Lunch world={local.world} act={act} say={say} />
               )}{" "}
+              {panel === "map" && (
+                <div className={cn("activity")}>
+                  <h2>Thung lũng nhỏ</h2>
+                  <div className={cn("map-grid")}>
+                    {regions.map((r) => {
+                      const state = regionState(local.world.discoveries, r);
+                      return (
+                        <button
+                          type="button"
+                          key={r.id}
+                          data-state={state}
+                          className={cn("map-region")}
+                          aria-label={`${r.name}${state === "soon" ? ", sắp có" : state === "locked" ? ", chưa mở" : ""}`}
+                          onClick={() =>
+                            state === "open"
+                              ? setPanel("")
+                              : setMessage(
+                                  state === "soon"
+                                    ? "Khu này sắp có rồi, con chờ nhé!"
+                                    : "Con chơi thêm ở khu vườn để mở khu này nhé!",
+                                )
+                          }
+                        >
+                          <span className={cn("map-art")} aria-hidden="true">
+                            {state === "open"
+                              ? "🌿"
+                              : state === "locked"
+                                ? "☁"
+                                : "?"}
+                          </span>
+                          <span>{r.name}</span>
+                          {state === "soon" && <small>Sắp có</small>}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
               {panel === "fresh" && (
                 <div className={cn("activity")}>
                   <Art id="grass" />

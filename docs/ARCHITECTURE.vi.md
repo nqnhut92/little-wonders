@@ -35,6 +35,10 @@ Parent identity lấy từ session ký, không nhận user ID do client khai bá
 
 Một luống là field `plot.<khu>.<số>` với `{kind, stage, water, sun, rounds?}`: stage 0 là trống, rồi hạt, mầm, lớn và chín. Mỗi vòng đủ nước và nắng đưa cây lên một giai đoạn và xóa hai cờ; cây là dữ liệu trong `src/data/crops.ts` (`care` là số vòng mỗi giai đoạn). `harvest` đưa cây chín vào field `basket` (tối đa 9 mỗi loại), làm trống luống và ghi `harvest_<cây>`. `shake` thêm một quả táo vào giỏ, `feed` dùng một món trong giỏ (bàn ăn luôn có món cơ bản nên giỏ trống không chặn bé) và `resetGarden` làm trống luống, giỏ và đồ trang trí, còn khám phá, màu nhà và bữa ăn dở được giữ. Số luống suy ra từ các khám phá `harvest_*` khác nhau (3 đến 6), không lưu riêng. `upgradeWorld` chuyển field `plant0..2` cũ thành `plot.garden.N`: cây đủ nước và nắng thành chín, cây khác giữ hạt và cờ, và plot đã có không bị ghi đè.
 
+## Khu vực và biến thể hiếm
+
+Khu là các dòng trong `src/data/regions.ts` (`ready`, `after`, `counted`, ngưỡng 0,7). `regionsToOpen` trong `src/game/regions.ts` là hàm thuần: một khu đã sẵn sàng mở khi khu trước đã mở và đủ khám phá có tính điểm, và `apply` ghi `region_<id>_open` như một khám phá thường, nên trạng thái được suy ra, merge theo union và không bao giờ khóa lại. Khám phá may rủi (`rare_*`, `shooting_star`) không tính vào mẫu số. `apply` nhận hàm ngẫu nhiên được tiêm vào; hái cà rốt, bí ngô hoặc dâu ghi khám phá hiếm với xác suất 1/8. Bảng bản đồ tạm dùng ký hiệu chữ cho đến khi có tranh bản đồ.
+
 ## Ngôn ngữ thiết kế giao diện
 
 Màu, bo góc và font là biến CSS trong `src/styles/tokens.css`; `src/style.module.css` không còn màu viết cứng. Bộ token Sáng là mặc định, `:root[data-theme="dark"]` ghi đè. Các vùng cảnh (`.garden`, `.house-canvas`, `.lunch-scene`) lặp lại token Sáng và dùng bảng màu `--scene-*` không theo theme, nên tranh trông giống nhau ở mọi chế độ; tranh đặt trên bảng theo theme nằm trên một nền sáng. Ngày và đêm của game sẽ là trạng thái game, độc lập với chế độ giao diện.

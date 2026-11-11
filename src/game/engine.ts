@@ -1,4 +1,5 @@
 import { discoveryRules } from "../data/interactions";
+import { regionsToOpen } from "./regions";
 import {
   currentSchema,
   isCounterKey,
@@ -78,7 +79,20 @@ const sortFields = (fields: Record<string, Stamp>) =>
   Object.fromEntries(
     Object.entries(fields).sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0)),
   );
-export function apply(w: World, a: Action, device: string, now = 0): World {
+// Chance of a rare variant when harvesting (about one in eight).
+export const rareChance = 1 / 8;
+const rareOf: Record<string, string> = {
+  carrot: "rare_carrot_twin",
+  pumpkin: "rare_pumpkin_giant",
+  berry: "rare_berry_heart",
+};
+export function apply(
+  w: World,
+  a: Action,
+  device: string,
+  now = 0,
+  random: () => number = Math.random,
+): World {
   if (a.type === "resetAll")
     return {
       ...emptyWorld(),
@@ -148,6 +162,7 @@ export function apply(w: World, a: Action, device: string, now = 0): World {
         sun: false,
       });
       unlock(`harvest_${p.kind}`);
+      if (rareOf[p.kind] && random() < rareChance) unlock(rareOf[p.kind]);
     }
   }
   if (a.type === "water" || a.type === "sun") {
@@ -179,6 +194,7 @@ export function apply(w: World, a: Action, device: string, now = 0): World {
       if (rule.requires.every((id) => n.discoveries.includes(id)))
         unlock(rule.id);
   }
+  if (changed) for (const id of regionsToOpen(n.discoveries)) unlock(id);
   return changed ? n : w;
 }
 export const basketOf = (w: World): Basket =>
