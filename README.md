@@ -11,7 +11,7 @@ A Vietnamese touch-first storybook garden for children aged 4–6, built with Re
 - Four rabbit meal variations: three carrots, three free-choice foods, two berries and one apple. Picture requests, gentle reactions and unfinished-meal persistence support non-readers.
 - Five wall colors, three decoration types and saved arrangements visible in the main garden.
 - A notebook containing 18 meaningful discoveries, with no locked basic activities.
-- An interface in the owner's design language: Light, Dark and System appearance (System → Light → Dark → System, toggle in the header), a floating glass header and dock, self-hosted Nunito with the Vietnamese subset, one focus ring, thin scrollbars, a splash and skeleton loading states. Child-facing buttons are at least 56px. Appearance themes the interface only; scene artwork is unchanged.
+- An interface in the owner's design language: Light, Dark and System appearance (System → Light → Dark → System), a full-screen responsive scene with controls floating over it instead of header and footer bars, self-hosted Nunito with the Vietnamese subset, one focus ring, thin scrollbars, a splash and skeleton loading states. Child-facing buttons are at least 56px. Appearance themes the interface only; scene artwork is unchanged.
 - Immediate local persistence, per-profile backups, same-profile multi-tab merge, batched retries and offline shell caching.
 - Google OpenID Connect for parents, nicknames for children, ownership-checked Neon APIs, CSRF and secure session cookies.
 

@@ -14,7 +14,7 @@ Garden/Activities → Action có kiểu → apply → World → localStorage t�
 - `src/data`: danh mục khám phá, lời thoại và điều kiện tương tác.
 - `src/components`: SVG, khu vườn, nhà, bữa ăn và sổ tay.
 - `src/services`: lưu, retry, âm thanh. `App.tsx` điều phối hồ sơ và navigation.
-- `src/styles`: token thiết kế (`tokens.css`) và bản sao cục bộ của các khối header, focus và thanh cuộn dùng chung. `src/ui`: bộ điều khiển theme và vùng cuộn, không phụ thuộc framework. `src/components/Icons.tsx`: icon giao diện.
+- `src/styles`: token thiết kế (`tokens.css`) và bản sao cục bộ của các khối focus và thanh cuộn dùng chung. `src/ui`: bộ điều khiển theme và vùng cuộn, không phụ thuộc framework. `src/components/Icons.tsx`: icon giao diện.
 - `api/index.ts`, `api/_lib/security.ts`: OAuth, session ký, ownership và CSRF.
 
 ## Lưu và xung đột
@@ -37,7 +37,7 @@ Màu, bo góc và font là biến CSS trong `src/styles/tokens.css`; `src/style.
 
 Lựa chọn (`system`, `light`, `dark`) lưu theo trình duyệt trong localStorage với khóa `little-wonders-theme` và không bao giờ đồng bộ. Script nội tuyến trong `index.html` xác định nó trước lần vẽ đầu; `ThemeToggle.tsx` bọc bộ điều khiển, vốn chỉ theo thay đổi hệ thống ở chế độ Theo hệ thống, giữ lựa chọn trong bộ nhớ khi storage bị chặn, đồng bộ giữa các tab và cập nhật `theme-color`. Khóa lưu và màu phải khớp ở cả hai nơi (`tests/design.test.ts`).
 
-Header là thanh kính nổi: cao 64px, bo 24px, blur 26px, căn theo mép cảnh qua `--fe-content-width` và `--fe-content-max`. Nút dành cho bé 56px, nút người lớn 44px; đây là ngoại lệ có chủ ý so với cỡ 44px dùng chung. Thanh dưới và khay hạt dùng cùng chất liệu. Có nền đặc dự phòng khi không hỗ trợ blur, khi giảm độ trong suốt và ở forced colors. Hộp thoại giữ nút đóng bên ngoài phần cuộn. `index.html` có splash trong `#root`; danh sách hồ sơ hiện skeleton có nhãn; chỉ báo lưu gồm icon kèm chữ.
+Game không có header hay thanh dưới. Cảnh phủ kín viewport (`100dvh`, tính cả vùng an toàn) và các nút nổi trên cảnh: thỏ hướng dẫn kèm nút gợi ý ở góc trên trái, một cột ở góc trên phải (âm thanh, sổ, nghỉ, rồi Góc người lớn, chế độ giao diện và trạng thái lưu). Vật trong cảnh giữ vị trí theo phần trăm; kích thước dùng một đơn vị cảnh `--u: min(1cqw, 1.9cqh)`, nên màn rất rộng hay rất cao không đẩy vật ra ngoài cảnh, và có test trình duyệt kiểm không nút nào che vật chạm được ở cỡ iPad, desktop và siêu rộng. Nút dành cho bé 56px, nút người lớn 44px. Nút nổi, khay hạt và hộp thoại dùng chất liệu kính; ở chế độ Tối các nút có nền gần như đặc vì cảnh luôn sáng. Có nền đặc dự phòng khi không hỗ trợ blur, khi giảm độ trong suốt và ở forced colors. Hộp thoại giữ nút đóng bên ngoài phần cuộn. `index.html` có splash trong `#root`; danh sách hồ sơ hiện skeleton có nhãn; trạng thái lưu là icon, chữ nằm ở nhãn và tooltip.
 
 ## Ngoại tuyến và hiển thị
 

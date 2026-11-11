@@ -14,7 +14,7 @@ Garden/Activities → typed Action → apply → World → immediate localStorag
 - `src/data`: discovery inventory and interaction dialogue/conditions.
 - `src/components`: SVG artwork, garden, house, lunch and notebook.
 - `src/services`: persistence, retry and sound. `App.tsx` coordinates profiles and navigation.
-- `src/styles`: design tokens (`tokens.css`) and local copies of the shared header, focus and scrollbar blocks. `src/ui`: framework-independent theme and scroll-region controllers. `src/components/Icons.tsx`: interface icons.
+- `src/styles`: design tokens (`tokens.css`) and local copies of the shared focus and scrollbar blocks. `src/ui`: framework-independent theme and scroll-region controllers. `src/components/Icons.tsx`: interface icons.
 - `api/index.ts` and `api/_lib/security.ts`: OAuth, signed sessions, ownership and CSRF.
 
 ## Persistence and conflicts
@@ -37,7 +37,7 @@ Colors, radii and fonts are CSS variables in `src/styles/tokens.css`; `src/style
 
 The preference (`system`, `light`, `dark`) is stored per browser in localStorage under `little-wonders-theme` and is never synchronized. An inline script in `index.html` resolves it before first paint; `ThemeToggle.tsx` wraps the controller, which follows live system changes only in System mode, keeps an in-memory choice when storage is blocked, synchronizes tabs and updates `theme-color`. The storage key and colors must match in both places (`tests/design.test.ts`).
 
-The header is a floating glass bar: 64px tall, 24px radius, 26px blur, aligned to the scene edges through `--fe-content-width` and `--fe-content-max`. Child-facing buttons are 56px and adult ones 44px, a deliberate exception to the shared 44px size. The bottom dock and the seed tray use the same material. Opaque fallbacks cover missing blur support, reduced transparency and forced colors. Dialogs keep the close button outside the scrolling body. `index.html` ships a splash inside `#root`; the profile list shows a labelled skeleton; the save indicator pairs an icon with text.
+The game has no header or footer bar. The scene fills the viewport (`100dvh`, safe-area aware) and the controls float over it: the rabbit guide with the hint button at the top left, and a column at the top right (sound, notebook, rest, then the adult corner, appearance and save state). Scene objects keep percentage positions; their size uses one scene unit, `--u: min(1cqw, 1.9cqh)`, so very wide or tall screens never push them off the scene, and a browser test checks that no control covers a tappable object at iPad, desktop and ultra-wide sizes. Child-facing buttons are 56px and adult ones 44px. Floating controls, the seed tray and dialogs use the glass material; in Dark mode the controls use a near-opaque fill because the scene stays light. Opaque fallbacks cover missing blur support, reduced transparency and forced colors. Dialogs keep the close button outside the scrolling body. `index.html` ships a splash inside `#root`; the profile list shows a labelled skeleton; the save state is an icon with its text as label and tooltip.
 
 ## Offline and rendering
 

@@ -62,8 +62,8 @@ Giao diện theo chế độ Sáng, Tối và Theo hệ thống; tranh thì khô
 | `--accent`    | #52684e | #a8cf8f | Hành động chính, vòng focus       |
 | `--plate`     | #fff9e9 | #e9ecd9 | Nền sáng phía sau tranh trên bảng |
 
-- Cảnh là một khung bo góc 28px nằm dưới header kính nổi cao 64px (cách mép trên trang 78px, rồi hở 10px). Giữ các hình quan trọng cách mỗi góc cảnh ít nhất 28px.
-- Các bảng kính nổi trên cảnh (khay hạt, dải gợi ý). Tranh phía sau bị làm mờ và sáng lên; đừng đặt chi tiết cần thấy ở đó.
+- Cảnh phủ kín màn hình, từ khoảng 4:3 (iPad) đến 21:9 (desktop siêu rộng). Nền phải kéo tới mọi mép và chịu được bị cắt; vật co giãn theo giá trị nhỏ hơn giữa chiều rộng và 1,9 lần chiều cao. Nút nổi ở góc trên trái (thỏ hướng dẫn, khoảng 460×72px) và dọc góc trên phải (cột rộng 70px); tránh đặt chi tiết nền quan trọng ở các vùng đó.
+- Các bảng kính nổi trên cảnh (khay hạt, thỏ hướng dẫn). Tranh phía sau bị làm mờ và sáng lên; đừng đặt chi tiết cần thấy ở đó.
 - Trên hộp thoại, tranh nằm trên nền sáng ở cả hai chế độ nên viền xanh rêu luôn rõ. Không tự thêm hình nền hay bóng đổ.
 - Bản đêm của các nền cảnh và vùng mờ trên bản đồ cho các khu đánh dấu sắp có sẽ được mô tả tại đây khi các tính năng đó được làm.
 - Icon giao diện (loa, sổ, cài đặt, gợi ý, đóng, trạng thái lưu, chế độ giao diện) là vector trong repo ở `src/components/Icons.tsx`, không thuộc phần bàn giao này.

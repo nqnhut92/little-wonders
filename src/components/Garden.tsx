@@ -95,7 +95,12 @@ export function Garden({ world, act, say, open, highlight, showSteps }: Props) {
       className={cn(
         `object ${reaction === id ? "react-" + id : ""} ${highlight && ["cloud", "rock", "rabbit"].includes(id) ? "hint-glow" : ""}`,
       )}
-      style={{ left: x + "%", top: y + "%", width: w + "%", ...extra }}
+      style={{
+        left: x + "%",
+        top: y + "%",
+        width: `calc(${w} * var(--u))`,
+        ...extra,
+      }}
       onClick={fn}
     >
       <Art
@@ -139,11 +144,7 @@ export function Garden({ world, act, say, open, highlight, showSteps }: Props) {
       <div className={cn("hill hill-back")} />
       <div className={cn("hill hill-front")} />
       <div className={cn("path")} />
-      <div className={cn("garden-title")}>
-        <span>MỘT CHÚT TÒ MÒ, THẬT NHIỀU ĐIỀU HAY</span>
-        <h1>Khu Vườn Kỳ Diệu</h1>
-        <p>Hôm nay, con muốn khám phá điều gì?</p>
-      </div>
+      <h1 className={cn("sr-only")}>Khu Vườn Kỳ Diệu</h1>
       {world.discoveries.includes("rainbow") && (
         <div className={cn("rainbow")}>
           <Art id="rainbow" />
@@ -152,7 +153,7 @@ export function Garden({ world, act, say, open, highlight, showSteps }: Props) {
       <button
         aria-label="Mặt trời"
         className={cn(`object sun ${reaction === "sun" ? "react-sun" : ""}`)}
-        style={{ left: "82%", top: "5%", width: "10%" }}
+        style={{ left: "74%", top: "6%", width: "calc(10 * var(--u))" }}
         onPointerDown={(e) => down(e, "sun")}
         onClick={() => {
           [0, 1, 2].forEach((slot) => act({ type: "sun", slot }));
@@ -166,7 +167,7 @@ export function Garden({ world, act, say, open, highlight, showSteps }: Props) {
         className={cn(
           `object cloud ${reaction === "cloud" ? "react-cloud" : ""} ${highlight ? "hint-glow" : ""}`,
         )}
-        style={{ left: "57%", top: "11%", width: "15%" }}
+        style={{ left: "50%", top: "10%", width: "calc(15 * var(--u))" }}
         onPointerDown={(e) => down(e, "cloud")}
         onClick={() => {
           [0, 1, 2].forEach((slot) => act({ type: "water", slot }));

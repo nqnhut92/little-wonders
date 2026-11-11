@@ -13,10 +13,8 @@ import "@fontsource/nunito/vietnamese-800.css";
 import "./styles/tokens.css";
 import App from "./App";
 // Shared design-language blocks go after the app's own styles.
-import "./styles/header.css";
 import "./styles/focus.css";
 import "./styles/scroll.css";
-import "./styles/chrome.css";
 
 createRoot(document.getElementById("root")!).render(
   <React.StrictMode>

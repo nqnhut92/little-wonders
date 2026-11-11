@@ -11,7 +11,7 @@ Khu vườn truyện tranh ưu tiên cảm ứng, dành cho trẻ Việt Nam 4�
 - Bốn biến thể bữa thỏ: ba cà rốt, ba món tự chọn, hai dâu, một táo. Yêu cầu bằng hình, phản ứng nhẹ và lưu bữa chưa xong hỗ trợ trẻ chưa đọc.
 - Năm màu tường, ba loại trang trí và bố cục lưu hiện ở vườn chính.
 - Sổ có 18 khám phá ý nghĩa, không khóa hoạt động cơ bản.
-- Giao diện theo ngôn ngữ thiết kế của chủ dự án: chế độ Sáng, Tối và Theo hệ thống (Hệ thống → Sáng → Tối → Hệ thống, nút ở header), header và thanh dưới bằng kính nổi, font Nunito tự host có subset tiếng Việt, một kiểu vòng focus, thanh cuộn mảnh, splash và skeleton khi chờ. Nút dành cho bé tối thiểu 56px. Chế độ giao diện chỉ đổi khung giao diện; tranh cảnh giữ nguyên.
+- Giao diện theo ngôn ngữ thiết kế của chủ dự án: chế độ Sáng, Tối và Theo hệ thống (Hệ thống → Sáng → Tối → Hệ thống), cảnh full màn hình co giãn theo màn, các nút nổi trên cảnh thay cho header và thanh dưới, font Nunito tự host có subset tiếng Việt, một kiểu vòng focus, thanh cuộn mảnh, splash và skeleton khi chờ. Nút dành cho bé tối thiểu 56px. Chế độ giao diện chỉ đổi khung giao diện; tranh cảnh giữ nguyên.
 - Lưu cục bộ tức thì, backup theo hồ sơ, merge nhiều tab cùng hồ sơ, gửi batch/retry và cache shell ngoại tuyến.
 - Google OpenID Connect cho phụ huynh, nickname cho bé, API Neon kiểm ownership, CSRF và cookie session bảo mật.
 

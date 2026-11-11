@@ -205,7 +205,7 @@ test("self-hosted Nunito renders Vietnamese and no serif remains", async ({
       faces: [...document.fonts].filter(
         (f) => f.family.includes("Nunito") && f.status === "loaded",
       ).length,
-      families: [".brand", ".garden-title h1", ".garden-sign", ".guide p"].map(
+      families: ["main", ".garden-sign", ".hud-guide p", ".seed-tray"].map(
         (s) => getComputedStyle(document.querySelector(s)!).fontFamily,
       ),
     };
@@ -244,56 +244,65 @@ test("fonts stay available offline from the service-worker cache", async ({
   ).toBe(true);
 });
 
-test("glass header keeps its geometry and aligns with the scene", async ({
+test("the scene fills the screen and floating controls stay inside it", async ({
   page,
 }) => {
   for (const size of [
-    { width: 1440, height: 1000 },
-    { width: 1180, height: 820 },
     { width: 1024, height: 768 },
+    { width: 1180, height: 820 },
+    { width: 1440, height: 1000 },
+    { width: 2560, height: 1080 },
   ]) {
     await page.setViewportSize(size);
     await page.goto("/");
-    const header = (await page.locator(".fe-header").boundingBox())!;
     const garden = (await page.locator(".garden").boundingBox())!;
-    const dock = (await page.locator(".dock").boundingBox())!;
-    expect(header.height).toBe(64);
-    expect(header.y).toBe(14);
-    for (const box of [garden, dock]) {
-      expect(Math.abs(box.x - header.x)).toBeLessThanOrEqual(1);
-      expect(Math.abs(box.width - header.width)).toBeLessThanOrEqual(1);
-    }
-    const style = await page.locator(".fe-header").evaluate((el) => {
-      const s = getComputedStyle(el);
-      return {
-        radius: s.borderTopLeftRadius,
-        blur: s.backdropFilter || s.getPropertyValue("-webkit-backdrop-filter"),
-        wrap: s.flexWrap,
-      };
-    });
-    expect(style.radius).toBe("24px");
-    expect(style.blur).toContain("blur(26px)");
-    expect(style.wrap).toBe("nowrap");
+    expect(garden).toEqual({ x: 0, y: 0, ...size });
+    await expect(page.locator("header, footer")).toHaveCount(0);
     const overflow = await page.evaluate(() => ({
       x: document.documentElement.scrollWidth - innerWidth,
       y: document.documentElement.scrollHeight - innerHeight,
     }));
-    expect(overflow.x).toBeLessThanOrEqual(0);
-    expect(overflow.y, `${size.width}x${size.height}`).toBeLessThanOrEqual(0);
-    for (const name of ["Bật âm thanh", "Sổ khám phá", "Nghe gợi ý"]) {
+    expect(overflow).toEqual({ x: 0, y: 0 });
+    const boxes = [];
+    for (const name of [
+      "Bật âm thanh",
+      "Sổ khám phá",
+      "Nghỉ một chút",
+      "Nghe gợi ý",
+    ]) {
       const box = (await page
         .getByRole("button", { name, exact: true })
         .boundingBox())!;
-      expect(box.width).toBeGreaterThanOrEqual(56);
-      expect(box.height).toBeGreaterThanOrEqual(56);
-      expect(box.y).toBeGreaterThanOrEqual(
-        name === "Nghe gợi ý" ? dock.y : header.y,
-      );
+      expect(Math.min(box.width, box.height), name).toBeGreaterThanOrEqual(56);
+      boxes.push(box);
     }
     for (const selector of [".icon-button", ".theme-toggle"]) {
       const box = (await page.locator(selector).boundingBox())!;
       expect(box.width).toBe(44);
-      expect(box.height).toBe(44);
+      boxes.push(box);
+    }
+    for (const box of boxes) {
+      expect(box.x).toBeGreaterThanOrEqual(0);
+      expect(box.y).toBeGreaterThanOrEqual(0);
+      expect(box.x + box.width).toBeLessThanOrEqual(size.width);
+      expect(box.y + box.height).toBeLessThanOrEqual(size.height);
+    }
+    // Floating controls never cover a tappable scene object.
+    const controls = await page
+      .locator(".hud")
+      .evaluateAll((els) =>
+        els.map((el) => el.getBoundingClientRect().toJSON()),
+      );
+    for (const object of await page.locator(".garden > .object").all()) {
+      const o = (await object.boundingBox())!;
+      for (const c of controls)
+        expect(
+          o.x < c.right &&
+            o.x + o.width > c.left &&
+            o.y < c.bottom &&
+            o.y + o.height > c.top,
+          `${await object.getAttribute("aria-label")} at ${size.width}x${size.height}`,
+        ).toBe(false);
     }
   }
 });

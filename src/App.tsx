@@ -246,53 +246,6 @@ export default function App() {
   };
   return (
     <main>
-      <div className={cn("fe-header-wrap")}>
-        <header className={cn("fe-header")}>
-          <div className={cn("brand")}>
-            <Art id="flower" />
-            <span>
-              little wonders<small>THẾ GIỚI NHỎ, ĐIỀU KỲ DIỆU TO</small>
-            </span>
-          </div>
-          <div className={cn("header-actions")}>
-            <button
-              type="button"
-              className={cn("kid-button")}
-              aria-label={audio ? "Tắt âm thanh" : "Bật âm thanh"}
-              title={audio ? "Tắt âm thanh" : "Bật âm thanh"}
-              aria-pressed={audio}
-              onClick={() => {
-                setAudio(!audio);
-                if (!audio) sound("flower", true);
-              }}
-            >
-              <Icon name={audio ? "speaker-on" : "speaker-off"} size={28} />
-            </button>
-            <button
-              type="button"
-              className={cn("kid-button")}
-              aria-label="Sổ khám phá"
-              title="Sổ khám phá"
-              onClick={() => setPanel("book")}
-            >
-              <Icon name="book" size={28} />
-            </button>
-            <button
-              type="button"
-              className={cn("icon-button")}
-              aria-label="Dành cho người lớn"
-              title="Dành cho người lớn"
-              onClick={() => {
-                setGate(false);
-                setPanel("account");
-              }}
-            >
-              <Icon name="gear" size={20} />
-            </button>
-            <ThemeToggle />
-          </div>
-        </header>
-      </div>
       <Garden
         world={local.world}
         act={act}
@@ -301,39 +254,80 @@ export default function App() {
         highlight={assistance(attempts) !== "explore"}
         showSteps={assistance(attempts) === "demonstrate"}
       />
-      <footer>
-        <div className={cn("dock glass")}>
-          <div className={cn("guide")}>
-            <Art id="rabbit" />
-            <p aria-live="polite">{message}</p>
-            <button
-              type="button"
-              className={cn("kid-button")}
-              aria-label="Nghe gợi ý"
-              title="Nghe gợi ý"
-              onClick={() => {
-                const h = hints[hintIndex.current++ % hints.length];
-                say(h);
-                setAttempts((a) => a + 3);
-              }}
-            >
-              <Icon name="bulb" size={28} />
-            </button>
-          </div>
-          <span className={cn("save-status")} data-state={status.kind}>
-            <Icon name={busy ? "busy" : saveIcons[status.kind]} size={18} />
-            {status.text}
-          </span>
-          <button
-            type="button"
-            className={cn("rest")}
-            onClick={() => setPanel("rest")}
-          >
-            <Icon name="cup" size={20} />
-            Nghỉ một chút
-          </button>
-        </div>
-      </footer>
+      {/* Controls float over the full-screen scene; there is no header or footer bar. */}
+      <div className={cn("hud hud-guide glass")}>
+        <Art id="rabbit" />
+        <p aria-live="polite">{message}</p>
+        <button
+          type="button"
+          className={cn("kid-button")}
+          aria-label="Nghe gợi ý"
+          title="Nghe gợi ý"
+          onClick={() => {
+            const h = hints[hintIndex.current++ % hints.length];
+            say(h);
+            setAttempts((a) => a + 3);
+          }}
+        >
+          <Icon name="bulb" size={28} />
+        </button>
+      </div>
+      <nav className={cn("hud hud-actions")} aria-label="Nút điều khiển">
+        <button
+          type="button"
+          className={cn("kid-button")}
+          aria-label={audio ? "Tắt âm thanh" : "Bật âm thanh"}
+          title={audio ? "Tắt âm thanh" : "Bật âm thanh"}
+          aria-pressed={audio}
+          onClick={() => {
+            setAudio(!audio);
+            if (!audio) sound("flower", true);
+          }}
+        >
+          <Icon name={audio ? "speaker-on" : "speaker-off"} size={28} />
+        </button>
+        <button
+          type="button"
+          className={cn("kid-button")}
+          aria-label="Sổ khám phá"
+          title="Sổ khám phá"
+          onClick={() => setPanel("book")}
+        >
+          <Icon name="book" size={28} />
+        </button>
+        <button
+          type="button"
+          className={cn("kid-button")}
+          aria-label="Nghỉ một chút"
+          title="Nghỉ một chút"
+          onClick={() => setPanel("rest")}
+        >
+          <Icon name="cup" size={28} />
+        </button>
+        <span className={cn("hud-gap")} aria-hidden="true" />
+        <button
+          type="button"
+          className={cn("icon-button")}
+          aria-label="Dành cho người lớn"
+          title="Dành cho người lớn"
+          onClick={() => {
+            setGate(false);
+            setPanel("account");
+          }}
+        >
+          <Icon name="gear" size={20} />
+        </button>
+        <ThemeToggle />
+        <span
+          className={cn("save-status")}
+          data-state={status.kind}
+          role="status"
+          aria-label={status.text}
+          title={status.text}
+        >
+          <Icon name={busy ? "busy" : saveIcons[status.kind]} size={20} />
+        </span>
+      </nav>
       {panel && (
         <div className={cn("modal-shade")}>
           <section

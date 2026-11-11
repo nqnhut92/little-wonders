@@ -62,8 +62,8 @@ The interface follows Light, Dark and System appearance; artwork does not. Deliv
 | `--accent`    | #52684e | #a8cf8f | Primary action, focus ring           |
 | `--plate`     | #fff9e9 | #e9ecd9 | Light plate behind artwork on panels |
 
-- The scene is a framed panel with 28px rounded corners below a 64px floating glass header (78px from the top of the page, then a 10px gap). Keep important shapes at least 28px away from every scene corner.
-- Glass panels float on the scene (seed tray, hint strip). Artwork behind them is blurred and lightened; do not rely on detail there.
+- The scene fills the whole screen, from about 4:3 (iPad) to 21:9 (ultra-wide desktop). Backgrounds must extend to every edge and survive cropping; objects scale with the smaller of the width and 1.9 x the height. Controls float at the top left (guide, about 460×72px) and down the top right (a 70px column); keep important background detail out of those areas.
+- Glass panels float on the scene (seed tray, guide). Artwork behind them is blurred and lightened; do not rely on detail there.
 - On dialogs, artwork sits on the light plate in both appearances, so moss outlines stay visible. Do not add your own backing shape or shadow.
 - A night version of the scene backgrounds and the dimmed map areas for regions marked as coming soon will be specified here when those features are built.
 - Interface icons (speaker, notebook, settings, hint, close, save state, appearance) are repository vectors in `src/components/Icons.tsx` and are not part of this handoff.

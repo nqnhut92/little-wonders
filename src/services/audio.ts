@@ -35,18 +35,26 @@ export function sound(kind: string, on: boolean) {
   }
 }
 let lastSpeech = 0;
+// Device voices only (no paid service). Prefer an on-device Vietnamese voice: network voices
+// can start before they are ready and fall back to reading letter by letter.
+function vietnameseVoice() {
+  const voices = speechSynthesis
+    .getVoices()
+    .filter((v) => v.lang.toLowerCase().replace("_", "-").startsWith("vi"));
+  return voices.find((v) => v.localService) ?? voices[0];
+}
+if (typeof window !== "undefined" && "speechSynthesis" in window)
+  speechSynthesis.addEventListener?.("voiceschanged", () => vietnameseVoice());
 export function speak(text: string, on: boolean) {
   if (Date.now() - lastSpeech < 1600) return;
   if (!on || !("speechSynthesis" in window)) return;
-  const voice = speechSynthesis
-    .getVoices()
-    .find((v) => v.lang.startsWith("vi"));
+  const voice = vietnameseVoice();
   if (!voice) return;
   lastSpeech = Date.now();
   speechSynthesis.cancel();
   const u = new SpeechSynthesisUtterance(text);
   u.voice = voice;
-  u.lang = "vi-VN";
-  u.rate = 0.85;
+  u.lang = voice.lang;
+  u.rate = 1;
   speechSynthesis.speak(u);
 }
