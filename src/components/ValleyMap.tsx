@@ -2,6 +2,7 @@ import { cn } from "../styles";
 import { regions } from "../data/regions";
 import { regionState } from "../game/regions";
 import { Art } from "./Art";
+import { ValleyBackdrop } from "./SceneBackdrop";
 import type { World } from "../game/engine";
 type Props = {
   world: World;
@@ -9,7 +10,7 @@ type Props = {
   onEnter: (regionId: string) => void;
   say: (text: string, kind?: string) => void;
 };
-// Coordinates align directly with the 6 illustrated landmarks in bg-valley-map.jpg.
+// Coordinates align with the six landmarks drawn in ValleyBackdrop (SceneBackdrop.tsx).
 const coords: Record<string, { x: number; y: number }> = {
   garden: { x: 14, y: 70 },
   pond: { x: 40, y: 67 },
@@ -26,13 +27,7 @@ export function ValleyMap({ world, clearing, onEnter, say }: Props) {
     <section className={cn("valley-map")} aria-label="Bản đồ thung lũng">
       <div className={cn("map-board")}>
         <h1 className={cn("valley-title")}>Thung lũng nhỏ</h1>
-        <img
-          src="/assets/bg-valley-map.jpg"
-          alt=""
-          aria-hidden="true"
-          draggable={false}
-          className={cn("map-svg map-backdrop")}
-        />
+        <ValleyBackdrop className={cn("map-svg map-backdrop")} />
         {regions.map((r) => {
           const state = states[r.id];
           const isClearing = clearing.includes(r.id);

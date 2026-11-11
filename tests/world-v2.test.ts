@@ -24,7 +24,7 @@ function randomWorld(random: () => number): World {
     "decorations",
     "plot.garden.0",
     "n.gift_puppy",
-    "n.gift_rabbit",
+    "n.gift_reindeer",
     "n.visit",
   ])
     if (random() < 0.7)

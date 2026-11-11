@@ -9,8 +9,8 @@
   "README.md": {
     "vi": "README.vi.md",
     "hashes": [
-      "7991f0a52d38fd90912943874ae88a64b646113ca8bdce01075d70ffb5fa6c5b",
-      "eea39c4e9afbb4aa4a959f0b654a714fc141642c41402a48c899d5af55d61d01"
+      "15f5318ed8a856f36d58921778a3e47db72e586b9755f9b9087ca47eb3fb55f9",
+      "a4b009d466a44b3529c266fabc95a489d4aa52293cd7f29f3383ce434e68eb3f"
     ]
   },
   "docs/ARCHITECTURE.md": {
@@ -23,15 +23,15 @@
   "docs/ARTWORK_HANDOFF.md": {
     "vi": "docs/ARTWORK_HANDOFF.vi.md",
     "hashes": [
-      "061a2026ebe74a84b3ba5d05b5a6df80745ab90f3603bdddac2a9682405a13e8",
-      "4c80a6978803a764ab86679a7ba5ad0c921d9f54823bb5b6f6adbb8b74269f14"
+      "cd55d6b87cc78e47cd762bae23ff2b986d72dae10d271a0bb76453b36dab3ff8",
+      "fd79a5b159c43cc0f665d32ebe85985d4e7cc047f2992fdfb0ad5beb80c166be"
     ]
   },
   "public/assets/PROVENANCE.md": {
     "vi": "public/assets/PROVENANCE.vi.md",
     "hashes": [
-      "166b9f3a7843443766bf1531e75ff20cdbc0305dcaff681cc0c5f3456fac15ff",
-      "ec33af954a578f29b35b93dbf39a87c0e9ed2445062222c7d09772248e1a3fa9"
+      "6fdee6e8f5edb91a97bfe116477a7b50b8b190369b9c897c332c4ecf3f911dd6",
+      "caff4762bf1f04deb4bd4d93c2dc35fa00d3d9728decef4183f911ae4ccf8cd8"
     ]
   }
 }

@@ -16,7 +16,7 @@ export function PalPanel({
   world,
   act,
   say,
-  palId = "rabbit",
+  palId = "puppy",
 }: Props & { palId?: string }) {
   const { pal, gifts, wish, unlockedChapters } = palStatus(world, palId);
   const basket = basketOf(world);
@@ -84,14 +84,14 @@ export function PalPanel({
         {feedback}
       </p>
       <div className={cn("lunch-scene")}>
-        <div className={cn(`rabbit-response rabbit-${reaction}`)}>
+        <div className={cn(`pal-response pal-${reaction}`)}>
           <Art id={pal.art} />
           {reaction === "happy" && (
-            <span className={cn("rabbit-spark")}>
+            <span className={cn("pal-spark")}>
               <Art id="star" />
             </span>
           )}
-          <span className={cn("rabbit-wish")} aria-hidden="true">
+          <span className={cn("pal-wish")} aria-hidden="true">
             <Art id={cropArt(wish)} />
           </span>
         </div>

@@ -82,7 +82,6 @@ main {
   overflow: hidden;
   isolation: isolate;
   background-color: var(--scene-grass);
-  background-image: url("/assets/bg-garden-day.jpg");
   background-size: cover;
   background-position: center bottom;
   touch-action: none;
@@ -994,19 +993,19 @@ main {
   font-weight: 700;
   color: var(--accent);
 }
-.rabbit-response {
+.pal-response {
   width: 180px;
   position: relative;
   flex-shrink: 0;
 }
-.rabbit-happy > .art {
+.pal-happy > .art {
   animation: hop 0.8s ease;
 }
-.rabbit-thinking > .art {
+.pal-thinking > .art {
   animation: wiggle 0.8s ease;
 }
-.rabbit-spark,
-.rabbit-wish {
+.pal-spark,
+.pal-wish {
   position: absolute;
   right: -15px;
   top: 0;
@@ -1250,11 +1249,9 @@ main {
 }
 .garden[data-variant="pond"] {
   background-color: var(--scene-pond-grass);
-  background-image: url("/assets/bg-pond.jpg");
 }
 .garden[data-time="night"] {
   background-color: var(--scene-night-sky);
-  background-image: url("/assets/bg-garden-night.jpg");
 }
 .garden[data-time="night"] .art-flower {
   transform: scale(0.86);

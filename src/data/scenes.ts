@@ -653,8 +653,8 @@ export const scenes: Record<string, RegionScene> = {
         stageLines: [
           "Một ngôi sao sáng lên!",
           "Nối thêm ngôi sao nữa nào!",
-          "Gần xong rồi, thấy đôi tai dài chưa?",
-          "Chòm sao hình bạn thỏ Bông kìa!",
+          "Gần xong rồi, thấy đôi tai cụp chưa?",
+          "Chòm sao hình bạn cún Lucky kìa!",
         ],
         discovery: "constellation",
       },

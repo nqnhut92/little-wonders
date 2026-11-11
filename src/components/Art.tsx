@@ -10,7 +10,6 @@ export const assetIds = [
   "worm",
   "bug",
   "bird",
-  "rabbit",
   "puppy",
   "reindeer",
   "fish",
@@ -91,30 +90,19 @@ export const assetIds = [
   "dish-coconut",
   "dish-chestnut",
 ];
-const rasterIds = new Set([
-  "puppy",
-  "reindeer",
-  "house",
-  "tree",
-  "sun",
-  "rabbit",
-  "flower",
-  "basket",
-  "rock",
-  "owl",
-  "frog",
-]);
-// A bunny-shaped constellation: body, then ears, lit a few stars per stage.
+// A puppy-shaped constellation (Lucky): body, head, then the two floppy ears, lit a few stars per stage.
 const CONSTELLATION = [
-  [30, 96],
-  [46, 70],
-  [60, 58],
-  [74, 70],
-  [90, 96],
-  [52, 30],
-  [48, 8],
-  [68, 30],
-  [72, 8],
+  [26, 100],
+  [40, 72],
+  [50, 46],
+  [62, 28],
+  [78, 46],
+  [86, 72],
+  [98, 100],
+  [34, 34],
+  [24, 56],
+  [92, 34],
+  [102, 56],
 ];
 export function Art({
   id,
@@ -125,44 +113,6 @@ export function Art({
   color?: string;
   night?: boolean;
 }) {
-  if (id === "cloud") {
-    return (
-      <span className={cn("art art-cloud art-raster-wrap")}>
-        <img
-          src="/assets/cloud.png"
-          alt=""
-          aria-hidden="true"
-          draggable={false}
-          className={cn("art-img")}
-        />
-        <svg viewBox="0 0 120 120" aria-hidden="true" className={cn("art-fx")}>
-          <path
-            className={cn("raindrops")}
-            d="m32 90-6 14m32-14-6 14m32-14-6 14"
-            stroke="#6bb3c9"
-            strokeWidth="5"
-            strokeLinecap="round"
-          />
-        </svg>
-      </span>
-    );
-  }
-  if (rasterIds.has(id)) {
-    const tint =
-      id === "house" && color && color !== "#efcf9d"
-        ? { filter: `drop-shadow(0 0 10px ${color}aa)` }
-        : undefined;
-    return (
-      <img
-        src={`/assets/${id}.png`}
-        alt=""
-        aria-hidden="true"
-        draggable={false}
-        style={tint}
-        className={cn(`art art-${id}`)}
-      />
-    );
-  }
   return (
     <svg
       viewBox="0 0 120 120"
@@ -648,7 +598,7 @@ export function Art({
           <g stroke="#fff1b8">
             {CONSTELLATION.slice(0, Number(id.slice(-1)) * 3 - 1).map(
               ([x1, y1], i, arr) =>
-                i ? (
+                i && i !== 7 && i !== 9 ? (
                   <path
                     key={"l" + i}
                     d={`M${arr[i - 1][0]} ${arr[i - 1][1]}L${x1} ${y1}`}
@@ -758,30 +708,128 @@ export function Art({
               ))}
           </>
         )}
-        {id === "rabbit" && (
+        {id === "puppy" && (
           <>
-            <ellipse
-              cx="44"
-              cy="28"
-              rx="13"
-              ry="26"
-              fill="#fff5df"
-              transform="rotate(-12 44 28)"
+            <path d="M88 94q20-4 17-24-11 3-15 15" fill="#f1dfbd" />
+            <ellipse cx="60" cy="90" rx="30" ry="23" fill="#fffaf0" />
+            <ellipse cx="46" cy="110" rx="10" ry="6" fill="#fffaf0" />
+            <ellipse cx="74" cy="110" rx="10" ry="6" fill="#fffaf0" />
+            <path
+              d="M35 32C16 28 11 58 24 71c9-7 13-19 15-31Z"
+              fill="#ecd3a6"
             />
-            <ellipse
-              cx="77"
-              cy="28"
-              rx="13"
-              ry="26"
-              fill="#fff5df"
-              transform="rotate(12 77 28)"
+            <path d="M85 32c19-4 24 26 11 39-9-7-13-19-15-31Z" fill="#ecd3a6" />
+            <circle cx="60" cy="50" r="30" fill="#fffaf0" />
+            <path d="M52 22q8-9 16 0" fill="none" />
+            <circle cx="48" cy="48" r="4.200" fill="#3d3a36" stroke="none" />
+            <circle cx="72" cy="48" r="4.200" fill="#3d3a36" stroke="none" />
+            <circle
+              cx="49.500"
+              cy="46.500"
+              r="1.400"
+              fill="#ffffff"
+              stroke="none"
             />
-            <path d="M44 12v26m33-26v26" stroke="#e7b4a7" strokeWidth="7" />
-            <ellipse cx="60" cy="90" rx="37" ry="26" fill="#fff5df" />
-            <circle cx="60" cy="61" r="33" fill="#fff5df" />
-            <path d="M46 57v4m28-4v4m-19 8 5 4 5-4m-5 4v7" />
-            <ellipse cx="36" cy="70" rx="7" ry="4" fill="#edb9a6" />
-            <ellipse cx="83" cy="70" rx="7" ry="4" fill="#edb9a6" />
+            <circle
+              cx="73.500"
+              cy="46.500"
+              r="1.400"
+              fill="#ffffff"
+              stroke="none"
+            />
+            <path d="M55 67q5 9 10 0Z" fill="#ef8f8f" />
+            <path d="M60 61v4m-8 0q4 5 8 0 4 5 8 0" fill="none" />
+            <ellipse
+              cx="60"
+              cy="58"
+              rx="5"
+              ry="3.600"
+              fill="#3d3a36"
+              stroke="none"
+            />
+            <circle cx="40" cy="60" r="6" fill="#f6b9b0" stroke="none" />
+            <circle cx="80" cy="60" r="6" fill="#f6b9b0" stroke="none" />
+          </>
+        )}
+        {id === "tree" && (
+          <>
+            <path d="M50 116q6-36 2-60h16q-4 24 2 60Z" fill="#a9805d" />
+            <path d="M58 82q-10-8-16-8m20-2q10-8 16-8" fill="none" />
+            <path
+              d="M22 66C2 52 12 26 34 28 36 4 78 0 86 26c26-2 36 30 14 42-26 10-54 10-78-2Z"
+              fill="#7fab68"
+            />
+            <path
+              d="M40 26q16-12 32-4M24 48q4-10 12-12"
+              stroke="#a9cf86"
+              strokeWidth="6"
+              fill="none"
+            />
+            <circle cx="36" cy="50" r="7" fill="url(#lw-apple)" />
+            <circle cx="84" cy="48" r="7" fill="url(#lw-apple)" />
+            <circle cx="62" cy="60" r="7" fill="url(#lw-apple)" />
+          </>
+        )}
+        {id === "sun" && (
+          <>
+            {[0, 45, 90, 135, 180, 225, 270, 315].map((r) => (
+              <path
+                key={r}
+                d="M60 8v14"
+                stroke="#e9bd58"
+                strokeWidth="7"
+                transform={`rotate(${r} 60 60)`}
+              />
+            ))}
+            <circle cx="60" cy="60" r="27" fill="url(#lw-gold)" />
+            <path d="M50 56v4m20-4v4" strokeWidth="4" />
+            <path d="M50 68q10 9 20 0" fill="none" />
+            <circle cx="44" cy="66" r="5" fill="#f2a58e" stroke="none" />
+            <circle cx="76" cy="66" r="5" fill="#f2a58e" stroke="none" />
+          </>
+        )}
+        {id === "cloud" && (
+          <>
+            <path
+              className={cn("raindrops")}
+              d="m32 88-6 14m32-14-6 14m32-14-6 14"
+              stroke="#6bb3c9"
+              strokeWidth="5"
+            />
+            <path
+              d="M22 78C0 76 4 46 28 48 26 18 72 16 78 42c28-12 48 26 22 36Z"
+              fill="#fffdf4"
+            />
+            <path d="M46 60v4m18-4v4" strokeWidth="4" />
+            <path d="M48 70q7 6 14 0" fill="none" />
+            <circle cx="40" cy="68" r="4.500" fill="#f6c6bb" stroke="none" />
+            <circle cx="70" cy="68" r="4.500" fill="#f6c6bb" stroke="none" />
+          </>
+        )}
+        {id === "house" && (
+          <>
+            <path d="M80 30V16h12v24" fill="#a9805d" />
+            <path d="M22 56h76v54H22Z" fill={color || "#efcf9d"} />
+            <path d="M10 58 60 14l50 44Z" fill="#bc7f70" />
+            <path d="M52 110V84q8-12 16 0v26" fill="#9fbcae" />
+            <rect
+              x="29"
+              y="66"
+              width="18"
+              height="18"
+              rx="3"
+              fill={night ? "#ffd36e" : "#e4f1f2"}
+            />
+            <path d="M38 66v18m-9-9h18" />
+            <rect
+              x="74"
+              y="66"
+              width="18"
+              height="18"
+              rx="3"
+              fill={night ? "#ffd36e" : "#e4f1f2"}
+            />
+            <path d="M83 66v18m-9-9h18" />
           </>
         )}
         {id === "reindeer" && (
@@ -791,7 +839,9 @@ export function Art({
               stroke="#9e7f63"
               strokeWidth="5"
             />
+            <path d="M34 44l-14-8 4 16Zm52 0 14-8-4 16Z" fill="#c98b55" />
             <ellipse cx="60" cy="88" rx="31" ry="23" fill="#c98b55" />
+            <path d="M40 108h12m16 0h12" stroke="#7a5236" strokeWidth="7" />
             <ellipse
               cx="60"
               cy="90"
@@ -812,6 +862,9 @@ export function Art({
             <circle cx="48" cy="52" r="3" fill="#52684e" />
             <circle cx="72" cy="52" r="3" fill="#52684e" />
             <ellipse cx="60" cy="61" rx="6" ry="4.5" fill="#a8473c" />
+            <path d="M54 69q6 5 12 0" fill="none" />
+            <circle cx="42" cy="62" r="5" fill="#f2b3a2" stroke="none" />
+            <circle cx="78" cy="62" r="5" fill="#f2b3a2" stroke="none" />
           </>
         )}
         {id === "butterfly" && (

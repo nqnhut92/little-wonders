@@ -6,7 +6,7 @@
 
 Chưa tạo artwork production hoặc ảnh Gemini. Game dùng vector tạm tự vẽ nhất quán và vẫn chơi được khi chưa nâng cấp hình. Cập nhật cả hai ngôn ngữ mỗi khi đổi asset hoặc tương tác của nó.
 
-Truyện tranh cổ tích ấm áp cho trẻ Việt 4–6 tuổi: viền rêu mềm #52684e, trời nhạt #dceceb, cỏ #d1dfa9, hoa vàng #e9bd58, thỏ kem #fff5df má hồng #edb9a6, mái đất đỏ #bc7f70. Dùng silhouette tròn, ánh sáng tản từ trên phải. Tránh tương phản gắt, mặt đáng sợ, chi tiết nhỏ rối, chữ, logo và watermark.
+Truyện tranh cổ tích ấm áp cho trẻ Việt 4–6 tuổi: viền rêu mềm #52684e, trời nhạt #dceceb, cỏ #d1dfa9, hoa vàng #e9bd58, cún trắng kem #fffaf0 má hồng #f6b9b0, mái đất đỏ #bc7f70. Dùng silhouette tròn, ánh sáng tản từ trên phải. Tránh tương phản gắt, mặt đáng sợ, chi tiết nhỏ rối, chữ, logo và watermark.
 
 ## Danh mục đầy đủ và quy cách file
 
@@ -24,7 +24,8 @@ Mọi ID đối tượng dưới đây hiện nằm trong `src/components/Art.ts
 | worm / worm.png                                                                                                                                                                      | Sinh vật hiện từ cỏ                                       |
 | bug / bug.png                                                                                                                                                                        | Bọ rùa; dùng chung hình cho dế trong sổ                   |
 | bird / bird.png                                                                                                                                                                      | Chim trên cành; hót và nhảy                               |
-| rabbit / rabbit.png                                                                                                                                                                  | Thỏ vườn, hướng dẫn, bữa ăn; phản ứng vui/suy nghĩ        |
+| puppy / puppy.png                                                                                                                                                                    | Lucky: vườn, hướng dẫn, bữa ăn; phản ứng vui/suy nghĩ     |
+| reindeer / reindeer.png                                                                                                                                                              | Bạn thứ hai: Lời mời, quà và chương truyện                |
 | fish / fish.png                                                                                                                                                                      | Cá trong ao; phản ứng bơi                                 |
 | apple / apple.png                                                                                                                                                                    | Quả rơi, thức ăn/yêu cầu bữa trưa                         |
 | house / house.png                                                                                                                                                                    | Vườn chính và editor; năm màu tường                       |
@@ -58,7 +59,11 @@ Các nền hiện nằm trong `src/style.module.css`, tô màu bằng token `--s
 | soil.png       | 512×256 / 2:1      | trong suốt | Luống / .soil                |
 | house-yard.png | 1160×560 / 29:14   | kín        | Sân editor / .house-canvas   |
 
-Icon app hiện có: `public/favicon.ico` (16/32/48), `public/favicon.svg`, `public/icon-32.png`, `public/icon-180.png` (nền kín tràn viền), `public/icon-192.png`, `public/icon-512.png` và `public/icon-maskable-192.png`/`-512.png` (tranh nằm trong vùng an toàn 80% ở giữa), xuất từ minh họa storybook do Gemini tạo (thỏ kem ôm hoa hướng dương, xem `PROVENANCE.vi.md`). Không animation. Chữ UI, nút cài đặt/âm thanh/sổ, chấm đếm, dấu cộng, focus và mũi tên gợi ý do app render, không sinh trong ảnh. Bong bóng thỏ dùng lại ID thức ăn; ngôi sao vui dùng star. Trang trí ngoài vườn dùng lại ID hoa/bướm/ngôi sao đã lưu.
+Icon app hiện có: `public/favicon.ico` (16/32/48), `public/favicon.svg`, `public/icon-32.png`, `public/icon-180.png` (nền kín tràn viền), `public/icon-192.png`, `public/icon-512.png` và `public/icon-maskable-192.png`/`-512.png` (tranh nằm trong vùng an toàn 80% ở giữa), xuất từ minh họa storybook do Gemini tạo (Lucky ôm quả dưa hấu, xem `PROVENANCE.vi.md`). Không animation. Chữ UI, nút cài đặt/âm thanh/sổ, chấm đếm, dấu cộng, focus và mũi tên gợi ý do app render, không sinh trong ảnh. Bong bóng của bạn thú dùng lại ID thức ăn; ngôi sao vui dùng star. Trang trí ngoài vườn dùng lại ID hoa/bướm/ngôi sao đã lưu.
+
+## Một phong cách vẽ (hiện trạng)
+
+Mọi hình trong game hiện là vector do dự án tự vẽ trong `src/components/Art.tsx`, nền cảnh và bản đồ thung lũng nằm trong `src/components/SceneBackdrop.tsx`, tất cả đi qua bộ lọc màu nước dùng chung trong `PaintFilters.tsx` nên cả game là một phong cách. Các tranh Gemini từng được dùng ngắn (nền, bản đồ, Lucky, tuần lộc, nhà, cây, mặt trời, mây, hoa, giỏ, đá, cú, ếch và một chú thỏ không dùng) được giữ ở `art-archive/gemini/` và không được đóng gói. Chỉ còn bộ icon app là tranh Gemini. Tranh thay thế phải là một bộ đầy đủ, đồng nhất; đừng trộn lẻ vài ảnh vẽ trở lại.
 
 ## Các khu sau (vector tạm)
 
@@ -69,7 +74,7 @@ Rừng nhỏ, bãi biển, đồi tuyết và núi sao dùng nền SVG vẽ (`sr
 | Rừng nhỏ  | blueberry, chestnut, mushroom-house (chỉ để trang trí, không bao giờ là đồ ăn), leafpile, hedgehog, squirrel, woodpecker         |
 | Bãi biển  | coconut-tree, coconut, shell, sand, crab, sandcastle-1 (ụ cát kèm xô và xẻng), sandcastle-2, sandcastle-3, wave, turtle, seagull |
 | Đồi tuyết | pine-snow, pinecone, snowman-1, snowman-2, snowman-3, polar-bear (gấu con, tròn và mềm), penguin, sled, snowflake                |
-| Núi sao   | telescope, moon-face, constellation-1 đến constellation-4 (chú thỏ vẽ dần từng ngôi sao; giữ vị trí các sao), star-lantern       |
+| Núi sao   | telescope, moon-face, constellation-1 đến constellation-4 (cún Lucky vẽ dần từng ngôi sao; giữ vị trí các sao), star-lantern     |
 | Bếp       | dish-coconut, dish-chestnut                                                                                                      |
 
 Nền: bg-forest, bg-beach, bg-snow và bg-stars, 3200×1800 nền kín, hình quan trọng nằm trong 60% ở giữa, có bản đêm cho rừng, biển và tuyết (núi sao luôn là ban đêm). Giữ yên vùng hướng dẫn góc dưới trái và cột nút bên phải.
@@ -88,8 +93,8 @@ Giao diện theo chế độ Sáng, Tối và Theo hệ thống; tranh thì khô
 | `--accent`    | #52684e | #a8cf8f | Hành động chính, vòng focus       |
 | `--plate`     | #fff9e9 | #e9ecd9 | Nền sáng phía sau tranh trên bảng |
 
-- Cảnh phủ kín màn hình, từ khoảng 4:3 (iPad) đến 21:9 (desktop siêu rộng). Nền phải kéo tới mọi mép và chịu được bị cắt; vật co giãn theo giá trị nhỏ hơn giữa chiều rộng và 1,9 lần chiều cao. Nút nổi ở góc trên trái (thỏ hướng dẫn, khoảng 460×72px) và dọc góc trên phải (cột rộng 70px); tránh đặt chi tiết nền quan trọng ở các vùng đó.
-- Các bảng kính nổi trên cảnh (khay hạt, thỏ hướng dẫn). Tranh phía sau bị làm mờ và sáng lên; đừng đặt chi tiết cần thấy ở đó.
+- Cảnh phủ kín màn hình, từ khoảng 4:3 (iPad) đến 21:9 (desktop siêu rộng). Nền phải kéo tới mọi mép và chịu được bị cắt; vật co giãn theo giá trị nhỏ hơn giữa chiều rộng và 1,9 lần chiều cao. Nút nổi ở góc trên trái (Lucky hướng dẫn, khoảng 460×72px) và dọc góc trên phải (cột rộng 70px); tránh đặt chi tiết nền quan trọng ở các vùng đó.
+- Các bảng kính nổi trên cảnh (khay hạt, Lucky hướng dẫn). Tranh phía sau bị làm mờ và sáng lên; đừng đặt chi tiết cần thấy ở đó.
 - Trên hộp thoại, tranh nằm trên nền sáng ở cả hai chế độ nên viền xanh rêu luôn rõ. Không tự thêm hình nền hay bóng đổ.
 - Bản đêm của các nền cảnh và vùng mờ trên bản đồ cho các khu đánh dấu sắp có sẽ được mô tả tại đây khi các tính năng đó được làm.
 - Icon giao diện (loa, sổ, cài đặt, gợi ý, đóng, trạng thái lưu, chế độ giao diện) là vector trong repo ở `src/components/Icons.tsx`, không thuộc phần bàn giao này.
@@ -97,13 +102,13 @@ Giao diện theo chế độ Sáng, Tối và Theo hệ thống; tranh thì khô
 
 ## Nhất quán nhân vật
 
-Thỏ: thân/đầu kem tròn, tai dài lòng hồng, mắt chấm, mũi V, má hồng; không đổi quần áo giữa pose. Giữ tỉ lệ đầu/tai theo SVG tham chiếu. Chim: thân bầu xanh xám, mỏ vàng hướng phải, chân ngắn. Bướm: cánh trên hồng, dưới vàng, thân rêu mảnh, hai râu. Bọ rùa: áo đất đỏ chấm rêu; sâu xanh nhạt; cá vàng cam hướng phải. Mây/nắng mắt chấm và cười nhẹ. Duyệt reference sheet trước; dùng lại reference/seed nếu model hỗ trợ.
+Cún Lucky: nhỏ, tròn trịa, lông trắng kem, đầu tròn, tai cụp màu nâu nhạt, mắt chấm có đốm sáng, mũi nhỏ sẫm, lưỡi hồng và má hồng, đuôi ngắn cong; kiểu hoạt hình bo tròn, không phải chó thật. Tuần Lộc nhỏ: nâu ấm, bụng và mõm màu kem, hai sừng nhỏ, mũi nâu đỏ và má hồng. Không đổi quần áo giữa pose. Giữ tỉ lệ đầu/tai theo SVG tham chiếu. Chim: thân bầu xanh xám, mỏ vàng hướng phải, chân ngắn. Bướm: cánh trên hồng, dưới vàng, thân rêu mảnh, hai râu. Bọ rùa: áo đất đỏ chấm rêu; sâu xanh nhạt; cá vàng cam hướng phải. Mây/nắng mắt chấm và cười nhẹ. Duyệt reference sheet trước; dùng lại reference/seed nếu model hỗ trợ.
 
 ## Animation và lớp
 
-Hiện dùng CSS, không có sprite sheet. Đầu ra bắt buộc đầu tiên là một pose tĩnh khớp mỗi ID và pivot CSS. Sprite tương lai tùy chọn phải giữ canvas/pivot: idle 2–4 frame ở 4–6 fps cho thỏ/chim/cá/sâu; touch 3–4 frame dưới 0,8 giây; bướm/cá di chuyển 4 frame; discovery 3 frame nhẹ. Có frame đầu tĩnh rõ cho reduced motion. Không chớp sáng hoặc dịch vùng collision.
+Hiện dùng CSS, không có sprite sheet. Đầu ra bắt buộc đầu tiên là một pose tĩnh khớp mỗi ID và pivot CSS. Sprite tương lai tùy chọn phải giữ canvas/pivot: idle 2–4 frame ở 4–6 fps cho cún/tuần lộc/chim/cá/sâu; touch 3–4 frame dưới 0,8 giây; bướm/cá di chuyển 4 frame; discovery 3 frame nhẹ. Có frame đầu tĩnh rõ cho reduced motion. Không chớp sáng hoặc dịch vùng collision.
 
-Tách thân cây/tán/táo; thân/mặt mây và giọt mưa (3 frame); bờ ao/nước/gợn/lá và cá; mái nhà/mask đổi màu tường/cửa/cửa sổ; mọi trang trí độc lập. Giai đoạn cây cùng neo đáy; mầm hiện dùng grass. Thỏ vui dùng CSS nhảy và star riêng; suy nghĩ nghiêng nhẹ kèm bong bóng thức ăn. Giữ các lớp này tách khỏi ảnh thỏ.
+Tách thân cây/tán/táo; thân/mặt mây và giọt mưa (3 frame); bờ ao/nước/gợn/lá và cá; mái nhà/mask đổi màu tường/cửa/cửa sổ; mọi trang trí độc lập. Giai đoạn cây cùng neo đáy; mầm hiện dùng grass. Phản ứng vui của bạn thú dùng CSS nhảy và star riêng; suy nghĩ nghiêng nhẹ kèm bong bóng thức ăn. Giữ các lớp này tách khỏi ảnh nhân vật.
 
 Thứ tự: trời, cầu vồng, đồi xa, đồi gần/lối, cây/nhà, ao/cỏ/đá, động vật, luống/cây, khay hạt, gợi ý, drag ghost, modal. Trang trí ngoài vườn là overlay sân tỉ lệ 2:1 thu nhỏ theo bố cục editor. Ngoại lệ lớp thuộc renderer, không vẽ dính vào nền.
 
@@ -113,11 +118,11 @@ Thứ tự: trời, cầu vồng, đồi xa, đồi gần/lối, cây/nhà, ao/c
 
 ## Prompt Gemini sao chép dùng ngay
 
-> Tạo artwork thay thế cho Little Wonders, game vườn cho trẻ Việt 4–6 tuổi. Phong cách truyện tranh cổ tích ấm áp, silhouette tròn mềm, viền rêu #52684e và ánh sáng tản trên phải. Trời #dceceb, cỏ #d1dfa9, hoa vàng #e9bd58, thỏ kem #fff5df má #edb9a6, mái đất đỏ #bc7f70. Ảnh phải rõ khi hiển thị 60–200 pixel. Không chữ, logo, watermark. Không bắt chước họa sĩ đang sống hoặc dùng nhân vật thương mại.
+> Tạo artwork thay thế cho Little Wonders, game vườn cho trẻ Việt 4–6 tuổi. Phong cách truyện tranh cổ tích ấm áp, silhouette tròn mềm, viền rêu #52684e và ánh sáng tản trên phải. Trời #dceceb, cỏ #d1dfa9, hoa vàng #e9bd58, cún trắng kem #fffaf0 má #f6b9b0, mái đất đỏ #bc7f70. Ảnh phải rõ khi hiển thị 60–200 pixel. Không chữ, logo, watermark. Không bắt chước họa sĩ đang sống hoặc dùng nhân vật thương mại.
 >
-> Khớp SVG tham chiếu thuộc dự án được cung cấp. Thỏ: thân/đầu kem tròn, tai dài lòng hồng, mắt chấm, mũi V, má hồng, không quần áo. Chim xanh xám/mỏ vàng; bướm cánh trên hồng/dưới vàng; bọ rùa đất đỏ/chấm rêu; sâu xanh nhạt; cá vàng cam hướng phải. Giữ tỉ lệ, nét và sáng giống nhau giữa pose. Đầu tiên đưa character reference sheet để duyệt, rồi xuất từng file.
+> Khớp SVG tham chiếu thuộc dự án được cung cấp. Cún Lucky: nhỏ, tròn trịa, lông trắng kem, đầu tròn, tai cụp màu nâu nhạt, mắt chấm có đốm sáng, mũi nhỏ sẫm, lưỡi hồng và má hồng, đuôi ngắn cong; kiểu hoạt hình bo tròn, không phải chó thật. Tuần Lộc nhỏ: nâu ấm, bụng và mõm màu kem, hai sừng nhỏ, mũi nâu đỏ và má hồng. Chim xanh xám/mỏ vàng; bướm cánh trên hồng/dưới vàng; bọ rùa đất đỏ/chấm rêu; sâu xanh nhạt; cá vàng cam hướng phải. Giữ tỉ lệ, nét và sáng giống nhau giữa pose. Đầu tiên đưa character reference sheet để duyệt, rồi xuất từng file.
 >
-> ID đối tượng: tree, cloud, sun, flower, carrot, berry, butterfly, worm, bug, bird, rabbit, fish, apple, house, rainbow, rock, grass, pond, basket, star, tomato, pumpkin, corn, watermelon. Xuất mỗi ID.png, RGBA trong suốt 512×512, padding khoảng 7%, neo giữa đáy khớp (60,112) trong canvas 120×120 hiện tại. Không crop/đổi tỉ lệ. Cà rốt phải rõ màu cam; dâu đỏ/hồng. Nhà cần mask tường đổi màu riêng. Tách thân/tán/táo, mây/mưa, bờ/nước/gợn/lá/cá, mái/tường/cửa và trang trí. Không nhúng UI, vùng chạm hoặc luật chơi.
+> ID đối tượng: tree, cloud, sun, flower, carrot, berry, butterfly, worm, bug, bird, puppy, reindeer, fish, apple, house, rainbow, rock, grass, pond, basket, star, tomato, pumpkin, corn, watermelon. Xuất mỗi ID.png, RGBA trong suốt 512×512, padding khoảng 7%, neo giữa đáy khớp (60,112) trong canvas 120×120 hiện tại. Không crop/đổi tỉ lệ. Cà rốt phải rõ màu cam; dâu đỏ/hồng. Nhà cần mask tường đổi màu riêng. Tách thân/tán/táo, mây/mưa, bờ/nước/gợn/lá/cá, mái/tường/cửa và trang trí. Không nhúng UI, vùng chạm hoặc luật chơi.
 >
 > Nền: sky 2400×1400 kín; hill-back/hill-front 2400×1400 trong suốt; path 1200×1400 trong suốt; soil 512×256 trong suốt; house-yard 1160×560 kín. Không vẽ sinh vật tương tác dính vào nền. Sprite tùy chọn: idle 2–4 frame, touch 3–4, bướm/cá di chuyển 4, mưa 3, khám phá nhẹ 3. Mọi frame cùng canvas/pivot. Pose ID.png tĩnh bắt buộc vì MVP dùng CSS animation. Frame thêm đặt ID-idle-01.png, ID-touch-01.png, ID-move-01.png hoặc ID-discover-01.png; kèm manifest frame-rate riêng và pose reduced-motion.
 >
@@ -129,7 +134,7 @@ Thứ tự: trời, cầu vồng, đồi xa, đồi gần/lối, cây/nhà, ao/c
 - [ ] Duyệt nhất quán reference, phù hợp trẻ và không chữ.
 - [ ] Lưu ID ổn định trong `public/assets`; giữ props Art, kích thước, pivot và nhãn.
 - [ ] Giữ hitbox DOM, data-soil/data-basket, pointer capture, thứ tự lớp và tọa độ phần trăm.
-- [ ] Kiểm đủ năm màu tường, bố cục cũ, tỉ lệ đồ ngoài vườn và lớp phản hồi thỏ.
+- [ ] Kiểm đủ năm màu tường, bố cục cũ, tỉ lệ đồ ngoài vườn và lớp phản hồi của bạn thú.
 - [ ] Kiểm giới hạn iPad/desktop, chạm/kéo và reduced motion.
 - [ ] Thêm danh mục ảnh mới vào precache service worker và hash nội dung khi URL không hash; precache bundle không tự thêm PNG mới.
 - [ ] Chạy typecheck, lint, test, build, Playwright và offline; kiểm icon PNG/manifest.

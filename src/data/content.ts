@@ -93,7 +93,7 @@ export const discoveries = [
   ["snowflake", "Bông tuyết sáu cánh", "snowflake"],
   ["telescope", "Kính thiên văn", "telescope"],
   ["moon_face", "Ông trăng cười", "moon-face"],
-  ["constellation", "Chòm sao bạn thỏ", "constellation-4"],
+  ["constellation", "Chòm sao bạn cún", "constellation-4"],
   ["star_lantern", "Đèn ngôi sao", "star-lantern"],
   ["dish_coconut", "Nước dừa mát lạnh", "dish-coconut"],
   ["dish_chestnut", "Hạt dẻ nướng thơm", "dish-chestnut"],
