@@ -46,7 +46,7 @@ Các nền hiện nằm trong `src/style.module.css`; đầu ra đích là PNG (
 | soil.png       | 512×256 / 2:1      | trong suốt | Luống / .soil                |
 | house-yard.png | 1160×560 / 29:14   | kín        | Sân editor / .house-canvas   |
 
-Icon hiện có: `public/icon.svg` (viewBox vuông 192) và `public/icon-180.png`, `icon-192.png`, `icon-512.png`, PNG vuông nền kín raster từ SVG đó. Không animation. Chữ UI, nút cài đặt/âm thanh/sổ, chấm đếm, dấu cộng, focus và mũi tên gợi ý do app render, không sinh trong ảnh. Bong bóng thỏ dùng lại ID thức ăn; ngôi sao vui dùng star. Trang trí ngoài vườn dùng lại ID hoa/bướm/ngôi sao đã lưu.
+Icon app hiện có: `public/favicon.ico` (16/32/48), `public/icon-32.png`, `public/icon-180.png` (nền kín tràn viền), `public/icon-192.png`, `public/icon-512.png`, xuất từ minh họa storybook do Gemini tạo (thỏ kem ôm hoa hướng dương, xem `PROVENANCE.vi.md`). Không animation. Chữ UI, nút cài đặt/âm thanh/sổ, chấm đếm, dấu cộng, focus và mũi tên gợi ý do app render, không sinh trong ảnh. Bong bóng thỏ dùng lại ID thức ăn; ngôi sao vui dùng star. Trang trí ngoài vườn dùng lại ID hoa/bướm/ngôi sao đã lưu.
 
 ## Nhất quán nhân vật
 
@@ -86,4 +86,4 @@ Thứ tự: trời, cầu vồng, đồi xa, đồi gần/lối, cây/nhà, ao/c
 - [ ] Kiểm giới hạn iPad/desktop, chạm/kéo và reduced motion.
 - [ ] Thêm danh mục ảnh mới vào precache service worker và hash nội dung khi URL không hash; precache bundle không tự thêm PNG mới.
 - [ ] Chạy typecheck, lint, test, build, Playwright và offline; kiểm icon PNG/manifest.
-- [ ] Cập nhật cả hai handoff, provenance và TODO; chỉ đánh xong khi gameplay/khôi phục còn hoạt động.
+- [ ] Cập nhật cả hai handoff và provenance; chỉ đánh xong khi gameplay/khôi phục còn hoạt động.

@@ -14,7 +14,7 @@ Khu vườn truyện tranh ưu tiên cảm ứng, dành cho trẻ Việt Nam 4�
 - Lưu cục bộ tức thì, backup theo hồ sơ, merge nhiều tab cùng hồ sơ, gửi batch/retry và cache shell ngoại tuyến.
 - Google OpenID Connect cho phụ huynh, nickname cho bé, API Neon kiểm ownership, CSRF và cookie session bảo mật.
 
-Google/Neon cần cấu hình bên ngoài. Chơi khách dùng local được; Vite riêng không chạy API. OAuth thật, Neon qua mạng, routing Vercel và iPad Safari vật lý chưa kiểm chứng. Xem [review](docs/SELF_REVIEW.vi.md) và [bàn giao mỹ thuật](docs/ARTWORK_HANDOFF.vi.md).
+Google/Neon cần cấu hình bên ngoài. Chơi khách dùng local được; Vite riêng không chạy API. OAuth thật, Neon qua mạng, routing Vercel và iPad Safari vật lý chưa kiểm chứng. Xem [bàn giao mỹ thuật](docs/ARTWORK_HANDOFF.vi.md) và [kiến trúc](docs/ARCHITECTURE.vi.md).
 
 ## Chạy và kiểm thử
 
@@ -36,13 +36,13 @@ Dùng `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium` cho Chromium hệ 
 
 ## Deploy
 
-1. Tạo Neon free tier, đặt `DATABASE_URL` trong `.env.local`, chạy `npm run db:migrate` (hoặc chạy `migrations/001_initial.sql` trong SQL editor).
+1. Tạo database Neon PostgreSQL free tier.
 2. Cấu hình Google OAuth web client với `openid` và callback chính xác `https://YOUR_HOST/api/auth/callback`.
-3. Import Vercel dùng `vercel.json`: `npm ci`, `npm run build`, output `dist`.
-4. Đặt biến server-only `DATABASE_URL`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `SESSION_SECRET` (32+ ký tự ngẫu nhiên), `APP_URL` (origin HTTPS chính xác, không / cuối).
+3. Import Vercel dùng `vercel.json`: install `npm ci`, build `node scripts/migrate.mjs --optional && npm run build`, output `dist`. Khi đã đặt `DATABASE_URL` trên Vercel, các file đánh số trong `migrations/` tự động chạy khi build kèm advisory lock và kiểm checksum (hoặc chạy tay `npm run db:migrate`).
+4. Đặt biến server-only `DATABASE_URL`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `SESSION_SECRET` (32+ ký tự ngẫu nhiên), `APP_URL` (origin HTTPS chính xác, không `/` cuối), và bật Vercel Web Analytics trong project dashboard (`@vercel/analytics/react` đã gắn trong `src/main.tsx`).
 5. Kiểm đăng nhập, tạo nickname, khôi phục hai máy, hết session và nối lại mạng trước phát hành.
 
-Không commit secret hoặc dùng `VITE_` cho chúng. Chưa tạo/mua cloud resource. Xem [triển khai](docs/DEPLOYMENT.vi.md).
+Không commit secret hoặc dùng `VITE_` cho chúng. Chưa tạo/mua cloud resource.
 
 ## Chính sách dữ liệu
 
@@ -50,8 +50,6 @@ Khám phá merge union. Field có stamp dùng bộ đếm logic vượt mọi ch
 
 ## Tài liệu và ảnh
 
-Mỗi README/tài liệu có cặp EN/VI liên kết đầu trang. Cập nhật cả hai khi hành vi/hướng dẫn đổi; rà ý nghĩa rồi chạy `npm run docs:sync` ghi hash. `npm run docs:check` chạy trong CI, từ chối bản dịch thiếu, chưa ghi nhận hoặc thay đổi. Hash phát hiện lệch phiên bản, không kiểm chứng dịch đúng nghĩa. Xem [quy định tài liệu](docs/DOCUMENTATION.vi.md).
+Mỗi README/tài liệu có cặp EN/VI liên kết đầu trang. Cập nhật cả hai khi hành vi/hướng dẫn đổi; rà ý nghĩa rồi chạy `npm run docs:sync` ghi hash. `npm run docs:check` chạy trong CI, từ chối bản dịch thiếu, chưa ghi nhận hoặc thay đổi. Hash phát hiện lệch phiên bản, không kiểm chứng dịch đúng nghĩa.
 
 Khi production preview chạy, `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium node scripts/capture.mjs` dùng chạm thật để tìm đủ 18 khám phá và chụp 19 ảnh, gồm lưu qua reload. Không cấy progress fixture. File ở `artifacts/screenshots/` được ignore.
-
-Xem [gameplay](docs/GAMEPLAY.vi.md), [kiểm thử](docs/TESTING.vi.md), [việc tiếp theo](docs/TODO.vi.md).

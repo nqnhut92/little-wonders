@@ -4,7 +4,7 @@
 
 Dùng checkout hiện tại; không tạo worktree trừ khi được yêu cầu. Dùng Node 22+, `npm ci`, typecheck, lint, Vitest, kiểm tra docs và build. Chạy Playwright khi đổi tương tác.
 
-Giữ chữ và lời nói cho bé bằng tiếng Việt. README, tài liệu kỹ thuật/sản phẩm và handoff artwork phải có cặp Anh/Việt đồng bộ; theo `docs/DOCUMENTATION.vi.md`. Sửa cả hai và chạy `npm run docs:sync` sau rà ý nghĩa, rồi `npm run docs:check`.
+Giữ chữ và lời nói cho bé bằng tiếng Việt. README, tài liệu kỹ thuật/sản phẩm và handoff artwork phải có cặp Anh/Việt đồng bộ có liên kết ở đầu file. Sửa cả hai và chạy `npm run docs:sync` sau rà ý nghĩa, rồi `npm run docs:check`.
 
 Công cụ kỹ thuật dùng tiếng Anh: tên workflow, job và step GitHub Actions, mô tả test và commit message. Quy định chỉ tiếng Việt áp dụng cho gameplay của bé; tài liệu vẫn có cặp EN/VI.
 

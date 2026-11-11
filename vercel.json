@@ -1,5 +1,5 @@
 {
-  "buildCommand": "npm run build",
+  "buildCommand": "node scripts/migrate.mjs --optional && npm run build",
   "outputDirectory": "dist",
   "rewrites": [
     {

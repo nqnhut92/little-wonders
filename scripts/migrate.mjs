@@ -2,13 +2,18 @@ import { URL } from "node:url";
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { Client } from "pg";
 import { runMigrations } from "./lib/migrations.mjs";
+const optional = process.argv.includes("--optional");
 for (const file of [".env.local", ".env"])
   if (existsSync(file)) process.loadEnvFile(file);
 if (!process.env.DATABASE_URL) {
-  console.error(
-    "Thiếu DATABASE_URL. Đặt connection string Neon trong .env.local hoặc biến môi trường.",
-  );
-  process.exitCode = 1;
+  if (optional) {
+    console.log("Skipping database migrations because DATABASE_URL is unset.");
+  } else {
+    console.error(
+      "Thiếu DATABASE_URL. Đặt connection string Neon trong .env.local hoặc biến môi trường.",
+    );
+    process.exitCode = 1;
+  }
 } else {
   const url = new URL(process.env.DATABASE_URL);
   // Enforce certificate validation independently of sslmode URL compatibility settings.
@@ -38,6 +43,6 @@ if (!process.env.DATABASE_URL) {
     );
     process.exitCode = 1;
   } finally {
-    await client.end();
+    await client.end().catch(() => {});
   }
 }

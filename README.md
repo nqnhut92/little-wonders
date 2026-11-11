@@ -14,7 +14,7 @@ A Vietnamese touch-first storybook garden for children aged 4–6, built with Re
 - Immediate local persistence, per-profile backups, same-profile multi-tab merge, batched retries and offline shell caching.
 - Google OpenID Connect for parents, nicknames for children, ownership-checked Neon APIs, CSRF and secure session cookies.
 
-Google/Neon need external configuration. Guest play works locally; Vite alone does not run APIs. Real OAuth, live Neon, Vercel routing and physical iPad Safari are not verified. See [review](docs/SELF_REVIEW.md) and [artwork handoff](docs/ARTWORK_HANDOFF.md).
+Google/Neon need external configuration. Guest play works locally; Vite alone does not run APIs. Real OAuth, live Neon, Vercel routing and physical iPad Safari are not verified. See [artwork handoff](docs/ARTWORK_HANDOFF.md) and [architecture](docs/ARCHITECTURE.md).
 
 ## Run and test
 
@@ -36,13 +36,13 @@ Use `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium` for a system Chromiu
 
 ## Deploy
 
-1. Create free-tier Neon, set `DATABASE_URL` in `.env.local`, and run `npm run db:migrate` (or execute `migrations/001_initial.sql` in its SQL editor).
+1. Create a free-tier Neon PostgreSQL database.
 2. Configure a Google OAuth web client with `openid` and the exact callback `https://YOUR_HOST/api/auth/callback`.
-3. Import into Vercel using `vercel.json`: `npm ci`, `npm run build`, output `dist`.
-4. Set server-only `DATABASE_URL`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `SESSION_SECRET` (32+ random characters) and `APP_URL` (exact HTTPS origin, no trailing slash).
+3. Import into Vercel using `vercel.json`: install `npm ci`, build `node scripts/migrate.mjs --optional && npm run build`, output `dist`. When `DATABASE_URL` is set on Vercel, numbered files in `migrations/` run automatically during build with advisory locking and checksum verification (or run `npm run db:migrate` manually).
+4. Set server-only `DATABASE_URL`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `SESSION_SECRET` (32+ random characters) and `APP_URL` (exact HTTPS origin, no trailing slash), then enable Vercel Web Analytics in the project dashboard (`@vercel/analytics/react` is wired into `src/main.tsx`).
 5. Test sign-in, nickname creation, two-device restoration, session expiry and offline reconnection before release.
 
-Never commit secrets or use `VITE_` for them. No cloud resources were created or purchased. See [deployment](docs/DEPLOYMENT.md).
+Never commit secrets or use `VITE_` for them. No cloud resources were created or purchased.
 
 ## Data policy
 
@@ -50,8 +50,6 @@ Discoveries merge by union. Stamped fields use logical counters beyond all obser
 
 ## Documentation and screenshots
 
-Every README/document has EN/VI counterparts linked at the top. Update both whenever behavior or instructions change; review their meaning, then run `npm run docs:sync` to record hashes. `npm run docs:check` runs in CI and rejects missing, unrecorded or changed translations. Hash checks detect version drift, not semantic mistranslation. See [documentation policy](docs/DOCUMENTATION.md).
+Every README/document has EN/VI counterparts linked at the top. Update both whenever behavior or instructions change; review their meaning, then run `npm run docs:sync` to record hashes. `npm run docs:check` runs in CI and rejects missing, unrecorded or changed translations. Hash checks detect version drift, not semantic mistranslation.
 
 With production preview running, `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium node scripts/capture.mjs` uses real touch actions to discover all 18 entries and capture 19 screens, including reload persistence. It injects no progress fixtures. Files go to ignored `artifacts/screenshots/`.
-
-See [gameplay](docs/GAMEPLAY.md), [testing](docs/TESTING.md) and [future work](docs/TODO.md).

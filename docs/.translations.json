@@ -2,15 +2,15 @@
   "AGENTS.md": {
     "vi": "AGENTS.vi.md",
     "hashes": [
-      "9dc550d6f5ac4f92a076f26da725657a5cbca0cf9b3a9e04a32a5869231a0a98",
-      "94e5887f4fa397014153ca4ffdef28abcc7dc73cb13916970d0e20b15fe1ec2a"
+      "ec1b580837ef227b26cb080cd71212b4228c43696f9a23896f5da96cf685225d",
+      "4cad33c73bb99e1ed5c5203184927f5d204336c5aef233d2714a897887982b8d"
     ]
   },
   "README.md": {
     "vi": "README.vi.md",
     "hashes": [
-      "91bec6296ee8a39aeb2184b437a23512a158a6d67e35b3908e9bfa984593d535",
-      "389f40a4ff3f532575c88cec8ee03e11a464b21432059615c14380e7e0b1a7b5"
+      "c9c2b390cae65840ddcc38303548a5480422ee59c073c6ebc19f48ce7c0026ff",
+      "f95235b0fcc295485e5f8f8469c4a7aa6120560a72a949bb578f8559ad052eac"
     ]
   },
   "docs/ARCHITECTURE.md": {
@@ -23,57 +23,15 @@
   "docs/ARTWORK_HANDOFF.md": {
     "vi": "docs/ARTWORK_HANDOFF.vi.md",
     "hashes": [
-      "3b15f4cebec7614dda85521b5b4f384ac75896b5357e5465fe2dd4ca3aea0419",
-      "abed0ac3f3f866685eb3da0f27413c1881f2eb382b3e89296cc275cdfffa06d9"
-    ]
-  },
-  "docs/DEPLOYMENT.md": {
-    "vi": "docs/DEPLOYMENT.vi.md",
-    "hashes": [
-      "51410368a1d609233483d4d76a39ff9ff46c1bee07453c921d9823f195cad088",
-      "ee9bf5ae229cf58d946d43811d9dbe92eb59094e96313fca04bb7b348057ec57"
-    ]
-  },
-  "docs/DOCUMENTATION.md": {
-    "vi": "docs/DOCUMENTATION.vi.md",
-    "hashes": [
-      "85322c9ffe8041e1017fb2da933eff550ef2d35b137ec974822cb150c0ff5c70",
-      "b03c47267acb4135476745120ec9e9b59d69846bf50bb46183509df9e11ce004"
-    ]
-  },
-  "docs/GAMEPLAY.md": {
-    "vi": "docs/GAMEPLAY.vi.md",
-    "hashes": [
-      "233bc58f4fa744ae924632b04e143103bbe2f92fb27950d54b7dfb158b2bffc6",
-      "76dae00a2acd931bb9f716c4ea1cf00d2f5e0ca69daddc1110a35dc48d2757e6"
-    ]
-  },
-  "docs/SELF_REVIEW.md": {
-    "vi": "docs/SELF_REVIEW.vi.md",
-    "hashes": [
-      "c998ad86deef1544bb444eee819f083fd0be8ccfe00602c3c716dfad9b2bdb4a",
-      "451f66d5dead05de9e912651c435b611622858cbb8b11df065f35b2311e6a3db"
-    ]
-  },
-  "docs/TESTING.md": {
-    "vi": "docs/TESTING.vi.md",
-    "hashes": [
-      "c4df10897561f97cc4a302b1e6d3ee6c0a6c393a13d2aeb1e6416b717935f46a",
-      "f300e6540dd556cd39c5fcfcaf3523d513991a0d7007ade049c777c9ca1426ba"
-    ]
-  },
-  "docs/TODO.md": {
-    "vi": "docs/TODO.vi.md",
-    "hashes": [
-      "d11ccafd5a552e9a7146a8592afff144febc369091277e7b197ca1552520b5d7",
-      "4c3d7196c87b02f4fda6917349803fdc35b14db64009c439d60e30fcc00ba87d"
+      "996a8383e0207c23de5711c0fcfafcb358693a5a06bd8479d67c11204b6030be",
+      "198f1b061709c307e0f6e87d940d741e16cfb65a720e781f6c20250101b84189"
     ]
   },
   "public/assets/PROVENANCE.md": {
     "vi": "public/assets/PROVENANCE.vi.md",
     "hashes": [
-      "3e3c4f292ffd252b704f5796b88e969b34b87bd2a20f60917a11a3104f9058de",
-      "38a0e2f013314fc9d8d8c654697a40362a7e26df626e56eebeac1d70cd018b85"
+      "ab917f2c7d425dac6711c5d6056b2d5d23c8465a581ea421bd98201710735c5a",
+      "12d831f8e28f9507ad97c1f1c4a9cc58df60b17ca78e29e9d4b0798cc2073988"
     ]
   }
 }

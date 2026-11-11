@@ -46,7 +46,7 @@ Backgrounds currently live in `src/style.module.css`; target output is PNG (opti
 | soil.png       | 512×256 / 2:1    | transparent | Bed / .soil                 |
 | house-yard.png | 1160×560 / 29:14 | opaque      | Editor yard / .house-canvas |
 
-Existing app icons: `public/icon.svg` (192-square viewBox) and `public/icon-180.png`, `icon-192.png`, `icon-512.png`, opaque square PNGs rasterized from that SVG. They have no animation. UI text, settings/audio/notebook controls, dots, plus signs, focus rings and hint arrows are rendered by the app, not generated inside illustrations. The rabbit thought bubble reuses food IDs; happy sparkle reuses star. Outdoor decorations reuse the saved flower/butterfly/star IDs.
+Existing app icons: `public/favicon.ico` (16/32/48), `public/icon-32.png`, `public/icon-180.png` (full-bleed opaque), `public/icon-192.png`, `public/icon-512.png`, rasterized from a Gemini-generated storybook illustration of the cream rabbit hugging a sunflower (`PROVENANCE.md`). They have no animation. UI text, settings/audio/notebook controls, dots, plus signs, focus rings and hint arrows are rendered by the app, not generated inside illustrations. The rabbit thought bubble reuses food IDs; happy sparkle reuses star. Outdoor decorations reuse the saved flower/butterfly/star IDs.
 
 ## Character consistency
 
@@ -86,4 +86,4 @@ Layer order: sky, rainbow, distant hill, near hill/path, tree/house, pond/grass/
 - [ ] Check iPad/desktop bounds, touch/drag and reduced motion.
 - [ ] Add new image inventory to service-worker precaching and content hashing when URLs are not hashed; bundle-only precaching does not automatically include new PNGs.
 - [ ] Run typecheck, lint, tests, build, Playwright and offline checks; verify PNG app icons/manifest.
-- [ ] Update both handoffs, provenance and TODO; mark complete only when gameplay and restoration still work.
+- [ ] Update both handoffs and provenance; mark complete only when gameplay and restoration still work.

@@ -4,7 +4,7 @@
 
 Use the existing checkout; do not create worktrees unless requested. Use Node 22+, `npm ci`, typecheck, lint, Vitest, docs checks and build. Run Playwright for interaction changes.
 
-Keep child-facing text and speech Vietnamese. README, engineering/product documents and artwork handoffs must have synchronized English/Vietnamese pairs; follow `docs/DOCUMENTATION.md`. Update both and run `npm run docs:sync` after semantic review, then `npm run docs:check`.
+Keep child-facing text and speech Vietnamese. README, engineering/product documents and artwork handoffs must have synchronized English/Vietnamese pairs with top-of-file partner links. Update both and run `npm run docs:sync` after semantic review, then `npm run docs:check`.
 
 Engineering tooling uses English: GitHub Actions workflow, job and step names, test descriptions and commit messages. Vietnamese-only language applies to child-facing gameplay; documentation remains paired EN/VI.
 

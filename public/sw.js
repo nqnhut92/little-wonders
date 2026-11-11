@@ -13,7 +13,8 @@ self.addEventListener("install", (event) => {
         new Response(html, { headers: { "Content-Type": "text/html" } }),
       );
       await cache.addAll([
-        "/icon.svg",
+        "/favicon.ico",
+        "/icon-32.png",
         "/icon-180.png",
         "/icon-192.png",
         "/icon-512.png",
@@ -38,7 +39,8 @@ self.addEventListener("fetch", (event) => {
   if (
     event.request.method !== "GET" ||
     url.origin !== location.origin ||
-    url.pathname.startsWith("/api/")
+    url.pathname.startsWith("/api/") ||
+    url.pathname.startsWith("/_vercel/")
   )
     return;
   if (event.request.mode === "navigate") {
