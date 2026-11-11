@@ -1,3 +1,4 @@
+import { cn } from "./styles";
 import { useState, useEffect, useRef } from "react";
 import { Garden } from "./components/Garden";
 import { House, Lunch, Notebook } from "./components/Activities";
@@ -180,7 +181,7 @@ export default function App() {
   return (
     <main>
       <header>
-        <div className="brand">
+        <div className={cn("brand")}>
           <Art id="flower" />
           <span>
             little wonders<small>THẾ GIỚI NHỎ, ĐIỀU KỲ DIỆU TO</small>
@@ -235,7 +236,7 @@ export default function App() {
         showSteps={assistance(attempts) === "demonstrate"}
       />
       <footer>
-        <div className="guide">
+        <div className={cn("guide")}>
           <Art id="rabbit" />
           <p aria-live="polite">{message}</p>
           <button
@@ -249,21 +250,21 @@ export default function App() {
             ?
           </button>
         </div>
-        <span className="save-status">● {status}</span>
-        <button className="rest" onClick={() => setPanel("rest")}>
+        <span className={cn("save-status")}>● {status}</span>
+        <button className={cn("rest")} onClick={() => setPanel("rest")}>
           Nghỉ một chút
         </button>
       </footer>
       {panel && (
-        <div className="modal-shade">
+        <div className={cn("modal-shade")}>
           <section
-            className={`modal ${panel === "account" ? "account" : ""}`}
+            className={cn(`modal ${panel === "account" ? "account" : ""}`)}
             role="dialog"
             aria-modal="true"
             aria-label="Góc nhỏ trong vườn"
           >
             <button
-              className="close"
+              className={cn("close")}
               aria-label="Trở về vườn"
               onClick={() => setPanel("")}
             >
@@ -277,7 +278,7 @@ export default function App() {
               <Lunch world={local.world} act={act} say={say} />
             )}{" "}
             {panel === "rest" && (
-              <div className="activity">
+              <div className={cn("activity")}>
                 <Art id="cloud" />
                 <h2>Khu vườn đợi con nhé!</h2>
                 <p>Mình duỗi tay, uống nước và nhìn ra xa một chút.</p>
@@ -285,12 +286,12 @@ export default function App() {
               </div>
             )}
             {panel === "account" && (
-              <div className="activity">
+              <div className={cn("activity")}>
                 <h2>Góc dành cho người lớn</h2>
                 {!gate ? (
                   <>
                     <p>Nhờ người lớn giúp nhé. Bảy cộng năm bằng bao nhiêu?</p>
-                    <div className="gate">
+                    <div className={cn("gate")}>
                       {[10, 12, 14].map((n) => (
                         <button
                           key={n}
@@ -314,7 +315,7 @@ export default function App() {
                     </p>
                     {!signed ? (
                       <>
-                        <a className="primary" href="/api/auth/login">
+                        <a className={cn("primary")} href="/api/auth/login">
                           Tiếp tục với Google
                         </a>
                         <p>
@@ -324,7 +325,7 @@ export default function App() {
                       </>
                     ) : (
                       <>
-                        <div className="profiles">
+                        <div className={cn("profiles")}>
                           {profiles.map((p) => (
                             <button
                               key={p.id}
@@ -368,7 +369,7 @@ export default function App() {
           </section>
         </div>
       )}
-      <div className="rotate-note">
+      <div className={cn("rotate-note")}>
         Con xoay màn hình ngang để nhìn cả khu vườn nhé!
       </div>
     </main>

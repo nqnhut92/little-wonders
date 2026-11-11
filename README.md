@@ -1,6 +1,6 @@
 # Little Wonders
 
-A Vietnamese, touch-first storybook garden for children aged 4–6. React, strict TypeScript and Vite render original temporary SVG characters. No paid AI, advertisements, analytics, or continuously running backend is required.
+A Vietnamese, touch-first storybook garden for children aged 4–6. React, strict TypeScript, CSS Modules and Vite render original temporary SVG characters. No paid AI, advertisements, analytics, or continuously running backend is required.
 
 ## What works
 

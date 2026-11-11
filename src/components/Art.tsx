@@ -1,3 +1,4 @@
+import { cn } from "../styles";
 export const assetIds = [
   "tree",
   "cloud",
@@ -22,7 +23,11 @@ export const assetIds = [
 ];
 export function Art({ id, color }: { id: string; color?: string }) {
   return (
-    <svg viewBox="0 0 120 120" aria-hidden="true" className={`art art-${id}`}>
+    <svg
+      viewBox="0 0 120 120"
+      aria-hidden="true"
+      className={cn(`art art-${id}`)}
+    >
       <g
         stroke="#52684e"
         strokeWidth="2.5"
@@ -48,7 +53,7 @@ export function Art({ id, color }: { id: string; color?: string }) {
               fill="#fffdf4"
             />
             <path
-              className="raindrops"
+              className={cn("raindrops")}
               d="m30 90-6 13m36-13-6 13m36-13-6 13"
               stroke="#80b9c5"
               strokeWidth="5"

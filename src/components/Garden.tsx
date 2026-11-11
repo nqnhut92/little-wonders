@@ -1,3 +1,4 @@
+import { cn } from "../styles";
 import { useState, useRef, type PointerEvent, type CSSProperties } from "react";
 import { Art } from "./Art";
 import { value, type World, type Plant, type Action } from "../game/engine";
@@ -82,7 +83,9 @@ export function Garden({ world, act, say, open, highlight, showSteps }: Props) {
   ) => (
     <button
       aria-label={label}
-      className={`object ${reaction === id ? "react-" + id : ""} ${highlight && ["cloud", "rock", "rabbit"].includes(id) ? "hint-glow" : ""}`}
+      className={cn(
+        `object ${reaction === id ? "react-" + id : ""} ${highlight && ["cloud", "rock", "rabbit"].includes(id) ? "hint-glow" : ""}`,
+      )}
       style={{ left: x + "%", top: y + "%", width: w + "%", ...extra }}
       onClick={fn}
     >
@@ -96,7 +99,7 @@ export function Garden({ world, act, say, open, highlight, showSteps }: Props) {
   );
   return (
     <section
-      className="garden"
+      className={cn("garden")}
       aria-label="Khu Vườn Kỳ Diệu"
       onPointerMove={move}
       onPointerUp={up}
@@ -107,7 +110,7 @@ export function Garden({ world, act, say, open, highlight, showSteps }: Props) {
     >
       {showSteps && (
         <div
-          className="visual-hint"
+          className={cn("visual-hint")}
           aria-label="Chọn hạt, tưới nước, thêm nắng"
         >
           <Art id="flower" />
@@ -117,22 +120,22 @@ export function Garden({ world, act, say, open, highlight, showSteps }: Props) {
           <Art id="sun" />
         </div>
       )}
-      <div className="hill hill-back" />
-      <div className="hill hill-front" />
-      <div className="path" />
-      <div className="garden-title">
+      <div className={cn("hill hill-back")} />
+      <div className={cn("hill hill-front")} />
+      <div className={cn("path")} />
+      <div className={cn("garden-title")}>
         <span>MỘT CHÚT TÒ MÒ, THẬT NHIỀU ĐIỀU HAY</span>
         <h1>Khu Vườn Kỳ Diệu</h1>
         <p>Hôm nay, con muốn khám phá điều gì?</p>
       </div>
       {world.discoveries.includes("rainbow") && (
-        <div className="rainbow">
+        <div className={cn("rainbow")}>
           <Art id="rainbow" />
         </div>
       )}
       <button
         aria-label="Mặt trời"
-        className={`object sun ${reaction === "sun" ? "react-sun" : ""}`}
+        className={cn(`object sun ${reaction === "sun" ? "react-sun" : ""}`)}
         style={{ left: "82%", top: "5%", width: "10%" }}
         onPointerDown={(e) => down(e, "sun")}
         onClick={() => {
@@ -144,7 +147,9 @@ export function Garden({ world, act, say, open, highlight, showSteps }: Props) {
       </button>
       <button
         aria-label="Mây tưới nước"
-        className={`object cloud ${reaction === "cloud" ? "react-cloud" : ""} ${highlight ? "hint-glow" : ""}`}
+        className={cn(
+          `object cloud ${reaction === "cloud" ? "react-cloud" : ""} ${highlight ? "hint-glow" : ""}`,
+        )}
         style={{ left: "57%", top: "11%", width: "15%" }}
         onPointerDown={(e) => down(e, "cloud")}
         onClick={() => {
@@ -158,7 +163,7 @@ export function Garden({ world, act, say, open, highlight, showSteps }: Props) {
         react("tree", "Lá xào xạc… một quả táo rơi rồi!", "apple"),
       )}
       {reaction === "tree" && (
-        <div className="fallen-apple">
+        <div className={cn("fallen-apple")}>
           <Art id="apple" />
         </div>
       )}
@@ -176,7 +181,7 @@ export function Garden({ world, act, say, open, highlight, showSteps }: Props) {
         { filter: "drop-shadow(0 12px 0 #597a3814)" },
       )}
       <div
-        className="house-tint"
+        className={cn("house-tint")}
         style={{ background: value(world, "houseColor", "#efcf9d") }}
       />
       {object("pond", "pond", 3, 50, 26, "Ao nước", () => {
@@ -220,7 +225,7 @@ export function Garden({ world, act, say, open, highlight, showSteps }: Props) {
             "butterfly",
           ),
         )}
-      <div className="plots" aria-label="Hạt Giống Bí Ẩn">
+      <div className={cn("plots")} aria-label="Hạt Giống Bí Ẩn">
         {[0, 1, 2].map((slot) => {
           const p = value<Plant | undefined>(world, `plant${slot}`, undefined);
           return (
@@ -228,7 +233,7 @@ export function Garden({ world, act, say, open, highlight, showSteps }: Props) {
               data-soil={slot}
               key={slot}
               aria-label={`Luống đất ${slot + 1}`}
-              className={`soil ${reaction === "soil" ? "react-soil" : ""}`}
+              className={cn(`soil ${reaction === "soil" ? "react-soil" : ""}`)}
               onClick={() => {
                 if (!p) {
                   act({ type: "plant", slot, kind: seed });
@@ -244,7 +249,7 @@ export function Garden({ world, act, say, open, highlight, showSteps }: Props) {
               }}
             >
               {p ? (
-                <div className={`plant ${p.water && p.sun ? "grown" : ""}`}>
+                <div className={cn(`plant ${p.water && p.sun ? "grown" : ""}`)}>
                   <Art
                     id={
                       p.water && p.sun
@@ -254,23 +259,23 @@ export function Garden({ world, act, say, open, highlight, showSteps }: Props) {
                         : "grass"
                     }
                   />
-                  {p.water && <span className="water-dot">●</span>}
+                  {p.water && <span className={cn("water-dot")}>●</span>}
                 </div>
               ) : (
-                <span className="soil-mark">＋</span>
+                <span className={cn("soil-mark")}>＋</span>
               )}
             </button>
           );
         })}
       </div>
-      <div className="seed-tray">
+      <div className={cn("seed-tray")}>
         <span>Gieo một điều bất ngờ</span>
         <div>
           {seeds.map((s) => (
             <button
               key={s.id}
               aria-label={`Hạt ${s.name}`}
-              className={seed === s.id ? "selected" : ""}
+              className={cn(seed === s.id ? "selected" : "")}
               onClick={() => {
                 setSeed(s.id);
                 say("Con kéo hạt xuống luống đất nhé!");
@@ -286,10 +291,10 @@ export function Garden({ world, act, say, open, highlight, showSteps }: Props) {
           ))}
         </div>
       </div>
-      <span className="garden-sign sign-pond">Ao thì thầm</span>
-      <span className="garden-sign sign-house">Nhà của mình</span>
+      <span className={cn("garden-sign sign-pond")}>Ao thì thầm</span>
+      <span className={cn("garden-sign sign-house")}>Nhà của mình</span>
       {drag && (
-        <div className="drag-ghost" style={{ left: drag.x, top: drag.y }}>
+        <div className={cn("drag-ghost")} style={{ left: drag.x, top: drag.y }}>
           <Art id={drag.kind === "sunflower" ? "flower" : drag.kind} />
         </div>
       )}

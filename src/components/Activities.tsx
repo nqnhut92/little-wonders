@@ -1,3 +1,4 @@
+import { cn } from "../styles";
 import { useState, useRef, type PointerEvent } from "react";
 import { Art } from "./Art";
 import { initialMeal, offer } from "../game/lunch";
@@ -38,35 +39,35 @@ export function Lunch({ world, act, say }: Props) {
     if (t?.closest("[data-basket]")) feed(kind);
   };
   return (
-    <div className="lunch activity">
+    <div className={cn("lunch activity")}>
       <h2>Bữa Trưa Của Thỏ</h2>
       <p>
         {meal.kind === "orange"
           ? "Giúp thỏ tìm ba củ cà rốt màu cam nhé!"
           : "Bữa ăn sắc màu! Con chọn ba món bất kỳ nhé!"}
       </p>
-      <div className="lunch-scene">
+      <div className={cn("lunch-scene")}>
         <Art id="rabbit" />
         <button
           data-basket
           aria-label="Giỏ thức ăn"
           onClick={() => feed(food)}
-          className={meal.attempts >= 3 ? "hint-glow" : ""}
+          className={cn(meal.attempts >= 3 ? "hint-glow" : "")}
         >
           <Art id="basket" />
           <span>
             {[0, 1, 2].map((i) => (
-              <i key={i} className={i < meal.count ? "filled" : ""} />
+              <i key={i} className={cn(i < meal.count ? "filled" : "")} />
             ))}
           </span>
         </button>
       </div>
-      <div className="food-tray">
+      <div className={cn("food-tray")}>
         {["carrot", "berry", "apple"].map((f) => (
           <button
             key={f}
             aria-label={{ carrot: "Cà rốt", berry: "Dâu", apple: "Táo" }[f]}
-            className={food === f ? "selected" : ""}
+            className={cn(food === f ? "selected" : "")}
             onPointerDown={(e) => {
               if (pointer.current !== null) return;
               pointer.current = e.pointerId;
@@ -90,7 +91,7 @@ export function Lunch({ world, act, say }: Props) {
         ))}
       </div>
       {drag && (
-        <div className="drag-ghost" style={{ left: drag.x, top: drag.y }}>
+        <div className={cn("drag-ghost")} style={{ left: drag.x, top: drag.y }}>
           <Art id={drag.kind} />
         </div>
       )}
@@ -114,11 +115,11 @@ export function House({ world, act, say }: Props) {
     act({ type: "discover", id: "house" });
   };
   return (
-    <div className="activity">
+    <div className={cn("activity")}>
       <h2>Ngôi Nhà Sắc Màu</h2>
       <p>Một ngôi nhà thật giống con. Chọn màu, rồi đặt đồ trang trí nhé!</p>
       <div
-        className="house-canvas"
+        className={cn("house-canvas")}
         onClick={(e) => {
           const r = e.currentTarget.getBoundingClientRect();
           const item = {
@@ -141,7 +142,7 @@ export function House({ world, act, say }: Props) {
           say("Đẹp quá! Mình đã cất thiết kế của con rồi.", "house");
         }}
       >
-        <div className="big-house">
+        <div className={cn("big-house")}>
           <Art id="house" color={color} />
         </div>
         {decorations.map((d, i) => (
@@ -178,20 +179,20 @@ export function House({ world, act, say }: Props) {
           </button>
         ))}
       </div>
-      <div className="palette">
+      <div className={cn("palette")}>
         {["#efcf9d", "#d7a6b5", "#a5bca0", "#a2becb", "#e7bc7b"].map((c, i) => (
           <button
             aria-label={`Màu ${["kem", "hồng", "xanh lá", "xanh trời", "vàng"][i]}`}
             key={c}
             style={{ background: c }}
-            className={color === c ? "selected" : ""}
+            className={cn(color === c ? "selected" : "")}
             onClick={() => save({ type: "set", key: "houseColor", value: c })}
           />
         ))}
         {["flower", "butterfly", "star"].map((id) => (
           <button
             aria-label={`Trang trí ${id === "flower" ? "hoa" : id === "star" ? "ngôi sao" : "bướm"}`}
-            className={choice === id ? "selected" : ""}
+            className={cn(choice === id ? "selected" : "")}
             key={id}
             onClick={() => setChoice(id)}
           >
@@ -207,26 +208,26 @@ export function House({ world, act, say }: Props) {
       >
         Dọn đồ trang trí
       </button>
-      <span className="saved-note">Thiết kế được lưu tự động</span>
+      <span className={cn("saved-note")}>Thiết kế được lưu tự động</span>
     </div>
   );
 }
 export function Notebook({ world, say }: { world: World; say: Props["say"] }) {
   const [replay, setReplay] = useState("");
   return (
-    <div className="notebook activity">
+    <div className={cn("notebook activity")}>
       <h2>Sổ Tay Khám Phá</h2>
       <p>Những điều kỳ diệu con đã gặp</p>
       {!world.discoveries.length && (
         <p>Chạm vào cây, ao hoặc bụi cỏ để gặp bạn mới nhé!</p>
       )}
-      <div className="discovery-grid">
+      <div className={cn("discovery-grid")}>
         {discoveries
           .filter((d) => world.discoveries.includes(d.id))
           .map((d) => (
             <button
               key={d.id}
-              className={replay === d.id ? "replay" : ""}
+              className={cn(replay === d.id ? "replay" : "")}
               onClick={() => {
                 setReplay(d.id);
                 setTimeout(() => setReplay(""), 800);
