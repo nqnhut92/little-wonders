@@ -1,0 +1,760 @@
+:root {
+  font-family: ui-rounded, "Avenir Next", Arial, sans-serif;
+  color: #425b45;
+  background: #faf8ee;
+  font-synthesis: none;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+}
+button,
+a,
+input {
+  -webkit-tap-highlight-color: transparent;
+  font: inherit;
+}
+button {
+  cursor: pointer;
+  color: inherit;
+  border: 0;
+  background: #fff9e9;
+  border-radius: 18px;
+  min-height: 48px;
+  padding: 10px 18px;
+}
+button:focus-visible,
+a:focus-visible {
+  outline: 4px solid #bd8951;
+  outline-offset: 3px;
+}
+button:hover {
+  filter: brightness(1.025);
+}
+button:active {
+  transform: scale(0.96);
+}
+header {
+  height: 94px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 4%;
+  background: #faf8ee;
+}
+nav {
+  display: flex;
+  gap: 12px;
+}
+nav button {
+  background: #eeeee0;
+  border: 1px solid #dfe3cf;
+}
+nav button:last-child {
+  font-size: 24px;
+  width: 48px;
+  padding: 0;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: Georgia, serif;
+  font-size: 29px;
+  letter-spacing: -1px;
+}
+.brand > .art {
+  width: 48px;
+  height: 56px;
+}
+.brand small {
+  font:
+    9px Arial,
+    sans-serif;
+  letter-spacing: 2px;
+  display: block;
+  margin-top: 5px;
+}
+.garden {
+  position: relative;
+  width: 100%;
+  --garden-height: clamp(470px, min(68vw, calc(100dvh - 200px)), 820px);
+  height: var(--garden-height);
+  max-width: calc(var(--garden-height) * 1.9);
+  margin-inline: auto;
+  min-height: 470px;
+  max-height: 820px;
+  overflow: hidden;
+  isolation: isolate;
+  background: linear-gradient(#dceceb 0%, #eff3d8 60%, #d5e3ae 60%);
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.garden-title {
+  position: absolute;
+  top: 6%;
+  left: 28%;
+  text-align: center;
+  z-index: 2;
+  pointer-events: none;
+}
+.garden-title > span {
+  font-size: 9px;
+  letter-spacing: 2.5px;
+  color: #6e8972;
+}
+.garden-title h1 {
+  font-family: Georgia, serif;
+  font-size: clamp(25px, 3vw, 44px);
+  font-weight: 500;
+  margin: 12px 0;
+  color: #496849;
+}
+.garden-title p {
+  font-size: 14px;
+  color: #718573;
+}
+.hill {
+  position: absolute;
+  border-radius: 50% 50% 0 0;
+  pointer-events: none;
+}
+.hill-back {
+  width: 120%;
+  height: 69%;
+  left: -10%;
+  top: 39%;
+  background: #c2d8a3;
+  transform: rotate(-5deg);
+}
+.hill-front {
+  width: 130%;
+  height: 68%;
+  left: -12%;
+  top: 55%;
+  background: #d1dfa9;
+  transform: rotate(6deg);
+}
+.path {
+  position: absolute;
+  left: 49%;
+  top: 58%;
+  width: 35%;
+  height: 90%;
+  background: #e6d4ac;
+  border-radius: 70% 30% 0 0;
+  transform: rotate(-26deg);
+  opacity: 0.65;
+}
+.object {
+  position: absolute;
+  padding: 0;
+  border: 0;
+  background: none;
+  min-height: 0;
+  z-index: 3;
+  aspect-ratio: 1;
+  touch-action: none;
+}
+.art {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+}
+.object .art {
+  filter: drop-shadow(0 6px 1px #52684e0a);
+}
+.cloud > .art {
+  animation: float 8s ease-in-out infinite;
+}
+.sun > .art {
+  animation: sway 9s ease-in-out infinite;
+}
+.art-butterfly {
+  animation: flutter 2.4s ease-in-out infinite;
+}
+.art-flower {
+  transform-origin: 50% 90%;
+  animation: sway 6s ease-in-out infinite;
+}
+.house-tint {
+  display: none;
+}
+.plots {
+  position: absolute;
+  left: 43%;
+  top: 60%;
+  width: 26%;
+  height: 18%;
+  display: flex;
+  gap: 4%;
+  transform: rotate(-3deg);
+  z-index: 4;
+}
+.soil {
+  position: relative;
+  width: 31%;
+  height: 56%;
+  border-radius: 50%;
+  background: #ad8661;
+  box-shadow:
+    inset 0 8px #98745155,
+    0 3px #e5cba5;
+  padding: 0;
+  align-self: end;
+}
+.soil:after {
+  content: "";
+  position: absolute;
+  border-top: 2px dashed #d0ac80;
+  inset: 40% 12%;
+}
+.soil-mark {
+  color: #e6c9a0;
+  font-size: 30px;
+}
+.plant {
+  position: absolute;
+  width: 80%;
+  bottom: 35%;
+  left: 10%;
+  height: 70px;
+  z-index: 1;
+  transition: height 1s;
+}
+.plant.grown {
+  height: 120px;
+}
+.water-dot {
+  position: absolute;
+  bottom: 0;
+  color: #90c8d0;
+  left: 70%;
+}
+.seed-tray {
+  position: absolute;
+  bottom: 3%;
+  left: 42%;
+  padding: 10px 18px;
+  background: #fff8e6e8;
+  border: 1px solid #e4d9b7;
+  border-radius: 24px;
+  z-index: 5;
+  text-align: center;
+  box-shadow: 0 7px 20px #6a764510;
+}
+.seed-tray > span {
+  font-size: 11px;
+  letter-spacing: 0.5px;
+}
+.seed-tray > div {
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+}
+.seed-tray button {
+  width: 65px;
+  height: 66px;
+  padding: 4px 10px;
+  background: transparent;
+  border: 2px solid transparent;
+  border-radius: 14px;
+}
+.seed-tray .art {
+  height: 38px;
+}
+.seed-tray small {
+  font-size: 9px;
+  white-space: nowrap;
+}
+.selected {
+  border: 2px solid #869e65 !important;
+  background: #eaf0d7;
+}
+.garden-sign {
+  position: absolute;
+  font:
+    italic 13px Georgia,
+    serif;
+  color: #657f59;
+  pointer-events: none;
+}
+.sign-pond {
+  left: 10%;
+  top: 91%;
+}
+.sign-house {
+  left: 79%;
+  top: 80%;
+}
+.rainbow {
+  position: absolute;
+  width: 30%;
+  left: 38%;
+  top: 18%;
+  opacity: 0.45;
+  z-index: 1;
+}
+.fallen-apple {
+  position: absolute;
+  left: 20%;
+  top: 61%;
+  width: 5%;
+  animation: fall 0.8s ease-out;
+}
+.drag-ghost {
+  position: fixed;
+  width: 85px;
+  height: 85px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 50;
+  filter: drop-shadow(0 10px 8px #0002);
+}
+footer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 4%;
+  min-height: 106px;
+}
+.guide {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  max-width: 65%;
+  background: #f0efdf;
+  border-radius: 24px;
+  padding: 6px 14px;
+}
+.guide > .art {
+  width: 52px;
+  height: 64px;
+  flex-shrink: 0;
+}
+.guide p {
+  font-size: 14px;
+  margin: 0;
+  line-height: 1.6;
+}
+.guide button {
+  background: #dfe6c9;
+  border-radius: 50%;
+  width: 40px;
+  min-height: 40px;
+  padding: 0;
+  flex-shrink: 0;
+}
+.save-status {
+  font-size: 10px;
+  color: #87977c;
+  max-width: 160px;
+}
+.rest {
+  margin-left: auto;
+  font-size: 12px;
+  background: transparent;
+  white-space: nowrap;
+}
+.modal-shade {
+  position: fixed;
+  inset: 0;
+  background: #364c3b70;
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+  padding: 24px;
+}
+.modal {
+  position: relative;
+  width: min(820px, 96vw);
+  max-height: 90dvh;
+  overflow: auto;
+  background: #fffbee;
+  border: 5px solid #e8d9b8;
+  border-radius: 32px;
+  box-shadow: 0 20px 90px #233e3333;
+  padding: 28px;
+}
+.close {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  border-radius: 50%;
+  font-size: 26px;
+  padding: 0;
+  width: 48px;
+  z-index: 2;
+  background: #eae9d5;
+}
+.activity {
+  text-align: center;
+}
+.activity h2 {
+  font-family: Georgia, serif;
+  font-size: 30px;
+  font-weight: 500;
+  margin: 0 35px 10px;
+}
+.activity p {
+  font-size: 15px;
+  line-height: 1.6;
+}
+.activity > .art {
+  width: 150px;
+  margin: auto;
+}
+.lunch-scene {
+  display: flex;
+  justify-content: center;
+  gap: 45px;
+  height: 210px;
+}
+.lunch-scene > .art {
+  width: 180px;
+}
+.lunch-scene button {
+  width: 170px;
+  background: transparent;
+  padding: 0;
+}
+.lunch-scene button > .art {
+  height: 150px;
+}
+.lunch-scene span {
+  display: flex;
+  gap: 9px;
+  justify-content: center;
+}
+.lunch-scene i {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #e4dac3;
+  border: 2px solid #c7b595;
+}
+.lunch-scene i.filled {
+  background: #ec9d5e;
+}
+.food-tray {
+  display: flex;
+  justify-content: center;
+  gap: 22px;
+}
+.food-tray button {
+  height: 100px;
+  width: 100px;
+  border: 2px solid transparent;
+  padding: 8px;
+  touch-action: none;
+}
+.house-canvas {
+  position: relative;
+  background: linear-gradient(#dcebea 60%, #d1dfa9 60%);
+  height: 280px;
+  max-width: 580px;
+  margin: auto;
+  border-radius: 20px;
+  overflow: hidden;
+  touch-action: none;
+}
+.big-house {
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  left: 25%;
+}
+.house-canvas button {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  padding: 0;
+  background: transparent;
+  touch-action: none;
+}
+.palette {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px 0;
+}
+.palette button {
+  width: 45px;
+  height: 45px;
+  min-height: 45px;
+  border-radius: 50%;
+  border: 2px solid #d8d6bd;
+  padding: 4px;
+}
+.saved-note {
+  display: block;
+  font-size: 12px;
+  margin-top: 14px;
+  color: #849172;
+}
+.discovery-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+.discovery-grid button {
+  background: #f0efd9;
+  border: 1px solid #e2dfc3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+}
+.discovery-grid .art {
+  width: 90px;
+  height: 90px;
+}
+.account {
+  max-width: 540px;
+}
+.account input {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #b6c39b;
+  border-radius: 12px;
+  margin: 10px 0;
+}
+.account label {
+  display: block;
+  text-align: left;
+  font-size: 13px;
+}
+.primary {
+  display: block;
+  color: #fff;
+  background: #63805b;
+  border-radius: 15px;
+  padding: 15px;
+  text-decoration: none;
+  margin: 20px 0;
+}
+.account button {
+  margin: 5px;
+}
+.rotate-note {
+  display: none;
+}
+.hint-glow {
+  animation: glow 2s ease-in-out infinite;
+}
+.react-tree,
+.react-grass,
+.react-rock {
+  animation: wiggle 0.7s ease;
+}
+.react-pond {
+  animation: ripple 0.8s ease;
+}
+.react-bird,
+.react-fish,
+.react-butterfly {
+  animation: hop 0.8s ease;
+}
+.react-flower,
+.react-sun,
+.react-cloud,
+.react-soil {
+  animation: glow 0.8s ease;
+}
+@keyframes float {
+  50% {
+    transform: translateX(12px);
+  }
+}
+@keyframes sway {
+  50% {
+    transform: rotate(4deg);
+  }
+}
+@keyframes flutter {
+  50% {
+    transform: translateY(-8px) rotate(8deg);
+  }
+}
+@keyframes wiggle {
+  25% {
+    transform: rotate(-7deg);
+  }
+  75% {
+    transform: rotate(7deg);
+  }
+}
+@keyframes hop {
+  50% {
+    transform: translateY(-24px);
+  }
+}
+@keyframes ripple {
+  50% {
+    transform: scale(1.08);
+    opacity: 0.7;
+  }
+}
+@keyframes glow {
+  50% {
+    filter: drop-shadow(0 0 12px #fff8aa);
+  }
+}
+@keyframes fall {
+  from {
+    transform: translateY(-130px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+@media (max-height: 750px) and (orientation: landscape) {
+  header {
+    height: 70px;
+  }
+  .garden {
+    --garden-height: max(390px, calc(100dvh - 155px));
+    height: var(--garden-height);
+    min-height: 390px;
+  }
+  footer {
+    min-height: 85px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+  .garden-title h1 {
+    margin: 7px 0;
+  }
+  .guide > .art {
+    height: 48px;
+  }
+  .seed-tray {
+    padding: 6px 12px;
+  }
+  .seed-tray button {
+    height: 58px;
+  }
+}
+@media (orientation: portrait) and (max-width: 900px) {
+  .rotate-note {
+    display: block;
+    text-align: center;
+    padding: 20px;
+    background: #f2dfb2;
+  }
+  .garden {
+    min-height: 550px;
+  }
+  .garden-title {
+    left: 23%;
+  }
+  .garden-title h1 {
+    font-size: 23px;
+  }
+  .garden-title > span {
+    display: none;
+  }
+  .brand small {
+    display: none;
+  }
+  nav span {
+    display: none;
+  }
+  .brand {
+    font-size: 23px;
+  }
+  .guide {
+    max-width: 100%;
+  }
+  .save-status,
+  .rest {
+    display: none;
+  }
+  .discovery-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *:before,
+  *:after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+@supports (padding: max(0px)) {
+  header {
+    padding-left: max(4%, env(safe-area-inset-left));
+    padding-right: max(4%, env(safe-area-inset-right));
+  }
+  footer {
+    padding-bottom: max(14px, env(safe-area-inset-bottom));
+  }
+}
+.art-cloud .raindrops {
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.react-cloud .raindrops {
+  opacity: 1;
+  animation: drizzle 0.6s linear infinite;
+}
+.art-worm {
+  animation: crawl 5s ease-in-out infinite;
+}
+.react-worm {
+  animation: wiggle 0.8s ease;
+}
+.replay > .art {
+  animation: hop 0.8s ease;
+}
+.food-tray {
+  touch-action: none;
+}
+@keyframes drizzle {
+  from {
+    transform: translateY(-6px);
+  }
+  to {
+    transform: translateY(8px);
+  }
+}
+@keyframes crawl {
+  50% {
+    transform: scaleX(0.92) translateX(4px);
+  }
+}
+
+.seed-tray button.selected {
+  background: #eaf0d7;
+}
+.visual-hint {
+  position: absolute;
+  left: 34%;
+  top: 30%;
+  width: 26%;
+  height: 65px;
+  padding: 8px;
+  background: #fff8e6d9;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  z-index: 5;
+  pointer-events: none;
+}
+.visual-hint > .art {
+  width: 48px;
+  height: 48px;
+}

@@ -1,0 +1,53 @@
+const CACHE = "little-wonders-__BUILD_ID__";
+self.addEventListener("install", (event) => {
+  event.waitUntil(
+    (async () => {
+      const cache = await caches.open(CACHE);
+      const response = await fetch("/");
+      const html = await response.text();
+      const files = [
+        ...html.matchAll(/(?:src|href)="(\/assets\/[^" ]+)"/g),
+      ].map((m) => m[1]);
+      await cache.put(
+        "/",
+        new Response(html, { headers: { "Content-Type": "text/html" } }),
+      );
+      await cache.addAll([
+        "/icon.svg",
+        "/icon-180.png",
+        "/icon-192.png",
+        "/icon-512.png",
+        "/manifest.webmanifest",
+        ...files,
+      ]);
+    })(),
+  );
+});
+self.addEventListener("activate", (event) => {
+  event.waitUntil(
+    (async () => {
+      for (const key of await caches.keys())
+        if (key.startsWith("little-wonders-") && key !== CACHE)
+          await caches.delete(key);
+      await self.clients.claim();
+    })(),
+  );
+});
+self.addEventListener("fetch", (event) => {
+  const url = new URL(event.request.url);
+  if (
+    event.request.method !== "GET" ||
+    url.origin !== location.origin ||
+    url.pathname.startsWith("/api/")
+  )
+    return;
+  if (event.request.mode === "navigate") {
+    event.respondWith(fetch(event.request).catch(() => caches.match("/")));
+    return;
+  }
+  event.respondWith(
+    caches
+      .match(event.request, { ignoreVary: true })
+      .then((cached) => cached || fetch(event.request)),
+  );
+});
