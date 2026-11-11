@@ -1,3 +1,4 @@
+import { crops } from "./crops";
 export const discoveries = [
   ["rain", "Mưa tưới vườn", "cloud"],
   ["sun", "Nắng ấm", "sun"],
@@ -17,12 +18,15 @@ export const discoveries = [
   ["decor", "Hoa trước cửa", "flower"],
   ["rainbow", "Cầu vồng sau mưa", "rainbow"],
   ["grass", "Dế trong cỏ", "bug"],
+  ["harvest_sunflower", "Hái hoa hướng dương", "flower"],
+  ["harvest_carrot", "Hái cà rốt", "carrot"],
+  ["harvest_berry", "Hái dâu", "berry"],
+  ["harvest_tomato", "Hái cà chua", "tomato"],
+  ["harvest_pumpkin", "Hái bí ngô", "pumpkin"],
+  ["harvest_corn", "Hái bắp", "corn"],
+  ["harvest_watermelon", "Hái dưa hấu", "watermelon"],
 ].map(([id, name, art]) => ({ id, name, art }));
-export const seeds = [
-  { id: "sunflower", name: "Hướng dương", color: "#ebbd54" },
-  { id: "carrot", name: "Cà rốt", color: "#ef9457" },
-  { id: "berry", name: "Dâu", color: "#d96774" },
-];
+export const seeds = crops.map((c) => ({ id: c.id, name: c.name }));
 export const hints = [
   "Con chọn hạt rồi chạm luống đất nhé!",
   "Đưa mây tới mầm cây để tưới nhé!",

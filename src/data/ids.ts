@@ -19,6 +19,8 @@ export const cropKinds = [
   "watermelon",
 ] as const;
 export const plantKinds = cropKinds;
+// Things a basket can hold: every crop plus apples shaken from the tree.
+export const basketKinds = [...cropKinds, "apple"] as const;
 export const maxBasket = 9;
 export const maxPlots = 6;
 export const plotKeyPattern = /^plot\.[a-z0-9_]{1,16}\.[0-9]{1,2}$/;

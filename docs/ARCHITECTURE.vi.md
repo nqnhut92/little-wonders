@@ -33,7 +33,7 @@ Parent identity lấy từ session ký, không nhận user ID do client khai bá
 
 ## Cây, thu hoạch và giỏ
 
-Một luống là field `plot.<khu>.<số>` với `{kind, stage, water, sun, rounds?}`: stage 0 là trống, rồi hạt, mầm, lớn và chín. Mỗi vòng đủ nước và nắng đưa cây lên một giai đoạn và xóa hai cờ; cây là dữ liệu trong `src/data/crops.ts` (`care` là số vòng mỗi giai đoạn). `harvest` đưa cây chín vào field `basket` (tối đa 9 mỗi loại), làm trống luống và ghi `harvest_<cây>`. Số luống suy ra từ các khám phá `harvest_*` khác nhau (3 đến 6), không lưu riêng. `upgradeWorld` chuyển field `plant0..2` cũ thành `plot.garden.N`: cây đủ nước và nắng thành chín, cây khác giữ hạt và cờ, và plot đã có không bị ghi đè.
+Một luống là field `plot.<khu>.<số>` với `{kind, stage, water, sun, rounds?}`: stage 0 là trống, rồi hạt, mầm, lớn và chín. Mỗi vòng đủ nước và nắng đưa cây lên một giai đoạn và xóa hai cờ; cây là dữ liệu trong `src/data/crops.ts` (`care` là số vòng mỗi giai đoạn). `harvest` đưa cây chín vào field `basket` (tối đa 9 mỗi loại), làm trống luống và ghi `harvest_<cây>`. `shake` thêm một quả táo vào giỏ, `feed` dùng một món trong giỏ (bàn ăn luôn có món cơ bản nên giỏ trống không chặn bé) và `resetGarden` làm trống luống, giỏ và đồ trang trí, còn khám phá, màu nhà và bữa ăn dở được giữ. Số luống suy ra từ các khám phá `harvest_*` khác nhau (3 đến 6), không lưu riêng. `upgradeWorld` chuyển field `plant0..2` cũ thành `plot.garden.N`: cây đủ nước và nắng thành chín, cây khác giữ hạt và cờ, và plot đã có không bị ghi đè.
 
 ## Ngôn ngữ thiết kế giao diện
 

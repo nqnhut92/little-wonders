@@ -12,28 +12,32 @@ Truyện tranh cổ tích ấm áp cho trẻ Việt 4–6 tuổi: viền rêu m�
 
 Mọi ID đối tượng dưới đây hiện nằm trong `src/components/Art.tsx`, qua `Art` với viewBox 0 0 120 120. Chưa có file riêng từng đối tượng. Tên đích là ID.png trong `public/assets/`: 512×512, 1:1, PNG RGBA trong suốt; có thể kèm SVG master sạch. Giữ padding 7%, silhouette và điểm neo giữa đáy gần (60,112). Không crop lề trong suốt hoặc tính hitbox từ alpha.
 
-| ID / tên file đích        | Mục đích và tương tác                                   |
-| ------------------------- | ------------------------------------------------------- |
-| tree / tree.png           | Cây táo: rung tán, táo rơi                              |
-| cloud / cloud.png         | Mây kéo được; mưa khi chạm/thả                          |
-| sun / sun.png             | Nguồn nắng; chạm/thả vào luống                          |
-| flower / flower.png       | Hướng dương, hoa vườn, chọn hạt, trang trí, thương hiệu |
-| carrot / carrot.png       | Chọn hạt, cây lớn, thức ăn/yêu cầu bữa trưa             |
-| berry / berry.png         | Chọn hạt, cây lớn, thức ăn/yêu cầu bữa trưa             |
-| butterfly / butterfly.png | Bướm vườn, trang trí, sổ tay                            |
-| worm / worm.png           | Sinh vật hiện từ cỏ                                     |
-| bug / bug.png             | Bọ rùa; dùng chung hình cho dế trong sổ                 |
-| bird / bird.png           | Chim trên cành; hót và nhảy                             |
-| rabbit / rabbit.png       | Thỏ vườn, hướng dẫn, bữa ăn; phản ứng vui/suy nghĩ      |
-| fish / fish.png           | Cá trong ao; phản ứng bơi                               |
-| apple / apple.png         | Quả rơi, thức ăn/yêu cầu bữa trưa                       |
-| house / house.png         | Vườn chính và editor; năm màu tường                     |
-| rainbow / rainbow.png     | Nền khám phá mưa+nắng lâu dài                           |
-| rock / rock.png           | Nghiêng để lộ bọ rùa                                    |
-| grass / grass.png         | Bụi rung và hình đại diện mầm cây                       |
-| pond / pond.png           | Mặt nước, lá sen và gợn                                 |
-| basket / basket.png       | Đích thả bữa ăn; dấu đếm render riêng                   |
-| star / star.png           | Trang trí nhà và ngôi sao phản hồi bữa ăn               |
+| ID / tên file đích          | Mục đích và tương tác                                   |
+| --------------------------- | ------------------------------------------------------- |
+| tree / tree.png             | Cây táo: rung tán, táo rơi                              |
+| cloud / cloud.png           | Mây kéo được; mưa khi chạm/thả                          |
+| sun / sun.png               | Nguồn nắng; chạm/thả vào luống                          |
+| flower / flower.png         | Hướng dương, hoa vườn, chọn hạt, trang trí, thương hiệu |
+| carrot / carrot.png         | Chọn hạt, cây lớn, thức ăn/yêu cầu bữa trưa             |
+| berry / berry.png           | Chọn hạt, cây lớn, thức ăn/yêu cầu bữa trưa             |
+| butterfly / butterfly.png   | Bướm vườn, trang trí, sổ tay                            |
+| worm / worm.png             | Sinh vật hiện từ cỏ                                     |
+| bug / bug.png               | Bọ rùa; dùng chung hình cho dế trong sổ                 |
+| bird / bird.png             | Chim trên cành; hót và nhảy                             |
+| rabbit / rabbit.png         | Thỏ vườn, hướng dẫn, bữa ăn; phản ứng vui/suy nghĩ      |
+| fish / fish.png             | Cá trong ao; phản ứng bơi                               |
+| apple / apple.png           | Quả rơi, thức ăn/yêu cầu bữa trưa                       |
+| house / house.png           | Vườn chính và editor; năm màu tường                     |
+| rainbow / rainbow.png       | Nền khám phá mưa+nắng lâu dài                           |
+| rock / rock.png             | Nghiêng để lộ bọ rùa                                    |
+| grass / grass.png           | Bụi rung và hình đại diện mầm cây                       |
+| pond / pond.png             | Mặt nước, lá sen và gợn                                 |
+| basket / basket.png         | Đích thả bữa ăn; dấu đếm render riêng                   |
+| tomato / tomato.png         | Cây trồng: nút hạt, cây chín, giỏ (vector tạm)          |
+| pumpkin / pumpkin.png       | Cây trồng: nút hạt, cây chín, giỏ (vector tạm)          |
+| corn / corn.png             | Cây trồng: nút hạt, cây chín, giỏ (vector tạm)          |
+| watermelon / watermelon.png | Cây trồng: nút hạt, cây chín, giỏ; món cún thích        |
+| star / star.png             | Trang trí nhà và ngôi sao phản hồi bữa ăn               |
 
 Các nền hiện nằm trong `src/style.module.css`, tô màu bằng token `--scene-*` trong `src/styles/tokens.css`; đầu ra đích là PNG (có thể kèm SVG master). Tên file này chỉ file thay thế tương lai, chưa tồn tại.
 
@@ -91,7 +95,7 @@ Thứ tự: trời, cầu vồng, đồi xa, đồi gần/lối, cây/nhà, ao/c
 >
 > Khớp SVG tham chiếu thuộc dự án được cung cấp. Thỏ: thân/đầu kem tròn, tai dài lòng hồng, mắt chấm, mũi V, má hồng, không quần áo. Chim xanh xám/mỏ vàng; bướm cánh trên hồng/dưới vàng; bọ rùa đất đỏ/chấm rêu; sâu xanh nhạt; cá vàng cam hướng phải. Giữ tỉ lệ, nét và sáng giống nhau giữa pose. Đầu tiên đưa character reference sheet để duyệt, rồi xuất từng file.
 >
-> ID đối tượng: tree, cloud, sun, flower, carrot, berry, butterfly, worm, bug, bird, rabbit, fish, apple, house, rainbow, rock, grass, pond, basket, star. Xuất mỗi ID.png, RGBA trong suốt 512×512, padding khoảng 7%, neo giữa đáy khớp (60,112) trong canvas 120×120 hiện tại. Không crop/đổi tỉ lệ. Cà rốt phải rõ màu cam; dâu đỏ/hồng. Nhà cần mask tường đổi màu riêng. Tách thân/tán/táo, mây/mưa, bờ/nước/gợn/lá/cá, mái/tường/cửa và trang trí. Không nhúng UI, vùng chạm hoặc luật chơi.
+> ID đối tượng: tree, cloud, sun, flower, carrot, berry, butterfly, worm, bug, bird, rabbit, fish, apple, house, rainbow, rock, grass, pond, basket, star, tomato, pumpkin, corn, watermelon. Xuất mỗi ID.png, RGBA trong suốt 512×512, padding khoảng 7%, neo giữa đáy khớp (60,112) trong canvas 120×120 hiện tại. Không crop/đổi tỉ lệ. Cà rốt phải rõ màu cam; dâu đỏ/hồng. Nhà cần mask tường đổi màu riêng. Tách thân/tán/táo, mây/mưa, bờ/nước/gợn/lá/cá, mái/tường/cửa và trang trí. Không nhúng UI, vùng chạm hoặc luật chơi.
 >
 > Nền: sky 2400×1400 kín; hill-back/hill-front 2400×1400 trong suốt; path 1200×1400 trong suốt; soil 512×256 trong suốt; house-yard 1160×560 kín. Không vẽ sinh vật tương tác dính vào nền. Sprite tùy chọn: idle 2–4 frame, touch 3–4, bướm/cá di chuyển 4, mưa 3, khám phá nhẹ 3. Mọi frame cùng canvas/pivot. Pose ID.png tĩnh bắt buộc vì MVP dùng CSS animation. Frame thêm đặt ID-idle-01.png, ID-touch-01.png, ID-move-01.png hoặc ID-discover-01.png; kèm manifest frame-rate riêng và pose reduced-motion.
 >

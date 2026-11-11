@@ -10,7 +10,7 @@ import {
   type Plot,
   type Action,
 } from "../game/engine";
-import { crops, ripeStage } from "../data/crops";
+import { cropArt, ripeStage } from "../data/crops";
 import { seeds } from "../data/content";
 import { interactions } from "../data/interactions";
 type Props = {
@@ -185,9 +185,10 @@ export function Garden({ world, act, say, open, highlight, showSteps }: Props) {
       >
         <Art id="cloud" />
       </button>
-      {object("tree", "tree", 3, 22, 25, "Cây táo", () =>
-        react("tree", "Lá xào xạc… một quả táo rơi rồi!", "apple"),
-      )}
+      {object("tree", "tree", 3, 22, 25, "Cây táo", () => {
+        act({ type: "shake" });
+        react("tree", "Lá xào xạc… một quả táo rơi vào giỏ rồi!", "apple");
+      })}
       {reaction === "tree" && (
         <div className={cn("fallen-apple")}>
           <Art id="apple" />
@@ -249,7 +250,7 @@ export function Garden({ world, act, say, open, highlight, showSteps }: Props) {
         object("worm", "worm", 32, 82, 6, "Sâu nhỏ", () =>
           react("worm", "Bạn sâu uốn mình thật chậm."),
         )}
-      {object("rabbit", "rabbit", 65, 74, 10, "Bữa Trưa Của Thỏ", () => {
+      {object("rabbit", "rabbit", 76, 66, 10, "Bữa Trưa Của Thỏ", () => {
         act({ type: "discover", id: "rabbit" });
         open("lunch");
       })}
@@ -269,7 +270,7 @@ export function Garden({ world, act, say, open, highlight, showSteps }: Props) {
         {Array.from({ length: plotCount(world) }, (_, slot) => {
           const p = value<Plot | undefined>(world, plotKey(slot), undefined);
           const growing = p && p.stage > 0 ? p : undefined;
-          const crop = crops.find((c) => c.id === growing?.kind);
+          const art = cropArt(growing?.kind ?? "");
           return (
             <button
               data-soil={slot}
@@ -297,11 +298,7 @@ export function Garden({ world, act, say, open, highlight, showSteps }: Props) {
                     `plant stage-${growing.stage} ${growing.stage === ripeStage ? "ripe" : ""}`,
                   )}
                 >
-                  <Art
-                    id={
-                      growing.stage >= 3 ? (crop?.art ?? growing.kind) : "grass"
-                    }
-                  />
+                  <Art id={growing.stage >= 3 ? art : "grass"} />
                   {growing.water && <span className={cn("water-dot")}>●</span>}
                 </div>
               ) : (
@@ -318,7 +315,7 @@ export function Garden({ world, act, say, open, highlight, showSteps }: Props) {
             .filter(([, n]) => n > 0)
             .map(([kind, n]) => (
               <span key={kind} aria-label={`${kind} ${n}`}>
-                <Art id={crops.find((c) => c.id === kind)?.art ?? kind} />
+                <Art id={cropArt(kind)} />
                 <b>{n}</b>
               </span>
             ))}
@@ -341,7 +338,7 @@ export function Garden({ world, act, say, open, highlight, showSteps }: Props) {
                 down(e, s.id);
               }}
             >
-              <Art id={s.id === "sunflower" ? "flower" : s.id} />
+              <Art id={cropArt(s.id)} />
               <small>{s.name}</small>
             </button>
           ))}
@@ -351,7 +348,7 @@ export function Garden({ world, act, say, open, highlight, showSteps }: Props) {
       <span className={cn("garden-sign sign-house")}>Nhà của mình</span>
       {drag && (
         <div className={cn("drag-ghost")} style={{ left: drag.x, top: drag.y }}>
-          <Art id={drag.kind === "sunflower" ? "flower" : drag.kind} />
+          <Art id={cropArt(drag.kind)} />
         </div>
       )}
     </section>

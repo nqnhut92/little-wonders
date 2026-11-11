@@ -11,6 +11,10 @@ import {
 } from "../src/game/engine";
 import { contextualHint } from "../src/game/hints";
 import { worldSchema } from "../api/index";
+import { crops } from "../src/data/crops";
+import { cropKinds } from "../src/data/ids";
+import { assetIds } from "../src/components/Art";
+import { discoveries } from "../src/data/content";
 const run = (w: World, ...steps: Action[]) =>
   steps.reduce((acc, step) => apply(acc, step, "dev", 0), w);
 const plot = (w: World, slot = 0) =>
@@ -132,5 +136,49 @@ describe("hints", () => {
   it("point at a ripe plant first", () => {
     expect(contextualHint(ripe())).toContain("hái");
     expect(contextualHint(emptyWorld())).toContain("chọn một hạt");
+  });
+});
+
+describe("apples, feeding and a fresh garden", () => {
+  it("shaking the tree puts an apple in the basket, capped at nine", () => {
+    let w = run(emptyWorld(), { type: "shake" });
+    expect(basketOf(w)).toEqual({ apple: 1 });
+    expect(w.discoveries).toContain("apple");
+    for (let i = 0; i < 12; i++) w = run(w, { type: "shake" });
+    expect(basketOf(w).apple).toBe(9);
+    expect(worldSchema.safeParse(w).success).toBe(true);
+  });
+  it("uses one item from the basket when feeding and never blocks on an empty basket", () => {
+    const w = run(emptyWorld(), { type: "shake" }, { type: "shake" });
+    const fed = run(w, { type: "feed", kind: "apple" });
+    expect(basketOf(fed).apple).toBe(1);
+    const empty = emptyWorld();
+    expect(apply(empty, { type: "feed", kind: "carrot" }, "d")).toBe(empty);
+  });
+  it("fresh garden clears beds, basket and decorations but keeps discoveries and the house", () => {
+    let w = run(
+      ripe(),
+      { type: "set", key: "decorations", value: [{ id: "star", x: 1, y: 1 }] },
+      { type: "set", key: "houseColor", value: "#d7a6b5" },
+      { type: "shake" },
+    );
+    w = run(w, { type: "resetGarden" });
+    expect(plot(w)).toMatchObject({ stage: 0 });
+    expect(basketOf(w)).toEqual({});
+    expect(w.fields.decorations.value).toEqual([]);
+    expect(w.fields.houseColor.value).toBe("#d7a6b5");
+    expect(w.discoveries).toEqual(
+      expect.arrayContaining(["carrot", "apple", "rain", "sun"]),
+    );
+    expect(w.epoch).toBe(0);
+    expect(apply(w, { type: "resetGarden" }, "d")).toBe(w);
+    expect(worldSchema.safeParse(w).success).toBe(true);
+  });
+  it("offers seven crops, each with artwork and a notebook entry", () => {
+    expect(crops.map((c) => c.id)).toEqual(cropKinds.slice());
+    for (const c of crops) {
+      expect(assetIds).toContain(c.art);
+      expect(discoveries.map((d) => d.id)).toContain(`harvest_${c.id}`);
+    }
   });
 });

@@ -13,7 +13,10 @@ export type IconName =
   | "saved"
   | "cloud-saved"
   | "cloud-waiting"
-  | "busy";
+  | "busy"
+  | "broom"
+  | "yes"
+  | "no";
 const speaker = (
   <path d="M4 9.5A1.5 1.5 0 0 1 5.5 8H8l4.2-3.4a1 1 0 0 1 1.6.8v13.2a1 1 0 0 1-1.6.8L8 16H5.5A1.5 1.5 0 0 1 4 14.5z" />
 );
@@ -102,6 +105,14 @@ const paths: Record<IconName, ReactNode> = {
     </>
   ),
   "cloud-waiting": <path {...line} strokeWidth={2} d={cloud} />,
+  broom: (
+    <>
+      <path d="M14.6 3.2a1.6 1.6 0 0 1 2.3 2.2l-4.1 5.2-2.6-1.9z" />
+      <path d="M9.4 9.9 14 13.2c.9.7 1.2 1.9.6 2.9l-2.4 4.1c-.3.5-.9.7-1.4.5-3.4-1.4-5.8-3.7-7.1-7-.2-.6.1-1.200.7-1.400z" />
+    </>
+  ),
+  yes: <path {...line} strokeWidth={3.2} d="m5 12.5 4.6 4.6L19 7.4" />,
+  no: <path {...line} strokeWidth={3.2} d="m6.5 6.5 11 11m0-11-11 11" />,
   busy: <path {...line} d="M12 4a8 8 0 1 1-7.4 5" />,
 };
 export function Icon({ name, size = 24 }: { name: IconName; size?: number }) {

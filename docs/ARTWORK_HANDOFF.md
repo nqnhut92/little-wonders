@@ -12,28 +12,32 @@ Cozy magical storybook for Vietnamese children aged 4–6: soft moss outlines #5
 
 All following object IDs currently live in `src/components/Art.tsx`, using `Art` with viewBox 0 0 120 120. There are no separate current object files. Each target filename is ID.png under `public/assets/`: 512×512, 1:1, transparent PNG RGBA; optional clean SVG master. Keep 7% padding, the established silhouette, and bottom-center anchor near (60,112). Do not crop transparent margins or derive hitboxes from alpha.
 
-| ID / target filename      | Purpose and interaction                                    |
-| ------------------------- | ---------------------------------------------------------- |
-| tree / tree.png           | Apple tree: shake canopy, falling apple                    |
-| cloud / cloud.png         | Movable cloud; rain on touch/drop                          |
-| sun / sun.png             | Sunshine source; touch/drop on beds                        |
-| flower / flower.png       | Sunflower, garden flower, seed selector, decoration, brand |
-| carrot / carrot.png       | Seed selector, grown crop, lunch food/request              |
-| berry / berry.png         | Seed selector, grown crop, lunch food/request              |
-| butterfly / butterfly.png | Garden visitor, decoration, notebook                       |
-| worm / worm.png           | Creature revealed from grass                               |
-| bug / bug.png             | Ladybug; shared cricket notebook illustration              |
-| bird / bird.png           | Branch bird; chirp and hop                                 |
-| rabbit / rabbit.png       | Garden, guide and meal character; happy/thinking responses |
-| fish / fish.png           | Revealed pond fish; swim reaction                          |
-| apple / apple.png         | Falling fruit, lunch food/request                          |
-| house / house.png         | Main garden and editor; five wall colors                   |
-| rainbow / rainbow.png     | Persistent rain+sun discovery backdrop                     |
-| rock / rock.png           | Tilt to reveal ladybug                                     |
-| grass / grass.png         | Rustling bush and plant sprout proxy                       |
-| pond / pond.png           | Water surface, lily leaf and ripples                       |
-| basket / basket.png       | Lunch drop target; count indicators rendered separately    |
-| star / star.png           | House decoration and positive meal sparkle                 |
+| ID / target filename        | Purpose and interaction                                     |
+| --------------------------- | ----------------------------------------------------------- |
+| tree / tree.png             | Apple tree: shake canopy, falling apple                     |
+| cloud / cloud.png           | Movable cloud; rain on touch/drop                           |
+| sun / sun.png               | Sunshine source; touch/drop on beds                         |
+| flower / flower.png         | Sunflower, garden flower, seed selector, decoration, brand  |
+| carrot / carrot.png         | Seed selector, grown crop, lunch food/request               |
+| berry / berry.png           | Seed selector, grown crop, lunch food/request               |
+| butterfly / butterfly.png   | Garden visitor, decoration, notebook                        |
+| worm / worm.png             | Creature revealed from grass                                |
+| bug / bug.png               | Ladybug; shared cricket notebook illustration               |
+| bird / bird.png             | Branch bird; chirp and hop                                  |
+| rabbit / rabbit.png         | Garden, guide and meal character; happy/thinking responses  |
+| fish / fish.png             | Revealed pond fish; swim reaction                           |
+| apple / apple.png           | Falling fruit, lunch food/request                           |
+| house / house.png           | Main garden and editor; five wall colors                    |
+| rainbow / rainbow.png       | Persistent rain+sun discovery backdrop                      |
+| rock / rock.png             | Tilt to reveal ladybug                                      |
+| grass / grass.png           | Rustling bush and plant sprout proxy                        |
+| pond / pond.png             | Water surface, lily leaf and ripples                        |
+| basket / basket.png         | Lunch drop target; count indicators rendered separately     |
+| star / star.png             | House decoration and positive meal sparkle                  |
+| tomato / tomato.png         | Crop: seed button, ripe plant, basket (temporary vector)    |
+| pumpkin / pumpkin.png       | Crop: seed button, ripe plant, basket (temporary vector)    |
+| corn / corn.png             | Crop: seed button, ripe plant, basket (temporary vector)    |
+| watermelon / watermelon.png | Crop: seed button, ripe plant, basket; the puppy's favorite |
 
 Backgrounds currently live in `src/style.module.css`, colored by the `--scene-*` tokens in `src/styles/tokens.css`; target output is PNG (optional SVG master). These filenames describe future replacement files, not existing files.
 
@@ -91,7 +95,7 @@ Layer order: sky, rainbow, distant hill, near hill/path, tree/house, pond/grass/
 >
 > Match the supplied project-owned SVG references. Rabbit: round cream body/head, long pink-inner ears, dot eyes, V nose, pink cheeks and no clothing. Bird blue-gray/yellow beak; butterfly pink upper/yellow lower wings; ladybug terracotta/moss spots; worm pale green; fish orange-yellow facing right. Keep proportions, line weight and lighting identical across poses. First provide a character reference sheet for approval, then separate asset files.
 >
-> Object IDs: tree, cloud, sun, flower, carrot, berry, butterfly, worm, bug, bird, rabbit, fish, apple, house, rainbow, rock, grass, pond, basket, star. Output each as ID.png, transparent RGBA 512×512 with about 7% padding and bottom-center anchor matching (60,112) in the existing 120×120 canvas. Do not crop or change aspect ratio. Carrot must stay unmistakably orange; berries red/pink. House needs a separate wall recolor mask. Separate trunk/canopy/apple, cloud/rain, pond rim/water/ripple/leaf/fish, roof/walls/doors and decorations. Do not bake in UI, touch zones or game logic.
+> Object IDs: tree, cloud, sun, flower, carrot, berry, butterfly, worm, bug, bird, rabbit, fish, apple, house, rainbow, rock, grass, pond, basket, star, tomato, pumpkin, corn, watermelon. Output each as ID.png, transparent RGBA 512×512 with about 7% padding and bottom-center anchor matching (60,112) in the existing 120×120 canvas. Do not crop or change aspect ratio. Carrot must stay unmistakably orange; berries red/pink. House needs a separate wall recolor mask. Separate trunk/canopy/apple, cloud/rain, pond rim/water/ripple/leaf/fish, roof/walls/doors and decorations. Do not bake in UI, touch zones or game logic.
 >
 > Backgrounds: sky 2400×1400 opaque; hill-back and hill-front 2400×1400 transparent; path 1200×1400 transparent; soil 512×256 transparent; house-yard 1160×560 opaque. Do not draw interactive creatures into backgrounds. Optional sprites: idle 2–4 frames, touch 3–4, butterfly/fish movement 4, rain 3, gentle discovery 3. Every frame shares canvas/pivot. Static ID.png poses are mandatory because the MVP currently uses CSS animation. Name extra frames ID-idle-01.png, ID-touch-01.png, ID-move-01.png or ID-discover-01.png; provide a separate frame-rate manifest and reduced-motion pose.
 >

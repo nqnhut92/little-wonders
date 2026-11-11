@@ -13,6 +13,7 @@ import {
   maxCounter,
   counterKeyPattern,
   cropKinds,
+  basketKinds,
   maxBasket,
   plotKeyPattern,
   decorationIds,
@@ -50,7 +51,7 @@ const fieldValues = {
     rounds: z.number().int().min(0).max(20).optional(),
   }),
   basket: z.partialRecord(
-    z.enum(cropKinds),
+    z.enum(basketKinds),
     z.number().int().min(0).max(maxBasket),
   ),
   houseColor: z.enum(houseColors),

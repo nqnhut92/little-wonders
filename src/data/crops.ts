@@ -12,7 +12,13 @@ export const crops: Crop[] = [
   { id: "sunflower", name: "Hướng dương", art: "flower", care: 1 },
   { id: "carrot", name: "Cà rốt", art: "carrot", care: 1 },
   { id: "berry", name: "Dâu", art: "berry", care: 1 },
+  { id: "tomato", name: "Cà chua", art: "tomato", care: 1 },
+  { id: "pumpkin", name: "Bí ngô", art: "pumpkin", care: 1 },
+  { id: "corn", name: "Bắp", art: "corn", care: 1 },
+  { id: "watermelon", name: "Dưa hấu", art: "watermelon", care: 1 },
 ];
+export const cropArt = (kind: string) =>
+  crops.find((c) => c.id === kind)?.art ?? kind;
 // seed(1) -> sprout(2) -> grown(3) -> ripe(4); stage 0 is an empty bed.
 export const ripeStage = 4;
 export const startingPlots = 3;

@@ -301,3 +301,56 @@ test("saved decorations appear outside the house", async ({ page }) => {
   await page.reload();
   await expect(page.locator(".garden-decorations .art-flower")).toHaveCount(1);
 });
+
+test("fresh garden needs a one second hold and keeps the notebook", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await activate(page, "Luống đất 1");
+  await activate(page, "Mây tưới nước");
+  await activate(page, "Mặt trời");
+  const broom = page.getByRole("button", { name: /^Vườn mới/ });
+  await broom.click();
+  await expect(page.getByRole("dialog")).toHaveCount(0);
+  const box = (await broom.boundingBox())!;
+  await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+  await page.mouse.down();
+  await expect(page.getByRole("dialog")).toHaveCount(0);
+  await page.waitForTimeout(1100);
+  await page.mouse.up();
+  await expect(page.getByRole("dialog")).toBeVisible();
+  await activate(page, "Không, giữ khu vườn");
+  await expect(
+    page.getByRole("button", { name: "Luống đất 1" }).locator(".plant"),
+  ).toHaveCount(1);
+  await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+  await page.mouse.down();
+  await page.waitForTimeout(1100);
+  await page.mouse.up();
+  await activate(page, "Có, dọn vườn mới");
+  await expect(
+    page.getByRole("button", { name: "Luống đất 1" }).locator(".plant"),
+  ).toHaveCount(0);
+  await activate(page, "Sổ khám phá");
+  await expect(
+    page.getByText("Hoa hướng dương", { exact: true }),
+  ).toBeVisible();
+});
+test("shaking the tree fills the basket and a ripe plant can be harvested", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await activate(page, "Cây táo");
+  await expect(page.getByLabel("Giỏ của con")).toBeVisible();
+  await activate(page, "Luống đất 1");
+  for (let round = 0; round < 3; round++) {
+    await activate(page, "Mây tưới nước");
+    await activate(page, "Mặt trời");
+  }
+  await activate(page, "Luống đất 1");
+  await expect(
+    page.getByRole("button", { name: "Luống đất 1" }).locator(".plant"),
+  ).toHaveCount(0);
+  await expect(page.getByLabel("Giỏ của con")).toContainText("1");
+  await expect(page.getByRole("button", { name: "Luống đất 4" })).toBeVisible();
+});

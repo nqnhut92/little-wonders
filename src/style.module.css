@@ -251,7 +251,8 @@ main {
 .seed-tray {
   position: absolute;
   bottom: 3%;
-  left: 42%;
+  left: 50%;
+  transform: translateX(-50%);
   padding: 10px 12px;
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-l);
@@ -523,6 +524,20 @@ main {
   background: var(--plate);
   padding: 8px;
   touch-action: none;
+}
+.food-tray button {
+  position: relative;
+}
+.food-count {
+  position: absolute;
+  right: 6px;
+  bottom: 4px;
+  min-width: 24px;
+  padding: 1px 6px;
+  border-radius: 999px;
+  font-size: 14px;
+  color: var(--on-accent);
+  background: var(--accent);
 }
 .house-canvas {
   position: relative;

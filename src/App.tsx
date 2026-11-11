@@ -53,6 +53,9 @@ export default function App() {
   const syncing = useRef(false);
   const selectionRequest = useRef(0);
   const hintIndex = useRef(0);
+  const holdTimer = useRef<ReturnType<typeof setTimeout> | undefined>(
+    undefined,
+  );
   const say = (s: string, k = "flower") => {
     setMessage(s);
     sound(k, audio);
@@ -304,6 +307,28 @@ export default function App() {
         >
           <Icon name="cup" size={28} />
         </button>
+        <button
+          type="button"
+          className={cn("kid-button hold-button")}
+          aria-label="Vườn mới. Giữ một giây"
+          title="Vườn mới. Giữ một giây"
+          onPointerDown={() => {
+            holdTimer.current = setTimeout(() => setPanel("fresh"), 1000);
+          }}
+          onPointerUp={() => clearTimeout(holdTimer.current)}
+          onPointerLeave={() => clearTimeout(holdTimer.current)}
+          onPointerCancel={() => clearTimeout(holdTimer.current)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") setPanel("fresh");
+          }}
+          onClick={(e) => {
+            // A quick tap only explains how to use it; keyboard activation already opened the question.
+            if (e.detail === 0) return;
+            setMessage("Giữ nút chổi một giây để dọn vườn mới nhé!");
+          }}
+        >
+          <Icon name="broom" size={28} />
+        </button>
         <span className={cn("hud-gap")} aria-hidden="true" />
         <button
           type="button"
@@ -356,6 +381,37 @@ export default function App() {
               {panel === "lunch" && (
                 <Lunch world={local.world} act={act} say={say} />
               )}{" "}
+              {panel === "fresh" && (
+                <div className={cn("activity")}>
+                  <Art id="grass" />
+                  <h2>Dọn một khu vườn mới nhé?</h2>
+                  <p>
+                    Luống, giỏ và đồ trang trí sẽ trống. Sổ khám phá vẫn còn.
+                  </p>
+                  <div className={cn("gate")}>
+                    <button
+                      type="button"
+                      className={cn("kid-button")}
+                      aria-label="Có, dọn vườn mới"
+                      onClick={() => {
+                        act({ type: "resetGarden" });
+                        setPanel("");
+                        say("Khu vườn mới đang đợi con gieo hạt!");
+                      }}
+                    >
+                      <Icon name="yes" size={30} />
+                    </button>
+                    <button
+                      type="button"
+                      className={cn("kid-button")}
+                      aria-label="Không, giữ khu vườn"
+                      onClick={() => setPanel("")}
+                    >
+                      <Icon name="no" size={30} />
+                    </button>
+                  </div>
+                </div>
+              )}
               {panel === "rest" && (
                 <div className={cn("activity")}>
                   <Art id="cloud" />

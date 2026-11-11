@@ -3,7 +3,7 @@ import { useState, useRef, type PointerEvent } from "react";
 import { Art } from "./Art";
 import { initialMeal, offer, mealGoal, type Meal } from "../game/lunch";
 import { discoveries } from "../data/content";
-import { value, type Action, type World } from "../game/engine";
+import { value, basketOf, type Action, type World } from "../game/engine";
 type Props = {
   world: World;
   act: (a: Action) => void;
@@ -24,7 +24,10 @@ export function Lunch({ world, act, say }: Props) {
   const reactionTimer = useRef<ReturnType<typeof setTimeout> | undefined>(
     undefined,
   );
+  const basket = basketOf(world);
   const feed = (kind: string) => {
+    // A food taken from the basket is used up; the table always has basic foods, so the lunch never blocks.
+    act({ type: "feed", kind });
     const result = offer(meal, kind);
     act({ type: "set", key: "meal", value: result.meal });
     setFeedback(result.spoken);
@@ -115,6 +118,11 @@ export function Lunch({ world, act, say }: Props) {
             onClick={() => setFood(f)}
           >
             <Art id={f} />
+            {(basket[f] ?? 0) > 0 && (
+              <b className={cn("food-count")} aria-hidden="true">
+                {basket[f]}
+              </b>
+            )}
           </button>
         ))}
       </div>

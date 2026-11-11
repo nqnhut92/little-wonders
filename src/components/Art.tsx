@@ -20,6 +20,10 @@ export const assetIds = [
   "pond",
   "basket",
   "star",
+  "tomato",
+  "pumpkin",
+  "corn",
+  "watermelon",
 ];
 export function Art({ id, color }: { id: string; color?: string }) {
   return (
@@ -102,6 +106,46 @@ export function Art({ id, color }: { id: string; color?: string }) {
             />
             <path d="M32 43q26-23 53 1L51 111Q35 96 32 43" fill="#ed955a" />
             <path d="m40 57 18 5m-14 14 13 4" />
+          </>
+        )}
+        {id === "tomato" && (
+          <>
+            <circle cx="60" cy="68" r="38" fill="#e4695a" />
+            <path d="m60 33-12 8 12-1 12 1Zm0 0v-10" fill="#78a863" />
+            <path d="M45 62q4-8 12-9" stroke="#ffd9cf" />
+          </>
+        )}
+        {id === "pumpkin" && (
+          <>
+            <path
+              d="M60 36c-8-4-36 2-36 34s20 38 36 38 36-6 36-38-28-38-36-34Z"
+              fill="#ee9b45"
+            />
+            <path d="M60 38q-16 30 0 68m0-68q16 30 0 68" />
+            <path d="M60 36q0-12 6-16" stroke="#78a863" strokeWidth="6" />
+          </>
+        )}
+        {id === "corn" && (
+          <>
+            <path
+              d="M60 12c20 16 24 52 12 78H48C36 64 40 28 60 12Z"
+              fill="#f2c94c"
+            />
+            <path d="M52 40h16M49 56h22M50 72h20" />
+            <path
+              d="M60 112c-26-6-34-32-30-52 14 8 24 24 30 52Zm0 0c26-6 34-32 30-52-14 8-24 24-30 52Z"
+              fill="#8ab16e"
+            />
+          </>
+        )}
+        {id === "watermelon" && (
+          <>
+            <ellipse cx="60" cy="68" rx="46" ry="38" fill="#7fb069" />
+            <path
+              d="M32 50q10 18 0 36m28-52q10 24 0 68m28-52q-10 18 0 36"
+              stroke="#4f7a43"
+            />
+            <path d="M60 30q0-10 6-14" stroke="#78a863" strokeWidth="5" />
           </>
         )}
         {["berry", "apple"].includes(id) && (

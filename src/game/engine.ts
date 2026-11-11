@@ -1,5 +1,11 @@
 import { discoveryRules } from "../data/interactions";
-import { currentSchema, isCounterKey, maxBasket, maxPlots } from "../data/ids";
+import {
+  currentSchema,
+  isCounterKey,
+  maxBasket,
+  maxPlots,
+  plotKeyPattern,
+} from "../data/ids";
 import { crops, gardenRegion, ripeStage, startingPlots } from "../data/crops";
 // stage 0 empty, 1 seed, 2 sprout, 3 grown, 4 ripe. water and sun clear when a full round moves the plant up a stage.
 export type Plot = {
@@ -24,6 +30,9 @@ export type Action =
   | { type: "plant"; slot: number; kind: string }
   | { type: "water" | "sun"; slot: number }
   | { type: "harvest"; slot: number }
+  | { type: "shake" }
+  | { type: "feed"; kind: string }
+  | { type: "resetGarden" }
   | { type: "discover"; id: string }
   | { type: "set"; key: string; value: unknown }
   | { type: "resetAll" };
@@ -106,6 +115,26 @@ export function apply(w: World, a: Action, device: string, now = 0): World {
         water: false,
         sun: false,
       });
+  }
+  if (a.type === "shake") {
+    const held = basketOf(w).apple ?? 0;
+    unlock("apple");
+    if (held < maxBasket) set("basket", { ...basketOf(w), apple: held + 1 });
+  }
+  // Giving something from the basket away; the table always has basic foods, so an empty basket changes nothing.
+  if (a.type === "feed") {
+    const held = basketOf(w)[a.kind] ?? 0;
+    if (held > 0) set("basket", { ...basketOf(w), [a.kind]: held - 1 });
+  }
+  // "Vườn mới": clears beds, basket and decorations. Discoveries, regions and friends stay.
+  if (a.type === "resetGarden") {
+    for (const [key, stamp] of Object.entries(w.fields)) {
+      const p = stamp.value as Plot;
+      if (plotKeyPattern.test(key) && p.stage > 0)
+        set(key, { kind: p.kind, stage: 0, water: false, sun: false });
+    }
+    if (Object.values(basketOf(w)).some((n) => n > 0)) set("basket", {});
+    if (value<unknown[]>(w, "decorations", []).length) set("decorations", []);
   }
   if (a.type === "harvest") {
     const p = plot(a.slot);
