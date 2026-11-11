@@ -35,6 +35,10 @@ npm run test:e2e
 
 Use `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium` for a system Chromium, or a writable `PLAYWRIGHT_BROWSERS_PATH`. Browser tests serve the production build. For full-stack local work, copy `.env.example` to `.env.local`, configure a development Neon database and Google callback, apply `migrations/001_initial.sql`, then run `npx vercel dev`. Secure cookies require a compatible secure context.
 
+### Local play without sign-in
+
+`npm run dev` also serves the real API on a local PGlite database in `.local-db/` (ignored; migrations apply on start). In the adult corner, "Tiếp tục với Google" signs in a local test parent without opening Google, so profiles and sync between tabs or devices can be tried without Neon or Google. Open `http://<computer-ip>:5173` on an iPad on the same network to test with real touch. Delete `.local-db/` to start over. This only exists in the dev server; production builds use the real Google sign-in.
+
 ## Deploy
 
 1. Create a free-tier Neon PostgreSQL database.

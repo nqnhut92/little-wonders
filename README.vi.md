@@ -35,6 +35,10 @@ npm run test:e2e
 
 Dùng `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium` cho Chromium hệ thống hoặc `PLAYWRIGHT_BROWSERS_PATH` ghi được. Browser test phục vụ production build. Chạy full-stack local: chép `.env.example` sang `.env.local`, cấu hình Neon phát triển và callback Google, chạy `migrations/001_initial.sql`, rồi `npx vercel dev`. Cookie Secure cần secure context tương thích.
 
+### Chơi local không cần đăng nhập
+
+`npm run dev` cũng chạy API thật trên database PGlite local ở `.local-db/` (bị ignore; migration tự chạy khi khởi động). Trong Góc người lớn, "Tiếp tục với Google" đăng nhập một phụ huynh thử nghiệm local mà không mở Google, nên có thể thử hồ sơ và đồng bộ giữa các tab hoặc thiết bị mà không cần Neon hay Google. Mở `http://<ip-máy-tính>:5173` trên iPad cùng mạng để thử bằng cảm ứng thật. Xóa `.local-db/` để chơi lại từ đầu. Phần này chỉ có trong dev server; bản build production dùng đăng nhập Google thật.
+
 ## Deploy
 
 1. Tạo database Neon PostgreSQL free tier.

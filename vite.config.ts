@@ -1,10 +1,12 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import { localApi } from "./dev/local-api";
 import { readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { createHash } from "node:crypto";
 export default defineConfig({
   plugins: [
     react(),
+    localApi(),
     {
       name: "version-offline-shell",
       closeBundle() {
