@@ -1045,23 +1045,14 @@ main {
   position: absolute;
   inset: 0;
   overflow: hidden;
-  background: linear-gradient(
-    var(--scene-sky) 0%,
-    var(--scene-haze) 60%,
-    var(--scene-grass-edge) 60%
-  );
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px 96px 96px 24px;
+  background: var(--scene-grass);
 }
 .map-board {
-  position: relative;
+  position: absolute;
+  inset: 0;
   z-index: 2;
-  width: min(100%, 145dvh);
-  max-width: 1080px;
-  aspect-ratio: 16 / 9;
-  max-height: calc(100dvh - 116px);
+  width: 100%;
+  height: 100%;
 }
 .map-svg {
   position: absolute;
@@ -1072,22 +1063,20 @@ main {
   pointer-events: none;
 }
 .map-backdrop {
-  border-radius: var(--radius-xl);
   object-fit: cover;
-  border: 1px solid var(--glass-border);
-  box-shadow: var(--shadow);
 }
 .valley-title {
   position: absolute;
   left: 50%;
-  top: 3%;
+  top: var(--edge-top);
   transform: translateX(-50%);
   z-index: 3;
   margin: 0;
-  padding: 4px 18px;
+  padding: 6px 20px;
   border-radius: 999px;
   background: var(--glass);
   border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
   font-size: 24px;
   font-weight: 800;
   color: var(--scene-title);

@@ -11,12 +11,12 @@ type Props = {
 };
 // Coordinates align directly with the 6 illustrated landmarks in bg-valley-map.jpg.
 const coords: Record<string, { x: number; y: number }> = {
-  garden: { x: 14, y: 74 },
+  garden: { x: 14, y: 70 },
   pond: { x: 40, y: 67 },
   forest: { x: 22, y: 26 },
   beach: { x: 54, y: 24 },
   snow: { x: 74, y: 50 },
-  stars: { x: 86, y: 20 },
+  stars: { x: 83, y: 20 },
 };
 export function ValleyMap({ world, clearing, onEnter, say }: Props) {
   const states = Object.fromEntries(
