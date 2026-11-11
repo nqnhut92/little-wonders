@@ -38,9 +38,9 @@ const frogSpots = [
   { x: 59, y: 80 },
 ];
 const snailSpots = [
-  { x: 34, y: 84 },
-  { x: 63, y: 82 },
-  { x: 86, y: 85 },
+  { x: 34, y: 74 },
+  { x: 62, y: 72 },
+  { x: 88, y: 79 },
 ];
 export function Garden({
   regionId = "garden",
@@ -158,8 +158,8 @@ export function Garden({
     } else if (h.kind === "house") {
       open("house");
     } else if (h.kind === "pal" && h.palId) {
-      if (h.palId === "rabbit") act({ type: "discover", id: "rabbit" });
-      open(h.palId === "rabbit" ? "lunch" : `pal:${h.palId}`);
+      if (h.palId === "puppy") act({ type: "discover", id: "puppy" });
+      open(h.palId === "puppy" ? "lunch" : `pal:${h.palId}`);
     } else if (h.kind === "xylophone") {
       open("xylophone");
       react(h.id, h.line ?? "", h.discovery);
@@ -192,7 +192,7 @@ export function Garden({
       key={id}
       aria-label={label}
       className={cn(
-        `object ${reaction === id ? "react-" + id : ""} ${highlight && ["cloud", "rock", "rabbit"].includes(id) ? "hint-glow" : ""} ${id === "windmill" && wind ? "spin-windmill" : ""}`,
+        `object ${reaction === id ? "react-" + id : ""} ${highlight && ["cloud", "rock", "puppy"].includes(id) ? "hint-glow" : ""} ${id === "windmill" && wind ? "spin-windmill" : ""}`,
       )}
       style={{
         left: x + "%",
@@ -350,8 +350,8 @@ export function Garden({
         })
         .map((h) => {
           const pal =
-            h.kind === "pal" && h.palId === "puppy"
-              ? pals.find((p) => p.id === "puppy")
+            h.kind === "pal" && h.palId === "reindeer"
+              ? pals.find((p) => p.id === "reindeer")
               : undefined;
           return object(
             h.id,

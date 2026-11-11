@@ -25,7 +25,6 @@ export const crops: Crop[] = [
     name: "Dưa hấu",
     art: "watermelon",
     care: 1,
-    requires: "pal_puppy",
   },
   { id: "lotus", name: "Hoa sen", art: "lotus", care: 1, region: "pond" },
   {

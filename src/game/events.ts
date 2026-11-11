@@ -38,7 +38,7 @@ export function pickSurpriseEvent(
   candidates.push({
     id: "pal_wave",
     kind: "pal_wave",
-    message: "Bạn Bông vẫy tai chào con thật vui!",
+    message: "Cún Lucky vẫy đuôi chào con thật vui!",
   });
   return candidates[Math.floor(random() * candidates.length)] ?? null;
 }

@@ -24,11 +24,11 @@ export function contextualHint(world: World): string {
   )
     return "Giỏ có món ngon rồi! Con mở Bếp của vườn để nấu ăn nhé!";
   if (
-    world.discoveries.includes("pal_puppy") &&
-    !world.discoveries.includes("story_puppy_1") &&
+    world.discoveries.includes("pal_reindeer") &&
+    !world.discoveries.includes("story_reindeer_1") &&
     totalBasket > 0
   )
-    return "Bạn cún Lucky vừa tới vườn kìa! Con chạm để tặng quà cho Lucky nhé!";
+    return "Bạn Tuần Lộc nhỏ vừa tới vườn kìa! Con chạm để tặng quà cho bạn nhé!";
   if (plants.length === 0) return "Con chọn một hạt rồi chạm luống đất nhé!";
   if (!world.discoveries.includes("apple"))
     return "Con thử lắc cây táo xem có quả rơi vào giỏ không nhé!";
@@ -37,7 +37,7 @@ export function contextualHint(world: World): string {
   if (!world.discoveries.includes("ladybug"))
     return "Dưới hòn đá có tiếng sột soạt. Bạn nào trốn ở đó ta?";
   if (!world.discoveries.includes("lunch"))
-    return "Bạn Bông đang chờ quà ngon. Con chạm vào bạn Bông nhé!";
+    return "Cún Lucky đang chờ dưa hấu ngon. Con chạm vào Lucky nhé!";
   if (!world.discoveries.includes("house"))
     return "Ngôi nhà thích màu gì nhỉ? Con chạm vào nhà để thử nhé!";
   return "Mình ngắm khu vườn con đã chăm, rồi nghỉ một chút cũng được nhé!";

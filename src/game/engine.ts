@@ -145,7 +145,7 @@ export function apply(
       // Any gift is welcome and counts; only the wished-for one grants the wish.
       if (a.kind === pal.wants[wishes % pal.wants.length]) {
         set(fulfilledCounter(pal.id), wishes + 1);
-        if (pal.id === "rabbit") {
+        if (pal.id === "puppy") {
           unlock("lunch");
           if (wishes >= 1) unlock("colors");
         }
@@ -218,7 +218,7 @@ export function apply(
         sun: false,
       });
       unlock(`harvest_${p.kind}`);
-      unlock("pal_puppy");
+      unlock("pal_reindeer");
       if (rareOf[p.kind] && random() < rareChance) unlock(rareOf[p.kind]);
     }
   }

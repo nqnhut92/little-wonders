@@ -128,21 +128,33 @@ test.describe("appearance", () => {
   }) => {
     await page.emulateMedia({ colorScheme: "light" });
     await page.goto("/");
-    await page.getByRole("button", { name: "Vườn nhà", exact: true }).click();
-    const scene = () =>
-      page.locator(".garden").evaluate((el) => {
-        const s = getComputedStyle(el);
-        return [
-          s.backgroundImage,
-          getComputedStyle(el.querySelector("h1")!).color,
-        ];
-      });
-    const before = await scene();
     await openAdult(page);
     await toggle(page).click();
     await toggle(page).click();
     expect((await root(page)).theme).toBe("dark");
-    expect(await scene()).toEqual(before);
+    await page.getByRole("button", { name: "Trở về vườn" }).click();
+    await page.getByRole("button", { name: "Vườn nhà", exact: true }).click();
+    const darkScene = await page.locator(".garden").evaluate((el) => {
+      const s = getComputedStyle(el);
+      return [
+        s.backgroundImage,
+        getComputedStyle(el.querySelector("h1")!).color,
+      ];
+    });
+    await page.getByRole("button", { name: "Bản đồ thung lũng" }).click();
+    await openAdult(page);
+    await toggle(page).click();
+    expect((await root(page)).theme).toBe("light");
+    await page.getByRole("button", { name: "Trở về vườn" }).click();
+    await page.getByRole("button", { name: "Vườn nhà", exact: true }).click();
+    const lightScene = await page.locator(".garden").evaluate((el) => {
+      const s = getComputedStyle(el);
+      return [
+        s.backgroundImage,
+        getComputedStyle(el.querySelector("h1")!).color,
+      ];
+    });
+    expect(darkScene).toEqual(lightScene);
   });
 
   test("text and controls keep readable contrast in both themes", async ({
@@ -268,6 +280,13 @@ test("the scene fills the screen and floating controls stay inside it", async ({
   ]) {
     await page.setViewportSize(size);
     await page.goto("/");
+    const gearBox = (await page.locator(".icon-button").boundingBox())!;
+    expect(gearBox.width).toBe(44);
+    expect(gearBox.y).toBeGreaterThan(size.height / 2);
+    expect(gearBox.x).toBeGreaterThan(size.width / 2);
+    const guideBox = (await page.locator(".hud-guide").boundingBox())!;
+    expect(guideBox.y).toBeGreaterThan(size.height / 2);
+    expect(guideBox.x).toBeLessThan(size.width / 2);
     const mapControls = await page
       .locator(".hud")
       .evaluateAll((els) =>
@@ -285,6 +304,7 @@ test("the scene fills the screen and floating controls stay inside it", async ({
         ).toBe(false);
     }
     await page.getByRole("button", { name: "Vườn nhà", exact: true }).click();
+    await expect(page.locator(".hud-adult")).toHaveCount(0);
     const garden = (await page.locator(".garden").boundingBox())!;
     expect(garden).toEqual({ x: 0, y: 0, ...size });
     await expect(page.locator("header, footer")).toHaveCount(0);
@@ -293,7 +313,7 @@ test("the scene fills the screen and floating controls stay inside it", async ({
       y: document.documentElement.scrollHeight - innerHeight,
     }));
     expect(overflow).toEqual({ x: 0, y: 0 });
-    const boxes = [];
+    const boxes = [gearBox];
     for (const name of [
       "Bật âm thanh",
       "Sổ khám phá",
@@ -306,9 +326,6 @@ test("the scene fills the screen and floating controls stay inside it", async ({
       expect(Math.min(box.width, box.height), name).toBeGreaterThanOrEqual(56);
       boxes.push(box);
     }
-    const gearBox = (await page.locator(".icon-button").boundingBox())!;
-    expect(gearBox.width).toBe(44);
-    boxes.push(gearBox);
     for (const box of boxes) {
       expect(box.x).toBeGreaterThanOrEqual(0);
       expect(box.y).toBeGreaterThanOrEqual(0);

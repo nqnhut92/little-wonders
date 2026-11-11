@@ -81,14 +81,17 @@ main {
   --u: min(1cqw, 1.9cqh);
   overflow: hidden;
   isolation: isolate;
-  background: linear-gradient(
-    var(--scene-sky) 0%,
-    var(--scene-haze) 60%,
-    var(--scene-grass-edge) 60%
-  );
+  background-color: var(--scene-grass);
+  background-image: url("/assets/bg-garden-day.jpg");
+  background-size: cover;
+  background-position: center bottom;
   touch-action: none;
   user-select: none;
   -webkit-user-select: none;
+}
+.garden .hill,
+.garden .path {
+  display: none;
 }
 .hill {
   position: absolute;
@@ -137,7 +140,28 @@ main {
   width: 100%;
   height: 100%;
   display: block;
+  object-fit: contain;
   overflow: visible;
+}
+.art-raster-wrap {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.art-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+.art-fx {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
 }
 .object .art {
   filter: drop-shadow(0 6px 1px var(--scene-shadow));
@@ -210,8 +234,8 @@ main {
 }
 .basket-count {
   position: absolute;
-  left: 4%;
-  bottom: 4%;
+  left: var(--edge-left);
+  top: var(--edge-top);
   z-index: 6;
   display: flex;
   align-items: center;
@@ -250,10 +274,10 @@ main {
 }
 .seed-tray {
   position: absolute;
-  bottom: 3%;
-  left: 50%;
+  bottom: var(--edge-bottom);
+  left: 61%;
   transform: translateX(-50%);
-  padding: 10px 12px;
+  padding: 8px 10px;
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-l);
   background: var(--glass);
@@ -270,16 +294,16 @@ main {
 }
 .seed-tray > div {
   display: flex;
-  gap: 6px;
-  margin-top: 6px;
+  gap: 4px;
+  margin-top: 4px;
 }
 .seed-tray button {
   /* Grow with the label so long names such as "Hướng dương" stay inside the frame. */
   width: auto;
-  min-width: 64px;
-  height: 66px;
+  min-width: 56px;
+  height: 62px;
   min-height: var(--tap-kid);
-  padding: 4px 8px;
+  padding: 3px 5px;
   background: transparent;
   border: 2px solid transparent;
   border-radius: var(--radius-s);
@@ -345,15 +369,19 @@ main {
   z-index: 20;
 }
 .hud-guide {
-  top: var(--edge-top);
+  bottom: var(--edge-bottom);
   left: var(--edge-left);
   display: flex;
   align-items: center;
   gap: 10px;
-  max-width: min(460px, 44vw);
+  max-width: min(310px, 29vw);
   min-height: 72px;
   padding: 6px 8px 6px 12px;
   border-radius: var(--radius-l);
+}
+.hud-adult {
+  bottom: var(--edge-bottom);
+  right: var(--edge-right);
 }
 .hud-guide > .art {
   width: 40px;
@@ -1025,7 +1053,7 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 84px 96px 16px 24px;
+  padding: 20px 96px 96px 24px;
 }
 .map-board {
   position: relative;
@@ -1033,7 +1061,7 @@ main {
   width: min(100%, 145dvh);
   max-width: 1080px;
   aspect-ratio: 16 / 9;
-  max-height: calc(100dvh - 104px);
+  max-height: calc(100dvh - 116px);
 }
 .map-svg {
   position: absolute;
@@ -1043,14 +1071,24 @@ main {
   display: block;
   pointer-events: none;
 }
+.map-backdrop {
+  border-radius: var(--radius-xl);
+  object-fit: cover;
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow);
+}
 .valley-title {
   position: absolute;
   left: 50%;
-  top: 2%;
+  top: 3%;
   transform: translateX(-50%);
   z-index: 3;
   margin: 0;
-  font-size: 26px;
+  padding: 4px 18px;
+  border-radius: 999px;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  font-size: 24px;
   font-weight: 800;
   color: var(--scene-title);
   pointer-events: none;
@@ -1205,33 +1243,12 @@ main {
   filter: brightness(0) saturate(0);
 }
 .garden[data-variant="pond"] {
-  background: linear-gradient(
-    var(--scene-pond-sky) 0%,
-    var(--scene-pond-haze) 60%,
-    var(--scene-pond-grass) 60%
-  );
-}
-.garden[data-variant="pond"] .hill-back {
-  background: var(--scene-pond-hill);
-}
-.garden[data-variant="pond"] .hill-front {
-  background: var(--scene-pond-grass);
+  background-color: var(--scene-pond-grass);
+  background-image: url("/assets/bg-pond.jpg");
 }
 .garden[data-time="night"] {
-  background: linear-gradient(
-    var(--scene-night-sky) 0%,
-    var(--scene-night-haze) 60%,
-    var(--scene-night-grass) 60%
-  );
-}
-.garden[data-time="night"] .hill-back {
-  background: var(--scene-night-hill);
-}
-.garden[data-time="night"] .hill-front {
-  background: var(--scene-night-grass);
-}
-.garden[data-time="night"] .path {
-  background: var(--scene-night-path);
+  background-color: var(--scene-night-sky);
+  background-image: url("/assets/bg-garden-night.jpg");
 }
 .garden[data-time="night"] .art-flower {
   transform: scale(0.86);

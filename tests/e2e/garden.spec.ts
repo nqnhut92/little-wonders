@@ -42,24 +42,24 @@ test("garden chain, notebook and saved house survive reload", async ({
     /selected/,
   );
 });
-test("rabbit accepts any gift, advances wish on carrot and unlocks story chapters", async ({
+test("Lucky accepts any gift, advances wish on watermelon and unlocks story chapters", async ({
   page,
 }) => {
   await openGarden(page);
-  await activate(page, "Bữa Trưa Của Thỏ");
-  await activate(page, "Dâu");
+  await activate(page, "Góc Của Lucky");
+  await activate(page, "Cà rốt");
   await activate(page, "Giỏ thức ăn");
   await expect(
     page
       .getByRole("status")
-      .filter({ hasText: "Bông vẫn chờ cà rốt nhé!" }),
+      .filter({ hasText: "Lucky vẫn chờ dưa hấu nhé!" }),
   ).toBeVisible();
   await expect(
-    page.getByRole("button", { name: "Đọc chuyện 1 của Bông" }),
+    page.getByRole("button", { name: "Đọc chuyện 1 của Lucky" }),
   ).toBeEnabled();
-  await activate(page, "Cà rốt");
+  await activate(page, "Dưa hấu");
   await activate(page, "Giỏ thức ăn");
-  await expect(page.getByText("Bông đang thích dâu")).toBeVisible();
+  await expect(page.getByText("Lucky đang thích táo")).toBeVisible();
   await activate(page, "Trở về vườn");
   await activate(page, "Sổ khám phá");
   await expect(page.getByText("Bữa trưa đủ ba")).toBeVisible();
@@ -260,19 +260,19 @@ test("unfinished pal wish survives reopening and reload", async ({
   page,
 }) => {
   await openGarden(page);
-  await activate(page, "Bữa Trưa Của Thỏ");
-  await activate(page, "Dâu");
+  await activate(page, "Góc Của Lucky");
+  await activate(page, "Cà rốt");
   await activate(page, "Giỏ thức ăn");
   await expect(
-    page.getByRole("button", { name: "Đọc chuyện 1 của Bông" }),
+    page.getByRole("button", { name: "Đọc chuyện 1 của Lucky" }),
   ).toBeEnabled();
   await page.reload();
   await activate(page, "Vườn nhà");
-  await activate(page, "Bữa Trưa Của Thỏ");
+  await activate(page, "Góc Của Lucky");
   await expect(
-    page.getByRole("button", { name: "Đọc chuyện 1 của Bông" }),
+    page.getByRole("button", { name: "Đọc chuyện 1 của Lucky" }),
   ).toBeEnabled();
-  await expect(page.locator(".meal-request .art-carrot")).toHaveCount(1);
+  await expect(page.locator(".meal-request .art-watermelon")).toHaveCount(1);
 });
 test("tabs merge discoveries and keep independent writer identities", async ({
   page,
@@ -405,13 +405,14 @@ test("kitchen cooks apples into a surprise dish and records it", async ({
   await expect(page.getByText("Món bất ngờ", { exact: true })).toBeVisible();
 });
 
-test("first harvest brings Lucky, unlocks watermelon seeds and lets the child gift him", async ({
+test("first harvest brings the little reindeer and lets the child gift watermelon", async ({
   page,
 }) => {
   await openGarden(page);
-  await expect(page.getByRole("button", { name: "Hạt Dưa hấu" })).toHaveCount(
-    0,
-  );
+  await expect(
+    page.getByRole("button", { name: "Bạn Tuần Lộc nhỏ" }),
+  ).toHaveCount(0);
+  await activate(page, "Hạt Dưa hấu");
   await activate(page, "Luống đất 1");
   for (let round = 0; round < 3; round++) {
     await activate(page, "Mây tưới nước");
@@ -419,18 +420,14 @@ test("first harvest brings Lucky, unlocks watermelon seeds and lets the child gi
   }
   await activate(page, "Luống đất 1");
   await expect(
-    page.getByRole("button", { name: "Bạn cún Lucky" }),
+    page.getByRole("button", { name: "Bạn Tuần Lộc nhỏ" }),
   ).toBeVisible();
-  await expect(
-    page.getByRole("button", { name: "Hạt Dưa hấu" }),
-  ).toBeVisible();
-  await activate(page, "Cây táo");
-  await activate(page, "Bạn cún Lucky");
+  await activate(page, "Bạn Tuần Lộc nhỏ");
   await expect(page.locator(".meal-request .art-watermelon")).toBeVisible();
-  await activate(page, "Táo");
+  await activate(page, "Dưa hấu");
   await activate(page, "Giỏ thức ăn");
-  await activate(page, "Đọc chuyện 1 của Lucky");
-  await expect(page.locator(".pal-story-text")).toContainText("dưa hấu");
+  await activate(page, "Đọc chuyện 1 của Tuần Lộc nhỏ");
+  await expect(page.locator(".pal-story-text")).toContainText("Tuần Lộc nhỏ");
 });
 
 test("day/night toggle, xylophone, audio persistence and Ao sen region work end-to-end", async ({
@@ -494,7 +491,7 @@ test("fog clears on the map when a region opens, including under reduced motion"
       "butterfly",
       "worm",
       "ladybug",
-      "rabbit",
+      "puppy",
       "fish",
       "apple",
       "lunch",
@@ -524,8 +521,8 @@ test("fog clears on the map when a region opens, including under reduced motion"
       "dish_smoothie",
       "dish_mystery",
       "house_decorated",
-      "pal_puppy",
-      "story_rabbit_1",
+      "pal_reindeer",
+      "story_puppy_1",
     ];
     localStorage.setItem(
       "little-wonders-v1",

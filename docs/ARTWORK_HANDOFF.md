@@ -39,7 +39,8 @@ All following object IDs currently live in `src/components/Art.tsx`, using `Art`
 | pumpkin / pumpkin.png                                                      | Crop: seed button, ripe plant, basket (temporary vector)      |
 | corn / corn.png                                                            | Crop: seed button, ripe plant, basket (temporary vector)      |
 | watermelon / watermelon.png                                                | Crop: seed button, ripe plant, basket; the puppy's favorite   |
-| puppy / puppy.png                                                          | Lucky the small cute rounded white cartoon puppy              |
+| puppy / puppy.png                                                          | Lucky the main chubby white cartoon puppy (loves watermelon)  |
+| reindeer / reindeer.png                                                    | Little baby reindeer companion (arrives after first harvest)  |
 | decor-sunflower, decor-pumpkin-lamp (.png)                                 | House v2 unlocked decorations (pumpkin lamp glows at night)   |
 | owl, frog, snail, duck, dragonfly (.png)                                   | Night owl, shifting critters and lotus pond creatures         |
 | windmill, xylophone (.png)                                                 | Interactive garden toys (spinning blades, 8-bar pentatonic)   |

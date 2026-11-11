@@ -69,8 +69,8 @@ export function PalPanel({
   return (
     <div className={cn("lunch activity")}>
       <h2>
-        {pal.id === "rabbit"
-          ? "Bữa Trưa Của Thỏ Bông"
+        {pal.id === "puppy"
+          ? "Góc Của Lucky"
           : `Lời mời của ${pal.name}`}
       </h2>
       <p>
@@ -179,7 +179,7 @@ export function PalPanel({
   );
 }
 export function Lunch(props: Props) {
-  return <PalPanel {...props} palId="rabbit" />;
+  return <PalPanel {...props} palId="puppy" />;
 }
 const houseDecorations = [
   { id: "flower", label: "Trang trí hoa" },

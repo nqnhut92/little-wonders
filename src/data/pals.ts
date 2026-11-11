@@ -18,41 +18,41 @@ export type Pal = {
 };
 export const pals: Pal[] = [
   {
-    id: "rabbit",
-    name: "Bông",
-    spokenName: "bạn Bông",
-    art: "rabbit",
-    freeFoods: ["carrot", "berry", "apple"],
-    wants: ["carrot", "berry", "apple", "dish_salad", "dish_pie"],
-    chapters: [1, 3, 6],
-    stories: [
-      "Sáng nay bạn Bông đánh thức cả vườn bằng một cú nhảy thật cao bên luống cà rốt.",
-      "Bạn Bông nhặt những cánh hoa vàng xếp thành vòng tròn nhỏ trước cửa nhà.",
-      "Chiều mát, bạn Bông ngồi nghe gió hát và chừa sẵn một chỗ êm bên cạnh con.",
-    ],
-    thanks: [
-      "Ngon quá! Bạn Bông nhảy cẫng lên vì vui!",
-      "Cảm ơn con nhé! Bạn Bông thích món này lắm!",
-      "Tuyệt vời! Bạn Bông vẫy tai chào con nè!",
-    ],
-  },
-  {
     id: "puppy",
     name: "Lucky",
     spokenName: "Lắc-ki",
     art: "puppy",
-    arrives: "pal_puppy",
+    freeFoods: ["watermelon", "carrot", "apple"],
     wants: ["watermelon", "apple", "carrot", "dish_juice"],
     chapters: [1, 3, 6],
     stories: [
       "Hôm nay Lucky đánh hơi thấy mùi dưa hấu ngọt lịm. Gâu! Lucky thích nhất là dưa hấu mát lạnh.",
-      "Lucky đào một cái hố nhỏ trong vườn và tìm thấy một hạt dưa đen bóng mang cho con đấy!",
-      "Cuối ngày Lucky nằm cạnh bạn Bông, hai đứa cùng nhìn mặt trời lặn thật êm.",
+      "Lucky chạy quanh các luống đất, vẫy đuôi tít mù khi thấy mầm xanh nhú lên dưới nắng.",
+      "Cuối ngày Lucky nằm cạnh bạn Tuần Lộc nhỏ, hai đứa cùng nhìn mặt trời lặn thật êm.",
     ],
     thanks: [
       "Gâu gâu! Lucky cảm ơn con nhiều lắm!",
       "Ngon quá, Lucky vẫy đuôi tít luôn!",
       "Lucky thích lắm, cảm ơn con nhé!",
+    ],
+  },
+  {
+    id: "reindeer",
+    name: "Tuần Lộc nhỏ",
+    spokenName: "bạn Tuần Lộc nhỏ",
+    art: "reindeer",
+    arrives: "pal_reindeer",
+    wants: ["watermelon", "carrot", "apple", "dish_fruitbowl"],
+    chapters: [1, 3, 6],
+    stories: [
+      "Bạn Tuần Lộc nhỏ gõ nhẹ đôi móng nhỏ xíu ngoài cổng vườn rồi mỉm cười chào Lucky.",
+      "Bạn Tuần Lộc nhỏ cũng mê vị ngọt mát của dưa hấu đỏ giống hệt Lucky luôn đấy!",
+      "Đêm xuống, cặp sừng nhỏ của bạn Tuần Lộc lấp lánh dưới ánh trăng cùng đom đóm.",
+    ],
+    thanks: [
+      "Tuần Lộc nhỏ thích mê! Cảm ơn con nhé!",
+      "Ngon tuyệt! Bạn Tuần Lộc nhỏ khẽ lắc đầu vui lắm!",
+      "Ấm áp quá, cảm ơn con nhiều!",
     ],
   },
 ];

@@ -123,39 +123,33 @@ import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 it("accepts any pal gift for story chapters while advancing wishes only on the wished item", () => {
   let w = emptyWorld();
-  // Watermelon is locked until Lucky arrives after the first harvest.
-  expect(
-    apply(w, { type: "plant", slot: 0, kind: "watermelon" }, "a"),
-  ).toBe(w);
-  // Rabbit Bông is available from the start and accepts basic table snacks even on an empty basket.
-  expect(palStatus(w, "rabbit").wish).toBe("carrot");
-  w = apply(w, { type: "gift", pal: "rabbit", kind: "berry" }, "a");
-  expect(palStatus(w, "rabbit").gifts).toBe(1);
-  expect(palStatus(w, "rabbit").wishes).toBe(0);
-  expect(palStatus(w, "rabbit").wish).toBe("carrot");
-  expect(w.discoveries).toContain("story_rabbit_1");
+  // Lucky (puppy) is the main character from the start and accepts basic table snacks even on an empty basket.
+  expect(palStatus(w, "puppy").wish).toBe("watermelon");
+  w = apply(w, { type: "gift", pal: "puppy", kind: "carrot" }, "a");
+  expect(palStatus(w, "puppy").gifts).toBe(1);
+  expect(palStatus(w, "puppy").wishes).toBe(0);
+  expect(palStatus(w, "puppy").wish).toBe("watermelon");
+  expect(w.discoveries).toContain("story_puppy_1");
   // Fulfilling the wish unlocks the next wish and lunch discovery.
-  w = apply(w, { type: "gift", pal: "rabbit", kind: "carrot" }, "a");
-  expect(palStatus(w, "rabbit").wishes).toBe(1);
-  expect(palStatus(w, "rabbit").wish).toBe("berry");
+  w = apply(w, { type: "gift", pal: "puppy", kind: "watermelon" }, "a");
+  expect(palStatus(w, "puppy").wishes).toBe(1);
+  expect(palStatus(w, "puppy").wish).toBe("apple");
   expect(w.discoveries).toContain("lunch");
   expect(worldSchema.safeParse(w).success).toBe(true);
 });
-it("unlocks Lucky and watermelon seeds on first harvest and uses spokenName for TTS", () => {
+it("unlocks the little reindeer on first harvest and uses spokenName for TTS", () => {
   let w = emptyWorld();
-  w = apply(w, { type: "plant", slot: 0, kind: "carrot" }, "a");
+  w = apply(w, { type: "plant", slot: 0, kind: "watermelon" }, "a");
   for (let i = 0; i < 3; i++) {
     w = apply(w, { type: "water", slot: 0 }, "a");
     w = apply(w, { type: "sun", slot: 0 }, "a");
   }
   w = apply(w, { type: "harvest", slot: 0 }, "a");
-  expect(w.discoveries).toContain("pal_puppy");
-  w = apply(w, { type: "plant", slot: 0, kind: "watermelon" }, "a");
-  expect(w.fields["plot.garden.0"]?.value).toMatchObject({ kind: "watermelon" });
-  w = apply(w, { type: "gift", pal: "puppy", kind: "carrot" }, "a");
-  expect(palStatus(w, "puppy").gifts).toBe(1);
-  expect(palStatus(w, "puppy").wish).toBe("watermelon");
-  expect(w.discoveries).toContain("story_puppy_1");
+  expect(w.discoveries).toContain("pal_reindeer");
+  w = apply(w, { type: "gift", pal: "reindeer", kind: "watermelon" }, "a");
+  expect(palStatus(w, "reindeer").gifts).toBe(1);
+  expect(palStatus(w, "reindeer").wishes).toBe(1);
+  expect(w.discoveries).toContain("story_reindeer_1");
   const puppy = pals.find((p) => p.id === "puppy")!;
   expect(palSpeak(puppy, "Lucky thích dưa hấu")).toBe("Lắc-ki thích dưa hấu");
   expect(worldSchema.safeParse(w).success).toBe(true);

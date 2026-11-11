@@ -338,7 +338,7 @@ export default function App() {
       )}
       {/* Controls float over the full-screen scene; there is no header or footer bar. */}
       <div className={cn("hud hud-guide glass")}>
-        <Art id="rabbit" />
+        <Art id="puppy" />
         <p aria-live="polite">{message}</p>
         <button
           type="button"
@@ -349,13 +349,27 @@ export default function App() {
             const h = activeRegion
               ? hints[hintIndex.current++ % hints.length]
               : "Con chạm vào Vườn nhà trên bản đồ để bắt đầu chơi nhé!";
-            say(h);
+            say(h, "puppy", h.replaceAll("Lucky", "Lắc-ki"));
             setAttempts((a) => a + 3);
           }}
         >
           <Icon name="bulb" size={28} />
         </button>
       </div>
+      {!activeRegion && (
+        <button
+          type="button"
+          className={cn("hud hud-adult icon-button")}
+          aria-label="Dành cho người lớn"
+          title="Dành cho người lớn"
+          onClick={() => {
+            setGate(false);
+            setPanel("account");
+          }}
+        >
+          <Icon name="gear" size={20} />
+        </button>
+      )}
       <nav className={cn("hud hud-actions")} aria-label="Nút điều khiển">
         <button
           type="button"
@@ -451,19 +465,6 @@ export default function App() {
             </button>
           </>
         )}
-        <span className={cn("hud-gap")} aria-hidden="true" />
-        <button
-          type="button"
-          className={cn("icon-button")}
-          aria-label="Dành cho người lớn"
-          title="Dành cho người lớn"
-          onClick={() => {
-            setGate(false);
-            setPanel("account");
-          }}
-        >
-          <Icon name="gear" size={20} />
-        </button>
       </nav>
       {panel && (
         <div className={cn("modal-shade")}>

@@ -38,7 +38,8 @@ Mọi ID đối tượng dưới đây hiện nằm trong `src/components/Art.ts
 | pumpkin / pumpkin.png                                                      | Cây trồng: nút hạt, cây chín, giỏ (vector tạm)          |
 | corn / corn.png                                                            | Cây trồng: nút hạt, cây chín, giỏ (vector tạm)          |
 | watermelon / watermelon.png                                                | Cây trồng: nút hạt, cây chín, giỏ; món cún thích        |
-| puppy / puppy.png                                                          | Cún Lucky trắng nhỏ tròn kiểu hoạt hình                 |
+| puppy / puppy.png                                                          | Cún Lucky trắng nhỏ tròn, nhân vật chính thích ăn dưa hấu |
+| reindeer / reindeer.png                                                    | Bạn tuần lộc nhỏ đồng hành (đến sau lần thu hoạch đầu)   |
 | decor-sunflower, decor-pumpkin-lamp (.png)                                 | Đồ trang trí Nhà v2 (đèn bí ngô sáng vào ban đêm)       |
 | owl, frog, snail, duck, dragonfly (.png)                                   | Cú đêm, sinh vật đổi chỗ và sinh vật ở Ao sen           |
 | windmill, xylophone (.png)                                                 | Đồ chơi trong vườn (chong chóng quay, đàn gỗ 8 thanh)   |

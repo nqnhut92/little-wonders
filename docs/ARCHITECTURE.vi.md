@@ -9,7 +9,7 @@ React, TypeScript strict, Vite và CSS Modules render DOM/SVG. Không cần Phas
 Garden/Activities → Action có kiểu → apply → World → localStorage tức thì → debounce 1,5 giây → API serverless có xác thực → PostgreSQL merge_world nguyên tử.
 
 - `src/game/engine.ts`: điều kiện cây, tặng quà, khám phá và merge field; độc lập renderer.
-- `src/game/lunch.ts`: trạng thái Lời mời của bạn thú và hàm thay tên dễ đọc cho Bông và Lucky.
+- `src/game/lunch.ts`: trạng thái Lời mời của bạn thú và hàm thay tên dễ đọc cho Lucky và Tuần Lộc nhỏ.
 - `src/game/hints.ts`: gợi ý theo trạng thái cây, giỏ, bạn thú và khám phá hiện tại.
 - `src/game/visitors.ts` và `src/game/events.ts`: bộ chọn thuần cho khách thăm vườn và sự kiện bất ngờ nhận RNG tiêm từ ngoài.
 - `src/data`: danh mục khám phá, cây trồng, bạn thú, công thức, khu vực, cảnh theo dữ liệu (`scenes.ts`) và quy tắc tương tác.
@@ -50,7 +50,7 @@ Màu, bo góc và font là biến CSS trong `src/styles/tokens.css`; `src/style.
 
 Lựa chọn (`system`, `light`, `dark`) lưu theo trình duyệt trong localStorage với khóa `little-wonders-theme` và không bao giờ đồng bộ. Script nội tuyến trong `index.html` xác định nó trước lần vẽ đầu; `ThemeToggle.tsx` bọc bộ điều khiển, vốn chỉ theo thay đổi hệ thống ở chế độ Theo hệ thống, giữ lựa chọn trong bộ nhớ khi storage bị chặn, đồng bộ giữa các tab và cập nhật `theme-color`. Khóa lưu và màu phải khớp ở cả hai nơi (`tests/design.test.ts`).
 
-Game không có header hay thanh dưới. Cảnh phủ kín viewport (`100dvh`, tính cả vùng an toàn) và các nút nổi trên cảnh: thỏ hướng dẫn kèm nút gợi ý ở góc trên trái, và một cột gọn ở góc trên phải (các nút cho bé rồi duy nhất một nút bánh răng cho người lớn; phần chọn chế độ giao diện và trạng thái lưu nằm gọn bên trong Góc dành cho người lớn để màn chơi của bé không bị rối). Vật trong cảnh giữ vị trí theo phần trăm; kích thước dùng một đơn vị cảnh `--u: min(1cqw, 1.9cqh)`, nên màn rất rộng hay rất cao không đẩy vật ra ngoài cảnh, và có test trình duyệt kiểm không nút nào che vật chạm được hoặc điểm khu trên bản đồ ở cỡ iPad, desktop và siêu rộng. Nút dành cho bé 56px, nút người lớn 44px. Nút nổi, khay hạt và hộp thoại dùng chất liệu kính; ở chế độ Tối các nút có nền gần như đặc vì cảnh luôn sáng. Có nền đặc dự phòng khi không hỗ trợ blur, khi giảm độ trong suốt và ở forced colors. Hộp thoại giữ nút đóng bên ngoài phần cuộn. `index.html` có splash trong `#root`; danh sách hồ sơ hiện skeleton có nhãn.
+Game không có header hay thanh dưới. Cảnh phủ kín viewport (`100dvh`, tính cả vùng an toàn) và các nút nổi trên cảnh: cún Lucky hướng dẫn kèm nút gợi ý ở góc dưới trái, các nút cho bé ở góc trên phải, và duy nhất một nút bánh răng cho người lớn ở góc dưới phải trên màn hình bản đồ chính (không hiện trong màn chơi; phần chọn chế độ giao diện và trạng thái lưu nằm gọn bên trong Góc dành cho người lớn). Vật trong cảnh giữ vị trí theo phần trăm; kích thước dùng một đơn vị cảnh `--u: min(1cqw, 1.9cqh)`, nên màn rất rộng hay rất cao không đẩy vật ra ngoài cảnh, và có test trình duyệt kiểm không nút nào che vật chạm được hoặc điểm khu trên bản đồ ở cỡ iPad, desktop và siêu rộng. Nút dành cho bé 56px, nút người lớn 44px. Nút nổi, khay hạt và hộp thoại dùng chất liệu kính; ở chế độ Tối các nút có nền gần như đặc vì cảnh luôn sáng. Có nền đặc dự phòng khi không hỗ trợ blur, khi giảm độ trong suốt và ở forced colors. Hộp thoại giữ nút đóng bên ngoài phần cuộn. `index.html` có splash trong `#root`; danh sách hồ sơ hiện skeleton có nhãn.
 
 ## Ngoại tuyến và hiển thị
 

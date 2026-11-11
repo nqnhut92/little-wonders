@@ -12,15 +12,25 @@ export default defineConfig({
       closeBundle() {
         const html = readFileSync("dist/index.html", "utf8");
         const sw = readFileSync("public/sw.js", "utf8");
-        // Fonts are referenced from CSS, not HTML, so list them for offline precaching.
-        const bundled = readdirSync("dist/assets")
-          .filter((f) => f.endsWith(".woff2"))
-          .sort()
-          .map((f) => `/assets/${f}`);
+        // Fonts and public/assets illustrations are referenced dynamically or from CSS, so precache them offline.
+        const bundled = [
+          ...readdirSync("dist/assets")
+            .filter((f) => f.endsWith(".woff2"))
+            .sort()
+            .map((f) => `/assets/${f}`),
+          ...readdirSync("public/assets")
+            .filter((f) => /\.(png|jpe?g|webp|svg)$/i.test(f))
+            .sort()
+            .map((f) => `/assets/${f}`),
+        ];
         const hash = createHash("sha256")
           .update(html)
           .update(sw)
           .update(bundled.join());
+        for (const file of readdirSync("public/assets").filter((f) =>
+          /\.(png|jpe?g|webp|svg)$/i.test(f),
+        ))
+          hash.update(readFileSync(`public/assets/${file}`));
         for (const file of [
           "favicon.ico",
           "favicon.svg",
