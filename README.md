@@ -11,6 +11,7 @@ A Vietnamese touch-first storybook garden for children aged 4–6, built with Re
 - Four rabbit meal variations: three carrots, three free-choice foods, two berries and one apple. Picture requests, gentle reactions and unfinished-meal persistence support non-readers.
 - Five wall colors, three decoration types and saved arrangements visible in the main garden.
 - A notebook containing 18 meaningful discoveries, with no locked basic activities.
+- An interface in the owner's design language: Light, Dark and System appearance (System → Light → Dark → System, toggle in the header), a floating glass header and dock, self-hosted Nunito with the Vietnamese subset, one focus ring, thin scrollbars, a splash and skeleton loading states. Child-facing buttons are at least 56px. Appearance themes the interface only; scene artwork is unchanged.
 - Immediate local persistence, per-profile backups, same-profile multi-tab merge, batched retries and offline shell caching.
 - Google OpenID Connect for parents, nicknames for children, ownership-checked Neon APIs, CSRF and secure session cookies.
 
@@ -52,4 +53,6 @@ Discoveries merge by union. Stamped fields use logical counters beyond all obser
 
 Every README/document has EN/VI counterparts linked at the top. Update both whenever behavior or instructions change; review their meaning, then run `npm run docs:sync` to record hashes. `npm run docs:check` runs in CI and rejects missing, unrecorded or changed translations. Hash checks detect version drift, not semantic mistranslation.
 
-With production preview running, `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium node scripts/capture.mjs` uses real touch actions to discover all 18 entries and capture 19 screens, including reload persistence. It injects no progress fixtures. Files go to ignored `artifacts/screenshots/`.
+With production preview running, `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium node scripts/capture.mjs` uses real touch actions to discover all 18 entries and capture 19 screens, including reload persistence. It injects no progress fixtures. Files go to ignored `artifacts/screenshots/`. Set `CAPTURE_THEME=light|dark`, `CAPTURE_VIEWPORT=1180x820` and `CAPTURE_DIR` to capture one appearance and size into another folder for before/after review.
+
+`npm test` also runs the theme controller contract with `node --test`. `node scripts/make-icons.mjs` regenerates `public/favicon.svg` and the maskable icons from `public/icon-512.png`.

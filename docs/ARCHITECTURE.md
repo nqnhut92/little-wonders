@@ -14,6 +14,7 @@ Garden/Activities → typed Action → apply → World → immediate localStorag
 - `src/data`: discovery inventory and interaction dialogue/conditions.
 - `src/components`: SVG artwork, garden, house, lunch and notebook.
 - `src/services`: persistence, retry and sound. `App.tsx` coordinates profiles and navigation.
+- `src/styles`: design tokens (`tokens.css`) and local copies of the shared header, focus and scrollbar blocks. `src/ui`: framework-independent theme and scroll-region controllers. `src/components/Icons.tsx`: interface icons.
 - `api/index.ts` and `api/_lib/security.ts`: OAuth, signed sessions, ownership and CSRF.
 
 ## Persistence and conflicts
@@ -30,6 +31,14 @@ Server UPDATE merges under the row lock. Identical retries do not increment revi
 
 Parent identity comes from a signed session, never a client-supplied user ID. Every profile read/write filters by parent ID. POST requires exact Origin and a custom header. OAuth checks signed state, nonce, Google signature, issuer and audience. Cookies are Secure, HttpOnly, SameSite=Lax. Authenticated API responses are no-store and excluded from service-worker caching.
 
+## Interface design language
+
+Colors, radii and fonts are CSS variables in `src/styles/tokens.css`; `src/style.module.css` holds no color literals. Light is the default token set and `:root[data-theme="dark"]` overrides it. Scene containers (`.garden`, `.house-canvas`, `.lunch-scene`) repeat the light tokens and use the theme-independent `--scene-*` palette, so artwork looks the same in every appearance; artwork shown on themed panels sits on a light plate. The game's own day and night will be game state, independent of appearance.
+
+The preference (`system`, `light`, `dark`) is stored per browser in localStorage under `little-wonders-theme` and is never synchronized. An inline script in `index.html` resolves it before first paint; `ThemeToggle.tsx` wraps the controller, which follows live system changes only in System mode, keeps an in-memory choice when storage is blocked, synchronizes tabs and updates `theme-color`. The storage key and colors must match in both places (`tests/design.test.ts`).
+
+The header is a floating glass bar: 64px tall, 24px radius, 26px blur, aligned to the scene edges through `--fe-content-width` and `--fe-content-max`. Child-facing buttons are 56px and adult ones 44px, a deliberate exception to the shared 44px size. The bottom dock and the seed tray use the same material. Opaque fallbacks cover missing blur support, reduced transparency and forced colors. Dialogs keep the close button outside the scrolling body. `index.html` ships a splash inside `#root`; the profile list shows a labelled skeleton; the save indicator pairs an icon with text.
+
 ## Offline and rendering
 
-The service worker precaches the shell and bundled assets. Cache IDs depend on build contents; new workers wait for old tabs to close rather than interrupt play. SVG scales with a bounded scene ratio; reduced-motion disables animations. Audio starts only after user interaction and is throttled. Speech uses a Vietnamese voice when available, otherwise visual feedback and synthesized effects remain usable.
+The service worker precaches the shell and bundled assets. Nunito font files are referenced from CSS rather than HTML, so the build lists every bundled `.woff2` in the worker for offline use. Cache IDs depend on build contents; new workers wait for old tabs to close rather than interrupt play. SVG scales with a bounded scene ratio; reduced-motion disables animations. Audio starts only after user interaction and is throttled. Speech uses a Vietnamese voice when available, otherwise visual feedback and synthesized effects remain usable.

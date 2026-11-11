@@ -35,7 +35,7 @@ All following object IDs currently live in `src/components/Art.tsx`, using `Art`
 | basket / basket.png       | Lunch drop target; count indicators rendered separately    |
 | star / star.png           | House decoration and positive meal sparkle                 |
 
-Backgrounds currently live in `src/style.module.css`; target output is PNG (optional SVG master). These filenames describe future replacement files, not existing files.
+Backgrounds currently live in `src/style.module.css`, colored by the `--scene-*` tokens in `src/styles/tokens.css`; target output is PNG (optional SVG master). These filenames describe future replacement files, not existing files.
 
 | Target         | Size / ratio     | Background  | Purpose / current selector  |
 | -------------- | ---------------- | ----------- | --------------------------- |
@@ -46,7 +46,28 @@ Backgrounds currently live in `src/style.module.css`; target output is PNG (opti
 | soil.png       | 512×256 / 2:1    | transparent | Bed / .soil                 |
 | house-yard.png | 1160×560 / 29:14 | opaque      | Editor yard / .house-canvas |
 
-Existing app icons: `public/favicon.ico` (16/32/48), `public/icon-32.png`, `public/icon-180.png` (full-bleed opaque), `public/icon-192.png`, `public/icon-512.png`, rasterized from a Gemini-generated storybook illustration of the cream rabbit hugging a sunflower (`PROVENANCE.md`). They have no animation. UI text, settings/audio/notebook controls, dots, plus signs, focus rings and hint arrows are rendered by the app, not generated inside illustrations. The rabbit thought bubble reuses food IDs; happy sparkle reuses star. Outdoor decorations reuse the saved flower/butterfly/star IDs.
+Existing app icons: `public/favicon.ico` (16/32/48), `public/favicon.svg`, `public/icon-32.png`, `public/icon-180.png` (full-bleed opaque), `public/icon-192.png`, `public/icon-512.png` and `public/icon-maskable-192.png`/`-512.png` (artwork inside the central 80% safe zone), rasterized from a Gemini-generated storybook illustration of the cream rabbit hugging a sunflower (`PROVENANCE.md`). They have no animation. UI text, settings/audio/notebook controls, dots, plus signs, focus rings and hint arrows are rendered by the app, not generated inside illustrations. The rabbit thought bubble reuses food IDs; happy sparkle reuses star. Outdoor decorations reuse the saved flower/butterfly/star IDs.
+
+## Interface frame around the artwork
+
+The interface follows Light, Dark and System appearance; artwork does not. Deliver one version of each asset. It must read well next to both frames.
+
+| Token         | Light   | Dark    | Use                                  |
+| ------------- | ------- | ------- | ------------------------------------ |
+| `--bg`        | #faf8ee | #131b1a | Page behind the scene                |
+| `--surface`   | #fffbee | #1d2826 | Dialogs and panels                   |
+| `--surface-2` | #f2f1df | #27342f | Tiles and quiet buttons              |
+| `--text`      | #3b523f | #e8eedd | Interface text                       |
+| `--muted`     | #5a6f5b | #adbcaa | Secondary text                       |
+| `--accent`    | #52684e | #a8cf8f | Primary action, focus ring           |
+| `--plate`     | #fff9e9 | #e9ecd9 | Light plate behind artwork on panels |
+
+- The scene is a framed panel with 28px rounded corners below a 64px floating glass header (78px from the top of the page, then a 10px gap). Keep important shapes at least 28px away from every scene corner.
+- Glass panels float on the scene (seed tray, hint strip). Artwork behind them is blurred and lightened; do not rely on detail there.
+- On dialogs, artwork sits on the light plate in both appearances, so moss outlines stay visible. Do not add your own backing shape or shadow.
+- A night version of the scene backgrounds and the dimmed map areas for regions marked as coming soon will be specified here when those features are built.
+- Interface icons (speaker, notebook, settings, hint, close, save state, appearance) are repository vectors in `src/components/Icons.tsx` and are not part of this handoff.
+- The final app icon will be redrawn with the rest of the artwork: a 1024px master, full-bleed opaque for the 180px Apple icon, a separate maskable version with the subject inside the central 80%, and a vector SVG for the favicon. The current `favicon.svg` wraps a small raster copy and the maskable files are derived by `scripts/make-icons.mjs`.
 
 ## Character consistency
 

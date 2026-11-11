@@ -1,0 +1,144 @@
+/* Design tokens. Chrome (header, dock, modals, panels) follows Light/Dark/System.
+   Scene artwork keeps its own palette in every theme: see the --scene-* tokens. */
+:root {
+  --font-ui:
+    "Nunito", ui-rounded, "Segoe UI", system-ui, -apple-system, Arial,
+    sans-serif;
+  --radius-s: 14px;
+  --radius-m: 20px;
+  --radius-l: 24px;
+  --radius-xl: 32px;
+  --tap-kid: 56px;
+  --tap: 44px;
+
+  /* Scene palette from the artwork handoff; never themed. */
+  --scene-ink: #52684e;
+  --scene-sky: #dceceb;
+  --scene-haze: #eff3d8;
+  --scene-grass: #d1dfa9;
+  --scene-grass-edge: #d5e3ae;
+  --scene-hill: #c2d8a3;
+  --scene-path: #e6d4ac;
+  --scene-soil: #ad8661;
+  --scene-soil-shade: #98745155;
+  --scene-soil-rim: #e5cba5;
+  --scene-soil-row: #d0ac80;
+  --scene-soil-mark: #e6c9a0;
+  --scene-water: #90c8d0;
+  --scene-title: #496849;
+  --scene-title-soft: #5a7460;
+  --scene-sign: #566f4c;
+  --scene-glow: #fff8aa;
+  --scene-shadow: #52684e0a;
+  --scene-dot: #e4dac3;
+  --scene-dot-rim: #c7b595;
+  --scene-dot-filled: #ec9d5e;
+}
+
+/* Light tokens. Scene containers repeat them so artwork panels stay light in Dark mode. */
+:root,
+.garden,
+.house-canvas,
+.lunch-scene {
+  --bg: #faf8ee;
+  --bg-top: #edf4d2;
+  --surface: #fffbee;
+  --surface-2: #f2f1df;
+  --surface-3: #e8ead4;
+  --border: #dfe0c6;
+  --border-strong: #b9c19c;
+  --text: #3b523f;
+  --muted: #5a6f5b;
+  --accent: #52684e;
+  --accent-strong: #435840;
+  --on-accent: #ffffff;
+  --accent-soft: #e3ebcf;
+  --warm: #e9bd58;
+  --clay: #bc7f70;
+  --ok: #4f7a43;
+  --wait: #8a6516;
+  --shade: rgba(54, 76, 59, 0.44);
+  --shadow: 0 20px 60px rgba(35, 62, 51, 0.18);
+  --shadow-soft: 0 7px 20px rgba(84, 98, 55, 0.1);
+  --glass: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.72),
+    rgba(244, 247, 252, 0.52)
+  );
+  --glass-border: rgba(255, 255, 255, 0.7);
+  --glass-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -1px 0 rgba(120, 140, 175, 0.1), 0 10px 34px rgba(54, 70, 107, 0.1);
+  --glass-solid: #f4f7fc;
+  --panel: rgba(255, 251, 238, 0.94);
+  --control: rgba(255, 255, 255, 0.8);
+  --control-shadow: inset 0 1px 0 #fff, 0 2px 8px rgba(49, 74, 108, 0.1);
+  --kid: linear-gradient(#fff1c2, #ffe39a);
+  --kid-ink: #4b5a2c;
+  --kid-shadow: inset 0 1px 0 #fffbe8, 0 3px 10px rgba(150, 118, 40, 0.22);
+  --plate: #fff9e9;
+  --plate-border: #e8dfc2;
+  --focus-ring: #52684e;
+  --hover: brightness(1.03);
+}
+
+:root[data-theme="dark"] {
+  --bg: #131b1a;
+  --bg-top: #131b22;
+  --surface: #1d2826;
+  --surface-2: #27342f;
+  --surface-3: #33433c;
+  --border: rgba(255, 255, 255, 0.1);
+  --border-strong: rgba(255, 255, 255, 0.24);
+  --text: #e8eedd;
+  --muted: #adbcaa;
+  --accent: #a8cf8f;
+  --accent-strong: #bfe0a8;
+  --on-accent: #142010;
+  --accent-soft: rgba(168, 207, 143, 0.16);
+  --ok: #a8cf8f;
+  --wait: #e9c46a;
+  --shade: rgba(5, 10, 12, 0.62);
+  --shadow: 0 24px 70px rgba(0, 0, 0, 0.5);
+  --shadow-soft: 0 7px 20px rgba(0, 0, 0, 0.3);
+  --glass: linear-gradient(
+    135deg,
+    rgba(44, 53, 74, 0.62),
+    rgba(26, 31, 44, 0.5)
+  );
+  --glass-border: rgba(255, 255, 255, 0.09);
+  --glass-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.1), inset 0 -1px 0 rgba(0, 0, 0, 0.25),
+    0 12px 36px rgba(0, 0, 0, 0.35);
+  --glass-solid: #202735;
+  --panel: rgba(29, 40, 38, 0.94);
+  --control: rgba(255, 255, 255, 0.12);
+  --control-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  --kid: linear-gradient(rgba(233, 189, 88, 0.3), rgba(233, 189, 88, 0.2));
+  --kid-ink: #f6dc97;
+  --kid-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16);
+  --plate: #e9ecd9;
+  --plate-border: #cfd5b8;
+  --focus-ring: #a8cf8f;
+  --hover: brightness(1.12);
+}
+
+html {
+  font-family: var(--font-ui);
+  font-synthesis: none;
+  color: var(--text);
+  background: var(--bg);
+}
+body {
+  margin: 0;
+  min-height: 100dvh;
+  color: var(--text);
+  background: linear-gradient(var(--bg-top), var(--bg) 360px) var(--bg);
+}
+/* Scene containers are always light, so their text and focus rings stay on the light palette. */
+.garden,
+.house-canvas,
+.lunch-scene {
+  color: var(--text);
+  color-scheme: light;
+}

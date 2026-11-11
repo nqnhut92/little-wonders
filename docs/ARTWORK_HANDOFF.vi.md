@@ -35,7 +35,7 @@ Mọi ID đối tượng dưới đây hiện nằm trong `src/components/Art.ts
 | basket / basket.png       | Đích thả bữa ăn; dấu đếm render riêng                   |
 | star / star.png           | Trang trí nhà và ngôi sao phản hồi bữa ăn               |
 
-Các nền hiện nằm trong `src/style.module.css`; đầu ra đích là PNG (có thể kèm SVG master). Tên file này chỉ file thay thế tương lai, chưa tồn tại.
+Các nền hiện nằm trong `src/style.module.css`, tô màu bằng token `--scene-*` trong `src/styles/tokens.css`; đầu ra đích là PNG (có thể kèm SVG master). Tên file này chỉ file thay thế tương lai, chưa tồn tại.
 
 | File đích      | Kích thước / tỉ lệ | Nền        | Mục đích / selector hiện tại |
 | -------------- | ------------------ | ---------- | ---------------------------- |
@@ -46,7 +46,28 @@ Các nền hiện nằm trong `src/style.module.css`; đầu ra đích là PNG (
 | soil.png       | 512×256 / 2:1      | trong suốt | Luống / .soil                |
 | house-yard.png | 1160×560 / 29:14   | kín        | Sân editor / .house-canvas   |
 
-Icon app hiện có: `public/favicon.ico` (16/32/48), `public/icon-32.png`, `public/icon-180.png` (nền kín tràn viền), `public/icon-192.png`, `public/icon-512.png`, xuất từ minh họa storybook do Gemini tạo (thỏ kem ôm hoa hướng dương, xem `PROVENANCE.vi.md`). Không animation. Chữ UI, nút cài đặt/âm thanh/sổ, chấm đếm, dấu cộng, focus và mũi tên gợi ý do app render, không sinh trong ảnh. Bong bóng thỏ dùng lại ID thức ăn; ngôi sao vui dùng star. Trang trí ngoài vườn dùng lại ID hoa/bướm/ngôi sao đã lưu.
+Icon app hiện có: `public/favicon.ico` (16/32/48), `public/favicon.svg`, `public/icon-32.png`, `public/icon-180.png` (nền kín tràn viền), `public/icon-192.png`, `public/icon-512.png` và `public/icon-maskable-192.png`/`-512.png` (tranh nằm trong vùng an toàn 80% ở giữa), xuất từ minh họa storybook do Gemini tạo (thỏ kem ôm hoa hướng dương, xem `PROVENANCE.vi.md`). Không animation. Chữ UI, nút cài đặt/âm thanh/sổ, chấm đếm, dấu cộng, focus và mũi tên gợi ý do app render, không sinh trong ảnh. Bong bóng thỏ dùng lại ID thức ăn; ngôi sao vui dùng star. Trang trí ngoài vườn dùng lại ID hoa/bướm/ngôi sao đã lưu.
+
+## Khung giao diện quanh tranh
+
+Giao diện theo chế độ Sáng, Tối và Theo hệ thống; tranh thì không. Giao một phiên bản cho mỗi asset. Tranh phải dễ nhìn cạnh cả hai khung.
+
+| Token         | Sáng    | Tối     | Dùng cho                          |
+| ------------- | ------- | ------- | --------------------------------- |
+| `--bg`        | #faf8ee | #131b1a | Trang phía sau cảnh               |
+| `--surface`   | #fffbee | #1d2826 | Hộp thoại và bảng                 |
+| `--surface-2` | #f2f1df | #27342f | Ô và nút phụ                      |
+| `--text`      | #3b523f | #e8eedd | Chữ giao diện                     |
+| `--muted`     | #5a6f5b | #adbcaa | Chữ phụ                           |
+| `--accent`    | #52684e | #a8cf8f | Hành động chính, vòng focus       |
+| `--plate`     | #fff9e9 | #e9ecd9 | Nền sáng phía sau tranh trên bảng |
+
+- Cảnh là một khung bo góc 28px nằm dưới header kính nổi cao 64px (cách mép trên trang 78px, rồi hở 10px). Giữ các hình quan trọng cách mỗi góc cảnh ít nhất 28px.
+- Các bảng kính nổi trên cảnh (khay hạt, dải gợi ý). Tranh phía sau bị làm mờ và sáng lên; đừng đặt chi tiết cần thấy ở đó.
+- Trên hộp thoại, tranh nằm trên nền sáng ở cả hai chế độ nên viền xanh rêu luôn rõ. Không tự thêm hình nền hay bóng đổ.
+- Bản đêm của các nền cảnh và vùng mờ trên bản đồ cho các khu đánh dấu sắp có sẽ được mô tả tại đây khi các tính năng đó được làm.
+- Icon giao diện (loa, sổ, cài đặt, gợi ý, đóng, trạng thái lưu, chế độ giao diện) là vector trong repo ở `src/components/Icons.tsx`, không thuộc phần bàn giao này.
+- Icon app chốt sẽ được vẽ lại cùng bộ tranh: bản gốc 1024px, bản nền kín tràn viền cho icon Apple 180px, bản maskable riêng với chủ thể nằm trong 80% ở giữa, và SVG vector cho favicon. `favicon.svg` hiện tại bọc một bản raster nhỏ, còn các file maskable do `scripts/make-icons.mjs` tạo ra.
 
 ## Nhất quán nhân vật
 

@@ -1,0 +1,23 @@
+/* BEGIN frontend-theme-behavior focus v1 */
+/* One keyboard focus ring for the whole app. Tokens are optional: set --focus-ring and --focus-ring-soft per theme to override. */
+:where(a[href], button, summary, [role=button], [role=tab], [role=switch], [role=separator], [role=link], [tabindex]:not([tabindex="-1"])):focus-visible {
+  outline: 2px solid var(--focus-ring, var(--accent, Highlight));
+  outline-offset: 2px;
+}
+/* Text-like fields: a 1px accent ring plus a soft halo, drawn with box-shadow so it does not depend on the field's own border rules. The transparent outline keeps a visible ring in forced-colors mode. */
+:where(input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=button]):not([type=submit]), select, textarea, [contenteditable=true]):focus-visible {
+  outline: 2px solid transparent;
+  outline-offset: 0;
+  box-shadow: 0 0 0 1px var(--focus-ring, var(--accent, Highlight)), 0 0 0 4px var(--focus-ring-soft, color-mix(in srgb, var(--focus-ring, var(--accent, Highlight)) 28%, transparent));
+}
+:where(input[type=checkbox], input[type=radio], input[type=range]):focus-visible {
+  outline: 2px solid var(--focus-ring, var(--accent, Highlight));
+  outline-offset: 2px;
+}
+@media (forced-colors: active) {
+  :where(a[href], button, summary, select, textarea, input, [role=button], [role=tab], [role=switch], [role=separator], [tabindex]:not([tabindex="-1"])):focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
+  }
+}
+/* END frontend-theme-behavior focus */

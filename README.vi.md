@@ -11,6 +11,7 @@ Khu vườn truyện tranh ưu tiên cảm ứng, dành cho trẻ Việt Nam 4�
 - Bốn biến thể bữa thỏ: ba cà rốt, ba món tự chọn, hai dâu, một táo. Yêu cầu bằng hình, phản ứng nhẹ và lưu bữa chưa xong hỗ trợ trẻ chưa đọc.
 - Năm màu tường, ba loại trang trí và bố cục lưu hiện ở vườn chính.
 - Sổ có 18 khám phá ý nghĩa, không khóa hoạt động cơ bản.
+- Giao diện theo ngôn ngữ thiết kế của chủ dự án: chế độ Sáng, Tối và Theo hệ thống (Hệ thống → Sáng → Tối → Hệ thống, nút ở header), header và thanh dưới bằng kính nổi, font Nunito tự host có subset tiếng Việt, một kiểu vòng focus, thanh cuộn mảnh, splash và skeleton khi chờ. Nút dành cho bé tối thiểu 56px. Chế độ giao diện chỉ đổi khung giao diện; tranh cảnh giữ nguyên.
 - Lưu cục bộ tức thì, backup theo hồ sơ, merge nhiều tab cùng hồ sơ, gửi batch/retry và cache shell ngoại tuyến.
 - Google OpenID Connect cho phụ huynh, nickname cho bé, API Neon kiểm ownership, CSRF và cookie session bảo mật.
 
@@ -52,4 +53,6 @@ Khám phá merge union. Field có stamp dùng bộ đếm logic vượt mọi ch
 
 Mỗi README/tài liệu có cặp EN/VI liên kết đầu trang. Cập nhật cả hai khi hành vi/hướng dẫn đổi; rà ý nghĩa rồi chạy `npm run docs:sync` ghi hash. `npm run docs:check` chạy trong CI, từ chối bản dịch thiếu, chưa ghi nhận hoặc thay đổi. Hash phát hiện lệch phiên bản, không kiểm chứng dịch đúng nghĩa.
 
-Khi production preview chạy, `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium node scripts/capture.mjs` dùng chạm thật để tìm đủ 18 khám phá và chụp 19 ảnh, gồm lưu qua reload. Không cấy progress fixture. File ở `artifacts/screenshots/` được ignore.
+Khi production preview chạy, `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium node scripts/capture.mjs` dùng chạm thật để tìm đủ 18 khám phá và chụp 19 ảnh, gồm lưu qua reload. Không cấy progress fixture. File ở `artifacts/screenshots/` được ignore. Đặt `CAPTURE_THEME=light|dark`, `CAPTURE_VIEWPORT=1180x820` và `CAPTURE_DIR` để chụp một chế độ giao diện và kích thước vào thư mục khác, dùng cho việc duyệt trước/sau.
+
+`npm test` cũng chạy hợp đồng của bộ điều khiển theme bằng `node --test`. `node scripts/make-icons.mjs` tạo lại `public/favicon.svg` và icon maskable từ `public/icon-512.png`.

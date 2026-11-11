@@ -1,4 +1,6 @@
 const CACHE = "little-wonders-__BUILD_ID__";
+// Filled at build time with bundled files the HTML does not link directly (self-hosted fonts).
+const BUNDLED = [/*__BUNDLED__*/];
 self.addEventListener("install", (event) => {
   event.waitUntil(
     (async () => {
@@ -14,12 +16,16 @@ self.addEventListener("install", (event) => {
       );
       await cache.addAll([
         "/favicon.ico",
+        "/favicon.svg",
         "/icon-32.png",
         "/icon-180.png",
         "/icon-192.png",
         "/icon-512.png",
+        "/icon-maskable-192.png",
+        "/icon-maskable-512.png",
         "/manifest.webmanifest",
         ...files,
+        ...BUNDLED,
       ]);
     })(),
   );

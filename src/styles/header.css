@@ -1,0 +1,185 @@
+/* BEGIN frontend-header-design */
+.fe-header-wrap.fe-header-wrap {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  box-sizing: border-box;
+  width: var(--fe-content-width, 100%);
+  max-width: var(--fe-content-max, 100%);
+  height: auto;
+  margin: 0 auto;
+  padding: 14px 0 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  pointer-events: none;
+}
+.fe-header-wrap > nav { pointer-events: auto; }
+.fe-header.fe-header {
+  position: relative;
+  top: auto;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  width: 100%;
+  max-width: none;
+  height: auto;
+  min-height: 64px;
+  margin: 0;
+  padding: 10px 14px 10px 18px;
+  border: 1px solid rgba(255, 255, 255, .7);
+  border-radius: 24px;
+  background: linear-gradient(135deg, rgba(255,255,255,.72), rgba(244,247,252,.52));
+  -webkit-backdrop-filter: blur(26px) saturate(180%);
+  backdrop-filter: blur(26px) saturate(180%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.9), inset 0 -1px 0 rgba(120,140,175,.1), 0 10px 34px rgba(54,70,107,.1);
+  pointer-events: auto;
+}
+.fe-header :is(.header-actions, .header-tools, .header-right, .glass-actions) {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+}
+.fe-header :is(.theme-toggle, .theme-button, #theme-toggle, .icon-button, .mobile-menu, .glass-theme) {
+  box-sizing: border-box;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  color: inherit;
+  background: rgba(255,255,255,.8);
+  box-shadow: inset 0 1px 0 #fff, 0 2px 8px rgba(49,74,108,.1);
+  flex-shrink: 0;
+}
+.fe-header :is(nav a, .glass-link, .header-link, .nav-contact, .nav-library, .portfolio-link, .text-button, .header-actions > .button) {
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 38px;
+  padding: 0 14px;
+  border-radius: 999px;
+  font-size: 14px;
+  white-space: nowrap;
+}
+.fe-header :is(a, button, summary):focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+[data-theme=dark] .fe-header.fe-header {
+  border-color: rgba(255,255,255,.09);
+  background: linear-gradient(135deg, rgba(44,53,74,.62), rgba(26,31,44,.5));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.1), inset 0 -1px 0 rgba(0,0,0,.25), 0 12px 36px rgba(0,0,0,.35);
+}
+[data-theme=dark] .fe-header :is(.theme-toggle, .theme-button, #theme-toggle, .icon-button, .mobile-menu, .glass-theme) {
+  background: rgba(255,255,255,.12);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.14);
+}
+/* Navigation keeps its existing responsive visibility. */
+.fe-header nav { gap: 4px; }
+.fe-header nav a { display: inline-flex; align-items: center; justify-content: center; border: 0; text-decoration: none; }
+.fe-header nav a:is(.active, .nav-active, [aria-current=page]) {
+  background: rgba(255,255,255,.85);
+  box-shadow: inset 0 1px 0 #fff, 0 2px 8px rgba(49,74,108,.1);
+}
+.fe-header nav a:hover { background: rgba(255,255,255,.55); }
+[data-theme=dark] .fe-header nav a:is(.active, .nav-active, [aria-current=page]) {
+  background: rgba(255,255,255,.13);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.12);
+}
+[data-theme=dark] .fe-header nav a:hover { background: rgba(255,255,255,.07); }
+/* Collapsed navigation: below the breakpoint, links move into a disclosure panel opened by a hamburger at the far right. */
+.fe-header .header-menu { display: flex; align-items: center; gap: 6px; }
+/* Above the breakpoint the links sit centered between the brand and the actions. */
+.fe-header > .header-menu { margin-inline: auto; }
+.fe-header > .header-menu ~ .header-actions { margin-left: 0; }
+/* Optional split menu: .menu-primary is the centered navigation; .menu-secondary (external links) renders as buttons beside the actions above the breakpoint. */
+@media (min-width: 761px) {
+  .fe-header > .header-menu.header-menu--split { display: contents; }
+  .fe-header .header-menu--split > .menu-primary { display: flex; align-items: center; gap: 6px; margin-inline: auto; }
+  .fe-header .header-menu--split > .menu-secondary { display: flex; align-items: center; gap: 6px; }
+}
+.fe-header .mobile-menu { display: none; }
+.fe-header .mobile-menu .icon-close { display: none; }
+.fe-header .mobile-menu[aria-expanded=true] .icon-open { display: none; }
+.fe-header .mobile-menu[aria-expanded=true] .icon-close { display: inline-flex; }
+@media (max-width: 760px) {
+  .fe-header .mobile-menu { display: inline-grid; place-items: center; }
+  .fe-header .header-menu {
+    display: none;
+    position: absolute;
+    margin: 0;
+    top: calc(100% + 8px);
+    right: 0;
+    z-index: 2;
+    box-sizing: border-box;
+    width: min(320px, 100%);
+    flex-direction: column;
+    align-items: stretch;
+    gap: 2px;
+    padding: 8px;
+    border: 1px solid rgba(255,255,255,.7);
+    border-radius: 20px;
+    background: #f4f7fc;
+    box-shadow: 0 18px 44px rgba(54,70,107,.2);
+  }
+  .fe-header[data-menu-open] .header-menu { display: flex; }
+  .fe-header .header-menu--split > :is(.menu-primary, .menu-secondary) { display: flex; flex-direction: column; gap: 2px; }
+  .fe-header .header-menu.header-menu :is(a, button) {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 48px;
+    padding: 0 16px;
+    border: 0;
+    border-radius: 14px;
+    background: transparent;
+    font-size: 15px;
+    text-align: left;
+  }
+  .fe-header .header-menu.header-menu :is(a, button):hover { background: rgba(120,140,175,.14); }
+  .fe-header .header-menu.header-menu a[aria-current=page] { background: rgba(120,140,175,.18); }
+  [data-theme=dark] .fe-header .header-menu { border-color: rgba(255,255,255,.09); background: #202735; box-shadow: 0 18px 44px rgba(0,0,0,.45); }
+  [data-theme=dark] .fe-header .header-menu.header-menu :is(a, button):hover { background: rgba(255,255,255,.07); }
+  [data-theme=dark] .fe-header .header-menu.header-menu a[aria-current=page] { background: rgba(255,255,255,.13); }
+}
+@media (max-width: 860px) {
+  .fe-header.fe-header {
+    gap: 8px;
+    padding: 8px 10px;
+    border-radius: 20px;
+  }
+  .fe-header :is(.theme-toggle, .theme-button, #theme-toggle, .icon-button, .mobile-menu, .glass-theme) {
+    width: 44px; height: 44px; min-width: 44px; min-height: 44px;
+  }
+  .fe-header :is(nav a, .glass-link, .header-link, .nav-contact, .nav-library, .portfolio-link, .text-button, .header-actions > .button) {
+    padding-inline: 10px;
+  }
+}
+/* Last-resort safety net only: a header that wraps at 320px is a defect to fix by compacting the brand, not a layout. */
+@media (max-width: 360px) {
+  .fe-header.fe-header { flex-wrap: wrap; }
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .fe-header.fe-header { background: #f4f7fc; }
+  [data-theme=dark] .fe-header.fe-header { background: #202735; }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .fe-header.fe-header { background: #f4f7fc; -webkit-backdrop-filter: none; backdrop-filter: none; }
+  [data-theme=dark] .fe-header.fe-header { background: #202735; }
+}
+@media (forced-colors: active) {
+  .fe-header.fe-header { background: Canvas; border-color: CanvasText; box-shadow: none; }
+  .fe-header .header-menu { background: Canvas; border-color: CanvasText; box-shadow: none; }
+}
+/* END frontend-header-design */

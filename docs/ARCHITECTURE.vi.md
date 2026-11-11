@@ -14,6 +14,7 @@ Garden/Activities → Action có kiểu → apply → World → localStorage t�
 - `src/data`: danh mục khám phá, lời thoại và điều kiện tương tác.
 - `src/components`: SVG, khu vườn, nhà, bữa ăn và sổ tay.
 - `src/services`: lưu, retry, âm thanh. `App.tsx` điều phối hồ sơ và navigation.
+- `src/styles`: token thiết kế (`tokens.css`) và bản sao cục bộ của các khối header, focus và thanh cuộn dùng chung. `src/ui`: bộ điều khiển theme và vùng cuộn, không phụ thuộc framework. `src/components/Icons.tsx`: icon giao diện.
 - `api/index.ts`, `api/_lib/security.ts`: OAuth, session ký, ownership và CSRF.
 
 ## Lưu và xung đột
@@ -30,6 +31,14 @@ Server UPDATE merge dưới khóa hàng. Retry giống nhau không tăng revisio
 
 Parent identity lấy từ session ký, không nhận user ID do client khai báo. Mọi thao tác hồ sơ lọc parent ID. POST cần Origin chính xác và header riêng. OAuth kiểm state ký, nonce, chữ ký Google, issuer và audience. Cookie Secure, HttpOnly, SameSite=Lax. API xác thực dùng no-store và không được service worker cache.
 
+## Ngôn ngữ thiết kế giao diện
+
+Màu, bo góc và font là biến CSS trong `src/styles/tokens.css`; `src/style.module.css` không còn màu viết cứng. Bộ token Sáng là mặc định, `:root[data-theme="dark"]` ghi đè. Các vùng cảnh (`.garden`, `.house-canvas`, `.lunch-scene`) lặp lại token Sáng và dùng bảng màu `--scene-*` không theo theme, nên tranh trông giống nhau ở mọi chế độ; tranh đặt trên bảng theo theme nằm trên một nền sáng. Ngày và đêm của game sẽ là trạng thái game, độc lập với chế độ giao diện.
+
+Lựa chọn (`system`, `light`, `dark`) lưu theo trình duyệt trong localStorage với khóa `little-wonders-theme` và không bao giờ đồng bộ. Script nội tuyến trong `index.html` xác định nó trước lần vẽ đầu; `ThemeToggle.tsx` bọc bộ điều khiển, vốn chỉ theo thay đổi hệ thống ở chế độ Theo hệ thống, giữ lựa chọn trong bộ nhớ khi storage bị chặn, đồng bộ giữa các tab và cập nhật `theme-color`. Khóa lưu và màu phải khớp ở cả hai nơi (`tests/design.test.ts`).
+
+Header là thanh kính nổi: cao 64px, bo 24px, blur 26px, căn theo mép cảnh qua `--fe-content-width` và `--fe-content-max`. Nút dành cho bé 56px, nút người lớn 44px; đây là ngoại lệ có chủ ý so với cỡ 44px dùng chung. Thanh dưới và khay hạt dùng cùng chất liệu. Có nền đặc dự phòng khi không hỗ trợ blur, khi giảm độ trong suốt và ở forced colors. Hộp thoại giữ nút đóng bên ngoài phần cuộn. `index.html` có splash trong `#root`; danh sách hồ sơ hiện skeleton có nhãn; chỉ báo lưu gồm icon kèm chữ.
+
 ## Ngoại tuyến và hiển thị
 
-Service worker precache shell và bundle. Cache ID phụ thuộc nội dung build; worker mới chờ đóng tab cũ, không ngắt trò chơi. SVG scale theo tỉ lệ cảnh có giới hạn; reduced-motion tắt animation. Âm thanh chỉ bắt đầu sau thao tác và được giới hạn tần suất. Lời nói dùng giọng Việt nếu có, còn hình ảnh và hiệu ứng tổng hợp vẫn dùng được khi không có giọng.
+Service worker precache shell và bundle. File font Nunito được tham chiếu từ CSS chứ không từ HTML, nên bản build liệt kê mọi `.woff2` trong bundle vào worker để dùng ngoại tuyến. Cache ID phụ thuộc nội dung build; worker mới chờ đóng tab cũ, không ngắt trò chơi. SVG scale theo tỉ lệ cảnh có giới hạn; reduced-motion tắt animation. Âm thanh chỉ bắt đầu sau thao tác và được giới hạn tần suất. Lời nói dùng giọng Việt nếu có, còn hình ảnh và hiệu ứng tổng hợp vẫn dùng được khi không có giọng.

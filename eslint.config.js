@@ -18,7 +18,26 @@ export default ts.config(
         process: "readonly",
         console: "readonly",
         localStorage: "readonly",
+        document: "readonly",
+        Image: "readonly",
+        Buffer: "readonly",
       },
+    },
+  },
+  {
+    files: ["src/ui/*.js"],
+    languageOptions: {
+      globals: {
+        window: "readonly",
+        document: "readonly",
+        localStorage: "readonly",
+      },
+    },
+  },
+  {
+    files: ["tests/*.mjs"],
+    languageOptions: {
+      globals: { EventTarget: "readonly", Event: "readonly" },
     },
   },
   {
