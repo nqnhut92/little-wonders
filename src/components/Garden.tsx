@@ -1,10 +1,5 @@
 import { cn } from "../styles";
-import {
-  useState,
-  useRef,
-  type PointerEvent,
-  type CSSProperties,
-} from "react";
+import { useState, useRef, type PointerEvent, type CSSProperties } from "react";
 import { Art } from "./Art";
 import {
   value,
@@ -21,6 +16,7 @@ import { palWish } from "../game/lunch";
 import { interactions } from "../data/interactions";
 import { scenes, type SceneHotspot } from "../data/scenes";
 import { gardenVisitors } from "../game/visitors";
+import { SceneBackdrop, drawnVariants } from "./SceneBackdrop";
 import type { SurpriseEvent } from "../game/events";
 type Props = {
   regionId?: string;
@@ -86,6 +82,14 @@ export function Garden({
   const start = useRef({ x: 0, y: 0 });
   const moved = useRef(false);
   const [revealed, reveal] = useState("");
+  // Build hotspots (sandcastle, snowman, constellation) grow one stage per tap; a finished one starts over.
+  const [builds, setBuilds] = useState<Record<string, number>>({});
+  const buildStage = (h: SceneHotspot) =>
+    builds[h.id] ??
+    (h.discovery && world.discoveries.includes(h.discovery)
+      ? (h.stages?.length ?? 1) - 1
+      : 0);
+  const hasCrops = regionCrops.length > 0;
   const visitors = gardenVisitors(world, scene.id);
   const react = (id: string, text: string, discovery?: string) => {
     setReaction(id);
@@ -155,6 +159,17 @@ export function Garden({
     if (h.kind === "tree") {
       act({ type: "shake" });
       react(h.id, h.line ?? "", h.discovery);
+    } else if (h.kind === "gather" && h.gives) {
+      act({ type: "shake", kind: h.gives });
+      react(h.id, h.line ?? "");
+    } else if (h.kind === "build" && h.stages) {
+      const last = h.stages.length - 1;
+      const now = buildStage(h);
+      const next = now >= last ? 0 : now + 1;
+      setBuilds((b) => ({ ...b, [h.id]: next }));
+      react(h.id, h.stageLines?.[next] ?? h.line ?? "");
+      if (next === last && h.discovery)
+        act({ type: "discover", id: h.discovery });
     } else if (h.kind === "house") {
       open("house");
     } else if (h.kind === "pal" && h.palId) {
@@ -221,6 +236,9 @@ export function Garden({
       className={cn("garden")}
       data-time={night ? "night" : "day"}
       data-variant={scene.variant}
+      data-backdrop={
+        drawnVariants.includes(scene.variant) ? "drawn" : undefined
+      }
       data-wind={wind ? "true" : undefined}
       aria-label={scene.title}
       onClickCapture={(e) => {
@@ -253,7 +271,10 @@ export function Garden({
       <div className={cn("hill hill-front")} />
       <div className={cn("path")} />
       <h1 className={cn("sr-only")}>{scene.title}</h1>
-      {night && (
+      {drawnVariants.includes(scene.variant) && (
+        <SceneBackdrop variant={scene.variant} night={night} />
+      )}
+      {night && scene.variant !== "stars" && (
         <>
           <div className={cn("night-stars")} aria-hidden="true">
             {[
@@ -295,7 +316,7 @@ export function Garden({
           <Art id="butterfly" />
         </div>
       )}
-      {!night ? (
+      {scene.sky === false ? null : !night ? (
         <button
           aria-label="Mặt trời"
           className={cn(`object sun ${reaction === "sun" ? "react-sun" : ""}`)}
@@ -317,22 +338,24 @@ export function Garden({
           react("moon", "Trăng tròn sáng dịu trên bầu trời đêm!", "moon");
         })
       )}
-      <button
-        aria-label="Mây tưới nước"
-        className={cn(
-          `object cloud ${reaction === "cloud" ? "react-cloud" : ""} ${highlight ? "hint-glow" : ""}`,
-        )}
-        style={{ left: "50%", top: "10%", width: "calc(15 * var(--u))" }}
-        onPointerDown={(e) => down(e, "cloud")}
-        onClick={() => {
-          [0, 1, 2].forEach((slot) =>
-            act({ type: "water", slot, region: scene.id }),
-          );
-          react("cloud", "Mưa tí tách! Con cũng có thể kéo mây tới cây.");
-        }}
-      >
-        <Art id="cloud" />
-      </button>
+      {scene.sky !== false && (
+        <button
+          aria-label="Mây tưới nước"
+          className={cn(
+            `object cloud ${reaction === "cloud" ? "react-cloud" : ""} ${highlight ? "hint-glow" : ""}`,
+          )}
+          style={{ left: "50%", top: "10%", width: "calc(15 * var(--u))" }}
+          onPointerDown={(e) => down(e, "cloud")}
+          onClick={() => {
+            [0, 1, 2].forEach((slot) =>
+              act({ type: "water", slot, region: scene.id }),
+            );
+            react("cloud", "Mưa tí tách! Con cũng có thể kéo mây tới cây.");
+          }}
+        >
+          <Art id="cloud" />
+        </button>
+      )}
       {scene.hotspots
         .filter((h) => {
           if (h.requires && !world.discoveries.includes(h.requires))
@@ -355,13 +378,15 @@ export function Garden({
               : undefined;
           return object(
             h.id,
-            h.art,
+            h.kind === "build" && h.stages ? h.stages[buildStage(h)] : h.art,
             h.x,
             h.y,
             h.w,
             h.label,
             () => triggerHotspot(h),
-            h.shadow ? { filter: "drop-shadow(0 12px 0 #597a3814)" } : undefined,
+            h.shadow
+              ? { filter: "drop-shadow(0 12px 0 #597a3814)" }
+              : undefined,
             pal ? cropArt(palWish(world, pal)) : undefined,
           );
         })}
@@ -419,52 +444,58 @@ export function Garden({
           react(v.art, `${v.label}!`),
         ),
       )}
-      <div className={cn("plots")} aria-label="Hạt Giống Bí Ẩn">
-        {Array.from({ length: plotCount(world) }, (_, slot) => {
-          const p = value<Plot | undefined>(
-            world,
-            plotKey(slot, scene.id),
-            undefined,
-          );
-          const growing = p && p.stage > 0 ? p : undefined;
-          const art = cropArt(growing?.kind ?? "");
-          return (
-            <button
-              data-soil={slot}
-              key={slot}
-              aria-label={`Luống đất ${slot + 1}`}
-              className={cn(`soil ${reaction === "soil" ? "react-soil" : ""}`)}
-              onClick={() => {
-                if (!growing) {
-                  act({ type: "plant", slot, kind: seed, region: scene.id });
-                  say("Hạt xuống đất rồi. Con đưa mây tới đây nhé!");
-                } else if (growing.stage === ripeStage) {
-                  act({ type: "harvest", slot, region: scene.id });
-                  say("Hái được rồi! Con bỏ vào giỏ nhé.", "flower");
-                } else
-                  say(
-                    !growing.water
-                      ? "Mầm cây đang khát nước!"
-                      : "Cây cần thêm nắng ấm!",
-                  );
-              }}
-            >
-              {growing ? (
-                <div
-                  className={cn(
-                    `plant stage-${growing.stage} ${growing.stage === ripeStage ? "ripe" : ""}`,
-                  )}
-                >
-                  <Art id={growing.stage >= 3 ? art : "grass"} />
-                  {growing.water && <span className={cn("water-dot")}>●</span>}
-                </div>
-              ) : (
-                <span className={cn("soil-mark")}>＋</span>
-              )}
-            </button>
-          );
-        })}
-      </div>
+      {hasCrops && (
+        <div className={cn("plots")} aria-label="Hạt Giống Bí Ẩn">
+          {Array.from({ length: plotCount(world) }, (_, slot) => {
+            const p = value<Plot | undefined>(
+              world,
+              plotKey(slot, scene.id),
+              undefined,
+            );
+            const growing = p && p.stage > 0 ? p : undefined;
+            const art = cropArt(growing?.kind ?? "");
+            return (
+              <button
+                data-soil={slot}
+                key={slot}
+                aria-label={`Luống đất ${slot + 1}`}
+                className={cn(
+                  `soil ${reaction === "soil" ? "react-soil" : ""}`,
+                )}
+                onClick={() => {
+                  if (!growing) {
+                    act({ type: "plant", slot, kind: seed, region: scene.id });
+                    say("Hạt xuống đất rồi. Con đưa mây tới đây nhé!");
+                  } else if (growing.stage === ripeStage) {
+                    act({ type: "harvest", slot, region: scene.id });
+                    say("Hái được rồi! Con bỏ vào giỏ nhé.", "flower");
+                  } else
+                    say(
+                      !growing.water
+                        ? "Mầm cây đang khát nước!"
+                        : "Cây cần thêm nắng ấm!",
+                    );
+                }}
+              >
+                {growing ? (
+                  <div
+                    className={cn(
+                      `plant stage-${growing.stage} ${growing.stage === ripeStage ? "ripe" : ""}`,
+                    )}
+                  >
+                    <Art id={growing.stage >= 3 ? art : "grass"} />
+                    {growing.water && (
+                      <span className={cn("water-dot")}>●</span>
+                    )}
+                  </div>
+                ) : (
+                  <span className={cn("soil-mark")}>＋</span>
+                )}
+              </button>
+            );
+          })}
+        </div>
+      )}
       {Object.entries(basketOf(world)).some(([, n]) => n > 0) && (
         <div className={cn("basket-count")} aria-label="Giỏ của con">
           <Art id="basket" />
@@ -478,29 +509,31 @@ export function Garden({
             ))}
         </div>
       )}
-      <div className={cn("seed-tray")}>
-        <span>Gieo một điều bất ngờ</span>
-        <div>
-          {regionCrops.map((s) => (
-            <button
-              key={s.id}
-              aria-label={`Hạt ${s.name}`}
-              className={cn(seed === s.id ? "selected" : "")}
-              onClick={() => {
-                setSeed(s.id);
-                say("Con kéo hạt xuống luống đất nhé!");
-              }}
-              onPointerDown={(e) => {
-                setSeed(s.id);
-                down(e, s.id);
-              }}
-            >
-              <Art id={cropArt(s.id)} />
-              <small>{s.name}</small>
-            </button>
-          ))}
+      {hasCrops && (
+        <div className={cn("seed-tray")}>
+          <span>Gieo một điều bất ngờ</span>
+          <div>
+            {regionCrops.map((s) => (
+              <button
+                key={s.id}
+                aria-label={`Hạt ${s.name}`}
+                className={cn(seed === s.id ? "selected" : "")}
+                onClick={() => {
+                  setSeed(s.id);
+                  say("Con kéo hạt xuống luống đất nhé!");
+                }}
+                onPointerDown={(e) => {
+                  setSeed(s.id);
+                  down(e, s.id);
+                }}
+              >
+                <Art id={cropArt(s.id)} />
+                <small>{s.name}</small>
+              </button>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
       {scene.signs.map((s) => (
         <span key={s.text} className={cn(`garden-sign ${s.className}`)}>
           {s.text}

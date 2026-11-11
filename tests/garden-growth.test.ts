@@ -191,9 +191,9 @@ describe("apples, feeding and a fresh garden", () => {
     expect(worldSchema.safeParse(w).success).toBe(true);
   });
   it("offers seven garden crops plus pond crops, each with artwork and a notebook entry", () => {
-    expect(crops.filter((c) => !c.region || c.region === "garden")).toHaveLength(
-      7,
-    );
+    expect(
+      crops.filter((c) => !c.region || c.region === "garden"),
+    ).toHaveLength(7);
     expect(crops.map((c) => c.id)).toEqual(cropKinds.slice());
     for (const c of crops) {
       expect(assetIds).toContain(c.art);

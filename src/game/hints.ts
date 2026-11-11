@@ -18,10 +18,7 @@ export function contextualHint(world: World): string {
     return "Mầm đã uống nước rồi. Con đưa mặt trời tới sưởi ấm nhé!";
   const basket = basketOf(world);
   const totalBasket = Object.values(basket).reduce((a, b) => a + b, 0);
-  if (
-    totalBasket > 0 &&
-    !world.discoveries.some((d) => d.startsWith("dish_"))
-  )
+  if (totalBasket > 0 && !world.discoveries.some((d) => d.startsWith("dish_")))
     return "Giỏ có món ngon rồi! Con mở Bếp của vườn để nấu ăn nhé!";
   if (
     world.discoveries.includes("pal_reindeer") &&

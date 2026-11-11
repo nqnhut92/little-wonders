@@ -12,40 +12,40 @@ Truyện tranh cổ tích ấm áp cho trẻ Việt 4–6 tuổi: viền rêu m�
 
 Mọi ID đối tượng dưới đây hiện nằm trong `src/components/Art.tsx`, qua `Art` với viewBox 0 0 120 120. Chưa có file riêng từng đối tượng. Tên đích là ID.png trong `public/assets/`: 512×512, 1:1, PNG RGBA trong suốt; có thể kèm SVG master sạch. Giữ padding 7%, silhouette và điểm neo giữa đáy gần (60,112). Không crop lề trong suốt hoặc tính hitbox từ alpha.
 
-| ID / tên file đích                                                         | Mục đích và tương tác                                   |
-| -------------------------------------------------------------------------- | ------------------------------------------------------- |
-| tree / tree.png                                                            | Cây táo: rung tán, táo rơi                              |
-| cloud / cloud.png                                                          | Mây kéo được; mưa khi chạm/thả                          |
-| sun / sun.png                                                              | Nguồn nắng; chạm/thả vào luống                          |
-| flower / flower.png                                                        | Hướng dương, hoa vườn, chọn hạt, trang trí, thương hiệu |
-| carrot / carrot.png                                                        | Chọn hạt, cây lớn, thức ăn/yêu cầu bữa trưa             |
-| berry / berry.png                                                          | Chọn hạt, cây lớn, thức ăn/yêu cầu bữa trưa             |
-| butterfly / butterfly.png                                                  | Bướm vườn, trang trí, sổ tay                            |
-| worm / worm.png                                                            | Sinh vật hiện từ cỏ                                     |
-| bug / bug.png                                                              | Bọ rùa; dùng chung hình cho dế trong sổ                 |
-| bird / bird.png                                                            | Chim trên cành; hót và nhảy                             |
-| rabbit / rabbit.png                                                        | Thỏ vườn, hướng dẫn, bữa ăn; phản ứng vui/suy nghĩ      |
-| fish / fish.png                                                            | Cá trong ao; phản ứng bơi                               |
-| apple / apple.png                                                          | Quả rơi, thức ăn/yêu cầu bữa trưa                       |
-| house / house.png                                                          | Vườn chính và editor; năm màu tường                     |
-| rainbow / rainbow.png                                                      | Nền khám phá mưa+nắng lâu dài                           |
-| rock / rock.png                                                            | Nghiêng để lộ bọ rùa                                    |
-| grass / grass.png                                                          | Bụi rung và hình đại diện mầm cây                       |
-| pond / pond.png                                                            | Mặt nước, lá sen và gợn                                 |
-| basket / basket.png                                                        | Đích thả bữa ăn; dấu đếm render riêng                   |
-| dish-soup, dish-jam, dish-salad, dish-pie, dish-juice, dish-corncake, dish-applesauce, dish-pumpkinsoup, dish-cornsoup, dish-fruitbowl, dish-tea, dish-smoothie, dish-mystery (.png) | Món đã nấu: kết quả ở bếp, giỏ, quà (bát tạm)           |
-| tomato / tomato.png                                                        | Cây trồng: nút hạt, cây chín, giỏ (vector tạm)          |
-| pumpkin / pumpkin.png                                                      | Cây trồng: nút hạt, cây chín, giỏ (vector tạm)          |
-| corn / corn.png                                                            | Cây trồng: nút hạt, cây chín, giỏ (vector tạm)          |
-| watermelon / watermelon.png                                                | Cây trồng: nút hạt, cây chín, giỏ; món cún thích        |
-| puppy / puppy.png                                                          | Cún Lucky trắng nhỏ tròn, nhân vật chính thích ăn dưa hấu |
-| reindeer / reindeer.png                                                    | Bạn tuần lộc nhỏ đồng hành (đến sau lần thu hoạch đầu)   |
-| decor-sunflower, decor-pumpkin-lamp (.png)                                 | Đồ trang trí Nhà v2 (đèn bí ngô sáng vào ban đêm)       |
-| owl, frog, snail, duck, dragonfly (.png)                                   | Cú đêm, sinh vật đổi chỗ và sinh vật ở Ao sen           |
-| windmill, xylophone (.png)                                                 | Đồ chơi trong vườn (chong chóng quay, đàn gỗ 8 thanh)   |
-| fx-moon, fx-firefly, fx-shooting-star (.png)                               | Mặt trăng đêm, đom đóm theo tay và sao băng             |
-| lotus, waterlily, pond-lantern (.png)                                      | Cây trồng Ao sen (khu 2) và đèn hoa đăng                |
-| star / star.png                                                            | Trang trí nhà và ngôi sao phản hồi bữa ăn               |
+| ID / tên file đích                                                                                                                                                                   | Mục đích và tương tác                                     |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------- |
+| tree / tree.png                                                                                                                                                                      | Cây táo: rung tán, táo rơi                                |
+| cloud / cloud.png                                                                                                                                                                    | Mây kéo được; mưa khi chạm/thả                            |
+| sun / sun.png                                                                                                                                                                        | Nguồn nắng; chạm/thả vào luống                            |
+| flower / flower.png                                                                                                                                                                  | Hướng dương, hoa vườn, chọn hạt, trang trí, thương hiệu   |
+| carrot / carrot.png                                                                                                                                                                  | Chọn hạt, cây lớn, thức ăn/yêu cầu bữa trưa               |
+| berry / berry.png                                                                                                                                                                    | Chọn hạt, cây lớn, thức ăn/yêu cầu bữa trưa               |
+| butterfly / butterfly.png                                                                                                                                                            | Bướm vườn, trang trí, sổ tay                              |
+| worm / worm.png                                                                                                                                                                      | Sinh vật hiện từ cỏ                                       |
+| bug / bug.png                                                                                                                                                                        | Bọ rùa; dùng chung hình cho dế trong sổ                   |
+| bird / bird.png                                                                                                                                                                      | Chim trên cành; hót và nhảy                               |
+| rabbit / rabbit.png                                                                                                                                                                  | Thỏ vườn, hướng dẫn, bữa ăn; phản ứng vui/suy nghĩ        |
+| fish / fish.png                                                                                                                                                                      | Cá trong ao; phản ứng bơi                                 |
+| apple / apple.png                                                                                                                                                                    | Quả rơi, thức ăn/yêu cầu bữa trưa                         |
+| house / house.png                                                                                                                                                                    | Vườn chính và editor; năm màu tường                       |
+| rainbow / rainbow.png                                                                                                                                                                | Nền khám phá mưa+nắng lâu dài                             |
+| rock / rock.png                                                                                                                                                                      | Nghiêng để lộ bọ rùa                                      |
+| grass / grass.png                                                                                                                                                                    | Bụi rung và hình đại diện mầm cây                         |
+| pond / pond.png                                                                                                                                                                      | Mặt nước, lá sen và gợn                                   |
+| basket / basket.png                                                                                                                                                                  | Đích thả bữa ăn; dấu đếm render riêng                     |
+| dish-soup, dish-jam, dish-salad, dish-pie, dish-juice, dish-corncake, dish-applesauce, dish-pumpkinsoup, dish-cornsoup, dish-fruitbowl, dish-tea, dish-smoothie, dish-mystery (.png) | Món đã nấu: kết quả ở bếp, giỏ, quà (bát tạm)             |
+| tomato / tomato.png                                                                                                                                                                  | Cây trồng: nút hạt, cây chín, giỏ (vector tạm)            |
+| pumpkin / pumpkin.png                                                                                                                                                                | Cây trồng: nút hạt, cây chín, giỏ (vector tạm)            |
+| corn / corn.png                                                                                                                                                                      | Cây trồng: nút hạt, cây chín, giỏ (vector tạm)            |
+| watermelon / watermelon.png                                                                                                                                                          | Cây trồng: nút hạt, cây chín, giỏ; món cún thích          |
+| puppy / puppy.png                                                                                                                                                                    | Cún Lucky trắng nhỏ tròn, nhân vật chính thích ăn dưa hấu |
+| reindeer / reindeer.png                                                                                                                                                              | Bạn tuần lộc nhỏ đồng hành (đến sau lần thu hoạch đầu)    |
+| decor-sunflower, decor-pumpkin-lamp (.png)                                                                                                                                           | Đồ trang trí Nhà v2 (đèn bí ngô sáng vào ban đêm)         |
+| owl, frog, snail, duck, dragonfly (.png)                                                                                                                                             | Cú đêm, sinh vật đổi chỗ và sinh vật ở Ao sen             |
+| windmill, xylophone (.png)                                                                                                                                                           | Đồ chơi trong vườn (chong chóng quay, đàn gỗ 8 thanh)     |
+| fx-moon, fx-firefly, fx-shooting-star (.png)                                                                                                                                         | Mặt trăng đêm, đom đóm theo tay và sao băng               |
+| lotus, waterlily, pond-lantern (.png)                                                                                                                                                | Cây trồng Ao sen (khu 2) và đèn hoa đăng                  |
+| star / star.png                                                                                                                                                                      | Trang trí nhà và ngôi sao phản hồi bữa ăn                 |
 
 Các nền hiện nằm trong `src/style.module.css`, tô màu bằng token `--scene-*` trong `src/styles/tokens.css`; đầu ra đích là PNG (có thể kèm SVG master). Tên file này chỉ file thay thế tương lai, chưa tồn tại.
 
@@ -59,6 +59,20 @@ Các nền hiện nằm trong `src/style.module.css`, tô màu bằng token `--s
 | house-yard.png | 1160×560 / 29:14   | kín        | Sân editor / .house-canvas   |
 
 Icon app hiện có: `public/favicon.ico` (16/32/48), `public/favicon.svg`, `public/icon-32.png`, `public/icon-180.png` (nền kín tràn viền), `public/icon-192.png`, `public/icon-512.png` và `public/icon-maskable-192.png`/`-512.png` (tranh nằm trong vùng an toàn 80% ở giữa), xuất từ minh họa storybook do Gemini tạo (thỏ kem ôm hoa hướng dương, xem `PROVENANCE.vi.md`). Không animation. Chữ UI, nút cài đặt/âm thanh/sổ, chấm đếm, dấu cộng, focus và mũi tên gợi ý do app render, không sinh trong ảnh. Bong bóng thỏ dùng lại ID thức ăn; ngôi sao vui dùng star. Trang trí ngoài vườn dùng lại ID hoa/bướm/ngôi sao đã lưu.
+
+## Các khu sau (vector tạm)
+
+Rừng nhỏ, bãi biển, đồi tuyết và núi sao dùng nền SVG vẽ (`src/components/SceneBackdrop.tsx`) và placeholder vector trong `Art.tsx`. Danh sách cần vẽ lại, cùng quy cách đồ vật như trên (512×512 trong suốt, neo giữa-đáy):
+
+| Khu       | ID                                                                                                                               |
+| --------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| Rừng nhỏ  | blueberry, chestnut, mushroom-house (chỉ để trang trí, không bao giờ là đồ ăn), leafpile, hedgehog, squirrel, woodpecker         |
+| Bãi biển  | coconut-tree, coconut, shell, sand, crab, sandcastle-1 (ụ cát kèm xô và xẻng), sandcastle-2, sandcastle-3, wave, turtle, seagull |
+| Đồi tuyết | pine-snow, pinecone, snowman-1, snowman-2, snowman-3, polar-bear (gấu con, tròn và mềm), penguin, sled, snowflake                |
+| Núi sao   | telescope, moon-face, constellation-1 đến constellation-4 (chú thỏ vẽ dần từng ngôi sao; giữ vị trí các sao), star-lantern       |
+| Bếp       | dish-coconut, dish-chestnut                                                                                                      |
+
+Nền: bg-forest, bg-beach, bg-snow và bg-stars, 3200×1800 nền kín, hình quan trọng nằm trong 60% ở giữa, có bản đêm cho rừng, biển và tuyết (núi sao luôn là ban đêm). Giữ yên vùng hướng dẫn góc dưới trái và cột nút bên phải.
 
 ## Khung giao diện quanh tranh
 

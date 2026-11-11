@@ -19,6 +19,8 @@ export const cropKinds = [
   "watermelon",
   "lotus",
   "waterlily",
+  "blueberry",
+  "chestnut",
 ] as const;
 export const sceneTimes = ["day", "night"] as const;
 export const plantKinds = cropKinds;
@@ -36,9 +38,17 @@ export const dishKinds = [
   "dish_fruitbowl",
   "dish_tea",
   "dish_smoothie",
+  "dish_coconut",
+  "dish_chestnut",
   "dish_mystery",
 ] as const;
-export const basketKinds = [...cropKinds, "apple", ...dishKinds] as const;
+// Things picked up in a scene rather than grown: shaken from a tree or found on the ground.
+export const gatherKinds = ["apple", "coconut", "shell", "pinecone"] as const;
+export const basketKinds = [
+  ...cropKinds,
+  ...gatherKinds,
+  ...dishKinds,
+] as const;
 export const maxBasket = 9;
 export const maxPlots = 6;
 export const plotKeyPattern = /^plot\.[a-z0-9_]{1,16}\.[0-9]{1,2}$/;

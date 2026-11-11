@@ -34,14 +34,34 @@ export const crops: Crop[] = [
     care: 1,
     region: "pond",
   },
+  {
+    id: "blueberry",
+    name: "Việt quất",
+    art: "blueberry",
+    care: 1,
+    region: "forest",
+  },
+  {
+    id: "chestnut",
+    name: "Hạt dẻ",
+    art: "chestnut",
+    care: 1,
+    region: "forest",
+  },
 ];
+// Names of things gathered in scenes (not grown).
+export const gatherNames: Record<string, string> = {
+  apple: "Táo",
+  coconut: "Dừa",
+  shell: "Vỏ sò",
+  pinecone: "Quả thông",
+};
 // Spoken and screen-reader name of anything a basket can hold.
 export const itemName = (kind: string) =>
-  kind === "apple"
-    ? "Táo"
-    : (crops.find((c) => c.id === kind)?.name ??
-      dishes.find((d) => d.dish === kind)?.name ??
-      kind);
+  gatherNames[kind] ??
+  crops.find((c) => c.id === kind)?.name ??
+  dishes.find((d) => d.dish === kind)?.name ??
+  kind;
 export const cropArt = (kind: string) =>
   kind.startsWith("dish_")
     ? kind.replace("_", "-")

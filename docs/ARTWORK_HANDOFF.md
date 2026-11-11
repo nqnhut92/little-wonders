@@ -12,40 +12,40 @@ Cozy magical storybook for Vietnamese children aged 4–6: soft moss outlines #5
 
 All following object IDs currently live in `src/components/Art.tsx`, using `Art` with viewBox 0 0 120 120. There are no separate current object files. Each target filename is ID.png under `public/assets/`: 512×512, 1:1, transparent PNG RGBA; optional clean SVG master. Keep 7% padding, the established silhouette, and bottom-center anchor near (60,112). Do not crop transparent margins or derive hitboxes from alpha.
 
-| ID / target filename                                                       | Purpose and interaction                                       |
-| -------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| tree / tree.png                                                            | Apple tree: shake canopy, falling apple                       |
-| cloud / cloud.png                                                          | Movable cloud; rain on touch/drop                             |
-| sun / sun.png                                                              | Sunshine source; touch/drop on beds                           |
-| flower / flower.png                                                        | Sunflower, garden flower, seed selector, decoration, brand    |
-| carrot / carrot.png                                                        | Seed selector, grown crop, lunch food/request                 |
-| berry / berry.png                                                          | Seed selector, grown crop, lunch food/request                 |
-| butterfly / butterfly.png                                                  | Garden visitor, decoration, notebook                          |
-| worm / worm.png                                                            | Creature revealed from grass                                  |
-| bug / bug.png                                                              | Ladybug; shared cricket notebook illustration                 |
-| bird / bird.png                                                            | Branch bird; chirp and hop                                    |
-| rabbit / rabbit.png                                                        | Garden, guide and meal character; happy/thinking responses    |
-| fish / fish.png                                                            | Revealed pond fish; swim reaction                             |
-| apple / apple.png                                                          | Falling fruit, lunch food/request                             |
-| house / house.png                                                          | Main garden and editor; five wall colors                      |
-| rainbow / rainbow.png                                                      | Persistent rain+sun discovery backdrop                        |
-| rock / rock.png                                                            | Tilt to reveal ladybug                                        |
-| grass / grass.png                                                          | Rustling bush and plant sprout proxy                          |
-| pond / pond.png                                                            | Water surface, lily leaf and ripples                          |
-| basket / basket.png                                                        | Lunch drop target; count indicators rendered separately       |
-| star / star.png                                                            | House decoration and positive meal sparkle                    |
+| ID / target filename                                                                                                                                                                 | Purpose and interaction                                       |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------- |
+| tree / tree.png                                                                                                                                                                      | Apple tree: shake canopy, falling apple                       |
+| cloud / cloud.png                                                                                                                                                                    | Movable cloud; rain on touch/drop                             |
+| sun / sun.png                                                                                                                                                                        | Sunshine source; touch/drop on beds                           |
+| flower / flower.png                                                                                                                                                                  | Sunflower, garden flower, seed selector, decoration, brand    |
+| carrot / carrot.png                                                                                                                                                                  | Seed selector, grown crop, lunch food/request                 |
+| berry / berry.png                                                                                                                                                                    | Seed selector, grown crop, lunch food/request                 |
+| butterfly / butterfly.png                                                                                                                                                            | Garden visitor, decoration, notebook                          |
+| worm / worm.png                                                                                                                                                                      | Creature revealed from grass                                  |
+| bug / bug.png                                                                                                                                                                        | Ladybug; shared cricket notebook illustration                 |
+| bird / bird.png                                                                                                                                                                      | Branch bird; chirp and hop                                    |
+| rabbit / rabbit.png                                                                                                                                                                  | Garden, guide and meal character; happy/thinking responses    |
+| fish / fish.png                                                                                                                                                                      | Revealed pond fish; swim reaction                             |
+| apple / apple.png                                                                                                                                                                    | Falling fruit, lunch food/request                             |
+| house / house.png                                                                                                                                                                    | Main garden and editor; five wall colors                      |
+| rainbow / rainbow.png                                                                                                                                                                | Persistent rain+sun discovery backdrop                        |
+| rock / rock.png                                                                                                                                                                      | Tilt to reveal ladybug                                        |
+| grass / grass.png                                                                                                                                                                    | Rustling bush and plant sprout proxy                          |
+| pond / pond.png                                                                                                                                                                      | Water surface, lily leaf and ripples                          |
+| basket / basket.png                                                                                                                                                                  | Lunch drop target; count indicators rendered separately       |
+| star / star.png                                                                                                                                                                      | House decoration and positive meal sparkle                    |
 | dish-soup, dish-jam, dish-salad, dish-pie, dish-juice, dish-corncake, dish-applesauce, dish-pumpkinsoup, dish-cornsoup, dish-fruitbowl, dish-tea, dish-smoothie, dish-mystery (.png) | Cooked dishes: kitchen result, basket, gifts (temporary bowl) |
-| tomato / tomato.png                                                        | Crop: seed button, ripe plant, basket (temporary vector)      |
-| pumpkin / pumpkin.png                                                      | Crop: seed button, ripe plant, basket (temporary vector)      |
-| corn / corn.png                                                            | Crop: seed button, ripe plant, basket (temporary vector)      |
-| watermelon / watermelon.png                                                | Crop: seed button, ripe plant, basket; the puppy's favorite   |
-| puppy / puppy.png                                                          | Lucky the main chubby white cartoon puppy (loves watermelon)  |
-| reindeer / reindeer.png                                                    | Little baby reindeer companion (arrives after first harvest)  |
-| decor-sunflower, decor-pumpkin-lamp (.png)                                 | House v2 unlocked decorations (pumpkin lamp glows at night)   |
-| owl, frog, snail, duck, dragonfly (.png)                                   | Night owl, shifting critters and lotus pond creatures         |
-| windmill, xylophone (.png)                                                 | Interactive garden toys (spinning blades, 8-bar pentatonic)   |
-| fx-moon, fx-firefly, fx-shooting-star (.png)                               | Night scene sky moon, pointer firefly and shooting star       |
-| lotus, waterlily, pond-lantern (.png)                                      | Ao sen (region 2) aquatic crops and floating lantern          |
+| tomato / tomato.png                                                                                                                                                                  | Crop: seed button, ripe plant, basket (temporary vector)      |
+| pumpkin / pumpkin.png                                                                                                                                                                | Crop: seed button, ripe plant, basket (temporary vector)      |
+| corn / corn.png                                                                                                                                                                      | Crop: seed button, ripe plant, basket (temporary vector)      |
+| watermelon / watermelon.png                                                                                                                                                          | Crop: seed button, ripe plant, basket; the puppy's favorite   |
+| puppy / puppy.png                                                                                                                                                                    | Lucky the main chubby white cartoon puppy (loves watermelon)  |
+| reindeer / reindeer.png                                                                                                                                                              | Little baby reindeer companion (arrives after first harvest)  |
+| decor-sunflower, decor-pumpkin-lamp (.png)                                                                                                                                           | House v2 unlocked decorations (pumpkin lamp glows at night)   |
+| owl, frog, snail, duck, dragonfly (.png)                                                                                                                                             | Night owl, shifting critters and lotus pond creatures         |
+| windmill, xylophone (.png)                                                                                                                                                           | Interactive garden toys (spinning blades, 8-bar pentatonic)   |
+| fx-moon, fx-firefly, fx-shooting-star (.png)                                                                                                                                         | Night scene sky moon, pointer firefly and shooting star       |
+| lotus, waterlily, pond-lantern (.png)                                                                                                                                                | Ao sen (region 2) aquatic crops and floating lantern          |
 
 Backgrounds currently live in `src/style.module.css`, colored by the `--scene-*` tokens in `src/styles/tokens.css`; target output is PNG (optional SVG master). These filenames describe future replacement files, not existing files.
 
@@ -59,6 +59,20 @@ Backgrounds currently live in `src/style.module.css`, colored by the `--scene-*`
 | house-yard.png | 1160×560 / 29:14 | opaque      | Editor yard / .house-canvas |
 
 Existing app icons: `public/favicon.ico` (16/32/48), `public/favicon.svg`, `public/icon-32.png`, `public/icon-180.png` (full-bleed opaque), `public/icon-192.png`, `public/icon-512.png` and `public/icon-maskable-192.png`/`-512.png` (artwork inside the central 80% safe zone), rasterized from a Gemini-generated storybook illustration of the cream rabbit hugging a sunflower (`PROVENANCE.md`). They have no animation. UI text, settings/audio/notebook controls, dots, plus signs, focus rings and hint arrows are rendered by the app, not generated inside illustrations. The rabbit thought bubble reuses food IDs; happy sparkle reuses star. Outdoor decorations reuse the saved flower/butterfly/star IDs.
+
+## Later regions (temporary vectors)
+
+Forest, beach, snowy hill and starry mountain use drawn SVG backdrops (`src/components/SceneBackdrop.tsx`) and vector placeholders in `Art.tsx`. Replacement targets, same object rules as above (512×512 transparent, bottom-center anchor):
+
+| Region          | IDs                                                                                                                                     |
+| --------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| Forest          | blueberry, chestnut, mushroom-house (decorative only, never shown as food), leafpile, hedgehog, squirrel, woodpecker                    |
+| Beach           | coconut-tree, coconut, shell, sand, crab, sandcastle-1 (mound with bucket and spade), sandcastle-2, sandcastle-3, wave, turtle, seagull |
+| Snowy hill      | pine-snow, pinecone, snowman-1, snowman-2, snowman-3, polar-bear (cub, soft and round), penguin, sled, snowflake                        |
+| Starry mountain | telescope, moon-face, constellation-1 to constellation-4 (a bunny traced star by star; keep the star positions), star-lantern           |
+| Kitchen         | dish-coconut, dish-chestnut                                                                                                             |
+
+Backgrounds: bg-forest, bg-beach, bg-snow and bg-stars, 3200×1800 opaque, important shapes in the central 60%, a night version for forest, beach and snow (the starry mountain is always night). Keep the lower-left guide area and the right-hand control column calm.
 
 ## Interface frame around the artwork
 

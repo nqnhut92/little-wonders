@@ -13,6 +13,7 @@ import {
   maxBasket,
   maxPlots,
   plotKeyPattern,
+  gatherKinds,
 } from "../data/ids";
 import { crops, gardenRegion, ripeStage, startingPlots } from "../data/crops";
 // stage 0 empty, 1 seed, 2 sprout, 3 grown, 4 ripe. water and sun clear when a full round moves the plant up a stage.
@@ -38,7 +39,8 @@ export type Action =
   | { type: "plant"; slot: number; kind: string; region?: string }
   | { type: "water" | "sun"; slot: number; region?: string }
   | { type: "harvest"; slot: number; region?: string }
-  | { type: "shake" }
+  // Gathers one item from a scene: apples by default, or a coconut, shell or pinecone.
+  | { type: "shake"; kind?: string }
   | { type: "gift"; pal: string; kind: string }
   | { type: "cook"; items: string[] }
   | { type: "feed"; kind: string }
@@ -155,7 +157,8 @@ export function apply(
       });
     }
   }
-  const plantCrop = a.type === "plant" ? crops.find((c) => c.id === a.kind) : undefined;
+  const plantCrop =
+    a.type === "plant" ? crops.find((c) => c.id === a.kind) : undefined;
   if (
     a.type === "plant" &&
     a.slot >= 0 &&
@@ -187,9 +190,12 @@ export function apply(
     }
   }
   if (a.type === "shake") {
-    const held = basketOf(w).apple ?? 0;
-    unlock("apple");
-    if (held < maxBasket) set("basket", { ...basketOf(w), apple: held + 1 });
+    const kind = a.kind ?? "apple";
+    if ((gatherKinds as readonly string[]).includes(kind)) {
+      const held = basketOf(w)[kind] ?? 0;
+      unlock(kind);
+      if (held < maxBasket) set("basket", { ...basketOf(w), [kind]: held + 1 });
+    }
   }
   // Giving something from the basket away; the table always has basic foods, so an empty basket changes nothing.
   if (a.type === "feed") {
@@ -228,7 +234,8 @@ export function apply(
     if (p && p.stage >= 1 && p.stage < ripeStage) {
       const flagged = { ...p, [a.type]: true };
       const need = crops.find((c) => c.id === p.kind)?.care ?? 1;
-      if (!(flagged.water && flagged.sun)) set(plotKey(a.slot, region), flagged);
+      if (!(flagged.water && flagged.sun))
+        set(plotKey(a.slot, region), flagged);
       else if ((p.rounds ?? 0) + 1 >= need) {
         set(plotKey(a.slot, region), {
           kind: p.kind,

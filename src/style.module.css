@@ -1345,3 +1345,52 @@ main {
   transform: scale(0.95);
   filter: brightness(1.08);
 }
+/* Drawn backdrops (forest, beach, snow, starry mountain) replace the painted image until art exists. */
+.garden[data-backdrop="drawn"],
+.garden[data-backdrop="drawn"][data-time="night"] {
+  background-image: none;
+}
+.scene-backdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+.backdrop-snowfall {
+  animation: snowfall 9s linear infinite;
+}
+.backdrop-twinkle {
+  animation: twinkle 4s ease-in-out infinite;
+}
+@keyframes snowfall {
+  from {
+    transform: translateY(-30px);
+  }
+  to {
+    transform: translateY(30px);
+  }
+}
+@keyframes twinkle {
+  50% {
+    opacity: 0.7;
+  }
+}
+.sign-forest {
+  left: 40%;
+  top: 92%;
+}
+.sign-beach {
+  left: 40%;
+  top: 92%;
+}
+.sign-snow {
+  left: 40%;
+  top: 92%;
+}
+.sign-stars {
+  left: 42%;
+  top: 92%;
+  color: var(--scene-sign-night);
+}

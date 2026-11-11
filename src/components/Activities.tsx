@@ -69,14 +69,15 @@ export function PalPanel({
   return (
     <div className={cn("lunch activity")}>
       <h2>
-        {pal.id === "puppy"
-          ? "Góc Của Lucky"
-          : `Lời mời của ${pal.name}`}
+        {pal.id === "puppy" ? "Góc Của Lucky" : `Lời mời của ${pal.name}`}
       </h2>
       <p>
         {pal.name} đang thích {itemName(wish).toLowerCase()}
       </p>
-      <div className={cn("meal-request")} aria-label={`Món ${pal.name} đang muốn`}>
+      <div
+        className={cn("meal-request")}
+        aria-label={`Món ${pal.name} đang muốn`}
+      >
         <Art id={cropArt(wish)} />
       </div>
       <p role="status" className={cn("meal-feedback")}>
@@ -171,9 +172,7 @@ export function PalPanel({
         })}
       </div>
       {storyIndex !== null && storyIndex < unlockedChapters && (
-        <p className={cn("pal-story-text")}>
-          {pal.stories[storyIndex]}
-        </p>
+        <p className={cn("pal-story-text")}>{pal.stories[storyIndex]}</p>
       )}
     </div>
   );
@@ -235,7 +234,8 @@ export function House({ world, act, say }: Props) {
             value: next,
           });
           act({ type: "discover", id: "decor" });
-          if (next.length >= 3) act({ type: "discover", id: "house_decorated" });
+          if (next.length >= 3)
+            act({ type: "discover", id: "house_decorated" });
           say("Đẹp quá! Mình đã cất thiết kế của con rồi.", "house");
         }}
       >
@@ -287,7 +287,8 @@ export function House({ world, act, say }: Props) {
           />
         ))}
         {houseDecorations.map((d) => {
-          const unlocked = !d.requires || world.discoveries.includes(d.requires);
+          const unlocked =
+            !d.requires || world.discoveries.includes(d.requires);
           return (
             <button
               key={d.id}
@@ -390,9 +391,7 @@ export function Xylophone({
             key={i}
             data-bar={i}
             aria-label={`Thanh đàn ${label}`}
-            className={cn(
-              `xylophone-bar ${lit.includes(i) ? "bar-lit" : ""}`,
-            )}
+            className={cn(`xylophone-bar ${lit.includes(i) ? "bar-lit" : ""}`)}
             style={{ height: `${190 - i * 10}px` }}
             onPointerDown={(e) => {
               e.preventDefault();

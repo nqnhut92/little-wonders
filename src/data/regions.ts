@@ -29,6 +29,45 @@ const pondIds = [
   "dragonfly",
   "pond_lantern",
 ];
+// Each later region lists its own discoveries; the garden counts everything that belongs to no other region.
+const forestIds = [
+  "blueberry",
+  "chestnut",
+  "harvest_blueberry",
+  "harvest_chestnut",
+  "hedgehog",
+  "squirrel",
+  "woodpecker",
+  "mushroom_house",
+];
+const beachIds = [
+  "coconut",
+  "shell",
+  "crab",
+  "sandcastle",
+  "waves",
+  "turtle",
+  "seagull",
+];
+const snowIds = [
+  "pinecone",
+  "snowman",
+  "polar_bear",
+  "penguin",
+  "sled",
+  "snowflake",
+];
+const starIds = ["telescope", "moon_face", "constellation", "star_lantern"];
+// Seen only at night or found in other regions' scenes: never part of a count.
+const uncounted = ["firefly_forest", "dish_coconut", "dish_chestnut"];
+const elsewhere = [
+  ...pondIds,
+  ...forestIds,
+  ...beachIds,
+  ...snowIds,
+  ...starIds,
+  ...uncounted,
+];
 export const regions: Region[] = [
   {
     id: "garden",
@@ -37,7 +76,9 @@ export const regions: Region[] = [
     ready: true,
     counted: discoveries
       .map((d) => d.id)
-      .filter((id) => !luckyDiscoveries.includes(id) && !pondIds.includes(id)),
+      .filter(
+        (id) => !luckyDiscoveries.includes(id) && !elsewhere.includes(id),
+      ),
   },
   {
     id: "pond",
@@ -50,34 +91,34 @@ export const regions: Region[] = [
   {
     id: "forest",
     name: "Rừng nhỏ",
-    art: "tree",
-    ready: false,
+    art: "mushroom-house",
+    ready: true,
     after: "pond",
-    counted: [],
+    counted: forestIds,
   },
   {
     id: "beach",
     name: "Bãi biển",
-    art: "fish",
-    ready: false,
+    art: "coconut-tree",
+    ready: true,
     after: "forest",
-    counted: [],
+    counted: beachIds,
   },
   {
     id: "snow",
     name: "Đồi tuyết",
-    art: "cloud",
-    ready: false,
+    art: "snowman-3",
+    ready: true,
     after: "beach",
-    counted: [],
+    counted: snowIds,
   },
   {
     id: "stars",
     name: "Núi sao",
-    art: "star",
-    ready: false,
+    art: "moon-face",
+    ready: true,
     after: "snow",
-    counted: [],
+    counted: starIds,
   },
 ];
 export const regionOpenId = (id: string) => `region_${id}_open`;

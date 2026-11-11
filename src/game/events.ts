@@ -12,10 +12,7 @@ export function pickSurpriseEvent(
 ): SurpriseEvent | null {
   const time = value<string>(world, "scene.time", "day");
   const candidates: SurpriseEvent[] = [];
-  if (
-    world.discoveries.includes("rain") &&
-    world.discoveries.includes("sun")
-  )
+  if (world.discoveries.includes("rain") && world.discoveries.includes("sun"))
     candidates.push({
       id: "rainbow",
       kind: "rainbow",
@@ -42,6 +39,8 @@ export function pickSurpriseEvent(
   });
   return candidates[Math.floor(random() * candidates.length)] ?? null;
 }
-export function nextSurpriseDelayMs(random: () => number = Math.random): number {
+export function nextSurpriseDelayMs(
+  random: () => number = Math.random,
+): number {
   return 45_000 + Math.floor(random() * 45_000);
 }

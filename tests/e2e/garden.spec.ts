@@ -50,9 +50,7 @@ test("Lucky accepts any gift, advances wish on watermelon and unlocks story chap
   await activate(page, "Cà rốt");
   await activate(page, "Giỏ thức ăn");
   await expect(
-    page
-      .getByRole("status")
-      .filter({ hasText: "Lucky vẫn chờ dưa hấu nhé!" }),
+    page.getByRole("status").filter({ hasText: "Lucky vẫn chờ dưa hấu nhé!" }),
   ).toBeVisible();
   await expect(
     page.getByRole("button", { name: "Đọc chuyện 1 của Lucky" }),
@@ -256,9 +254,7 @@ test.describe("mocked account requests", () => {
   });
 });
 
-test("unfinished pal wish survives reopening and reload", async ({
-  page,
-}) => {
+test("unfinished pal wish survives reopening and reload", async ({ page }) => {
   await openGarden(page);
   await activate(page, "Góc Của Lucky");
   await activate(page, "Cà rốt");
@@ -370,7 +366,7 @@ test("shaking the tree fills the basket and a ripe plant can be harvested", asyn
   await expect(page.getByRole("button", { name: "Luống đất 4" })).toBeVisible();
 });
 
-test("map is the home screen, shows locked and coming soon regions, and opens Ao sen", async ({
+test("map is the home screen, shows locked regions in order and keeps them closed", async ({
   page,
 }) => {
   await page.goto("/");
@@ -381,9 +377,12 @@ test("map is the home screen, shows locked and coming soon regions, and opens Ao
   await expect(locked).toBeVisible();
   await locked.click();
   await expect(page.locator(".valley-map")).toBeVisible();
-  const soon = page.getByRole("button", { name: "Rừng nhỏ, sắp có" });
-  await expect(soon).toBeVisible();
-  await soon.click();
+  // Every later region has content now, so each waits behind the one before it.
+  for (const name of ["Rừng nhỏ", "Bãi biển", "Đồi tuyết", "Núi sao"])
+    await expect(
+      page.getByRole("button", { name: `${name}, chưa mở` }),
+    ).toBeVisible();
+  await page.getByRole("button", { name: "Rừng nhỏ, chưa mở" }).click();
   await expect(page.locator(".valley-map")).toBeVisible();
   await activate(page, "Vườn nhà");
   await expect(page.locator(".garden")).toBeVisible();
@@ -551,4 +550,54 @@ test("fog clears on the map when a region opens, including under reduced motion"
   await pond.click();
   await expect(page.getByRole("button", { name: "Mặt ao sen" })).toBeVisible();
   await context.close();
+});
+
+test("later regions: beach gathering, building a sandcastle and the starry mountain", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await page.evaluate(() => {
+    const raw = JSON.parse(
+      localStorage.getItem("little-wonders-v1") || "null",
+    ) ?? {
+      pending: false,
+      nickname: "Bạn nhỏ",
+      device: "d",
+      world: { schema: 2, epoch: 0, discoveries: [], fields: {} },
+    };
+    raw.world.discoveries.push(
+      "region_pond_open",
+      "region_forest_open",
+      "region_beach_open",
+      "region_snow_open",
+      "region_stars_open",
+    );
+    localStorage.setItem("little-wonders-v1", JSON.stringify(raw));
+  });
+  await page.reload();
+  await activate(page, "Bãi biển");
+  await expect(page.locator(".garden")).toHaveAttribute(
+    "data-variant",
+    "beach",
+  );
+  await expect(page.getByRole("button", { name: "Luống đất 1" })).toHaveCount(
+    0,
+  );
+  await activate(page, "Cây dừa");
+  await activate(page, "Vỏ sò");
+  await expect(page.getByLabel("Giỏ của con")).toContainText("1");
+  for (let i = 0; i < 2; i++) await activate(page, "Lâu đài cát");
+  await activate(page, "Sổ khám phá");
+  await expect(page.getByText("Lâu đài cát", { exact: true })).toBeVisible();
+  await expect(page.getByText("Trái dừa rơi", { exact: true })).toBeVisible();
+  await activate(page, "Trở về vườn");
+  await activate(page, "Bản đồ thung lũng");
+  await activate(page, "Núi sao");
+  await expect(page.locator(".garden")).toHaveAttribute(
+    "data-variant",
+    "stars",
+  );
+  await expect(page.getByRole("button", { name: "Mặt trời" })).toHaveCount(0);
+  await activate(page, "Ông trăng");
+  await expect(page.getByRole("button", { name: "Chòm sao" })).toBeVisible();
 });

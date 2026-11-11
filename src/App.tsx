@@ -2,7 +2,13 @@ import { cn } from "./styles";
 import { useState, useEffect, useRef } from "react";
 import { Garden } from "./components/Garden";
 import { ValleyMap } from "./components/ValleyMap";
-import { House, Lunch, Notebook, PalPanel, Xylophone } from "./components/Activities";
+import {
+  House,
+  Lunch,
+  Notebook,
+  PalPanel,
+  Xylophone,
+} from "./components/Activities";
 import { Art } from "./components/Art";
 import { Kitchen } from "./components/Kitchen";
 import { Icon, GoogleMark } from "./components/Icons";
@@ -18,7 +24,13 @@ import {
   type ThemePreference,
 } from "./ui/theme-controller.js";
 import { createScrollRegions } from "./ui/scroll-regions.js";
-import { apply, mergeWorld, assistance, value, type Action } from "./game/engine";
+import {
+  apply,
+  mergeWorld,
+  assistance,
+  value,
+  type Action,
+} from "./game/engine";
 import { upgradeWorld } from "./game/upgrade";
 import {
   load,
@@ -102,7 +114,8 @@ export default function App() {
       if (opened.length) {
         setClearing((prev) => [...new Set([...prev, ...opened])]);
         const first = regions.find((r) => r.id === opened[0]);
-        if (first) say(`${first.name} đã mở ra rồi! Sương đang tan đó!`, "rainbow");
+        if (first)
+          say(`${first.name} đã mở ra rồi! Sương đang tan đó!`, "rainbow");
       }
       const next = {
         ...old,
@@ -183,7 +196,10 @@ export default function App() {
         const event = pickSurpriseEvent(current.current.world);
         if (event) {
           setSurprise(event);
-          say(event.message, event.kind === "shooting_star" ? "flower" : "butterfly");
+          say(
+            event.message,
+            event.kind === "shooting_star" ? "flower" : "butterfly",
+          );
           if (event.discovery) act({ type: "discover", id: event.discovery });
           hide = setTimeout(() => setSurprise(null), 4000);
         }
@@ -427,7 +443,9 @@ export default function App() {
             <button
               type="button"
               className={cn("kid-button")}
-              aria-label={night ? "Chuyển sang ban ngày" : "Chuyển sang ban đêm"}
+              aria-label={
+                night ? "Chuyển sang ban ngày" : "Chuyển sang ban đêm"
+              }
               title={night ? "Chuyển sang ban ngày" : "Chuyển sang ban đêm"}
               aria-pressed={night}
               onClick={() => {
@@ -435,7 +453,10 @@ export default function App() {
                 act({ type: "set", key: "scene.time", value: next });
                 if (next === "night") {
                   act({ type: "discover", id: "night" });
-                  say("Bầu trời chuyển sang ban đêm rồi, có sao và đom đóm kìa!", "owl");
+                  say(
+                    "Bầu trời chuyển sang ban đêm rồi, có sao và đom đóm kìa!",
+                    "owl",
+                  );
                 } else say("Trời sáng rồi! Nắng ấm quay lại vườn!", "sun");
               }}
             >
@@ -505,9 +526,7 @@ export default function App() {
               {panel === "kitchen" && (
                 <Kitchen world={local.world} act={act} say={say} />
               )}
-              {panel === "xylophone" && (
-                <Xylophone act={act} audio={audio} />
-              )}
+              {panel === "xylophone" && <Xylophone act={act} audio={audio} />}
               {panel === "fresh" && (
                 <div className={cn("activity")}>
                   <Art id="grass" />
@@ -558,7 +577,9 @@ export default function App() {
                 <div className={cn("activity")}>
                   <h2>Góc dành cho người lớn</h2>
                   <div className={cn("adult-meta")}>
-                    <span role="status">{busy ? "Đang đồng bộ…" : status.text}</span>
+                    <span role="status">
+                      {busy ? "Đang đồng bộ…" : status.text}
+                    </span>
                     <ThemeToggle
                       preference={themePref}
                       onCycle={() => themeController.current?.cycle()}
