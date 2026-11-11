@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { Garden } from "./components/Garden";
 import { House, Lunch, Notebook } from "./components/Activities";
 import { Art } from "./components/Art";
+import { Kitchen } from "./components/Kitchen";
 import { Icon, GoogleMark, type IconName } from "./components/Icons";
 import { regions } from "./data/regions";
 import { regionState } from "./game/regions";
@@ -312,6 +313,15 @@ export default function App() {
         <button
           type="button"
           className={cn("kid-button")}
+          aria-label="Bếp của vườn"
+          title="Bếp của vườn"
+          onClick={() => setPanel("kitchen")}
+        >
+          <Icon name="pot" size={28} />
+        </button>
+        <button
+          type="button"
+          className={cn("kid-button")}
           aria-label="Bản đồ thung lũng"
           title="Bản đồ thung lũng"
           onClick={() => setPanel("map")}
@@ -392,6 +402,9 @@ export default function App() {
               {panel === "lunch" && (
                 <Lunch world={local.world} act={act} say={say} />
               )}{" "}
+              {panel === "kitchen" && (
+                <Kitchen world={local.world} act={act} say={say} />
+              )}
               {panel === "map" && (
                 <div className={cn("activity")}>
                   <h2>Thung lũng nhỏ</h2>

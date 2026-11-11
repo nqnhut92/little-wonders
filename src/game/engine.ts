@@ -1,5 +1,6 @@
 import { discoveryRules } from "../data/interactions";
 import { regionsToOpen } from "./regions";
+import { dishFor, maxPot } from "../data/recipes";
 import {
   currentSchema,
   isCounterKey,
@@ -32,6 +33,7 @@ export type Action =
   | { type: "water" | "sun"; slot: number }
   | { type: "harvest"; slot: number }
   | { type: "shake" }
+  | { type: "cook"; items: string[] }
   | { type: "feed"; kind: string }
   | { type: "resetGarden" }
   | { type: "discover"; id: string }
@@ -129,6 +131,19 @@ export function apply(
         water: false,
         sun: false,
       });
+  }
+  if (a.type === "cook") {
+    const have = { ...basketOf(w) };
+    const ok =
+      a.items.length >= 1 &&
+      a.items.length <= maxPot &&
+      a.items.every((kind) => --have[kind] >= 0 && !kind.startsWith("dish_"));
+    const dish = dishFor(a.items).dish;
+    if (ok && (have[dish] ?? 0) < maxBasket) {
+      have[dish] = (have[dish] ?? 0) + 1;
+      set("basket", have);
+      unlock(dish);
+    }
   }
   if (a.type === "shake") {
     const held = basketOf(w).apple ?? 0;

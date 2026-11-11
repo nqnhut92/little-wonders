@@ -10,7 +10,7 @@ import {
   type Plot,
   type Action,
 } from "../game/engine";
-import { cropArt, ripeStage } from "../data/crops";
+import { cropArt, itemName, ripeStage } from "../data/crops";
 import { seeds } from "../data/content";
 import { interactions } from "../data/interactions";
 type Props = {
@@ -314,7 +314,7 @@ export function Garden({ world, act, say, open, highlight, showSteps }: Props) {
           {Object.entries(basketOf(world))
             .filter(([, n]) => n > 0)
             .map(([kind, n]) => (
-              <span key={kind} aria-label={`${kind} ${n}`}>
+              <span key={kind} aria-label={`${itemName(kind)} ${n}`}>
                 <Art id={cropArt(kind)} />
                 <b>{n}</b>
               </span>

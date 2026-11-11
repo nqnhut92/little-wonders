@@ -35,6 +35,10 @@ Parent identity lấy từ session ký, không nhận user ID do client khai bá
 
 Một luống là field `plot.<khu>.<số>` với `{kind, stage, water, sun, rounds?}`: stage 0 là trống, rồi hạt, mầm, lớn và chín. Mỗi vòng đủ nước và nắng đưa cây lên một giai đoạn và xóa hai cờ; cây là dữ liệu trong `src/data/crops.ts` (`care` là số vòng mỗi giai đoạn). `harvest` đưa cây chín vào field `basket` (tối đa 9 mỗi loại), làm trống luống và ghi `harvest_<cây>`. `shake` thêm một quả táo vào giỏ, `feed` dùng một món trong giỏ (bàn ăn luôn có món cơ bản nên giỏ trống không chặn bé) và `resetGarden` làm trống luống, giỏ và đồ trang trí, còn khám phá, màu nhà và bữa ăn dở được giữ. Số luống suy ra từ các khám phá `harvest_*` khác nhau (3 đến 6), không lưu riêng. `upgradeWorld` chuyển field `plant0..2` cũ thành `plot.garden.N`: cây đủ nước và nắng thành chín, cây khác giữ hạt và cờ, và plot đã có không bị ghi đè.
 
+## Bếp
+
+Công thức là dữ liệu trong `src/data/recipes.ts` (danh sách nguyên liệu đã sắp xếp). `cook` nhận một đến ba món đều có trong giỏ, dùng hết chúng và thêm món ăn (`dish_*`, tối đa 9) vào giỏ và sổ khám phá; tổ hợp không khớp công thức ra `dish_mystery`. Yêu cầu không hợp lệ (nồi trống, món không có, dùng món đã nấu làm nguyên liệu, chồng món đầy) không làm gì. Món ăn là một loại đồ trong giỏ, vẽ bằng bát placeholder `dish-*`.
+
 ## Khu vực và biến thể hiếm
 
 Khu là các dòng trong `src/data/regions.ts` (`ready`, `after`, `counted`, ngưỡng 0,7). `regionsToOpen` trong `src/game/regions.ts` là hàm thuần: một khu đã sẵn sàng mở khi khu trước đã mở và đủ khám phá có tính điểm, và `apply` ghi `region_<id>_open` như một khám phá thường, nên trạng thái được suy ra, merge theo union và không bao giờ khóa lại. Khám phá may rủi (`rare_*`, `shooting_star`) không tính vào mẫu số. `apply` nhận hàm ngẫu nhiên được tiêm vào; hái cà rốt, bí ngô hoặc dâu ghi khám phá hiếm với xác suất 1/8. Bảng bản đồ tạm dùng ký hiệu chữ cho đến khi có tranh bản đồ.

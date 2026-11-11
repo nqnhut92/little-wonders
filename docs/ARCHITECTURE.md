@@ -35,6 +35,10 @@ Parent identity comes from a signed session, never a client-supplied user ID. Ev
 
 A bed is the field `plot.<region>.<slot>` with `{kind, stage, water, sun, rounds?}`: stage 0 is empty, then seed, sprout, grown and ripe. A full water and sun round advances the stage and clears both flags; crops are data in `src/data/crops.ts` (`care` is the number of rounds per stage). `harvest` moves a ripe plant into the `basket` field (at most 9 per crop), empties the bed and records `harvest_<crop>`. `shake` adds an apple to the basket, `feed` uses one basket item (the lunch table always offers basic foods, so an empty basket never blocks) and `resetGarden` empties beds, basket and decorations while discoveries, house color and meal state stay. The number of beds is derived from the distinct `harvest_*` discoveries (3 to 6) and is never stored. `upgradeWorld` turns early `plant0..2` fields into `plot.garden.N`: a plant with both water and sun becomes ripe, any other keeps its seed and flags, and an existing plot is never overwritten.
 
+## Kitchen
+
+Recipes are data in `src/data/recipes.ts` (sorted ingredient lists). `cook` takes one to three items that are all in the basket, uses them up and adds the dish (`dish_*`, at most 9) to the basket and the notebook; a mix that matches no recipe makes `dish_mystery`. Invalid requests (empty pot, items not held, dishes as ingredients, a full dish stack) change nothing. Dishes are basket kinds drawn with the `dish-*` placeholder bowls.
+
 ## Regions and rare variants
 
 Regions are rows in `src/data/regions.ts` (`ready`, `after`, `counted`, ratio 0.7). `regionsToOpen` in `src/game/regions.ts` is pure: a ready region opens when the previous region is open and enough of its counted discoveries are found, and `apply` records `region_<id>_open` as an ordinary discovery, so the state is derived, merges by union and never locks again. Chance-based discoveries (`rare_*`, `shooting_star`) are excluded from the count. `apply` takes an injected random function; a harvest of carrot, pumpkin or strawberry records the rare discovery with probability 1/8. The map panel uses temporary text symbols until the map artwork exists.

@@ -14,6 +14,7 @@ export type IconName =
   | "cloud-saved"
   | "cloud-waiting"
   | "busy"
+  | "pot"
   | "map"
   | "broom"
   | "yes"
@@ -106,6 +107,16 @@ const paths: Record<IconName, ReactNode> = {
     </>
   ),
   "cloud-waiting": <path {...line} strokeWidth={2} d={cloud} />,
+  pot: (
+    <>
+      <path d="M4 10h16v3.500a7.500 7.500 0 0 1-7.500 7.500h-1A7.500 7.500 0 0 1 4 13.500z" />
+      <path
+        {...line}
+        strokeWidth={2.2}
+        d="M2.500 10h19M9 3.500c-1 1.300 1 2 0 3.500m5-3.500c-1 1.300 1 2 0 3.500"
+      />
+    </>
+  ),
   map: (
     <>
       <path d="M3 6.5 9 4v14l-6 2.500z" />

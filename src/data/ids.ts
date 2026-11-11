@@ -20,7 +20,15 @@ export const cropKinds = [
 ] as const;
 export const plantKinds = cropKinds;
 // Things a basket can hold: every crop plus apples shaken from the tree.
-export const basketKinds = [...cropKinds, "apple"] as const;
+export const dishKinds = [
+  "dish_soup",
+  "dish_jam",
+  "dish_salad",
+  "dish_pie",
+  "dish_juice",
+  "dish_mystery",
+] as const;
+export const basketKinds = [...cropKinds, "apple", ...dishKinds] as const;
 export const maxBasket = 9;
 export const maxPlots = 6;
 export const plotKeyPattern = /^plot\.[a-z0-9_]{1,16}\.[0-9]{1,2}$/;

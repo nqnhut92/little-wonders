@@ -24,6 +24,12 @@ export const assetIds = [
   "pumpkin",
   "corn",
   "watermelon",
+  "dish-soup",
+  "dish-jam",
+  "dish-salad",
+  "dish-pie",
+  "dish-juice",
+  "dish-mystery",
 ];
 export function Art({ id, color }: { id: string; color?: string }) {
   return (
@@ -106,6 +112,27 @@ export function Art({ id, color }: { id: string; color?: string }) {
             />
             <path d="M32 43q26-23 53 1L51 111Q35 96 32 43" fill="#ed955a" />
             <path d="m40 57 18 5m-14 14 13 4" />
+          </>
+        )}
+        {id.startsWith("dish-") && (
+          <>
+            <path d="M14 60h92c0 28-20 46-46 46S14 88 14 60Z" fill="#fffdf4" />
+            <ellipse
+              cx="60"
+              cy="60"
+              rx="46"
+              ry="10"
+              fill={
+                {
+                  "dish-soup": "#e4695a",
+                  "dish-jam": "#c8506a",
+                  "dish-salad": "#8ab16e",
+                  "dish-pie": "#e0a35a",
+                  "dish-juice": "#ef7d86",
+                  "dish-mystery": "#b79bd6",
+                }[id] ?? "#e9bd58"
+              }
+            />
           </>
         )}
         {id === "tomato" && (

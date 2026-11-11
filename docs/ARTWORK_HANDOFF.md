@@ -12,32 +12,33 @@ Cozy magical storybook for Vietnamese children aged 4–6: soft moss outlines #5
 
 All following object IDs currently live in `src/components/Art.tsx`, using `Art` with viewBox 0 0 120 120. There are no separate current object files. Each target filename is ID.png under `public/assets/`: 512×512, 1:1, transparent PNG RGBA; optional clean SVG master. Keep 7% padding, the established silhouette, and bottom-center anchor near (60,112). Do not crop transparent margins or derive hitboxes from alpha.
 
-| ID / target filename        | Purpose and interaction                                     |
-| --------------------------- | ----------------------------------------------------------- |
-| tree / tree.png             | Apple tree: shake canopy, falling apple                     |
-| cloud / cloud.png           | Movable cloud; rain on touch/drop                           |
-| sun / sun.png               | Sunshine source; touch/drop on beds                         |
-| flower / flower.png         | Sunflower, garden flower, seed selector, decoration, brand  |
-| carrot / carrot.png         | Seed selector, grown crop, lunch food/request               |
-| berry / berry.png           | Seed selector, grown crop, lunch food/request               |
-| butterfly / butterfly.png   | Garden visitor, decoration, notebook                        |
-| worm / worm.png             | Creature revealed from grass                                |
-| bug / bug.png               | Ladybug; shared cricket notebook illustration               |
-| bird / bird.png             | Branch bird; chirp and hop                                  |
-| rabbit / rabbit.png         | Garden, guide and meal character; happy/thinking responses  |
-| fish / fish.png             | Revealed pond fish; swim reaction                           |
-| apple / apple.png           | Falling fruit, lunch food/request                           |
-| house / house.png           | Main garden and editor; five wall colors                    |
-| rainbow / rainbow.png       | Persistent rain+sun discovery backdrop                      |
-| rock / rock.png             | Tilt to reveal ladybug                                      |
-| grass / grass.png           | Rustling bush and plant sprout proxy                        |
-| pond / pond.png             | Water surface, lily leaf and ripples                        |
-| basket / basket.png         | Lunch drop target; count indicators rendered separately     |
-| star / star.png             | House decoration and positive meal sparkle                  |
-| tomato / tomato.png         | Crop: seed button, ripe plant, basket (temporary vector)    |
-| pumpkin / pumpkin.png       | Crop: seed button, ripe plant, basket (temporary vector)    |
-| corn / corn.png             | Crop: seed button, ripe plant, basket (temporary vector)    |
-| watermelon / watermelon.png | Crop: seed button, ripe plant, basket; the puppy's favorite |
+| ID / target filename                                                       | Purpose and interaction                                       |
+| -------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| tree / tree.png                                                            | Apple tree: shake canopy, falling apple                       |
+| cloud / cloud.png                                                          | Movable cloud; rain on touch/drop                             |
+| sun / sun.png                                                              | Sunshine source; touch/drop on beds                           |
+| flower / flower.png                                                        | Sunflower, garden flower, seed selector, decoration, brand    |
+| carrot / carrot.png                                                        | Seed selector, grown crop, lunch food/request                 |
+| berry / berry.png                                                          | Seed selector, grown crop, lunch food/request                 |
+| butterfly / butterfly.png                                                  | Garden visitor, decoration, notebook                          |
+| worm / worm.png                                                            | Creature revealed from grass                                  |
+| bug / bug.png                                                              | Ladybug; shared cricket notebook illustration                 |
+| bird / bird.png                                                            | Branch bird; chirp and hop                                    |
+| rabbit / rabbit.png                                                        | Garden, guide and meal character; happy/thinking responses    |
+| fish / fish.png                                                            | Revealed pond fish; swim reaction                             |
+| apple / apple.png                                                          | Falling fruit, lunch food/request                             |
+| house / house.png                                                          | Main garden and editor; five wall colors                      |
+| rainbow / rainbow.png                                                      | Persistent rain+sun discovery backdrop                        |
+| rock / rock.png                                                            | Tilt to reveal ladybug                                        |
+| grass / grass.png                                                          | Rustling bush and plant sprout proxy                          |
+| pond / pond.png                                                            | Water surface, lily leaf and ripples                          |
+| basket / basket.png                                                        | Lunch drop target; count indicators rendered separately       |
+| star / star.png                                                            | House decoration and positive meal sparkle                    |
+| dish-soup, dish-jam, dish-salad, dish-pie, dish-juice, dish-mystery (.png) | Cooked dishes: kitchen result, basket, gifts (temporary bowl) |
+| tomato / tomato.png                                                        | Crop: seed button, ripe plant, basket (temporary vector)      |
+| pumpkin / pumpkin.png                                                      | Crop: seed button, ripe plant, basket (temporary vector)      |
+| corn / corn.png                                                            | Crop: seed button, ripe plant, basket (temporary vector)      |
+| watermelon / watermelon.png                                                | Crop: seed button, ripe plant, basket; the puppy's favorite   |
 
 Backgrounds currently live in `src/style.module.css`, colored by the `--scene-*` tokens in `src/styles/tokens.css`; target output is PNG (optional SVG master). These filenames describe future replacement files, not existing files.
 

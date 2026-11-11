@@ -373,6 +373,11 @@ main {
   right: var(--edge-right);
   display: flex;
   flex-direction: column;
+  /* Child buttons fill the right-hand column; the small adult/system ones wrap into a second column to its left. */
+  flex-wrap: wrap-reverse;
+  align-content: flex-start;
+  max-height: 400px;
+  column-gap: 8px;
   align-items: center;
   gap: 8px;
 }
@@ -1024,4 +1029,31 @@ main {
 }
 .map-art {
   font-size: 34px;
+}
+.pot {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: 12px 0;
+}
+.pot-slot {
+  width: 84px;
+  height: 84px;
+  padding: 8px;
+  border: 2px dashed var(--plate-border);
+  background: var(--plate);
+}
+.primary.cook {
+  width: auto;
+  min-width: 160px;
+  margin: 16px auto;
+}
+.primary:disabled {
+  opacity: 0.5;
+}
+.kitchen .meal-feedback .art {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  vertical-align: middle;
 }

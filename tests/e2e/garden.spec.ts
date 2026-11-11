@@ -370,3 +370,19 @@ test("map shows the garden lit and later regions as coming soon", async ({
   await activate(page, "Vườn nhà");
   await expect(page.getByRole("dialog")).toHaveCount(0);
 });
+
+test("kitchen cooks apples into a surprise dish and records it", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await activate(page, "Cây táo");
+  await activate(page, "Cây táo");
+  await activate(page, "Bếp của vườn");
+  await activate(page, "Thêm Táo vào nồi");
+  await activate(page, "Thêm Táo vào nồi");
+  await activate(page, "Nấu");
+  await expect(page.locator(".meal-feedback")).toContainText("Món bất ngờ");
+  await activate(page, "Trở về vườn");
+  await activate(page, "Sổ khám phá");
+  await expect(page.getByText("Món bất ngờ", { exact: true })).toBeVisible();
+});
