@@ -59,7 +59,7 @@ Các nền hiện nằm trong `src/style.module.css`, tô màu bằng token `--s
 | soil.png       | 512×256 / 2:1      | trong suốt | Luống / .soil                |
 | house-yard.png | 1160×560 / 29:14   | kín        | Sân editor / .house-canvas   |
 
-Icon app hiện có: `public/favicon.ico` (16/32/48), `public/favicon.svg`, `public/icon-32.png`, `public/icon-180.png` (nền kín tràn viền), `public/icon-192.png`, `public/icon-512.png` và `public/icon-maskable-192.png`/`-512.png` (tranh nằm trong vùng an toàn 80% ở giữa), do `scripts/make-icons.mjs` dựng từ bản gốc vector `public/favicon.svg`: Lucky phẳng đeo nơ tím trên nền trời và cỏ (xem `PROVENANCE.vi.md`). Không animation. Chữ UI, nút cài đặt/âm thanh/sổ, chấm đếm, dấu cộng, focus và mũi tên gợi ý do app render, không sinh trong ảnh. Bong bóng của bạn thú dùng lại ID thức ăn; ngôi sao vui dùng star. Trang trí ngoài vườn dùng lại ID hoa/bướm/ngôi sao đã lưu.
+Icon app hiện có: `public/favicon.ico` (16/32/48), `public/favicon.svg`, `public/icon-32.png`, `public/icon-180.png` (nền kín tràn viền), `public/icon-192.png`, `public/icon-512.png` và `public/icon-maskable-192.png`/`-512.png` (tranh nằm trong vùng an toàn 80% ở giữa), do `scripts/make-icons.mjs` dựng từ bản gốc vector `public/favicon.svg`: Lucky phẳng đeo nơ tím ôm quả dưa hấu, bên cạnh có hoa hướng dương, cà rốt và các đốm lấp lánh trên nền trời tia nắng (xem `PROVENANCE.vi.md`). Không animation. Chữ UI, nút cài đặt/âm thanh/sổ, chấm đếm, dấu cộng, focus và mũi tên gợi ý do app render, không sinh trong ảnh. Bong bóng của bạn thú dùng lại ID thức ăn; ngôi sao vui dùng star. Trang trí ngoài vườn dùng lại ID hoa/bướm/ngôi sao đã lưu.
 
 ## Một phong cách vẽ (hiện trạng)
 

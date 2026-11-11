@@ -6,8 +6,8 @@ const master = readFileSync("public/favicon.svg", "utf8");
 // Full-bleed square for the Apple icon; maskable also shrinks Lucky into the central safe zone.
 const square = master.replaceAll('rx="112"', 'rx="0"');
 const maskable = square.replace(
-  'x="56" y="68" width="400" height="400"',
-  'x="106" y="112" width="300" height="300"',
+  '<g id="art">',
+  '<g id="art" transform="translate(51 51) scale(0.8)">',
 );
 if (maskable === square) throw Error("favicon.svg layout changed");
 const browser = await chromium.launch();
