@@ -5,9 +5,18 @@ import { ValleyMap } from "./components/ValleyMap";
 import { House, Lunch, Notebook, PalPanel, Xylophone } from "./components/Activities";
 import { Art } from "./components/Art";
 import { Kitchen } from "./components/Kitchen";
-import { Icon, GoogleMark, type IconName } from "./components/Icons";
+import { Icon, GoogleMark } from "./components/Icons";
 import { regionOpenId, regions } from "./data/regions";
-import { ThemeToggle } from "./components/ThemeToggle";
+import {
+  ThemeToggle,
+  themeColors,
+  themeStorageKey,
+} from "./components/ThemeToggle";
+import {
+  createThemeController,
+  type ThemeController,
+  type ThemePreference,
+} from "./ui/theme-controller.js";
 import { createScrollRegions } from "./ui/scroll-regions.js";
 import { apply, mergeWorld, assistance, value, type Action } from "./game/engine";
 import { upgradeWorld } from "./game/upgrade";
@@ -32,11 +41,6 @@ import {
   type SurpriseEvent,
 } from "./game/events";
 type SaveKind = "local" | "synced" | "waiting";
-const saveIcons: Record<SaveKind, IconName> = {
-  local: "saved",
-  synced: "cloud-saved",
-  waiting: "cloud-waiting",
-};
 export default function App() {
   const [local, setLocal] = useState<Local>(() => ({
     ...load(),
@@ -66,6 +70,12 @@ export default function App() {
   );
   const [signed, setSigned] = useState(false);
   const [attempts, setAttempts] = useState(0);
+  const [themePref, setThemePref] = useState<ThemePreference>(
+    () =>
+      (document.documentElement.dataset.themePreference as ThemePreference) ||
+      "system",
+  );
+  const themeController = useRef<ThemeController | null>(null);
   const syncing = useRef(false);
   const selectionRequest = useRef(0);
   const hintIndex = useRef(0);
@@ -207,7 +217,17 @@ export default function App() {
   }, []);
   useEffect(() => {
     const regions = createScrollRegions();
-    return () => regions.destroy();
+    const theme = createThemeController({
+      storageKey: themeStorageKey,
+      colors: themeColors,
+      onChange: (state) => setThemePref(state.preference),
+    });
+    themeController.current = theme;
+    return () => {
+      regions.destroy();
+      theme.destroy();
+      themeController.current = null;
+    };
   }, []);
   const account = async () => {
     setLoadingProfiles(true);
@@ -444,16 +464,6 @@ export default function App() {
         >
           <Icon name="gear" size={20} />
         </button>
-        <ThemeToggle />
-        <span
-          className={cn("save-status")}
-          data-state={status.kind}
-          role="status"
-          aria-label={status.text}
-          title={status.text}
-        >
-          <Icon name={busy ? "busy" : saveIcons[status.kind]} size={20} />
-        </span>
       </nav>
       {panel && (
         <div className={cn("modal-shade")}>
@@ -546,6 +556,13 @@ export default function App() {
               {panel === "account" && (
                 <div className={cn("activity")}>
                   <h2>Góc dành cho người lớn</h2>
+                  <div className={cn("adult-meta")}>
+                    <span role="status">{busy ? "Đang đồng bộ…" : status.text}</span>
+                    <ThemeToggle
+                      preference={themePref}
+                      onCycle={() => themeController.current?.cycle()}
+                    />
+                  </div>
                   {!gate ? (
                     <>
                       <p>

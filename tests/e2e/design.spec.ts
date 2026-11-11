@@ -1,6 +1,10 @@
 import { test, expect, type Page } from "@playwright/test";
 const themeKey = "little-wonders-theme";
 const toggle = (page: Page) => page.locator(".theme-toggle");
+async function openAdult(page: Page) {
+  if (!(await toggle(page).isVisible()))
+    await page.getByRole("button", { name: "Dành cho người lớn" }).click();
+}
 const root = (page: Page) =>
   page.evaluate(() => ({
     theme: document.documentElement.dataset.theme,
@@ -23,6 +27,7 @@ test.describe("appearance", () => {
       scheme: "dark",
       meta: "#131b22",
     });
+    await openAdult(page);
     await expect(toggle(page)).toHaveAttribute(
       "aria-label",
       "Giao diện: Theo hệ thống. Chuyển sang Sáng",
@@ -53,6 +58,7 @@ test.describe("appearance", () => {
       ["dark", "dark", "Giao diện: Tối. Chuyển sang Theo hệ thống"],
       ["system", "light", "Giao diện: Theo hệ thống. Chuyển sang Sáng"],
     ]) {
+      await openAdult(page);
       await toggle(page).click();
       await expect(toggle(page)).toHaveAttribute("aria-label", label);
       await expect(toggle(page)).not.toHaveAttribute("aria-pressed");
@@ -62,6 +68,7 @@ test.describe("appearance", () => {
       ).toBe(preference);
       await page.reload();
       expect(await root(page)).toMatchObject({ preference, theme });
+      await openAdult(page);
       await expect(toggle(page)).toHaveAttribute("aria-label", label);
       expect((await background()) === light).toBe(theme === "light");
     }
@@ -85,6 +92,7 @@ test.describe("appearance", () => {
     await page.emulateMedia({ colorScheme: "light" });
     await page.goto("/");
     expect(await root(page)).toMatchObject({ preference: "system" });
+    await openAdult(page);
     await toggle(page).click();
     await toggle(page).click();
     await page.emulateMedia({ colorScheme: "light" });
@@ -103,9 +111,11 @@ test.describe("appearance", () => {
     const other = await context.newPage();
     await other.emulateMedia({ colorScheme: "light" });
     await other.goto("/");
+    await openAdult(page);
     await toggle(page).click();
     await toggle(page).click();
     await expect.poll(async () => (await root(other)).preference).toBe("dark");
+    await openAdult(other);
     await expect(toggle(other)).toHaveAttribute("data-mode", "dark");
     await page.evaluate((k) => localStorage.removeItem(k), themeKey);
     await expect
@@ -128,6 +138,7 @@ test.describe("appearance", () => {
         ];
       });
     const before = await scene();
+    await openAdult(page);
     await toggle(page).click();
     await toggle(page).click();
     expect((await root(page)).theme).toBe("dark");
@@ -257,6 +268,22 @@ test("the scene fills the screen and floating controls stay inside it", async ({
   ]) {
     await page.setViewportSize(size);
     await page.goto("/");
+    const mapControls = await page
+      .locator(".hud")
+      .evaluateAll((els) =>
+        els.map((el) => el.getBoundingClientRect().toJSON()),
+      );
+    for (const node of await page.locator(".map-node").all()) {
+      const n = (await node.boundingBox())!;
+      for (const c of mapControls)
+        expect(
+          n.x < c.right &&
+            n.x + n.width > c.left &&
+            n.y < c.bottom &&
+            n.y + n.height > c.top,
+          `${await node.getAttribute("aria-label")} at ${size.width}x${size.height}`,
+        ).toBe(false);
+    }
     await page.getByRole("button", { name: "Vườn nhà", exact: true }).click();
     const garden = (await page.locator(".garden").boundingBox())!;
     expect(garden).toEqual({ x: 0, y: 0, ...size });
@@ -279,11 +306,9 @@ test("the scene fills the screen and floating controls stay inside it", async ({
       expect(Math.min(box.width, box.height), name).toBeGreaterThanOrEqual(56);
       boxes.push(box);
     }
-    for (const selector of [".icon-button", ".theme-toggle"]) {
-      const box = (await page.locator(selector).boundingBox())!;
-      expect(box.width).toBe(44);
-      boxes.push(box);
-    }
+    const gearBox = (await page.locator(".icon-button").boundingBox())!;
+    expect(gearBox.width).toBe(44);
+    boxes.push(gearBox);
     for (const box of boxes) {
       expect(box.x).toBeGreaterThanOrEqual(0);
       expect(box.y).toBeGreaterThanOrEqual(0);

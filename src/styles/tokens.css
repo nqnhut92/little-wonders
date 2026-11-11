@@ -45,6 +45,15 @@
   --scene-wood: #c89e6d;
   --scene-wood-bar: #f2cf84;
   --scene-wood-bar-alt: #e49580;
+  --scene-trail: #ecdab2;
+  --scene-trail-dash: #be9f70;
+  --scene-sand: #f4dfac;
+  --scene-sea: #9ed4dd;
+  --scene-snow: #f5f9fa;
+  --scene-snow-shade: #d9e7ec;
+  --scene-pine: #6d9c68;
+  --scene-peak: #7e8da8;
+  --scene-star-gold: #f5d36b;
 }
 
 /* Light tokens. Scene containers repeat them so artwork panels stay light in Dark mode. */

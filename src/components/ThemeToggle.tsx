@@ -18,21 +18,29 @@ function initial(): ThemePreference {
     : "system";
 }
 // Appearance of the interface only. The game's own day and night is separate state.
-export function ThemeToggle() {
+export function ThemeToggle({
+  preference: controlled,
+  onCycle,
+}: {
+  preference?: ThemePreference;
+  onCycle?: () => void;
+} = {}) {
   const controller = useRef<ThemeController | null>(null);
-  const [preference, setPreference] = useState<ThemePreference>(initial);
+  const [localPref, setLocalPref] = useState<ThemePreference>(initial);
   useEffect(() => {
+    if (onCycle) return;
     const created = createThemeController({
       storageKey: themeStorageKey,
       colors: themeColors,
-      onChange: (state) => setPreference(state.preference),
+      onChange: (state) => setLocalPref(state.preference),
     });
     controller.current = created;
     return () => {
       created.destroy();
       controller.current = null;
     };
-  }, []);
+  }, [onCycle]);
+  const preference = controlled ?? localPref;
   const label = themeLabel(preference, "vi");
   return (
     <button
@@ -41,7 +49,7 @@ export function ThemeToggle() {
       data-mode={preference}
       aria-label={label}
       title={label}
-      onClick={() => controller.current?.cycle()}
+      onClick={() => (onCycle ? onCycle() : controller.current?.cycle())}
     >
       <svg
         width="19"
