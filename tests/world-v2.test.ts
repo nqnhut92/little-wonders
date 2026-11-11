@@ -22,7 +22,7 @@ function randomWorld(random: () => number): World {
   for (const key of [
     "houseColor",
     "decorations",
-    "plant0",
+    "plot.garden.0",
     "n.gift_puppy",
     "n.gift_rabbit",
     "n.visit",
@@ -119,10 +119,21 @@ describe("mergeWorld v2", () => {
 });
 
 describe("upgradeWorld", () => {
-  it("upgrades a real v1 world and keeps every field and discovery", () => {
+  it("upgrades a real v1 world, turning early beds into plots and keeping everything else", () => {
     const up = upgradeWorld(v1)!;
     expect(up).toMatchObject({ schema: 2, epoch: 0 });
-    expect(up.fields).toEqual(v1.fields);
+    const { plant0, plant1, ...rest } = v1.fields;
+    expect(up.fields).toEqual({
+      ...rest,
+      "plot.garden.0": {
+        ...plant0,
+        value: { kind: "sunflower", stage: 4, water: false, sun: false },
+      },
+      "plot.garden.1": {
+        ...plant1,
+        value: { kind: "carrot", stage: 1, water: true, sun: false },
+      },
+    });
     expect(up.discoveries).toEqual([...v1.discoveries].sort());
     expect(worldSchema.safeParse(up).success).toBe(true);
   });
@@ -131,6 +142,22 @@ describe("upgradeWorld", () => {
     const once = upgradeWorld(v1)!;
     expect(upgradeWorld(once)).toEqual(once);
     expect(v1).toEqual(copy);
+  });
+  it("never lets a stale early bed overwrite a plot that already exists", () => {
+    const up = upgradeWorld(v1)!;
+    const again = upgradeWorld({
+      ...up,
+      fields: {
+        ...up.fields,
+        plant0: {
+          value: { kind: "berry", water: false, sun: false },
+          clock: 99,
+          device: "old",
+        },
+      },
+    })!;
+    expect(again.fields["plot.garden.0"]).toEqual(up.fields["plot.garden.0"]);
+    expect(again.fields.plant0).toBeUndefined();
   });
   it("keeps an existing epoch and rejects data it cannot read", () => {
     expect(upgradeWorld({ ...v1, schema: 2, epoch: 4 })!.epoch).toBe(4);
@@ -152,7 +179,7 @@ describe("upgradeWorld", () => {
     });
     expect(merged.schema).toBe(2);
     expect(merged.discoveries).toContain("fish");
-    expect(merged.fields.plant0.value).toEqual(v1.fields.plant0.value);
+    expect(merged.fields["plot.garden.0"].value).toMatchObject({ stage: 4 });
   });
 });
 

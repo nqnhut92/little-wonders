@@ -1,6 +1,17 @@
 import { discoveryRules } from "../data/interactions";
-import { currentSchema, isCounterKey } from "../data/ids";
-export type Plant = { kind: string; water: boolean; sun: boolean };
+import { currentSchema, isCounterKey, maxBasket, maxPlots } from "../data/ids";
+import { crops, gardenRegion, ripeStage, startingPlots } from "../data/crops";
+// stage 0 empty, 1 seed, 2 sprout, 3 grown, 4 ripe. water and sun clear when a full round moves the plant up a stage.
+export type Plot = {
+  kind: string;
+  stage: number;
+  water: boolean;
+  sun: boolean;
+  rounds?: number;
+};
+export type Basket = Record<string, number>;
+export const plotKey = (slot: number, region = gardenRegion) =>
+  `plot.${region}.${slot}`;
 export type Stamp = { value: unknown; clock: number; device: string };
 export type World = {
   schema: 1 | 2;
@@ -12,6 +23,7 @@ export type World = {
 export type Action =
   | { type: "plant"; slot: number; kind: string }
   | { type: "water" | "sun"; slot: number }
+  | { type: "harvest"; slot: number }
   | { type: "discover"; id: string }
   | { type: "set"; key: string; value: unknown }
   | { type: "resetAll" };
@@ -82,18 +94,57 @@ export function apply(w: World, a: Action, device: string, now = 0): World {
   };
   if (a.type === "discover") unlock(a.id);
   if (a.type === "set") set(a.key, a.value);
-  if (a.type === "plant")
-    set(`plant${a.slot}`, { kind: a.kind, water: false, sun: false });
+  const plot = (slot: number) =>
+    w.fields[plotKey(slot)]?.value as Plot | undefined;
+  if (a.type === "plant" && a.slot >= 0 && a.slot < plotCount(w)) {
+    const p = plot(a.slot);
+    // Planting over a growing plant does nothing; a bed must be harvested first.
+    if (!p || p.stage === 0)
+      set(plotKey(a.slot), {
+        kind: a.kind,
+        stage: 1,
+        water: false,
+        sun: false,
+      });
+  }
+  if (a.type === "harvest") {
+    const p = plot(a.slot);
+    const held = basketOf(w)[p?.kind ?? ""] ?? 0;
+    if (p && p.stage === ripeStage && held < maxBasket) {
+      set("basket", { ...basketOf(w), [p.kind]: held + 1 });
+      set(plotKey(a.slot), {
+        kind: p.kind,
+        stage: 0,
+        water: false,
+        sun: false,
+      });
+      unlock(`harvest_${p.kind}`);
+    }
+  }
   if (a.type === "water" || a.type === "sun") {
     unlock(a.type === "water" ? "rain" : "sun");
-    const p = w.fields[`plant${a.slot}`]?.value as Plant | undefined;
-    if (p) {
-      const plant = { ...p, [a.type]: true };
-      set(`plant${a.slot}`, plant);
-      if (plant.sun && plant.water) {
-        unlock(plant.kind);
+    const p = plot(a.slot);
+    if (p && p.stage >= 1 && p.stage < ripeStage) {
+      const flagged = { ...p, [a.type]: true };
+      const need = crops.find((c) => c.id === p.kind)?.care ?? 1;
+      if (!(flagged.water && flagged.sun)) set(plotKey(a.slot), flagged);
+      else if ((p.rounds ?? 0) + 1 >= need) {
+        set(plotKey(a.slot), {
+          kind: p.kind,
+          stage: p.stage + 1,
+          water: false,
+          sun: false,
+        });
+        unlock(p.kind);
         unlock("butterfly");
-      }
+      } else
+        set(plotKey(a.slot), {
+          kind: p.kind,
+          stage: p.stage,
+          water: false,
+          sun: false,
+          rounds: (p.rounds ?? 0) + 1,
+        });
     }
     for (const rule of discoveryRules)
       if (rule.requires.every((id) => n.discoveries.includes(id)))
@@ -101,6 +152,15 @@ export function apply(w: World, a: Action, device: string, now = 0): World {
   }
   return changed ? n : w;
 }
+export const basketOf = (w: World): Basket =>
+  (w.fields.basket?.value as Basket | undefined) ?? {};
+// Beds open with the number of different crops harvested: derived from discoveries, never stored.
+export const plotCount = (w: World) =>
+  Math.min(
+    maxPlots,
+    startingPlots +
+      w.discoveries.filter((d) => d.startsWith("harvest_")).length,
+  );
 export const value = <T>(w: World, k: string, fallback: T): T =>
   (w.fields[k]?.value as T) ?? fallback;
 export const assistance = (attempts: number) =>

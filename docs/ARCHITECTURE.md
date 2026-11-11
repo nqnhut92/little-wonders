@@ -31,6 +31,10 @@ Server UPDATE merges under the row lock. Identical retries do not increment revi
 
 Parent identity comes from a signed session, never a client-supplied user ID. Every profile read/write filters by parent ID. POST requires exact Origin and a custom header. OAuth checks signed state, nonce, Google signature, issuer and audience. Cookies are Secure, HttpOnly, SameSite=Lax. Authenticated API responses are no-store and excluded from service-worker caching.
 
+## Plants, harvest and basket
+
+A bed is the field `plot.<region>.<slot>` with `{kind, stage, water, sun, rounds?}`: stage 0 is empty, then seed, sprout, grown and ripe. A full water and sun round advances the stage and clears both flags; crops are data in `src/data/crops.ts` (`care` is the number of rounds per stage). `harvest` moves a ripe plant into the `basket` field (at most 9 per crop), empties the bed and records `harvest_<crop>`. The number of beds is derived from the distinct `harvest_*` discoveries (3 to 6) and is never stored. `upgradeWorld` turns early `plant0..2` fields into `plot.garden.N`: a plant with both water and sun becomes ripe, any other keeps its seed and flags, and an existing plot is never overwritten.
+
 ## Interface design language
 
 Colors, radii and fonts are CSS variables in `src/styles/tokens.css`; `src/style.module.css` holds no color literals. Light is the default token set and `:root[data-theme="dark"]` overrides it. Scene containers (`.garden`, `.house-canvas`, `.lunch-scene`) repeat the light tokens and use the theme-independent `--scene-*` palette, so artwork looks the same in every appearance; artwork shown on themed panels sits on a light plate. The game's own day and night will be game state, independent of appearance.

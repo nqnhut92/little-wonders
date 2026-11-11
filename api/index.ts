@@ -12,7 +12,9 @@ import {
   maxDecorations,
   maxCounter,
   counterKeyPattern,
-  plantKinds,
+  cropKinds,
+  maxBasket,
+  plotKeyPattern,
   decorationIds,
   houseColors,
   mealKinds,
@@ -36,10 +38,21 @@ const stamp = <T extends z.ZodType>(schema: T) =>
   });
 const fieldValues = {
   plant: z.object({
-    kind: z.enum(plantKinds),
+    kind: z.enum(cropKinds),
     water: z.boolean(),
     sun: z.boolean(),
   }),
+  plot: z.object({
+    kind: z.enum(cropKinds),
+    stage: z.number().int().min(0).max(4),
+    water: z.boolean(),
+    sun: z.boolean(),
+    rounds: z.number().int().min(0).max(20).optional(),
+  }),
+  basket: z.partialRecord(
+    z.enum(cropKinds),
+    z.number().int().min(0).max(maxBasket),
+  ),
   houseColor: z.enum(houseColors),
   decorations: z
     .array(
@@ -64,6 +77,8 @@ const fieldValues = {
 // One entry per field-key pattern. Adding a field to the game means adding a pattern here, never a SQL migration.
 const fieldPatterns: [RegExp, ReturnType<typeof stamp>][] = [
   [/^plant[0-2]$/, stamp(fieldValues.plant)],
+  [plotKeyPattern, stamp(fieldValues.plot)],
+  [/^basket$/, stamp(fieldValues.basket)],
   [/^houseColor$/, stamp(fieldValues.houseColor)],
   [/^decorations$/, stamp(fieldValues.decorations)],
   [/^meal$/, stamp(fieldValues.meal)],

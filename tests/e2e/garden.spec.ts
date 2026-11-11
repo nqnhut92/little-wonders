@@ -110,11 +110,13 @@ test("touch controls grow a plant without mouse or reading, with reduced motion"
   });
   const page = await context.newPage();
   await page.goto("http://127.0.0.1:4173");
-  for (const name of ["Luống đất 1", "Mây tưới nước", "Mặt trời"])
-    await page.getByRole("button", { name, exact: true }).tap();
+  await page.getByRole("button", { name: "Luống đất 1", exact: true }).tap();
+  for (let round = 0; round < 3; round++)
+    for (const name of ["Mây tưới nước", "Mặt trời"])
+      await page.getByRole("button", { name, exact: true }).tap();
   await expect(
     page.getByRole("button", { name: "Luống đất 1" }).locator(".plant"),
-  ).toHaveClass(/grown/);
+  ).toHaveClass(/ripe/);
   expect(
     await page
       .locator(".cloud>.art")
@@ -282,9 +284,9 @@ test("tabs merge discoveries and keep independent writer identities", async ({
         const fields = JSON.parse(localStorage.getItem("little-wonders-v1")!)
           .world.fields;
         return Boolean(
-          fields.plant0 &&
-          fields.plant1 &&
-          fields.plant0.device !== fields.plant1.device,
+          fields["plot.garden.0"] &&
+          fields["plot.garden.1"] &&
+          fields["plot.garden.0"].device !== fields["plot.garden.1"].device,
         );
       }),
     )

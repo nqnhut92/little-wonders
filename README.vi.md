@@ -7,7 +7,7 @@ Khu vườn truyện tranh ưu tiên cảm ứng, dành cho trẻ Việt Nam 4�
 ## Đã triển khai
 
 - Khu vườn liên tục với phản ứng khác nhau của cây, mây, nắng, ao, động vật và hoa.
-- Ba luống/loại cây; cần cả nước và nắng để lớn.
+- Ba loại cây lớn qua các giai đoạn hạt, mầm, lớn và chín: mỗi vòng đủ nước và nắng đưa cây lên một giai đoạn. Cây chín được chạm để hái vào giỏ (tối đa 9 mỗi loại) và luống trống để gieo lại. Luống bắt đầu là ba và tăng tới sáu theo số loại cây đã hái.
 - Bốn biến thể bữa thỏ: ba cà rốt, ba món tự chọn, hai dâu, một táo. Yêu cầu bằng hình, phản ứng nhẹ và lưu bữa chưa xong hỗ trợ trẻ chưa đọc.
 - Năm màu tường, ba loại trang trí và bố cục lưu hiện ở vườn chính.
 - Sổ có 18 khám phá ý nghĩa, không khóa hoạt động cơ bản.

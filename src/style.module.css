@@ -161,18 +161,18 @@ main {
 .plots {
   position: absolute;
   left: 43%;
-  top: 60%;
-  width: 26%;
-  height: 18%;
-  display: flex;
-  gap: 4%;
+  top: 58%;
+  width: calc(26 * var(--u));
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: calc(1.6 * var(--u));
   transform: rotate(-3deg);
   z-index: 4;
 }
 .soil {
   position: relative;
-  width: 31%;
-  height: 56%;
+  aspect-ratio: 1.45;
+  width: 100%;
   min-height: 0;
   border-radius: 50%;
   background: var(--scene-soil);
@@ -201,8 +201,46 @@ main {
   z-index: 1;
   transition: height 1s;
 }
-.plant.grown {
+.plant.stage-3,
+.plant.stage-4 {
   height: 120px;
+}
+.plant.ripe .art {
+  animation: glow 1.6s ease-in-out infinite;
+}
+.basket-count {
+  position: absolute;
+  left: 4%;
+  bottom: 4%;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px 6px 6px;
+  border: 1px solid var(--glass-border);
+  border-radius: 999px;
+  background: var(--glass);
+  -webkit-backdrop-filter: blur(26px) saturate(180%);
+  backdrop-filter: blur(26px) saturate(180%);
+  box-shadow: var(--glass-shadow);
+  pointer-events: none;
+}
+.basket-count > .art {
+  width: 40px;
+  height: 40px;
+}
+.basket-count span {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+.basket-count span .art {
+  width: 30px;
+  height: 30px;
+}
+.basket-count b {
+  font-size: 15px;
+  color: var(--scene-title);
 }
 .water-dot {
   position: absolute;

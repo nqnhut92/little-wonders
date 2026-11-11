@@ -1,7 +1,16 @@
 import { cn } from "../styles";
 import { useState, useRef, type PointerEvent, type CSSProperties } from "react";
 import { Art } from "./Art";
-import { value, type World, type Plant, type Action } from "../game/engine";
+import {
+  value,
+  plotKey,
+  plotCount,
+  basketOf,
+  type World,
+  type Plot,
+  type Action,
+} from "../game/engine";
+import { crops, ripeStage } from "../data/crops";
 import { seeds } from "../data/content";
 import { interactions } from "../data/interactions";
 type Props = {
@@ -257,8 +266,10 @@ export function Garden({ world, act, say, open, highlight, showSteps }: Props) {
           ),
         )}
       <div className={cn("plots")} aria-label="Hạt Giống Bí Ẩn">
-        {[0, 1, 2].map((slot) => {
-          const p = value<Plant | undefined>(world, `plant${slot}`, undefined);
+        {Array.from({ length: plotCount(world) }, (_, slot) => {
+          const p = value<Plot | undefined>(world, plotKey(slot), undefined);
+          const growing = p && p.stage > 0 ? p : undefined;
+          const crop = crops.find((c) => c.id === growing?.kind);
           return (
             <button
               data-soil={slot}
@@ -266,31 +277,32 @@ export function Garden({ world, act, say, open, highlight, showSteps }: Props) {
               aria-label={`Luống đất ${slot + 1}`}
               className={cn(`soil ${reaction === "soil" ? "react-soil" : ""}`)}
               onClick={() => {
-                if (!p) {
+                if (!growing) {
                   act({ type: "plant", slot, kind: seed });
                   say("Hạt xuống đất rồi. Con đưa mây tới đây nhé!");
+                } else if (growing.stage === ripeStage) {
+                  act({ type: "harvest", slot });
+                  say("Hái được rồi! Con bỏ vào giỏ nhé.", "flower");
                 } else
                   say(
-                    p.water
-                      ? p.sun
-                        ? "Hoa lớn rồi! Con có thể gieo hạt mới bằng cách kéo hạt vào luống."
-                        : "Cây cần thêm nắng ấm!"
-                      : "Mầm cây đang khát nước!",
+                    !growing.water
+                      ? "Mầm cây đang khát nước!"
+                      : "Cây cần thêm nắng ấm!",
                   );
               }}
             >
-              {p ? (
-                <div className={cn(`plant ${p.water && p.sun ? "grown" : ""}`)}>
+              {growing ? (
+                <div
+                  className={cn(
+                    `plant stage-${growing.stage} ${growing.stage === ripeStage ? "ripe" : ""}`,
+                  )}
+                >
                   <Art
                     id={
-                      p.water && p.sun
-                        ? p.kind === "sunflower"
-                          ? "flower"
-                          : p.kind
-                        : "grass"
+                      growing.stage >= 3 ? (crop?.art ?? growing.kind) : "grass"
                     }
                   />
-                  {p.water && <span className={cn("water-dot")}>●</span>}
+                  {growing.water && <span className={cn("water-dot")}>●</span>}
                 </div>
               ) : (
                 <span className={cn("soil-mark")}>＋</span>
@@ -299,6 +311,19 @@ export function Garden({ world, act, say, open, highlight, showSteps }: Props) {
           );
         })}
       </div>
+      {Object.entries(basketOf(world)).some(([, n]) => n > 0) && (
+        <div className={cn("basket-count")} aria-label="Giỏ của con">
+          <Art id="basket" />
+          {Object.entries(basketOf(world))
+            .filter(([, n]) => n > 0)
+            .map(([kind, n]) => (
+              <span key={kind} aria-label={`${kind} ${n}`}>
+                <Art id={crops.find((c) => c.id === kind)?.art ?? kind} />
+                <b>{n}</b>
+              </span>
+            ))}
+        </div>
+      )}
       <div className={cn("seed-tray")}>
         <span>Gieo một điều bất ngờ</span>
         <div>

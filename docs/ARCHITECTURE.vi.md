@@ -31,6 +31,10 @@ Server UPDATE merge dưới khóa hàng. Retry giống nhau không tăng revisio
 
 Parent identity lấy từ session ký, không nhận user ID do client khai báo. Mọi thao tác hồ sơ lọc parent ID. POST cần Origin chính xác và header riêng. OAuth kiểm state ký, nonce, chữ ký Google, issuer và audience. Cookie Secure, HttpOnly, SameSite=Lax. API xác thực dùng no-store và không được service worker cache.
 
+## Cây, thu hoạch và giỏ
+
+Một luống là field `plot.<khu>.<số>` với `{kind, stage, water, sun, rounds?}`: stage 0 là trống, rồi hạt, mầm, lớn và chín. Mỗi vòng đủ nước và nắng đưa cây lên một giai đoạn và xóa hai cờ; cây là dữ liệu trong `src/data/crops.ts` (`care` là số vòng mỗi giai đoạn). `harvest` đưa cây chín vào field `basket` (tối đa 9 mỗi loại), làm trống luống và ghi `harvest_<cây>`. Số luống suy ra từ các khám phá `harvest_*` khác nhau (3 đến 6), không lưu riêng. `upgradeWorld` chuyển field `plant0..2` cũ thành `plot.garden.N`: cây đủ nước và nắng thành chín, cây khác giữ hạt và cờ, và plot đã có không bị ghi đè.
+
 ## Ngôn ngữ thiết kế giao diện
 
 Màu, bo góc và font là biến CSS trong `src/styles/tokens.css`; `src/style.module.css` không còn màu viết cứng. Bộ token Sáng là mặc định, `:root[data-theme="dark"]` ghi đè. Các vùng cảnh (`.garden`, `.house-canvas`, `.lunch-scene`) lặp lại token Sáng và dùng bảng màu `--scene-*` không theo theme, nên tranh trông giống nhau ở mọi chế độ; tranh đặt trên bảng theo theme nằm trên một nền sáng. Ngày và đêm của game sẽ là trạng thái game, độc lập với chế độ giao diện.

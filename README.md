@@ -7,7 +7,7 @@ A Vietnamese touch-first storybook garden for children aged 4–6, built with Re
 ## Implemented
 
 - A continuous garden with different tree, cloud, sun, pond, animal and flower reactions.
-- Three planting beds/types; both water and sunshine are required for growth.
+- Three crops grow through seed, sprout, grown and ripe: each full round of water and sunshine moves a plant up one stage. A ripe plant is tapped to harvest into a basket (up to 9 per crop) and the bed empties for replanting. Beds start at three and grow to six with each different crop harvested.
 - Four rabbit meal variations: three carrots, three free-choice foods, two berries and one apple. Picture requests, gentle reactions and unfinished-meal persistence support non-readers.
 - Five wall colors, three decoration types and saved arrangements visible in the main garden.
 - A notebook containing 18 meaningful discoveries, with no locked basic activities.

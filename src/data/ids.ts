@@ -8,7 +8,20 @@ export const maxDiscoveries = 200;
 export const maxFields = 200;
 export const maxBodyBytes = 64000;
 export const maxDecorations = 20;
-export const plantKinds = ["sunflower", "carrot", "berry"] as const;
+// Every crop the schema accepts; src/data/crops.ts decides which ones the game offers.
+export const cropKinds = [
+  "sunflower",
+  "carrot",
+  "berry",
+  "tomato",
+  "pumpkin",
+  "corn",
+  "watermelon",
+] as const;
+export const plantKinds = cropKinds;
+export const maxBasket = 9;
+export const maxPlots = 6;
+export const plotKeyPattern = /^plot\.[a-z0-9_]{1,16}\.[0-9]{1,2}$/;
 export const decorationIds = ["flower", "butterfly", "star"] as const;
 export const houseColors = [
   "#efcf9d",

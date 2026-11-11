@@ -1,10 +1,11 @@
-import { value, type World, type Plant } from "./engine";
+import { value, plotKey, plotCount, type World, type Plot } from "./engine";
 export function contextualHint(world: World): string {
-  const plants = [0, 1, 2].map((i) =>
-    value<Plant | undefined>(world, `plant${i}`, undefined),
-  );
-  if (plants.every((p) => !p))
-    return "Con chọn một hạt rồi chạm luống đất nhé!";
+  const plants = Array.from({ length: plotCount(world) }, (_, i) =>
+    value<Plot | undefined>(world, plotKey(i), undefined),
+  ).filter((p) => p && p.stage > 0);
+  if (plants.length === 0) return "Con chọn một hạt rồi chạm luống đất nhé!";
+  if (plants.some((p) => p && p.stage === 4))
+    return "Có cây chín rồi! Con chạm vào cây để hái nhé!";
   if (plants.some((p) => p && !p.water))
     return "Mầm cây khát nước. Con đưa mây tới luống cây nhé!";
   if (plants.some((p) => p && !p.sun))
