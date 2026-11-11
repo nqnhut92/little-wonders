@@ -56,8 +56,8 @@ Khám phá merge union (world schema 2 thêm `epoch` và bộ đếm `n.*` chỉ
 
 ## Tài liệu và ảnh
 
-Mỗi README/tài liệu có cặp EN/VI liên kết đầu trang. Cập nhật cả hai khi hành vi/hướng dẫn đổi; rà ý nghĩa rồi chạy `npm run docs:sync` ghi hash. `npm run docs:check` chạy trong CI, từ chối bản dịch thiếu, chưa ghi nhận hoặc thay đổi. Hash phát hiện lệch phiên bản, không kiểm chứng dịch đúng nghĩa.
+Mỗi README/tài liệu có cặp EN/VI liên kết đầu trang. Cập nhật cả hai khi hành vi/hướng dẫn đổi; rà ý nghĩa rồi chạy `npm run docs:sync` ghi hash. `npm run docs:check` chạy ở local trước mỗi lần push (không có workflow CI), từ chối bản dịch thiếu, chưa ghi nhận hoặc thay đổi. Hash phát hiện lệch phiên bản, không kiểm chứng dịch đúng nghĩa.
 
 Khi production preview chạy, `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium node scripts/capture.mjs` dùng chạm thật để tìm đủ 18 khám phá và chụp 19 ảnh, gồm lưu qua reload. Không cấy progress fixture. File ở `artifacts/screenshots/` được ignore. Đặt `CAPTURE_THEME=light|dark`, `CAPTURE_VIEWPORT=1180x820` và `CAPTURE_DIR` để chụp một chế độ giao diện và kích thước vào thư mục khác, dùng cho việc duyệt trước/sau.
 
-`npm test` cũng chạy hợp đồng của bộ điều khiển theme bằng `node --test`. `node scripts/make-icons.mjs` tạo lại `public/favicon.svg` và icon maskable từ `public/icon-512.png`.
+`npm test` cũng chạy hợp đồng của bộ điều khiển theme bằng `node --test`. `node scripts/make-icons.mjs` dựng mọi icon app PNG và ICO từ bản gốc vector `public/favicon.svg`.

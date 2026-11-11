@@ -40,7 +40,10 @@ export const flatArt: Record<string, Draw> = {
       <ellipse cx="46" cy="110" rx="10" ry="6" fill="#fffdf7" />
       <ellipse cx="74" cy="110" rx="10" ry="6" fill="#fffdf7" />
       <ellipse cx="60" cy="47" rx="32" ry="29" fill="#fff6e5" />
-      <g className="puppy-bow">
+      <g
+        className="puppy-bow"
+        transform="translate(60 80) scale(0.68) translate(-60 -80)"
+      >
         <path
           d="M60 80c-6-8-15-10-18-6-2 4 0 11 4 13 5 1 10-3 14-7Z"
           fill="#9b6bd6"

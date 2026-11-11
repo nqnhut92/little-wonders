@@ -56,8 +56,8 @@ Discoveries merge by union (world schema 2 adds an `epoch` and monotonic `n.*` c
 
 ## Documentation and screenshots
 
-Every README/document has EN/VI counterparts linked at the top. Update both whenever behavior or instructions change; review their meaning, then run `npm run docs:sync` to record hashes. `npm run docs:check` runs in CI and rejects missing, unrecorded or changed translations. Hash checks detect version drift, not semantic mistranslation.
+Every README/document has EN/VI counterparts linked at the top. Update both whenever behavior or instructions change; review their meaning, then run `npm run docs:sync` to record hashes. `npm run docs:check` runs locally before each push (there is no CI workflow) and rejects missing, unrecorded or changed translations. Hash checks detect version drift, not semantic mistranslation.
 
 With production preview running, `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium node scripts/capture.mjs` uses real touch actions to discover all 18 entries and capture 19 screens, including reload persistence. It injects no progress fixtures. Files go to ignored `artifacts/screenshots/`. Set `CAPTURE_THEME=light|dark`, `CAPTURE_VIEWPORT=1180x820` and `CAPTURE_DIR` to capture one appearance and size into another folder for before/after review.
 
-`npm test` also runs the theme controller contract with `node --test`. `node scripts/make-icons.mjs` regenerates `public/favicon.svg` and the maskable icons from `public/icon-512.png`.
+`npm test` also runs the theme controller contract with `node --test`. `node scripts/make-icons.mjs` renders every PNG and ICO app icon from the vector master `public/favicon.svg`.

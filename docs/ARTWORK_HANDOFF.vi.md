@@ -59,11 +59,11 @@ Các nền hiện nằm trong `src/style.module.css`, tô màu bằng token `--s
 | soil.png       | 512×256 / 2:1      | trong suốt | Luống / .soil                |
 | house-yard.png | 1160×560 / 29:14   | kín        | Sân editor / .house-canvas   |
 
-Icon app hiện có: `public/favicon.ico` (16/32/48), `public/favicon.svg`, `public/icon-32.png`, `public/icon-180.png` (nền kín tràn viền), `public/icon-192.png`, `public/icon-512.png` và `public/icon-maskable-192.png`/`-512.png` (tranh nằm trong vùng an toàn 80% ở giữa), xuất từ minh họa storybook do Gemini tạo (Lucky ôm quả dưa hấu, xem `PROVENANCE.vi.md`). Không animation. Chữ UI, nút cài đặt/âm thanh/sổ, chấm đếm, dấu cộng, focus và mũi tên gợi ý do app render, không sinh trong ảnh. Bong bóng của bạn thú dùng lại ID thức ăn; ngôi sao vui dùng star. Trang trí ngoài vườn dùng lại ID hoa/bướm/ngôi sao đã lưu.
+Icon app hiện có: `public/favicon.ico` (16/32/48), `public/favicon.svg`, `public/icon-32.png`, `public/icon-180.png` (nền kín tràn viền), `public/icon-192.png`, `public/icon-512.png` và `public/icon-maskable-192.png`/`-512.png` (tranh nằm trong vùng an toàn 80% ở giữa), do `scripts/make-icons.mjs` dựng từ bản gốc vector `public/favicon.svg`: Lucky phẳng đeo nơ tím trên nền trời và cỏ (xem `PROVENANCE.vi.md`). Không animation. Chữ UI, nút cài đặt/âm thanh/sổ, chấm đếm, dấu cộng, focus và mũi tên gợi ý do app render, không sinh trong ảnh. Bong bóng của bạn thú dùng lại ID thức ăn; ngôi sao vui dùng star. Trang trí ngoài vườn dùng lại ID hoa/bướm/ngôi sao đã lưu.
 
 ## Một phong cách vẽ (hiện trạng)
 
-Mọi hình trong game hiện là vector do dự án tự vẽ trong `src/components/Art.tsx`, nền cảnh và bản đồ thung lũng nằm trong `src/components/SceneBackdrop.tsx`, tất cả theo một phong cách phẳng: màu phẳng, không viền, không bộ lọc chất liệu (hình vẽ nằm trong `ArtFlat.tsx` và `ArtFlatMore.tsx`; `PaintFilters.tsx` chỉ còn hiệu ứng phát sáng cho đèn). Lucky đeo nơ tím nhỏ, không phải vòng cổ. Các tranh Gemini từng được dùng ngắn (nền, bản đồ, Lucky, tuần lộc, nhà, cây, mặt trời, mây, hoa, giỏ, đá, cú, ếch và một chú thỏ không dùng) được giữ ở `art-archive/gemini/` và không được đóng gói. Chỉ còn bộ icon app là tranh Gemini. Tranh thay thế phải là một bộ đầy đủ, đồng nhất; đừng trộn lẻ vài ảnh vẽ trở lại.
+Mọi hình trong game hiện là vector do dự án tự vẽ trong `src/components/Art.tsx`, nền cảnh và bản đồ thung lũng nằm trong `src/components/SceneBackdrop.tsx`, tất cả theo một phong cách phẳng: màu phẳng, không viền, không bộ lọc chất liệu (hình vẽ nằm trong `ArtFlat.tsx` và `ArtFlatMore.tsx`; `PaintFilters.tsx` chỉ còn hiệu ứng phát sáng cho đèn). Lucky đeo nơ tím nhỏ, không phải vòng cổ. Các tranh Gemini từng được dùng ngắn (nền, bản đồ, Lucky, tuần lộc, nhà, cây, mặt trời, mây, hoa, giỏ, đá, cú, ếch và một chú thỏ không dùng) được giữ ở `art-archive/gemini/` và không được đóng gói. Icon app dùng cùng Lucky phẳng đó. Tranh thay thế phải là một bộ đầy đủ, đồng nhất; đừng trộn lẻ vài ảnh vẽ trở lại.
 
 ## Các khu sau (vector tạm)
 
@@ -98,7 +98,7 @@ Giao diện theo chế độ Sáng, Tối và Theo hệ thống; tranh thì khô
 - Trên hộp thoại, tranh nằm trên nền sáng ở cả hai chế độ nên các hình màu nhạt vẫn rõ. Không tự thêm hình nền hay bóng đổ.
 - Bản đêm của các nền cảnh và vùng mờ trên bản đồ cho các khu đánh dấu sắp có sẽ được mô tả tại đây khi các tính năng đó được làm.
 - Icon giao diện (loa, sổ, cài đặt, gợi ý, đóng, trạng thái lưu, chế độ giao diện) là vector trong repo ở `src/components/Icons.tsx`, không thuộc phần bàn giao này.
-- Icon app chốt sẽ được vẽ lại cùng bộ tranh: bản gốc 1024px, bản nền kín tràn viền cho icon Apple 180px, bản maskable riêng với chủ thể nằm trong 80% ở giữa, và SVG vector cho favicon. `favicon.svg` hiện tại bọc một bản raster nhỏ, còn các file maskable do `scripts/make-icons.mjs` tạo ra.
+- Icon app theo đúng tranh trong game: `public/favicon.svg` là bản gốc vector, icon Apple 180px nền kín tràn viền, các bản maskable giữ Lucky trong 80% ở giữa. Sửa bản gốc rồi chạy `node scripts/make-icons.mjs`.
 
 ## Nhất quán nhân vật
 

@@ -59,11 +59,11 @@ Backgrounds currently live in `src/style.module.css`, colored by the `--scene-*`
 | soil.png       | 512×256 / 2:1    | transparent | Bed / .soil                 |
 | house-yard.png | 1160×560 / 29:14 | opaque      | Editor yard / .house-canvas |
 
-Existing app icons: `public/favicon.ico` (16/32/48), `public/favicon.svg`, `public/icon-32.png`, `public/icon-180.png` (full-bleed opaque), `public/icon-192.png`, `public/icon-512.png` and `public/icon-maskable-192.png`/`-512.png` (artwork inside the central 80% safe zone), rasterized from a Gemini-generated storybook illustration of Lucky hugging a watermelon (`PROVENANCE.md`). They have no animation. UI text, settings/audio/notebook controls, dots, plus signs, focus rings and hint arrows are rendered by the app, not generated inside illustrations. The friend's thought bubble reuses food IDs; happy sparkle reuses star. Outdoor decorations reuse the saved flower/butterfly/star IDs.
+Existing app icons: `public/favicon.ico` (16/32/48), `public/favicon.svg`, `public/icon-32.png`, `public/icon-180.png` (full-bleed opaque), `public/icon-192.png`, `public/icon-512.png` and `public/icon-maskable-192.png`/`-512.png` (artwork inside the central 80% safe zone), rendered by `scripts/make-icons.mjs` from the vector master `public/favicon.svg`: flat Lucky with the purple bow on a sky and grass background (`PROVENANCE.md`). They have no animation. UI text, settings/audio/notebook controls, dots, plus signs, focus rings and hint arrows are rendered by the app, not generated inside illustrations. The friend's thought bubble reuses food IDs; happy sparkle reuses star. Outdoor decorations reuse the saved flower/butterfly/star IDs.
 
 ## One drawn style (current status)
 
-Every in-game picture is now a project-authored vector in `src/components/Art.tsx`, with drawn backdrops and the valley map in `src/components/SceneBackdrop.tsx`, all in one flat style: flat fills, no outlines and no texture filters (`ArtFlat.tsx` and `ArtFlatMore.tsx` hold the drawings; `PaintFilters.tsx` keeps only the glow used by lights). Lucky wears a small purple bow, not a collar. The Gemini illustrations that shipped briefly (backgrounds, valley map, Lucky, reindeer, house, tree, sun, cloud, flower, basket, rock, owl, frog and an unused rabbit) are kept in `art-archive/gemini/` and are not bundled. Only the app icon set is still the Gemini illustration. Replacement art must come as one complete, consistent set; do not mix a few painted images back in.
+Every in-game picture is now a project-authored vector in `src/components/Art.tsx`, with drawn backdrops and the valley map in `src/components/SceneBackdrop.tsx`, all in one flat style: flat fills, no outlines and no texture filters (`ArtFlat.tsx` and `ArtFlatMore.tsx` hold the drawings; `PaintFilters.tsx` keeps only the glow used by lights). Lucky wears a small purple bow, not a collar. The Gemini illustrations that shipped briefly (backgrounds, valley map, Lucky, reindeer, house, tree, sun, cloud, flower, basket, rock, owl, frog and an unused rabbit) are kept in `art-archive/gemini/` and are not bundled. The app icon uses the same flat Lucky. Replacement art must come as one complete, consistent set; do not mix a few painted images back in.
 
 ## Later regions (temporary vectors)
 
@@ -98,7 +98,7 @@ The interface follows Light, Dark and System appearance; artwork does not. Deliv
 - On dialogs, artwork sits on the light plate in both appearances, so pale shapes stay visible. Do not add your own backing shape or shadow.
 - A night version of the scene backgrounds and the dimmed map areas for regions marked as coming soon will be specified here when those features are built.
 - Interface icons (speaker, notebook, settings, hint, close, save state, appearance) are repository vectors in `src/components/Icons.tsx` and are not part of this handoff.
-- The final app icon will be redrawn with the rest of the artwork: a 1024px master, full-bleed opaque for the 180px Apple icon, a separate maskable version with the subject inside the central 80%, and a vector SVG for the favicon. The current `favicon.svg` wraps a small raster copy and the maskable files are derived by `scripts/make-icons.mjs`.
+- The app icon follows the game art: `public/favicon.svg` is the vector master, the 180px Apple icon is full-bleed opaque, and the maskable versions keep Lucky inside the central 80%. Edit the master, then run `node scripts/make-icons.mjs`.
 
 ## Character consistency
 

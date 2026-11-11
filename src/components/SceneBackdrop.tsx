@@ -461,7 +461,7 @@ function Snow({ night }: { night: boolean }) {
             snow
           />
         ))}
-        <path d="M0 560 Q380 480 820 560 T1600 540 V980 H-80Z" fill="#fbfdff" />
+        <path d="M0 560 Q380 480 820 560 T1600 540 V980 H-80Z" fill="#dcebfa" />
         <g>
           <path d="M1060 560 v-60 l60 -46 l60 46 v60Z" fill="#e98544" />
           <path
@@ -474,8 +474,8 @@ function Snow({ night }: { night: boolean }) {
           <rect x="1100" y="516" width="34" height="30" rx="4" fill="#ffd37a" />
           <path d="M1160 470 v-40 h18 v40" fill="#b56236" />
         </g>
-        <path d="M0 690 Q420 630 900 700 T1600 680 V980 H-80Z" fill="#eef4fb" />
-        <path d="M200 900 Q520 740 980 900" fill="#dae8fa" />
+        <path d="M0 690 Q420 630 900 700 T1600 680 V980 H-80Z" fill="#cbe0f6" />
+        <path d="M200 900 Q520 740 980 900" fill="#b9d4f1" />
         {[
           [70, 690, 1.35],
           [1500, 700, 1.5],
