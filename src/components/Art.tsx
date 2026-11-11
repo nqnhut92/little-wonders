@@ -55,7 +55,19 @@ export const assetIds = [
   "dragonfly",
   "pond-lantern",
 ];
-const rasterIds = new Set(["puppy", "reindeer", "house", "tree", "sun"]);
+const rasterIds = new Set([
+  "puppy",
+  "reindeer",
+  "house",
+  "tree",
+  "sun",
+  "rabbit",
+  "flower",
+  "basket",
+  "rock",
+  "owl",
+  "frog",
+]);
 export function Art({
   id,
   color,
