@@ -4,6 +4,20 @@ import { createRemoteJWKSet, jwtVerify } from "jose";
 import { randomBytes, createHash } from "node:crypto";
 import { z } from "zod";
 import {
+  schemas,
+  discoveryIdPattern,
+  maxDiscoveries,
+  maxFields,
+  maxBodyBytes,
+  maxDecorations,
+  maxCounter,
+  counterKeyPattern,
+  plantKinds,
+  decorationIds,
+  houseColors,
+  mealKinds,
+} from "../src/data/ids.js";
+import {
   cookie,
   sign,
   verify,
@@ -20,74 +34,67 @@ const stamp = <T extends z.ZodType>(schema: T) =>
     clock: z.number().int().min(0).max(1e15),
     device: z.string().regex(/^[A-Za-z0-9_-]{1,80}$/),
   });
-const plant = stamp(
-  z.object({
-    kind: z.enum(["sunflower", "carrot", "berry"]),
+const fieldValues = {
+  plant: z.object({
+    kind: z.enum(plantKinds),
     water: z.boolean(),
     sun: z.boolean(),
   }),
-);
-const worldSchema = z.object({
-  schema: z.literal(1),
-  discoveries: z
+  houseColor: z.enum(houseColors),
+  decorations: z
     .array(
-      z.enum([
-        "rain",
-        "sun",
-        "sunflower",
-        "carrot",
-        "berry",
-        "butterfly",
-        "worm",
-        "ladybug",
-        "bird",
-        "rabbit",
-        "fish",
-        "apple",
-        "lunch",
-        "colors",
-        "house",
-        "decor",
-        "rainbow",
-        "grass",
-      ]),
+      z.object({
+        id: z.enum(decorationIds),
+        x: z.number().min(0).max(100),
+        y: z.number().min(0).max(100),
+      }),
     )
-    .max(40),
-  fields: z
-    .object({
-      plant0: plant.optional(),
-      plant1: plant.optional(),
-      plant2: plant.optional(),
-      houseColor: stamp(
-        z.enum(["#efcf9d", "#d7a6b5", "#a5bca0", "#a2becb", "#e7bc7b"]),
-      ).optional(),
-      decorations: stamp(
-        z
-          .array(
-            z.object({
-              id: z.enum(["flower", "butterfly", "star"]),
-              x: z.number().min(0).max(100),
-              y: z.number().min(0).max(100),
-            }),
-          )
-          .max(20),
-      ).optional(),
-      meal: stamp(
-        z.object({
-          kind: z.enum(["orange", "colors", "berries", "apples"]),
-          count: z.number().int().min(0).max(2),
-          attempts: z.number().int().min(0).max(100000),
-        }),
-      ).optional(),
-      lastMeal: stamp(
-        z.object({
-          kind: z.enum(["orange", "colors", "berries", "apples"]),
-          count: z.number().int().min(1).max(3),
-        }),
-      ).optional(),
-    })
-    .strict(),
-});
+    .max(maxDecorations),
+  meal: z.object({
+    kind: z.enum(mealKinds),
+    count: z.number().int().min(0).max(2),
+    attempts: z.number().int().min(0).max(100000),
+  }),
+  lastMeal: z.object({
+    kind: z.enum(mealKinds),
+    count: z.number().int().min(1).max(3),
+  }),
+  counter: z.number().int().min(0).max(maxCounter),
+};
+// One entry per field-key pattern. Adding a field to the game means adding a pattern here, never a SQL migration.
+const fieldPatterns: [RegExp, ReturnType<typeof stamp>][] = [
+  [/^plant[0-2]$/, stamp(fieldValues.plant)],
+  [/^houseColor$/, stamp(fieldValues.houseColor)],
+  [/^decorations$/, stamp(fieldValues.decorations)],
+  [/^meal$/, stamp(fieldValues.meal)],
+  [/^lastMeal$/, stamp(fieldValues.lastMeal)],
+  [counterKeyPattern, stamp(fieldValues.counter)],
+];
+export const worldSchema = z
+  .object({
+    schema: z.union(
+      schemas.map((n) => z.literal(n)) as [z.ZodLiteral<1>, z.ZodLiteral<2>],
+    ),
+    epoch: z.number().int().min(0).max(1e9).optional(),
+    discoveries: z
+      .array(z.string().regex(discoveryIdPattern))
+      .max(maxDiscoveries),
+    fields: z.record(z.string(), z.unknown()),
+  })
+  .superRefine((world, ctx) => {
+    const keys = Object.keys(world.fields);
+    if (keys.length > maxFields)
+      ctx.addIssue({ code: "custom", message: "Too many fields" });
+    for (const key of keys) {
+      const entry = fieldPatterns.find(([pattern]) => pattern.test(key));
+      if (!entry || !entry[1].safeParse(world.fields[key]).success)
+        ctx.addIssue({
+          code: "custom",
+          path: ["fields", key],
+          message: "Invalid field",
+        });
+    }
+  });
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   res.setHeader("Cache-Control", "no-store");
   res.setHeader("X-Content-Type-Options", "nosniff");
@@ -223,11 +230,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         return res.json(rows[0]);
       }
       if (req.method === "POST") {
-        if (JSON.stringify(req.body).length > 64000)
+        if (JSON.stringify(req.body).length > maxBodyBytes)
           return res.status(413).json({ message: "Dữ liệu quá lớn." });
         const world = worldSchema.parse(req.body.world);
-        if (Object.keys(world.fields).length > 80)
-          return res.status(400).json({ message: "Dữ liệu không hợp lệ." });
         const rows =
           await sql`UPDATE profiles SET world=merge_world(world,${JSON.stringify(world)}::jsonb),revision=revision+CASE WHEN world IS DISTINCT FROM merge_world(world,${JSON.stringify(world)}::jsonb) THEN 1 ELSE 0 END,updated_at=now() WHERE id=${id} AND parent_id=${uid} RETURNING world,revision`;
         if (!rows.length)

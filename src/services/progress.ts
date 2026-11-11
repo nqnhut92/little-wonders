@@ -1,4 +1,5 @@
 import { emptyWorld, mergeWorld, type World } from "../game/engine";
+import { upgradeWorld } from "../game/upgrade";
 export type Local = {
   world: World;
   pending: boolean;
@@ -10,7 +11,8 @@ const key = "little-wonders-v1";
 export function load(): Local {
   try {
     const l = JSON.parse(localStorage.getItem(key) || "null");
-    if (l?.world?.schema === 1) return l;
+    const world = upgradeWorld(l?.world);
+    if (world) return { ...l, world };
   } catch {
     /* local fallback */
   }
@@ -34,9 +36,9 @@ export function stash(l: Local) {
 }
 export function cachedProfile(id: string): Local | undefined {
   try {
-    return (
-      JSON.parse(localStorage.getItem(key + "-" + id) || "null") ?? undefined
-    );
+    const l = JSON.parse(localStorage.getItem(key + "-" + id) || "null");
+    const world = upgradeWorld(l?.world);
+    return world ? { ...l, world } : undefined;
   } catch {
     return undefined;
   }
@@ -56,6 +58,7 @@ export async function synchronize(
     body: JSON.stringify({ profile: l.profile, world: l.world }),
   });
   if (!r.ok) throw Error(r.status === 401 ? "AUTH" : "RETRY");
-  const remote = (await r.json()) as { world: World };
-  return { ...l, world: mergeWorld(l.world, remote.world), pending: false };
+  const remote = upgradeWorld(((await r.json()) as { world: unknown }).world);
+  if (!remote) throw Error("RETRY");
+  return { ...l, world: mergeWorld(l.world, remote), pending: false };
 }

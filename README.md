@@ -47,7 +47,7 @@ Never commit secrets or use `VITE_` for them. No cloud resources were created or
 
 ## Data policy
 
-Discoveries merge by union. Stamped fields use logical counters beyond all observed edits, with a unique writer ID per app mount for tie-breaking. New edits do not read wall time; legacy clocks remain compatible. Concurrent edits to the same field select one whole value, including a decoration arrangement. This is not collaborative per-object editing. Server merges are atomic and identical retries do not change revision. No per-tap history is stored. See [architecture](docs/ARCHITECTURE.md).
+Discoveries merge by union (world schema 2 adds an `epoch` and monotonic `n.*` counters; see architecture). Stamped fields use logical counters beyond all observed edits, with a unique writer ID per app mount for tie-breaking. New edits do not read wall time; legacy clocks remain compatible. Concurrent edits to the same field select one whole value, including a decoration arrangement. This is not collaborative per-object editing. Server merges are atomic and identical retries do not change revision. No per-tap history is stored. See [architecture](docs/ARCHITECTURE.md).
 
 ## Documentation and screenshots
 

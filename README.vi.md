@@ -47,7 +47,7 @@ Không commit secret hoặc dùng `VITE_` cho chúng. Chưa tạo/mua cloud reso
 
 ## Chính sách dữ liệu
 
-Khám phá merge union. Field có stamp dùng bộ đếm logic vượt mọi chỉnh sửa đã thấy, writer ID riêng mỗi lần mở app để phân xử khi bằng clock. Chỉnh sửa mới không đọc giờ máy; clock cũ vẫn tương thích. Chỉnh đồng thời cùng field chọn một giá trị toàn bộ, gồm cả bố cục trang trí. Không phải editor cộng tác từng đồ. Server merge nguyên tử, retry giống nhau không tăng revision. Không lưu lịch sử từng cú chạm. Xem [kiến trúc](docs/ARCHITECTURE.vi.md).
+Khám phá merge union (world schema 2 thêm `epoch` và bộ đếm `n.*` chỉ tăng; xem kiến trúc). Field có stamp dùng bộ đếm logic vượt mọi chỉnh sửa đã thấy, writer ID riêng mỗi lần mở app để phân xử khi bằng clock. Chỉnh sửa mới không đọc giờ máy; clock cũ vẫn tương thích. Chỉnh đồng thời cùng field chọn một giá trị toàn bộ, gồm cả bố cục trang trí. Không phải editor cộng tác từng đồ. Server merge nguyên tử, retry giống nhau không tăng revision. Không lưu lịch sử từng cú chạm. Xem [kiến trúc](docs/ARCHITECTURE.vi.md).
 
 ## Tài liệu và ảnh
 

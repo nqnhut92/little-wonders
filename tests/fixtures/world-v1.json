@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "discoveries": [
+    "rain",
+    "sun",
+    "sunflower",
+    "butterfly",
+    "rainbow",
+    "rabbit",
+    "house"
+  ],
+  "fields": {
+    "plant0": {
+      "value": { "kind": "sunflower", "water": true, "sun": true },
+      "clock": 3,
+      "device": "ipad"
+    },
+    "plant1": {
+      "value": { "kind": "carrot", "water": true, "sun": false },
+      "clock": 5,
+      "device": "ipad"
+    },
+    "meal": {
+      "value": { "kind": "berries", "count": 1, "attempts": 2 },
+      "clock": 9,
+      "device": "ipad"
+    },
+    "lastMeal": {
+      "value": { "kind": "orange", "count": 3 },
+      "clock": 8,
+      "device": "ipad"
+    },
+    "houseColor": { "value": "#d7a6b5", "clock": 10, "device": "ipad" },
+    "decorations": {
+      "value": [
+        { "id": "flower", "x": 20, "y": 30 },
+        { "id": "star", "x": 70, "y": 12.5 }
+      ],
+      "clock": 11,
+      "device": "ipad"
+    }
+  }
+}

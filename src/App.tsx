@@ -7,6 +7,7 @@ import { Icon, GoogleMark, type IconName } from "./components/Icons";
 import { ThemeToggle } from "./components/ThemeToggle";
 import { createScrollRegions } from "./ui/scroll-regions.js";
 import { apply, mergeWorld, assistance, type Action } from "./game/engine";
+import { upgradeWorld } from "./game/upgrade";
 import {
   load,
   persist,
@@ -147,10 +148,10 @@ export default function App() {
       if (event.key !== "little-wonders-v1" || !event.newValue) return;
       try {
         const incoming = JSON.parse(event.newValue) as Local;
+        const other = upgradeWorld(incoming.world);
         setLocal((now) => {
-          if (incoming.profile !== now.profile || incoming.world.schema !== 1)
-            return now;
-          const world = mergeWorld(now.world, incoming.world);
+          if (incoming.profile !== now.profile || !other) return now;
+          const world = mergeWorld(now.world, other);
           if (JSON.stringify(world) === JSON.stringify(now.world)) return now;
           const next = { ...now, world, pending: true };
           persist(next);
@@ -201,7 +202,8 @@ export default function App() {
     try {
       const r = await fetch(`/api/progress?profile=${encodeURIComponent(id)}`);
       if (!r.ok) throw Error();
-      const { world } = await r.json();
+      const world = upgradeWorld((await r.json()).world);
+      if (!world) throw Error();
       if (request !== selectionRequest.current) return;
       const old = current.current;
       const cached = cachedProfile(id);

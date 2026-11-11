@@ -19,7 +19,8 @@ import handler from "../api/index";
 let owner: string, other: string, id: string;
 beforeAll(async () => {
   state.db = new PGlite();
-  await state.db.exec(readFileSync("migrations/001_initial.sql", "utf8"));
+  for (const file of ["001_initial", "002_world_v2"])
+    await state.db.exec(readFileSync(`migrations/${file}.sql`, "utf8"));
   process.env.APP_URL = "https://garden.example";
   process.env.SESSION_SECRET = "a".repeat(40);
   process.env.GOOGLE_CLIENT_ID = "test";
@@ -183,4 +184,93 @@ it("stores unfinished meals and accepts completed count variations", async () =>
     attempts: 0,
   });
   expect(saved.data.world.fields.lastMeal.value.count).toBe(1);
+});
+
+it("accepts v1 and v2 payloads, epochs and counters, and keeps counters monotonic", async () => {
+  const device = "tablet";
+  const post = (world: unknown) =>
+    request("progress", owner, "POST", { profile: id, world });
+  expect(
+    (
+      await post({
+        schema: 2,
+        epoch: 0,
+        discoveries: ["harvest_carrot", "region_pond_open"],
+        fields: { "n.gift_puppy": { value: 5, clock: 50, device } },
+      })
+    ).code,
+  ).toBe(200);
+  const lower = await post({
+    schema: 2,
+    discoveries: [],
+    fields: { "n.gift_puppy": { value: 3, clock: 99, device: "phone" } },
+  });
+  expect(lower.data.world.fields["n.gift_puppy"].value).toBe(5);
+  expect(lower.data.world.schema).toBe(2);
+  expect(lower.data.world.discoveries).toContain("region_pond_open");
+});
+it("lets a higher epoch replace the saved garden and ignores a lower one afterwards", async () => {
+  const post = (world: unknown) =>
+    request("progress", owner, "POST", { profile: id, world });
+  const fresh = await post({
+    schema: 2,
+    epoch: 1,
+    discoveries: ["night"],
+    fields: {},
+  });
+  expect(fresh.data.world).toMatchObject({
+    epoch: 1,
+    discoveries: ["night"],
+    fields: {},
+  });
+  const stale = await post({ schema: 1, discoveries: ["fish"], fields: {} });
+  expect(stale.data.world.discoveries).toEqual(["night"]);
+  expect(stale.data.world.epoch).toBe(1);
+});
+it.each([
+  ["unknown field key", { stranger: { value: 1, clock: 1, device: "a" } }],
+  [
+    "counter with a fractional value",
+    { "n.x": { value: 1.5, clock: 1, device: "a" } },
+  ],
+  [
+    "counter key with uppercase",
+    { "n.Bad": { value: 1, clock: 1, device: "a" } },
+  ],
+  [
+    "plant slot out of range",
+    {
+      plant9: {
+        value: { kind: "carrot", water: true, sun: true },
+        clock: 1,
+        device: "a",
+      },
+    },
+  ],
+])("rejects %s", async (_name, fields) => {
+  const result = await request("progress", owner, "POST", {
+    profile: id,
+    world: { schema: 2, discoveries: [], fields },
+  });
+  expect(result.code).toBe(400);
+});
+it("rejects bad discovery ids, too many discoveries and too many fields", async () => {
+  const post = (world: unknown) =>
+    request("progress", owner, "POST", { profile: id, world });
+  for (const discoveries of [
+    ["Has Space"],
+    ["x".repeat(33)],
+    Array.from({ length: 201 }, (_, i) => `d_${i}`),
+  ])
+    expect((await post({ schema: 2, discoveries, fields: {} })).code).toBe(400);
+  const fields = Object.fromEntries(
+    Array.from({ length: 201 }, (_, i) => [
+      `n.k${i}`,
+      { value: 1, clock: 1, device: "a" },
+    ]),
+  );
+  expect((await post({ schema: 2, discoveries: [], fields })).code).toBe(400);
+  expect((await post({ schema: 3, discoveries: [], fields: {} })).code).toBe(
+    400,
+  );
 });
