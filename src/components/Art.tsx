@@ -204,6 +204,7 @@ export function Art({
         </linearGradient>
       </defs>
       <g
+        filter="url(#lw-paint)"
         stroke="#52684e"
         strokeWidth="2.4"
         strokeLinecap="round"

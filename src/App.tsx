@@ -11,6 +11,7 @@ import {
 } from "./components/Activities";
 import { Art } from "./components/Art";
 import { Kitchen } from "./components/Kitchen";
+import { PaintFilters } from "./components/PaintFilters";
 import { Icon, GoogleMark } from "./components/Icons";
 import { regionOpenId, regions } from "./data/regions";
 import {
@@ -328,6 +329,7 @@ export default function App() {
         lastTouch.current = Date.now();
       }}
     >
+      <PaintFilters />
       {activeRegion ? (
         <Garden
           regionId={activeRegion}

@@ -1359,22 +1359,90 @@ main {
   pointer-events: none;
 }
 .backdrop-snowfall {
-  animation: snowfall 9s linear infinite;
+  animation: snowfall 14s linear infinite;
 }
-.backdrop-twinkle {
-  animation: twinkle 4s ease-in-out infinite;
+.backdrop-snowfall.slow {
+  animation-duration: 24s;
+}
+.drift {
+  transform-box: fill-box;
+  animation: drift 12s linear infinite;
+}
+.pulse {
+  animation: pulse 3s ease-in-out infinite;
+}
+.twinkle {
+  animation: twinkle 3s ease-in-out infinite;
+}
+.slide {
+  animation: slide 6s linear infinite;
+}
+.foam {
+  animation: foam 5s ease-in-out infinite;
+}
+.rise {
+  transform-box: fill-box;
+  animation: rise 4.2s ease-out infinite;
+}
+.sway-slow {
+  animation: aurora 14s ease-in-out infinite;
 }
 @keyframes snowfall {
   from {
-    transform: translateY(-30px);
+    transform: translateY(0);
   }
   to {
-    transform: translateY(30px);
+    transform: translateY(900px);
+  }
+}
+@keyframes drift {
+  from {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.9;
+  }
+  to {
+    transform: translate(-160px, 760px) rotate(540deg);
+    opacity: 0;
+  }
+}
+@keyframes pulse {
+  50% {
+    opacity: 0.25;
   }
 }
 @keyframes twinkle {
   50% {
+    opacity: 0.2;
+  }
+}
+@keyframes slide {
+  to {
+    transform: translateX(160px);
+  }
+}
+@keyframes foam {
+  50% {
+    transform: translateY(8px);
+    opacity: 0.45;
+  }
+}
+@keyframes rise {
+  from {
+    transform: translate(0, 0) scale(0.6);
     opacity: 0.7;
+  }
+  to {
+    transform: translate(30px, -120px) scale(1.8);
+    opacity: 0;
+  }
+}
+@keyframes aurora {
+  50% {
+    transform: translateX(-60px) scaleY(1.15);
+    opacity: 0.75;
   }
 }
 .sign-forest {
