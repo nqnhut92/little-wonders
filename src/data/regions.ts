@@ -3,6 +3,8 @@ import { discoveries } from "./content";
 export type Region = {
   id: string;
   name: string;
+  // Art id shown on the valley map.
+  art?: string;
   // Content exists. Regions that are not ready show as "coming soon" and never open.
   ready: boolean;
   // The region whose exploration opens this one; the first region is always open.
@@ -18,19 +20,64 @@ export const luckyDiscoveries = [
   "rare_berry_heart",
   "shooting_star",
 ];
+const pondIds = [
+  "lotus",
+  "waterlily",
+  "harvest_lotus",
+  "harvest_waterlily",
+  "duck",
+  "dragonfly",
+  "pond_lantern",
+];
 export const regions: Region[] = [
   {
     id: "garden",
     name: "Vườn nhà",
+    art: "flower",
     ready: true,
     counted: discoveries
       .map((d) => d.id)
-      .filter((id) => !luckyDiscoveries.includes(id)),
+      .filter((id) => !luckyDiscoveries.includes(id) && !pondIds.includes(id)),
   },
-  { id: "pond", name: "Ao sen", ready: false, after: "garden", counted: [] },
-  { id: "forest", name: "Rừng nhỏ", ready: false, after: "pond", counted: [] },
-  { id: "beach", name: "Bãi biển", ready: false, after: "forest", counted: [] },
-  { id: "snow", name: "Đồi tuyết", ready: false, after: "beach", counted: [] },
-  { id: "stars", name: "Núi sao", ready: false, after: "snow", counted: [] },
+  {
+    id: "pond",
+    name: "Ao sen",
+    art: "pond",
+    ready: true,
+    after: "garden",
+    counted: pondIds,
+  },
+  {
+    id: "forest",
+    name: "Rừng nhỏ",
+    art: "tree",
+    ready: false,
+    after: "pond",
+    counted: [],
+  },
+  {
+    id: "beach",
+    name: "Bãi biển",
+    art: "fish",
+    ready: false,
+    after: "forest",
+    counted: [],
+  },
+  {
+    id: "snow",
+    name: "Đồi tuyết",
+    art: "cloud",
+    ready: false,
+    after: "beach",
+    counted: [],
+  },
+  {
+    id: "stars",
+    name: "Núi sao",
+    art: "star",
+    ready: false,
+    after: "snow",
+    counted: [],
+  },
 ];
 export const regionOpenId = (id: string) => `region_${id}_open`;

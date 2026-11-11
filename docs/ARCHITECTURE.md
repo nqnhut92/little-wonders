@@ -8,12 +8,13 @@ React, strict TypeScript, Vite and CSS Modules render DOM/SVG. Phaser is unneces
 
 Garden/Activities → typed Action → apply → World → immediate localStorage → 1.5-second debounce → authenticated serverless API → atomic PostgreSQL merge_world.
 
-- `src/game/engine.ts`: plant conditions, discoveries and field merge; renderer independent.
-- `src/game/lunch.ts`: four meal variations and acceptance/count rules.
-- `src/game/hints.ts`: hints based on the current plant/discovery state.
-- `src/data`: discovery inventory and interaction dialogue/conditions.
-- `src/components`: SVG artwork, garden, house, lunch and notebook.
-- `src/services`: persistence, retry and sound. `App.tsx` coordinates profiles and navigation.
+- `src/game/engine.ts`: plant conditions, gifting, discoveries and field merge; renderer independent.
+- `src/game/lunch.ts`: pal wish status and speech-pronunciation helpers for Bông and Lucky.
+- `src/game/hints.ts`: hints based on the current plant, basket, pal and discovery state.
+- `src/game/visitors.ts` & `src/game/events.ts`: pure selectors for garden visitors and injected-RNG surprise events.
+- `src/data`: discovery inventory, crops, pals, recipes, regions, data-driven region scenes (`scenes.ts`), and interaction rules.
+- `src/components`: SVG artwork (`Art.tsx`), data-driven scene renderer (`Garden.tsx`), valley map (`ValleyMap.tsx`), kitchen, pals, house, xylophone and notebook.
+- `src/services`: persistence, retry and audio/polyphony (`little-wonders-audio` stored per browser, off by default). `App.tsx` coordinates profiles and navigation.
 - `src/styles`: design tokens (`tokens.css`) and local copies of the shared focus and scrollbar blocks. `src/ui`: framework-independent theme and scroll-region controllers. `src/components/Icons.tsx`: interface icons.
 - `api/index.ts` and `api/_lib/security.ts`: OAuth, signed sessions, ownership and CSRF.
 
@@ -37,11 +38,11 @@ A bed is the field `plot.<region>.<slot>` with `{kind, stage, water, sun, rounds
 
 ## Kitchen
 
-Recipes are data in `src/data/recipes.ts` (sorted ingredient lists). `cook` takes one to three items that are all in the basket, uses them up and adds the dish (`dish_*`, at most 9) to the basket and the notebook; a mix that matches no recipe makes `dish_mystery`. Invalid requests (empty pot, items not held, dishes as ingredients, a full dish stack) change nothing. Dishes are basket kinds drawn with the `dish-*` placeholder bowls.
+Recipes are data in `src/data/recipes.ts` (12 sorted ingredient recipes plus `dish_mystery`). `cook` takes one to three items that are all in the basket, uses them up and adds the dish (`dish_*`, at most 9) to the basket and the notebook; a mix that matches no recipe makes `dish_mystery`. Invalid requests (empty pot, items not held, dishes as ingredients, a full dish stack) change nothing. Dishes are basket kinds drawn with the `dish-*` placeholder bowls.
 
-## Regions and rare variants
+## Regions, pals and data-driven scenes
 
-Regions are rows in `src/data/regions.ts` (`ready`, `after`, `counted`, ratio 0.7). `regionsToOpen` in `src/game/regions.ts` is pure: a ready region opens when the previous region is open and enough of its counted discoveries are found, and `apply` records `region_<id>_open` as an ordinary discovery, so the state is derived, merges by union and never locks again. Chance-based discoveries (`rare_*`, `shooting_star`) are excluded from the count. `apply` takes an injected random function; a harvest of carrot, pumpkin or strawberry records the rare discovery with probability 1/8. The map panel uses temporary text symbols until the map artwork exists.
+Regions are rows in `src/data/regions.ts` (`ready`, `after`, `counted`, ratio 0.7). `garden` and `pond` (Ao sen) are ready, and their layouts, crops, and hotspots live in `src/data/scenes.ts` so adding a region requires only data and art. `regionsToOpen` in `src/game/regions.ts` is pure: a ready region opens when the previous region is open and enough of its counted discoveries are found, and `apply` records `region_<id>_open` as an ordinary discovery, so the state is derived, merges by union and never locks again. Chance-based discoveries (`rare_*`, `shooting_star`) are excluded from the count. `apply` takes an injected random function; a harvest of carrot, pumpkin or strawberry records the rare discovery with probability 1/8. `ValleyMap.tsx` is the entry screen and plays a reduced-motion-safe fog-clearing animation when a region newly opens. Pals (`src/data/pals.ts`) track `n.gift_<id>` and `n.wish_<id>` monotonic counters, unlocking story chapters and rotating non-expiring wishes; Day/Night is synced via `scene.time`.
 
 ## Interface design language
 

@@ -40,7 +40,7 @@ describe("regions", () => {
     for (const id of luckyDiscoveries) expect(garden.counted).not.toContain(id);
     expect(regionsToOpen(ids(5), demo, 0.5)).toEqual([regionOpenId("b")]);
   });
-  it("lists every planned region in order, only the garden ready for now", () => {
+  it("lists every planned region in order, with garden and pond ready", () => {
     expect(regions.map((r) => r.id)).toEqual([
       "garden",
       "pond",
@@ -49,7 +49,25 @@ describe("regions", () => {
       "snow",
       "stars",
     ]);
-    expect(regions.filter((r) => r.ready).map((r) => r.id)).toEqual(["garden"]);
+    expect(regions.filter((r) => r.ready).map((r) => r.id)).toEqual([
+      "garden",
+      "pond",
+    ]);
+  });
+  it("supports planting and harvesting lotus in the pond region without touching garden beds", () => {
+    let w = apply(
+      emptyWorld(),
+      { type: "plant", slot: 0, kind: "lotus", region: "pond" },
+      "d",
+    );
+    for (let i = 0; i < 3; i++) {
+      w = apply(w, { type: "water", slot: 0, region: "pond" }, "d");
+      w = apply(w, { type: "sun", slot: 0, region: "pond" }, "d");
+    }
+    w = apply(w, { type: "harvest", slot: 0, region: "pond" }, "d");
+    expect(w.discoveries).toContain("harvest_lotus");
+    expect(w.fields["plot.pond.0"]).toBeDefined();
+    expect(w.fields["plot.garden.0"]).toBeUndefined();
   });
 });
 

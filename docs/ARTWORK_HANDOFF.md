@@ -34,11 +34,17 @@ All following object IDs currently live in `src/components/Art.tsx`, using `Art`
 | pond / pond.png                                                            | Water surface, lily leaf and ripples                          |
 | basket / basket.png                                                        | Lunch drop target; count indicators rendered separately       |
 | star / star.png                                                            | House decoration and positive meal sparkle                    |
-| dish-soup, dish-jam, dish-salad, dish-pie, dish-juice, dish-mystery (.png) | Cooked dishes: kitchen result, basket, gifts (temporary bowl) |
+| dish-soup, dish-jam, dish-salad, dish-pie, dish-juice, dish-corncake, dish-applesauce, dish-pumpkinsoup, dish-cornsoup, dish-fruitbowl, dish-tea, dish-smoothie, dish-mystery (.png) | Cooked dishes: kitchen result, basket, gifts (temporary bowl) |
 | tomato / tomato.png                                                        | Crop: seed button, ripe plant, basket (temporary vector)      |
 | pumpkin / pumpkin.png                                                      | Crop: seed button, ripe plant, basket (temporary vector)      |
 | corn / corn.png                                                            | Crop: seed button, ripe plant, basket (temporary vector)      |
 | watermelon / watermelon.png                                                | Crop: seed button, ripe plant, basket; the puppy's favorite   |
+| puppy / puppy.png                                                          | Lucky the small cute rounded white cartoon puppy              |
+| decor-sunflower, decor-pumpkin-lamp (.png)                                 | House v2 unlocked decorations (pumpkin lamp glows at night)   |
+| owl, frog, snail, duck, dragonfly (.png)                                   | Night owl, shifting critters and lotus pond creatures         |
+| windmill, xylophone (.png)                                                 | Interactive garden toys (spinning blades, 8-bar pentatonic)   |
+| fx-moon, fx-firefly, fx-shooting-star (.png)                               | Night scene sky moon, pointer firefly and shooting star       |
+| lotus, waterlily, pond-lantern (.png)                                      | Ao sen (region 2) aquatic crops and floating lantern          |
 
 Backgrounds currently live in `src/style.module.css`, colored by the `--scene-*` tokens in `src/styles/tokens.css`; target output is PNG (optional SVG master). These filenames describe future replacement files, not existing files.
 

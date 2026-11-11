@@ -133,9 +133,25 @@ function ripeActions(kind: string): Action[] {
 }
 
 describe("hints", () => {
-  it("point at a ripe plant first", () => {
+  it("point at a ripe plant first, then apple tree, kitchen and Lucky", () => {
     expect(contextualHint(ripe())).toContain("hái");
     expect(contextualHint(emptyWorld())).toContain("chọn một hạt");
+    const watered = run(
+      emptyWorld(),
+      { type: "plant", slot: 0, kind: "carrot" },
+      { type: "water", slot: 0 },
+      { type: "sun", slot: 0 },
+    );
+    const cared = run(
+      watered,
+      { type: "water", slot: 0 },
+      { type: "sun", slot: 0 },
+    );
+    const readyToWait = run(cared, { type: "water", slot: 0 });
+    expect(contextualHint(readyToWait)).toContain("mặt trời");
+    // Once a bed is harvested and the basket has an item, hint suggests the kitchen.
+    const harvested = run(ripe(), { type: "harvest", slot: 0 });
+    expect(contextualHint(harvested)).toContain("Bếp");
   });
 });
 
@@ -174,11 +190,27 @@ describe("apples, feeding and a fresh garden", () => {
     expect(apply(w, { type: "resetGarden" }, "d")).toBe(w);
     expect(worldSchema.safeParse(w).success).toBe(true);
   });
-  it("offers seven crops, each with artwork and a notebook entry", () => {
+  it("offers seven garden crops plus pond crops, each with artwork and a notebook entry", () => {
+    expect(crops.filter((c) => !c.region || c.region === "garden")).toHaveLength(
+      7,
+    );
     expect(crops.map((c) => c.id)).toEqual(cropKinds.slice());
     for (const c of crops) {
       expect(assetIds).toContain(c.art);
       expect(discoveries.map((d) => d.id)).toContain(`harvest_${c.id}`);
     }
+  });
+  it("allows up to 30 house decorations including unlocked sunflower and pumpkin lamp", () => {
+    const items = Array.from({ length: 30 }, (_, i) => ({
+      id: i % 2 === 0 ? "decor-sunflower" : "decor-pumpkin-lamp",
+      x: 10 + i,
+      y: 20,
+    }));
+    const w = run(emptyWorld(), {
+      type: "set",
+      key: "decorations",
+      value: items,
+    });
+    expect(worldSchema.safeParse(w).success).toBe(true);
   });
 });

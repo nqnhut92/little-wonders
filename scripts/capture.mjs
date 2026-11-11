@@ -25,6 +25,7 @@ const shots = [];
 const tap = async (name) => {
   await page.getByRole("button", { name, exact: true }).tap();
 };
+await tap("Vườn nhà");
 const shot = async (name, title, delay = 250) => {
   await page.waitForTimeout(delay);
   await page.screenshot({ path: `${dir}/${name}.png`, fullPage: true });

@@ -114,18 +114,51 @@ describe("durable offline progress", () => {
   });
 });
 
-import { initialMeal, offer } from "../src/game/lunch";
-it("does not count wrong colors, counts three and varies the next meal", () => {
-  let meal = initialMeal();
-  for (let i = 0; i < 3; i++) meal = offer(meal, "berry").meal;
-  expect(meal.count).toBe(0);
-  expect(meal.attempts).toBe(3);
-  meal = offer(meal, "carrot").meal;
-  meal = offer(meal, "carrot").meal;
-  const done = offer(meal, "carrot");
-  expect(done.discovery).toBe("lunch");
-  expect(done.meal.kind).toBe("colors");
-  expect(offer(done.meal, "berry").meal.count).toBe(1);
+import { palSpeak, palStatus } from "../src/game/lunch";
+import { pals } from "../src/data/pals";
+import { worldSchema } from "../api/index";
+import { gardenVisitors } from "../src/game/visitors";
+import { nextSurpriseDelayMs, pickSurpriseEvent } from "../src/game/events";
+import { readFileSync, readdirSync } from "node:fs";
+import { join } from "node:path";
+it("accepts any pal gift for story chapters while advancing wishes only on the wished item", () => {
+  let w = emptyWorld();
+  // Watermelon is locked until Lucky arrives after the first harvest.
+  expect(
+    apply(w, { type: "plant", slot: 0, kind: "watermelon" }, "a"),
+  ).toBe(w);
+  // Rabbit Bông is available from the start and accepts basic table snacks even on an empty basket.
+  expect(palStatus(w, "rabbit").wish).toBe("carrot");
+  w = apply(w, { type: "gift", pal: "rabbit", kind: "berry" }, "a");
+  expect(palStatus(w, "rabbit").gifts).toBe(1);
+  expect(palStatus(w, "rabbit").wishes).toBe(0);
+  expect(palStatus(w, "rabbit").wish).toBe("carrot");
+  expect(w.discoveries).toContain("story_rabbit_1");
+  // Fulfilling the wish unlocks the next wish and lunch discovery.
+  w = apply(w, { type: "gift", pal: "rabbit", kind: "carrot" }, "a");
+  expect(palStatus(w, "rabbit").wishes).toBe(1);
+  expect(palStatus(w, "rabbit").wish).toBe("berry");
+  expect(w.discoveries).toContain("lunch");
+  expect(worldSchema.safeParse(w).success).toBe(true);
+});
+it("unlocks Lucky and watermelon seeds on first harvest and uses spokenName for TTS", () => {
+  let w = emptyWorld();
+  w = apply(w, { type: "plant", slot: 0, kind: "carrot" }, "a");
+  for (let i = 0; i < 3; i++) {
+    w = apply(w, { type: "water", slot: 0 }, "a");
+    w = apply(w, { type: "sun", slot: 0 }, "a");
+  }
+  w = apply(w, { type: "harvest", slot: 0 }, "a");
+  expect(w.discoveries).toContain("pal_puppy");
+  w = apply(w, { type: "plant", slot: 0, kind: "watermelon" }, "a");
+  expect(w.fields["plot.garden.0"]?.value).toMatchObject({ kind: "watermelon" });
+  w = apply(w, { type: "gift", pal: "puppy", kind: "carrot" }, "a");
+  expect(palStatus(w, "puppy").gifts).toBe(1);
+  expect(palStatus(w, "puppy").wish).toBe("watermelon");
+  expect(w.discoveries).toContain("story_puppy_1");
+  const puppy = pals.find((p) => p.id === "puppy")!;
+  expect(palSpeak(puppy, "Lucky thích dưa hấu")).toBe("Lắc-ki thích dưa hấu");
+  expect(worldSchema.safeParse(w).success).toBe(true);
 });
 
 import { contextualHint } from "../src/game/hints";
@@ -163,16 +196,6 @@ it("keeps separate backups and does not discard a newer unsent creation", () => 
   expect(cachedProfile("child-a")?.pending).toBe(true);
 });
 
-it("cycles through count and food variations without accepting wrong foods", () => {
-  let m = initialMeal();
-  for (let i = 0; i < 3; i++) m = offer(m, "carrot").meal;
-  for (let i = 0; i < 3; i++) m = offer(m, "apple").meal;
-  expect(m.kind).toBe("berries");
-  expect(offer(m, "carrot").accepted).toBe(false);
-  m = offer(offer(m, "berry").meal, "berry").meal;
-  expect(m.kind).toBe("apples");
-  expect(offer(m, "apple").meal.kind).toBe("orange");
-});
 it("default logical edits do not depend on the wall clock", () => {
   const real = Date.now;
   Date.now = () => 999999999999;
@@ -189,5 +212,32 @@ it("default logical edits do not depend on the wall clock", () => {
     ).toBe(1);
   } finally {
     Date.now = real;
+  }
+});
+it("supports synced day/night, discovery combos, visitors and surprise events", () => {
+  let w = apply(
+    emptyWorld(),
+    { type: "set", key: "scene.time", value: "night" },
+    "a",
+  );
+  w = apply(w, { type: "discover", id: "night" }, "a");
+  w = apply(w, { type: "discover", id: "rain" }, "a");
+  expect(w.discoveries).toContain("firefly");
+  w = apply(w, { type: "plant", slot: 0, kind: "pumpkin" }, "a");
+  expect(gardenVisitors(w).map((v) => v.art)).toContain("owl");
+  expect(worldSchema.safeParse(w).success).toBe(true);
+  const ev = pickSurpriseEvent(w, () => 0);
+  expect(ev?.kind).toBe("shooting_star");
+  expect(nextSurpriseDelayMs(() => 0)).toBe(45_000);
+  expect(nextSurpriseDelayMs(() => 0.999)).toBeLessThan(90_000);
+});
+it("contains no forbidden pressure mechanics in src/", () => {
+  const walk = (dir: string): string[] =>
+    readdirSync(dir, { withFileTypes: true }).flatMap((e) =>
+      e.isDirectory() ? walk(join(dir, e.name)) : [join(dir, e.name)],
+    );
+  for (const file of walk("src")) {
+    const text = readFileSync(file, "utf8");
+    expect(text, file).not.toMatch(/\b(game over|streak|countdown)\b/i);
   }
 });

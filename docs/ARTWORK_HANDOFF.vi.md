@@ -33,11 +33,17 @@ Mọi ID đối tượng dưới đây hiện nằm trong `src/components/Art.ts
 | grass / grass.png                                                          | Bụi rung và hình đại diện mầm cây                       |
 | pond / pond.png                                                            | Mặt nước, lá sen và gợn                                 |
 | basket / basket.png                                                        | Đích thả bữa ăn; dấu đếm render riêng                   |
-| dish-soup, dish-jam, dish-salad, dish-pie, dish-juice, dish-mystery (.png) | Món đã nấu: kết quả ở bếp, giỏ, quà (bát tạm)           |
+| dish-soup, dish-jam, dish-salad, dish-pie, dish-juice, dish-corncake, dish-applesauce, dish-pumpkinsoup, dish-cornsoup, dish-fruitbowl, dish-tea, dish-smoothie, dish-mystery (.png) | Món đã nấu: kết quả ở bếp, giỏ, quà (bát tạm)           |
 | tomato / tomato.png                                                        | Cây trồng: nút hạt, cây chín, giỏ (vector tạm)          |
 | pumpkin / pumpkin.png                                                      | Cây trồng: nút hạt, cây chín, giỏ (vector tạm)          |
 | corn / corn.png                                                            | Cây trồng: nút hạt, cây chín, giỏ (vector tạm)          |
 | watermelon / watermelon.png                                                | Cây trồng: nút hạt, cây chín, giỏ; món cún thích        |
+| puppy / puppy.png                                                          | Cún Lucky trắng nhỏ tròn kiểu hoạt hình                 |
+| decor-sunflower, decor-pumpkin-lamp (.png)                                 | Đồ trang trí Nhà v2 (đèn bí ngô sáng vào ban đêm)       |
+| owl, frog, snail, duck, dragonfly (.png)                                   | Cú đêm, sinh vật đổi chỗ và sinh vật ở Ao sen           |
+| windmill, xylophone (.png)                                                 | Đồ chơi trong vườn (chong chóng quay, đàn gỗ 8 thanh)   |
+| fx-moon, fx-firefly, fx-shooting-star (.png)                               | Mặt trăng đêm, đom đóm theo tay và sao băng             |
+| lotus, waterlily, pond-lantern (.png)                                      | Cây trồng Ao sen (khu 2) và đèn hoa đăng                |
 | star / star.png                                                            | Trang trí nhà và ngôi sao phản hồi bữa ăn               |
 
 Các nền hiện nằm trong `src/style.module.css`, tô màu bằng token `--scene-*` trong `src/styles/tokens.css`; đầu ra đích là PNG (có thể kèm SVG master). Tên file này chỉ file thay thế tương lai, chưa tồn tại.

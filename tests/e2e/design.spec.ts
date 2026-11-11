@@ -118,6 +118,7 @@ test.describe("appearance", () => {
   }) => {
     await page.emulateMedia({ colorScheme: "light" });
     await page.goto("/");
+    await page.getByRole("button", { name: "Vườn nhà", exact: true }).click();
     const scene = () =>
       page.locator(".garden").evaluate((el) => {
         const s = getComputedStyle(el);
@@ -196,6 +197,7 @@ test("self-hosted Nunito renders Vietnamese and no serif remains", async ({
     if (r.resourceType() === "font") fonts.push(r.url());
   });
   await page.goto("/");
+  await page.getByRole("button", { name: "Vườn nhà", exact: true }).click();
   const stress = "Cầu ếch ổ nghề ớ ữ ặ Nguyện được tăng lương Tiến Điều Hồn";
   const loaded = await page.evaluate(async (text) => {
     await document.fonts.load("800 20px Nunito", text);
@@ -255,6 +257,7 @@ test("the scene fills the screen and floating controls stay inside it", async ({
   ]) {
     await page.setViewportSize(size);
     await page.goto("/");
+    await page.getByRole("button", { name: "Vườn nhà", exact: true }).click();
     const garden = (await page.locator(".garden").boundingBox())!;
     expect(garden).toEqual({ x: 0, y: 0, ...size });
     await expect(page.locator("header, footer")).toHaveCount(0);

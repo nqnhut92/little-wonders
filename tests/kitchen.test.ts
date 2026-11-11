@@ -36,5 +36,19 @@ describe("kitchen", () => {
     expect(cook(w, ["dish_soup"])).toBe(w);
     const full = stocked({ watermelon: 1, dish_juice: 9 });
     expect(cook(full, ["watermelon"])).toBe(full);
+    expect(recipes.length).toBeGreaterThanOrEqual(12);
+    for (const r of recipes) {
+      const made = cook(
+        stocked(
+          r.needs.reduce<Record<string, number>>(
+            (acc, k) => ({ ...acc, [k]: (acc[k] ?? 0) + 1 }),
+            {},
+          ),
+        ),
+        r.needs,
+      );
+      expect(basketOf(made)[r.dish]).toBe(1);
+      expect(worldSchema.safeParse(made).success).toBe(true);
+    }
   });
 });

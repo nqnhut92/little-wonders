@@ -1,15 +1,15 @@
 import { cn } from "./styles";
 import { useState, useEffect, useRef } from "react";
 import { Garden } from "./components/Garden";
-import { House, Lunch, Notebook } from "./components/Activities";
+import { ValleyMap } from "./components/ValleyMap";
+import { House, Lunch, Notebook, PalPanel, Xylophone } from "./components/Activities";
 import { Art } from "./components/Art";
 import { Kitchen } from "./components/Kitchen";
 import { Icon, GoogleMark, type IconName } from "./components/Icons";
-import { regions } from "./data/regions";
-import { regionState } from "./game/regions";
+import { regionOpenId, regions } from "./data/regions";
 import { ThemeToggle } from "./components/ThemeToggle";
 import { createScrollRegions } from "./ui/scroll-regions.js";
-import { apply, mergeWorld, assistance, type Action } from "./game/engine";
+import { apply, mergeWorld, assistance, value, type Action } from "./game/engine";
 import { upgradeWorld } from "./game/upgrade";
 import {
   load,
@@ -19,9 +19,18 @@ import {
   synchronize,
   type Local,
 } from "./services/progress";
-import { sound, speak } from "./services/audio";
+import {
+  sound,
+  speak,
+  loadAudioPreference,
+  saveAudioPreference,
+} from "./services/audio";
 import { hints } from "./data/content";
-import { contextualHint } from "./game/hints";
+import {
+  nextSurpriseDelayMs,
+  pickSurpriseEvent,
+  type SurpriseEvent,
+} from "./game/events";
 type SaveKind = "local" | "synced" | "waiting";
 const saveIcons: Record<SaveKind, IconName> = {
   local: "saved",
@@ -35,8 +44,12 @@ export default function App() {
   }));
   const current = useRef(local);
   current.current = local;
+  const [activeRegion, setActiveRegion] = useState<string | null>(null);
+  const [clearing, setClearing] = useState<string[]>([]);
   const [panel, setPanel] = useState("");
-  const [audio, setAudio] = useState(false);
+  const [audio, setAudio] = useState(() => loadAudioPreference());
+  const [surprise, setSurprise] = useState<SurpriseEvent | null>(null);
+  const lastTouch = useRef(Date.now());
   const [message, setMessage] = useState(
     "Chạm vào vườn nhé. Bạn nào đang trốn ở đây ta?",
   );
@@ -59,15 +72,28 @@ export default function App() {
   const holdTimer = useRef<ReturnType<typeof setTimeout> | undefined>(
     undefined,
   );
-  const say = (s: string, k = "flower") => {
+  const say = (s: string, k = "flower", spoken?: string) => {
     setMessage(s);
     sound(k, audio);
-    speak(s, audio);
+    speak(spoken ?? s, audio);
   };
   const act = (a: Action) => {
     setLocal((old) => {
       const world = apply(old.world, a, old.device);
       if (world === old.world) return old;
+      const opened = regions
+        .filter(
+          (r) =>
+            r.after &&
+            !old.world.discoveries.includes(regionOpenId(r.id)) &&
+            world.discoveries.includes(regionOpenId(r.id)),
+        )
+        .map((r) => r.id);
+      if (opened.length) {
+        setClearing((prev) => [...new Set([...prev, ...opened])]);
+        const first = regions.find((r) => r.id === opened[0]);
+        if (first) say(`${first.name} đã mở ra rồi! Sương đang tan đó!`, "rainbow");
+      }
       const next = {
         ...old,
         world,
@@ -85,6 +111,7 @@ export default function App() {
       return next;
     });
     setAttempts(0);
+    lastTouch.current = Date.now();
   };
   const sync = async () => {
     if (syncing.current || !current.current.profile) return;
@@ -140,15 +167,23 @@ export default function App() {
     };
   }, []);
   useEffect(() => {
-    const t = setInterval(() => {
-      if (!panel) {
-        const h = contextualHint(current.current.world);
-        setMessage(h);
-        setAttempts((a) => a + 3);
+    let hide: ReturnType<typeof setTimeout> | undefined;
+    const timer = setTimeout(() => {
+      if (!panel && activeRegion && Date.now() - lastTouch.current >= 45_000) {
+        const event = pickSurpriseEvent(current.current.world);
+        if (event) {
+          setSurprise(event);
+          say(event.message, event.kind === "shooting_star" ? "flower" : "butterfly");
+          if (event.discovery) act({ type: "discover", id: event.discovery });
+          hide = setTimeout(() => setSurprise(null), 4000);
+        }
       }
-    }, 25000);
-    return () => clearInterval(t);
-  }, [local.world, panel]);
+    }, nextSurpriseDelayMs());
+    return () => {
+      clearTimeout(timer);
+      clearTimeout(hide);
+    };
+  }, [local.world, panel, activeRegion]);
   useEffect(() => {
     const receive = (event: StorageEvent) => {
       if (event.key !== "little-wonders-v1" || !event.newValue) return;
@@ -250,16 +285,37 @@ export default function App() {
       setMessage("Chưa tạo được hồ sơ. Người lớn thử lại khi có mạng nhé.");
     }
   };
+  const night = value<string>(local.world, "scene.time", "day") === "night";
   return (
-    <main>
-      <Garden
-        world={local.world}
-        act={act}
-        say={say}
-        open={setPanel}
-        highlight={assistance(attempts) !== "explore"}
-        showSteps={assistance(attempts) === "demonstrate"}
-      />
+    <main
+      onPointerDown={() => {
+        lastTouch.current = Date.now();
+      }}
+    >
+      {activeRegion ? (
+        <Garden
+          regionId={activeRegion}
+          world={local.world}
+          act={act}
+          say={say}
+          open={setPanel}
+          highlight={assistance(attempts) !== "explore"}
+          showSteps={assistance(attempts) === "demonstrate"}
+          surprise={surprise}
+        />
+      ) : (
+        <ValleyMap
+          world={local.world}
+          clearing={clearing}
+          say={say}
+          onEnter={(id) => {
+            setClearing((prev) => prev.filter((x) => x !== id));
+            setActiveRegion(id);
+            const r = regions.find((x) => x.id === id);
+            if (r) setMessage(`Chào mừng con đến với ${r.name}!`);
+          }}
+        />
+      )}
       {/* Controls float over the full-screen scene; there is no header or footer bar. */}
       <div className={cn("hud hud-guide glass")}>
         <Art id="rabbit" />
@@ -270,7 +326,9 @@ export default function App() {
           aria-label="Nghe gợi ý"
           title="Nghe gợi ý"
           onClick={() => {
-            const h = hints[hintIndex.current++ % hints.length];
+            const h = activeRegion
+              ? hints[hintIndex.current++ % hints.length]
+              : "Con chạm vào Vườn nhà trên bản đồ để bắt đầu chơi nhé!";
             say(h);
             setAttempts((a) => a + 3);
           }}
@@ -286,8 +344,10 @@ export default function App() {
           title={audio ? "Tắt âm thanh" : "Bật âm thanh"}
           aria-pressed={audio}
           onClick={() => {
-            setAudio(!audio);
-            if (!audio) sound("flower", true);
+            const next = !audio;
+            setAudio(next);
+            saveAudioPreference(next);
+            if (next) sound("flower", true);
           }}
         >
           <Icon name={audio ? "speaker-on" : "speaker-off"} size={28} />
@@ -310,46 +370,67 @@ export default function App() {
         >
           <Icon name="cup" size={28} />
         </button>
-        <button
-          type="button"
-          className={cn("kid-button")}
-          aria-label="Bếp của vườn"
-          title="Bếp của vườn"
-          onClick={() => setPanel("kitchen")}
-        >
-          <Icon name="pot" size={28} />
-        </button>
-        <button
-          type="button"
-          className={cn("kid-button")}
-          aria-label="Bản đồ thung lũng"
-          title="Bản đồ thung lũng"
-          onClick={() => setPanel("map")}
-        >
-          <Icon name="map" size={28} />
-        </button>
-        <button
-          type="button"
-          className={cn("kid-button hold-button")}
-          aria-label="Vườn mới. Giữ một giây"
-          title="Vườn mới. Giữ một giây"
-          onPointerDown={() => {
-            holdTimer.current = setTimeout(() => setPanel("fresh"), 1000);
-          }}
-          onPointerUp={() => clearTimeout(holdTimer.current)}
-          onPointerLeave={() => clearTimeout(holdTimer.current)}
-          onPointerCancel={() => clearTimeout(holdTimer.current)}
-          onKeyDown={(e) => {
-            if (e.key === "Enter" || e.key === " ") setPanel("fresh");
-          }}
-          onClick={(e) => {
-            // A quick tap only explains how to use it; keyboard activation already opened the question.
-            if (e.detail === 0) return;
-            setMessage("Giữ nút chổi một giây để dọn vườn mới nhé!");
-          }}
-        >
-          <Icon name="broom" size={28} />
-        </button>
+        {activeRegion && (
+          <>
+            <button
+              type="button"
+              className={cn("kid-button")}
+              aria-label="Bếp của vườn"
+              title="Bếp của vườn"
+              onClick={() => setPanel("kitchen")}
+            >
+              <Icon name="pot" size={28} />
+            </button>
+            <button
+              type="button"
+              className={cn("kid-button")}
+              aria-label="Bản đồ thung lũng"
+              title="Bản đồ thung lũng"
+              onClick={() => setActiveRegion(null)}
+            >
+              <Icon name="map" size={28} />
+            </button>
+            <button
+              type="button"
+              className={cn("kid-button")}
+              aria-label={night ? "Chuyển sang ban ngày" : "Chuyển sang ban đêm"}
+              title={night ? "Chuyển sang ban ngày" : "Chuyển sang ban đêm"}
+              aria-pressed={night}
+              onClick={() => {
+                const next = night ? "day" : "night";
+                act({ type: "set", key: "scene.time", value: next });
+                if (next === "night") {
+                  act({ type: "discover", id: "night" });
+                  say("Bầu trời chuyển sang ban đêm rồi, có sao và đom đóm kìa!", "owl");
+                } else say("Trời sáng rồi! Nắng ấm quay lại vườn!", "sun");
+              }}
+            >
+              <Icon name={night ? "day-sun" : "night-moon"} size={28} />
+            </button>
+            <button
+              type="button"
+              className={cn("kid-button hold-button")}
+              aria-label="Vườn mới. Giữ một giây"
+              title="Vườn mới. Giữ một giây"
+              onPointerDown={() => {
+                holdTimer.current = setTimeout(() => setPanel("fresh"), 1000);
+              }}
+              onPointerUp={() => clearTimeout(holdTimer.current)}
+              onPointerLeave={() => clearTimeout(holdTimer.current)}
+              onPointerCancel={() => clearTimeout(holdTimer.current)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") setPanel("fresh");
+              }}
+              onClick={(e) => {
+                // A quick tap only explains how to use it; keyboard activation already opened the question.
+                if (e.detail === 0) return;
+                setMessage("Giữ nút chổi một giây để dọn vườn mới nhé!");
+              }}
+            >
+              <Icon name="broom" size={28} />
+            </button>
+          </>
+        )}
         <span className={cn("hud-gap")} aria-hidden="true" />
         <button
           type="button"
@@ -402,46 +483,19 @@ export default function App() {
               {panel === "lunch" && (
                 <Lunch world={local.world} act={act} say={say} />
               )}{" "}
+              {panel.startsWith("pal:") && (
+                <PalPanel
+                  world={local.world}
+                  act={act}
+                  say={say}
+                  palId={panel.slice(4)}
+                />
+              )}
               {panel === "kitchen" && (
                 <Kitchen world={local.world} act={act} say={say} />
               )}
-              {panel === "map" && (
-                <div className={cn("activity")}>
-                  <h2>Thung lũng nhỏ</h2>
-                  <div className={cn("map-grid")}>
-                    {regions.map((r) => {
-                      const state = regionState(local.world.discoveries, r);
-                      return (
-                        <button
-                          type="button"
-                          key={r.id}
-                          data-state={state}
-                          className={cn("map-region")}
-                          aria-label={`${r.name}${state === "soon" ? ", sắp có" : state === "locked" ? ", chưa mở" : ""}`}
-                          onClick={() =>
-                            state === "open"
-                              ? setPanel("")
-                              : setMessage(
-                                  state === "soon"
-                                    ? "Khu này sắp có rồi, con chờ nhé!"
-                                    : "Con chơi thêm ở khu vườn để mở khu này nhé!",
-                                )
-                          }
-                        >
-                          <span className={cn("map-art")} aria-hidden="true">
-                            {state === "open"
-                              ? "🌿"
-                              : state === "locked"
-                                ? "☁"
-                                : "?"}
-                          </span>
-                          <span>{r.name}</span>
-                          {state === "soon" && <small>Sắp có</small>}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
+              {panel === "xylophone" && (
+                <Xylophone act={act} audio={audio} />
               )}
               {panel === "fresh" && (
                 <div className={cn("activity")}>

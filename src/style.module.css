@@ -376,7 +376,7 @@ main {
   /* Child buttons fill the right-hand column; the small adult/system ones wrap into a second column to its left. */
   flex-wrap: wrap-reverse;
   align-content: flex-start;
-  max-height: 400px;
+  max-height: 460px;
   column-gap: 8px;
   align-items: center;
   gap: 8px;
@@ -843,6 +843,7 @@ main {
 ) {
   .glass,
   .seed-tray,
+  .map-region,
   .icon-button,
   .theme-toggle {
     background: var(--glass-solid);
@@ -854,6 +855,7 @@ main {
 @media (prefers-reduced-transparency: reduce) {
   .glass,
   .seed-tray,
+  .map-region,
   .icon-button,
   .theme-toggle {
     background: var(--glass-solid);
@@ -873,6 +875,7 @@ main {
 @media (forced-colors: active) {
   .glass,
   .seed-tray,
+  .map-region,
   .modal {
     background: Canvas;
     border-color: CanvasText;
@@ -1010,21 +1013,90 @@ main {
   gap: 14px;
   margin-top: 16px;
 }
+.valley-map {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: linear-gradient(
+    var(--scene-sky) 0%,
+    var(--scene-haze) 60%,
+    var(--scene-grass-edge) 60%
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: max(96px, 14vh) 140px 28px;
+}
+.valley-content {
+  position: relative;
+  z-index: 2;
+  width: min(720px, 100%);
+  text-align: center;
+}
+.valley-title {
+  margin: 0 0 8px;
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--scene-title);
+}
 .map-region {
+  position: relative;
   display: grid;
   place-items: center;
   gap: 6px;
-  min-height: 120px;
+  min-height: 132px;
+  padding: 14px 12px;
   border-radius: var(--radius-m);
   font-weight: 800;
-  background: var(--accent-soft);
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+}
+.map-icon {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 68px;
+  height: 68px;
+}
+.map-icon > .art {
+  width: 64px;
+  height: 64px;
+}
+.map-fog {
+  position: absolute;
+  inset: -6px;
+  display: grid;
+  place-items: center;
+  font-size: 46px;
+  color: var(--glass-solid);
+  text-shadow: 0 2px 10px var(--scene-shadow);
+  pointer-events: none;
+}
+.map-fog-clearing {
+  animation: fog-clear 1.2s ease-out forwards;
+}
+@keyframes fog-clear {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.35) translateY(-10px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .map-fog-clearing {
+    opacity: 0;
+  }
 }
 .map-region[data-state="locked"] {
-  opacity: 0.6;
-  filter: saturate(0.5);
+  opacity: 0.7;
+  filter: saturate(0.45);
 }
 .map-region[data-state="soon"] {
-  opacity: 0.4;
+  opacity: 0.45;
   filter: grayscale(0.8);
 }
 .map-art {
@@ -1056,4 +1128,160 @@ main {
   width: 40px;
   height: 40px;
   vertical-align: middle;
+}
+.pal-bubble {
+  position: absolute;
+  right: -12%;
+  top: -18%;
+  width: 46%;
+  aspect-ratio: 1;
+  padding: 10%;
+  border-radius: 50%;
+  border: 1px solid var(--plate-border);
+  background: var(--plate);
+  box-shadow: var(--shadow-soft);
+  pointer-events: none;
+}
+.pal-stories {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+}
+.pal-stories button {
+  min-width: 108px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+}
+.pal-story-text {
+  max-width: 540px;
+  margin: 14px auto 0;
+  padding: 14px 18px;
+  border-radius: var(--radius-m);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  font-weight: 700;
+}
+.locked-silhouette {
+  opacity: 0.4;
+  filter: brightness(0) saturate(0);
+}
+.garden[data-variant="pond"] {
+  background: linear-gradient(
+    var(--scene-pond-sky) 0%,
+    var(--scene-pond-haze) 60%,
+    var(--scene-pond-grass) 60%
+  );
+}
+.garden[data-variant="pond"] .hill-back {
+  background: var(--scene-pond-hill);
+}
+.garden[data-variant="pond"] .hill-front {
+  background: var(--scene-pond-grass);
+}
+.garden[data-time="night"] {
+  background: linear-gradient(
+    var(--scene-night-sky) 0%,
+    var(--scene-night-haze) 60%,
+    var(--scene-night-grass) 60%
+  );
+}
+.garden[data-time="night"] .hill-back {
+  background: var(--scene-night-hill);
+}
+.garden[data-time="night"] .hill-front {
+  background: var(--scene-night-grass);
+}
+.garden[data-time="night"] .path {
+  background: var(--scene-night-path);
+}
+.garden[data-time="night"] .art-flower {
+  transform: scale(0.86);
+}
+.garden[data-wind="true"] .art-flower,
+.garden[data-wind="true"] .art-grass {
+  animation: sway 0.55s ease-in-out infinite;
+}
+.spin-windmill .windmill-blades {
+  transform-origin: 60px 54px;
+  animation: spin 0.9s linear infinite;
+}
+.night-stars {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+.night-stars span {
+  position: absolute;
+  width: calc(2.4 * var(--u));
+  aspect-ratio: 1;
+  opacity: 0.85;
+}
+.firefly {
+  position: absolute;
+  width: calc(4.5 * var(--u));
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  transition:
+    left 0.45s ease-out,
+    top 0.45s ease-out;
+  pointer-events: none;
+  z-index: 5;
+}
+.shooting-star {
+  position: absolute;
+  left: 34%;
+  top: 16%;
+  width: calc(10 * var(--u));
+  pointer-events: none;
+  z-index: 2;
+  animation: fall 1.2s ease-out;
+}
+.butterfly-flock {
+  position: absolute;
+  left: 38%;
+  top: 24%;
+  display: flex;
+  gap: 12px;
+  width: calc(14 * var(--u));
+  pointer-events: none;
+  z-index: 5;
+  animation: float 3s ease-in-out infinite;
+}
+.xylophone {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 10px;
+  padding: 20px 14px;
+  margin: 12px auto;
+  max-width: 660px;
+  border-radius: var(--radius-m);
+  background: var(--scene-wood);
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.xylophone-bar {
+  flex: 1;
+  min-width: 56px;
+  min-height: 110px;
+  border-radius: var(--radius-s);
+  background: var(--scene-wood-bar);
+  color: var(--scene-ink);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 12px;
+  touch-action: none;
+  transition: transform 0.1s ease;
+}
+.xylophone-bar:nth-child(even) {
+  background: var(--scene-wood-bar-alt);
+}
+.xylophone-bar.bar-lit {
+  transform: scale(0.95);
+  filter: brightness(1.08);
 }

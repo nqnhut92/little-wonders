@@ -73,5 +73,74 @@ export const interactions: Record<
     ],
     effect: "hop",
   },
+  windmill: {
+    lines: [
+      "Vù vù! Chong chóng quay theo làn gió mát!",
+      "Gió thổi qua làm hoa lá rung rinh thật thích!",
+    ],
+    discovery: "windmill",
+    effect: "spin",
+  },
+  xylophone: {
+    lines: [
+      "Tình tang! Tiếng đàn gỗ vang khắp vườn!",
+      "Con gõ hoặc vuốt qua các thanh gỗ để tạo giai điệu nhé!",
+    ],
+    discovery: "xylophone",
+    effect: "hop",
+  },
+  frog: {
+    lines: [
+      "Ộp ộp! Bạn ếch nhảy qua bãi cỏ xanh!",
+      "Ếch nhỏ chào con rồi trốn sang chỗ mới kìa!",
+    ],
+    discovery: "frog",
+    effect: "hop",
+  },
+  snail: {
+    lines: [
+      "Ốc sên mang ngôi nhà nhỏ trên lưng thật chậm rãi.",
+      "Chào bạn ốc sên đáng yêu nhé!",
+    ],
+    discovery: "snail",
+    effect: "crawl",
+  },
+  owl: {
+    lines: [
+      "Hú hù! Bạn cú thức dậy ngắm sao cùng con!",
+      "Đêm yên tĩnh quá, bạn cú chớp đôi mắt tròn.",
+    ],
+    discovery: "owl",
+    effect: "hop",
+  },
+  duck: {
+    lines: [
+      "Cạp cạp! Vịt con bơi vòng quanh lá sen!",
+      "Vịt nhỏ vẫy cánh làm nước gợn sóng.",
+    ],
+    discovery: "duck",
+    effect: "swim",
+  },
+  dragonfly: {
+    lines: [
+      "Chuồn chuồn đậu nhẹ trên nụ sen hồng!",
+      "Đôi cánh mỏng lấp lánh dưới nắng.",
+    ],
+    discovery: "dragonfly",
+    effect: "flutter",
+  },
+  "pond-lantern": {
+    lines: [
+      "Đèn hoa đăng lung linh trôi trên mặt nước!",
+      "Ánh sáng ấm áp soi cả ao sen.",
+    ],
+    discovery: "pond_lantern",
+    effect: "glow",
+  },
 };
-export const discoveryRules = [{ id: "rainbow", requires: ["rain", "sun"] }];
+export const discoveryRules = [
+  { id: "rainbow", requires: ["rain", "sun"] },
+  { id: "firefly", requires: ["night", "rain"] },
+  { id: "butterfly_flock", requires: ["wind", "butterfly"] },
+  { id: "moon_pond", requires: ["night", "fish"] },
+];

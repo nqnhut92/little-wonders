@@ -8,6 +8,10 @@ export type Crop = {
   art: string;
   // Full water + sun rounds needed to move up one stage (tuning knob).
   care: number;
+  // Discovery needed before this seed is offered (the puppy brings the watermelon seeds).
+  requires?: string;
+  // Region that offers this seed; defaults to "garden".
+  region?: string;
 };
 export const crops: Crop[] = [
   { id: "sunflower", name: "Hướng dương", art: "flower", care: 1 },
@@ -16,7 +20,21 @@ export const crops: Crop[] = [
   { id: "tomato", name: "Cà chua", art: "tomato", care: 1 },
   { id: "pumpkin", name: "Bí ngô", art: "pumpkin", care: 1 },
   { id: "corn", name: "Bắp", art: "corn", care: 1 },
-  { id: "watermelon", name: "Dưa hấu", art: "watermelon", care: 1 },
+  {
+    id: "watermelon",
+    name: "Dưa hấu",
+    art: "watermelon",
+    care: 1,
+    requires: "pal_puppy",
+  },
+  { id: "lotus", name: "Hoa sen", art: "lotus", care: 1, region: "pond" },
+  {
+    id: "waterlily",
+    name: "Hoa súng",
+    art: "waterlily",
+    care: 1,
+    region: "pond",
+  },
 ];
 // Spoken and screen-reader name of anything a basket can hold.
 export const itemName = (kind: string) =>

@@ -19,6 +19,7 @@ import {
   decorationIds,
   houseColors,
   mealKinds,
+  sceneTimes,
 } from "../src/data/ids.js";
 import {
   cookie,
@@ -74,6 +75,7 @@ const fieldValues = {
     count: z.number().int().min(1).max(3),
   }),
   counter: z.number().int().min(0).max(maxCounter),
+  sceneTime: z.enum(sceneTimes),
 };
 // One entry per field-key pattern. Adding a field to the game means adding a pattern here, never a SQL migration.
 const fieldPatterns: [RegExp, ReturnType<typeof stamp>][] = [
@@ -84,6 +86,7 @@ const fieldPatterns: [RegExp, ReturnType<typeof stamp>][] = [
   [/^decorations$/, stamp(fieldValues.decorations)],
   [/^meal$/, stamp(fieldValues.meal)],
   [/^lastMeal$/, stamp(fieldValues.lastMeal)],
+  [/^scene\.time$/, stamp(fieldValues.sceneTime)],
   [counterKeyPattern, stamp(fieldValues.counter)],
 ];
 export const worldSchema = z

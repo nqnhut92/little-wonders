@@ -33,11 +33,24 @@
   --scene-dot: #e4dac3;
   --scene-dot-rim: #c7b595;
   --scene-dot-filled: #ec9d5e;
+  --scene-night-sky: #1e2d48;
+  --scene-night-haze: #2c4161;
+  --scene-night-grass: #5a7757;
+  --scene-night-hill: #4b684b;
+  --scene-night-path: #7f7866;
+  --scene-pond-sky: #d5ebed;
+  --scene-pond-haze: #e6f2e2;
+  --scene-pond-grass: #b8d8be;
+  --scene-pond-hill: #a7cdaf;
+  --scene-wood: #c89e6d;
+  --scene-wood-bar: #f2cf84;
+  --scene-wood-bar-alt: #e49580;
 }
 
 /* Light tokens. Scene containers repeat them so artwork panels stay light in Dark mode. */
 :root,
 .garden,
+.valley-map,
 .house-canvas,
 .lunch-scene {
   --bg: #faf8ee;
@@ -140,6 +153,7 @@ body {
 }
 /* Scene containers are always light, so their text and focus rings stay on the light palette. */
 .garden,
+.valley-map,
 .house-canvas,
 .lunch-scene {
   color: var(--text);

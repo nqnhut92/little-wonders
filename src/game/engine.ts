@@ -2,6 +2,12 @@ import { discoveryRules } from "../data/interactions";
 import { regionsToOpen } from "./regions";
 import { dishFor, maxPot } from "../data/recipes";
 import {
+  pals,
+  giftCounter,
+  fulfilledCounter,
+  storyDiscovery,
+} from "../data/pals";
+import {
   currentSchema,
   isCounterKey,
   maxBasket,
@@ -29,10 +35,11 @@ export type World = {
   fields: Record<string, Stamp>;
 };
 export type Action =
-  | { type: "plant"; slot: number; kind: string }
-  | { type: "water" | "sun"; slot: number }
-  | { type: "harvest"; slot: number }
+  | { type: "plant"; slot: number; kind: string; region?: string }
+  | { type: "water" | "sun"; slot: number; region?: string }
+  | { type: "harvest"; slot: number; region?: string }
   | { type: "shake" }
+  | { type: "gift"; pal: string; kind: string }
   | { type: "cook"; items: string[] }
   | { type: "feed"; kind: string }
   | { type: "resetGarden" }
@@ -119,13 +126,47 @@ export function apply(
   };
   if (a.type === "discover") unlock(a.id);
   if (a.type === "set") set(a.key, a.value);
+  const region =
+    "region" in a && typeof a.region === "string" && a.region
+      ? a.region
+      : gardenRegion;
   const plot = (slot: number) =>
-    w.fields[plotKey(slot)]?.value as Plot | undefined;
-  if (a.type === "plant" && a.slot >= 0 && a.slot < plotCount(w)) {
+    w.fields[plotKey(slot, region)]?.value as Plot | undefined;
+  if (a.type === "gift") {
+    const pal = pals.find((x) => x.id === a.pal);
+    const arrived = !pal?.arrives || w.discoveries.includes(pal.arrives);
+    const held = basketOf(w)[a.kind] ?? 0;
+    const canFree = pal?.freeFoods?.includes(a.kind) ?? false;
+    if (pal && arrived && (held > 0 || canFree)) {
+      const gifts = counter(w, giftCounter(pal.id)) + 1;
+      const wishes = counter(w, fulfilledCounter(pal.id));
+      if (held > 0) set("basket", { ...basketOf(w), [a.kind]: held - 1 });
+      set(giftCounter(pal.id), gifts);
+      // Any gift is welcome and counts; only the wished-for one grants the wish.
+      if (a.kind === pal.wants[wishes % pal.wants.length]) {
+        set(fulfilledCounter(pal.id), wishes + 1);
+        if (pal.id === "rabbit") {
+          unlock("lunch");
+          if (wishes >= 1) unlock("colors");
+        }
+      }
+      pal.chapters.forEach((need, i) => {
+        if (gifts >= need) unlock(storyDiscovery(pal.id, i + 1));
+      });
+    }
+  }
+  const plantCrop = a.type === "plant" ? crops.find((c) => c.id === a.kind) : undefined;
+  if (
+    a.type === "plant" &&
+    a.slot >= 0 &&
+    a.slot < plotCount(w) &&
+    plantCrop &&
+    (!plantCrop.requires || w.discoveries.includes(plantCrop.requires))
+  ) {
     const p = plot(a.slot);
     // Planting over a growing plant does nothing; a bed must be harvested first.
     if (!p || p.stage === 0)
-      set(plotKey(a.slot), {
+      set(plotKey(a.slot, region), {
         kind: a.kind,
         stage: 1,
         water: false,
@@ -170,13 +211,14 @@ export function apply(
     const held = basketOf(w)[p?.kind ?? ""] ?? 0;
     if (p && p.stage === ripeStage && held < maxBasket) {
       set("basket", { ...basketOf(w), [p.kind]: held + 1 });
-      set(plotKey(a.slot), {
+      set(plotKey(a.slot, region), {
         kind: p.kind,
         stage: 0,
         water: false,
         sun: false,
       });
       unlock(`harvest_${p.kind}`);
+      unlock("pal_puppy");
       if (rareOf[p.kind] && random() < rareChance) unlock(rareOf[p.kind]);
     }
   }
@@ -186,9 +228,9 @@ export function apply(
     if (p && p.stage >= 1 && p.stage < ripeStage) {
       const flagged = { ...p, [a.type]: true };
       const need = crops.find((c) => c.id === p.kind)?.care ?? 1;
-      if (!(flagged.water && flagged.sun)) set(plotKey(a.slot), flagged);
+      if (!(flagged.water && flagged.sun)) set(plotKey(a.slot, region), flagged);
       else if ((p.rounds ?? 0) + 1 >= need) {
-        set(plotKey(a.slot), {
+        set(plotKey(a.slot, region), {
           kind: p.kind,
           stage: p.stage + 1,
           water: false,
@@ -197,7 +239,7 @@ export function apply(
         unlock(p.kind);
         unlock("butterfly");
       } else
-        set(plotKey(a.slot), {
+        set(plotKey(a.slot, region), {
           kind: p.kind,
           stage: p.stage,
           water: false,
@@ -205,13 +247,16 @@ export function apply(
           rounds: (p.rounds ?? 0) + 1,
         });
     }
+  }
+  if (changed) {
     for (const rule of discoveryRules)
       if (rule.requires.every((id) => n.discoveries.includes(id)))
         unlock(rule.id);
+    for (const id of regionsToOpen(n.discoveries)) unlock(id);
   }
-  if (changed) for (const id of regionsToOpen(n.discoveries)) unlock(id);
   return changed ? n : w;
 }
+export const counter = (w: World, k: string) => Number(w.fields[k]?.value ?? 0);
 export const basketOf = (w: World): Basket =>
   (w.fields.basket?.value as Basket | undefined) ?? {};
 // Beds open with the number of different crops harvested: derived from discoveries, never stored.

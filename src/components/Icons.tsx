@@ -18,7 +18,9 @@ export type IconName =
   | "map"
   | "broom"
   | "yes"
-  | "no";
+  | "no"
+  | "day-sun"
+  | "night-moon";
 const speaker = (
   <path d="M4 9.5A1.5 1.5 0 0 1 5.5 8H8l4.2-3.4a1 1 0 0 1 1.6.8v13.2a1 1 0 0 1-1.6.8L8 16H5.5A1.5 1.5 0 0 1 4 14.5z" />
 );
@@ -132,6 +134,18 @@ const paths: Record<IconName, ReactNode> = {
   ),
   yes: <path {...line} strokeWidth={3.2} d="m5 12.5 4.6 4.6L19 7.4" />,
   no: <path {...line} strokeWidth={3.2} d="m6.5 6.5 11 11m0-11-11 11" />,
+  "day-sun": (
+    <>
+      <circle cx="12" cy="12" r="4.5" />
+      <path
+        {...line}
+        d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M18.7 5.3l-1.6 1.6M6.9 17.1l-1.6 1.6"
+      />
+    </>
+  ),
+  "night-moon": (
+    <path d="M15.5 3.6a8.6 8.6 0 1 0 5.4 13.7A7 7 0 0 1 15.5 3.6z" />
+  ),
   busy: <path {...line} d="M12 4a8 8 0 1 1-7.4 5" />,
 };
 export function Icon({ name, size = 24 }: { name: IconName; size?: number }) {

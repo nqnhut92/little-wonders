@@ -2,10 +2,14 @@ import { test, expect, type Page } from "@playwright/test";
 async function activate(page: Page, label: string) {
   await page.getByRole("button", { name: label, exact: true }).click();
 }
+async function openGarden(page: Page) {
+  await page.goto("/");
+  await activate(page, "Vườn nhà");
+}
 test("garden chain, notebook and saved house survive reload", async ({
   page,
 }) => {
-  await page.goto("/");
+  await openGarden(page);
   await activate(page, "Luống đất 1");
   await activate(page, "Mây tưới nước");
   await activate(page, "Mặt trời");
@@ -19,6 +23,9 @@ test("garden chain, notebook and saved house survive reload", async ({
   await expect(page.getByText("Bọ rùa dưới đá", { exact: true })).toBeVisible();
   await activate(page, "Trở về vườn");
   await activate(page, "Ngôi Nhà Sắc Màu");
+  await expect(
+    page.getByRole("button", { name: "Trang trí hoa hướng dương chưa mở" }),
+  ).toBeDisabled();
   await activate(page, "Màu hồng");
   await page.locator(".house-canvas").click({ position: { x: 60, y: 200 } });
   await expect(
@@ -26,6 +33,7 @@ test("garden chain, notebook and saved house survive reload", async ({
   ).toHaveCount(1);
   await activate(page, "Trở về vườn");
   await page.reload();
+  await activate(page, "Vườn nhà");
   await activate(page, "Ngôi Nhà Sắc Màu");
   await expect(
     page.getByRole("button", { name: "Di chuyển đồ trang trí" }),
@@ -34,23 +42,24 @@ test("garden chain, notebook and saved house survive reload", async ({
     /selected/,
   );
 });
-test("rabbit gently rejects a wrong food and counts three carrots", async ({
+test("rabbit accepts any gift, advances wish on carrot and unlocks story chapters", async ({
   page,
 }) => {
-  await page.goto("/");
+  await openGarden(page);
   await activate(page, "Bữa Trưa Của Thỏ");
   await activate(page, "Dâu");
   await activate(page, "Giỏ thức ăn");
   await expect(
     page
       .getByRole("status")
-      .filter({ hasText: "Thỏ muốn cà rốt màu cam. Con thử lại nhé!" }),
+      .filter({ hasText: "Bông vẫn chờ cà rốt nhé!" }),
   ).toBeVisible();
-  await activate(page, "Cà rốt");
-  for (let i = 0; i < 3; i++) await activate(page, "Giỏ thức ăn");
   await expect(
-    page.getByText("Bữa ăn sắc màu! Con chọn ba món bất kỳ nhé!"),
-  ).toBeVisible();
+    page.getByRole("button", { name: "Đọc chuyện 1 của Bông" }),
+  ).toBeEnabled();
+  await activate(page, "Cà rốt");
+  await activate(page, "Giỏ thức ăn");
+  await expect(page.getByText("Bông đang thích dâu")).toBeVisible();
   await activate(page, "Trở về vườn");
   await activate(page, "Sổ khám phá");
   await expect(page.getByText("Bữa trưa đủ ba")).toBeVisible();
@@ -58,7 +67,7 @@ test("rabbit gently rejects a wrong food and counts three carrots", async ({
 test("drag seed and cloud into soil with real pointer input", async ({
   page,
 }) => {
-  await page.goto("/");
+  await openGarden(page);
   const soil = page.getByRole("button", { name: "Luống đất 2" });
   async function drag(label: string) {
     const source = await page
@@ -87,13 +96,14 @@ test("cached garden survives offline navigation and stores new discoveries", asy
   page,
   context,
 }) => {
-  await page.goto("/");
+  await openGarden(page);
   await page.evaluate(async () => {
     await navigator.serviceWorker.ready;
   });
   await page.reload();
   await context.setOffline(true);
   await page.reload();
+  await activate(page, "Vườn nhà");
   await activate(page, "Chim trên cành");
   await page.reload();
   await activate(page, "Sổ khám phá");
@@ -110,6 +120,7 @@ test("touch controls grow a plant without mouse or reading, with reduced motion"
   });
   const page = await context.newPage();
   await page.goto("http://127.0.0.1:4173");
+  await page.getByRole("button", { name: "Vườn nhà", exact: true }).tap();
   await page.getByRole("button", { name: "Luống đất 1", exact: true }).tap();
   for (let round = 0; round < 3; round++)
     for (const name of ["Mây tưới nước", "Mặt trời"])
@@ -134,7 +145,7 @@ test("garden touch targets stay inside the scene at iPad and wide desktop sizes"
     { width: 1920, height: 1080 },
   ]) {
     await page.setViewportSize(size);
-    await page.goto("/");
+    await openGarden(page);
     const scene = await page.locator(".garden").boundingBox();
     if (!scene) throw Error("scene missing");
     for (const object of await page.locator(".garden>.object").all()) {
@@ -148,7 +159,7 @@ test("garden touch targets stay inside the scene at iPad and wide desktop sizes"
 });
 
 test("dragging rain waters only the target bed", async ({ page }) => {
-  await page.goto("/");
+  await openGarden(page);
   for (const n of [1, 2])
     await page.getByRole("button", { name: `Luống đất ${n}` }).click();
   const a = await page
@@ -245,28 +256,31 @@ test.describe("mocked account requests", () => {
   });
 });
 
-test("unfinished lunch and visual request survive reopening and reload", async ({
+test("unfinished pal wish survives reopening and reload", async ({
   page,
 }) => {
-  await page.goto("/");
-  await page.getByRole("button", { name: "Bữa Trưa Của Thỏ" }).click();
-  await page.getByRole("button", { name: "Giỏ thức ăn" }).click();
-  await expect(page.locator(".filled")).toHaveCount(1);
+  await openGarden(page);
+  await activate(page, "Bữa Trưa Của Thỏ");
+  await activate(page, "Dâu");
+  await activate(page, "Giỏ thức ăn");
+  await expect(
+    page.getByRole("button", { name: "Đọc chuyện 1 của Bông" }),
+  ).toBeEnabled();
   await page.reload();
-  await page.getByRole("button", { name: "Bữa Trưa Của Thỏ" }).click();
-  await expect(page.locator(".filled")).toHaveCount(1);
-  await page.getByRole("button", { name: "Dâu", exact: true }).click();
-  await page.getByRole("button", { name: "Giỏ thức ăn" }).click();
-  await expect(page.locator(".rabbit-wish .art-carrot")).toBeVisible();
-  await expect(page.locator(".meal-request .art-carrot")).toHaveCount(3);
+  await activate(page, "Vườn nhà");
+  await activate(page, "Bữa Trưa Của Thỏ");
+  await expect(
+    page.getByRole("button", { name: "Đọc chuyện 1 của Bông" }),
+  ).toBeEnabled();
+  await expect(page.locator(".meal-request .art-carrot")).toHaveCount(1);
 });
 test("tabs merge discoveries and keep independent writer identities", async ({
   page,
   context,
 }) => {
-  await page.goto("/");
+  await openGarden(page);
   const other = await context.newPage();
-  await other.goto("/");
+  await openGarden(other);
   await page.getByRole("button", { name: "Cây táo" }).click();
   await other.getByRole("button", { name: "Ao nước" }).click();
   for (const p of [page, other]) {
@@ -293,19 +307,20 @@ test("tabs merge discoveries and keep independent writer identities", async ({
     .toBe(true);
 });
 test("saved decorations appear outside the house", async ({ page }) => {
-  await page.goto("/");
+  await openGarden(page);
   await page.getByRole("button", { name: "Ngôi Nhà Sắc Màu" }).click();
   await page.locator(".house-canvas").click({ position: { x: 40, y: 150 } });
   await page.getByRole("button", { name: "Trở về vườn" }).click();
   await expect(page.locator(".garden-decorations .art-flower")).toHaveCount(1);
   await page.reload();
+  await activate(page, "Vườn nhà");
   await expect(page.locator(".garden-decorations .art-flower")).toHaveCount(1);
 });
 
 test("fresh garden needs a one second hold and keeps the notebook", async ({
   page,
 }) => {
-  await page.goto("/");
+  await openGarden(page);
   await activate(page, "Luống đất 1");
   await activate(page, "Mây tưới nước");
   await activate(page, "Mặt trời");
@@ -339,7 +354,7 @@ test("fresh garden needs a one second hold and keeps the notebook", async ({
 test("shaking the tree fills the basket and a ripe plant can be harvested", async ({
   page,
 }) => {
-  await page.goto("/");
+  await openGarden(page);
   await activate(page, "Cây táo");
   await expect(page.getByLabel("Giỏ của con")).toBeVisible();
   await activate(page, "Luống đất 1");
@@ -355,34 +370,188 @@ test("shaking the tree fills the basket and a ripe plant can be harvested", asyn
   await expect(page.getByRole("button", { name: "Luống đất 4" })).toBeVisible();
 });
 
-test("map shows the garden lit and later regions as coming soon", async ({
+test("map is the home screen, shows locked and coming soon regions, and opens Ao sen", async ({
   page,
 }) => {
   await page.goto("/");
-  await activate(page, "Bản đồ thung lũng");
   await expect(
     page.getByRole("button", { name: "Vườn nhà", exact: true }),
   ).toBeVisible();
-  const soon = page.getByRole("button", { name: "Ao sen, sắp có" });
+  const locked = page.getByRole("button", { name: "Ao sen, chưa mở" });
+  await expect(locked).toBeVisible();
+  await locked.click();
+  await expect(page.locator(".valley-map")).toBeVisible();
+  const soon = page.getByRole("button", { name: "Rừng nhỏ, sắp có" });
   await expect(soon).toBeVisible();
   await soon.click();
-  await expect(page.getByRole("dialog")).toBeVisible();
+  await expect(page.locator(".valley-map")).toBeVisible();
   await activate(page, "Vườn nhà");
-  await expect(page.getByRole("dialog")).toHaveCount(0);
+  await expect(page.locator(".garden")).toBeVisible();
+  await activate(page, "Bản đồ thung lũng");
+  await expect(page.locator(".valley-map")).toBeVisible();
 });
 
 test("kitchen cooks apples into a surprise dish and records it", async ({
   page,
 }) => {
-  await page.goto("/");
-  await activate(page, "Cây táo");
+  await openGarden(page);
   await activate(page, "Cây táo");
   await activate(page, "Bếp của vườn");
-  await activate(page, "Thêm Táo vào nồi");
   await activate(page, "Thêm Táo vào nồi");
   await activate(page, "Nấu");
   await expect(page.locator(".meal-feedback")).toContainText("Món bất ngờ");
   await activate(page, "Trở về vườn");
   await activate(page, "Sổ khám phá");
   await expect(page.getByText("Món bất ngờ", { exact: true })).toBeVisible();
+});
+
+test("first harvest brings Lucky, unlocks watermelon seeds and lets the child gift him", async ({
+  page,
+}) => {
+  await openGarden(page);
+  await expect(page.getByRole("button", { name: "Hạt Dưa hấu" })).toHaveCount(
+    0,
+  );
+  await activate(page, "Luống đất 1");
+  for (let round = 0; round < 3; round++) {
+    await activate(page, "Mây tưới nước");
+    await activate(page, "Mặt trời");
+  }
+  await activate(page, "Luống đất 1");
+  await expect(
+    page.getByRole("button", { name: "Bạn cún Lucky" }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Hạt Dưa hấu" }),
+  ).toBeVisible();
+  await activate(page, "Cây táo");
+  await activate(page, "Bạn cún Lucky");
+  await expect(page.locator(".meal-request .art-watermelon")).toBeVisible();
+  await activate(page, "Táo");
+  await activate(page, "Giỏ thức ăn");
+  await activate(page, "Đọc chuyện 1 của Lucky");
+  await expect(page.locator(".pal-story-text")).toContainText("dưa hấu");
+});
+
+test("day/night toggle, xylophone, audio persistence and Ao sen region work end-to-end", async ({
+  page,
+}) => {
+  await openGarden(page);
+  // Audio defaults to off and persists locally per browser.
+  const speaker = page.getByRole("button", { name: "Bật âm thanh" });
+  await expect(speaker).toHaveAttribute("aria-pressed", "false");
+  await speaker.click();
+  await expect(
+    page.getByRole("button", { name: "Tắt âm thanh" }),
+  ).toHaveAttribute("aria-pressed", "true");
+  // Day/Night toggle syncs into world state and renders moon & owl.
+  await activate(page, "Chuyển sang ban đêm");
+  await expect(page.locator(".garden")).toHaveAttribute("data-time", "night");
+  await expect(page.getByRole("button", { name: "Mặt trăng" })).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Cú mèo trên cành" }),
+  ).toBeVisible();
+  // Xylophone opens and records discovery on bar activation.
+  await activate(page, "Đàn gỗ");
+  await activate(page, "Thanh đàn Đồ");
+  await activate(page, "Thanh đàn Mí");
+  await activate(page, "Trở về vườn");
+  await page.reload();
+  await expect(
+    page.getByRole("button", { name: "Tắt âm thanh" }),
+  ).toHaveAttribute("aria-pressed", "true");
+  await activate(page, "Vườn nhà");
+  await expect(page.locator(".garden")).toHaveAttribute("data-time", "night");
+  // Seed region_pond_open in localStorage to verify entering Ao sen (data-driven P5).
+  await page.evaluate(() => {
+    const raw = JSON.parse(localStorage.getItem("little-wonders-v1")!);
+    raw.world.discoveries.push("region_pond_open");
+    localStorage.setItem("little-wonders-v1", JSON.stringify(raw));
+  });
+  await page.reload();
+  await activate(page, "Ao sen");
+  await expect(page.getByRole("button", { name: "Mặt ao sen" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Hạt Hoa sen" })).toBeVisible();
+});
+
+test("fog clears on the map when a region opens, including under reduced motion", async ({
+  browser,
+}) => {
+  const context = await browser.newContext({
+    viewport: { width: 1194, height: 834 },
+    reducedMotion: "reduce",
+  });
+  const page = await context.newPage();
+  await page.goto("http://127.0.0.1:4173");
+  await page.evaluate(() => {
+    // 39 counted discoveries (< 70% of 57), excluding "bird", so tapping bird opens Ao sen.
+    const seed = [
+      "rain",
+      "sun",
+      "sunflower",
+      "carrot",
+      "berry",
+      "butterfly",
+      "worm",
+      "ladybug",
+      "rabbit",
+      "fish",
+      "apple",
+      "lunch",
+      "colors",
+      "house",
+      "decor",
+      "rainbow",
+      "grass",
+      "harvest_sunflower",
+      "harvest_carrot",
+      "harvest_berry",
+      "harvest_tomato",
+      "harvest_pumpkin",
+      "harvest_corn",
+      "harvest_watermelon",
+      "dish_soup",
+      "dish_jam",
+      "dish_salad",
+      "dish_pie",
+      "dish_juice",
+      "dish_corncake",
+      "dish_applesauce",
+      "dish_pumpkinsoup",
+      "dish_cornsoup",
+      "dish_fruitbowl",
+      "dish_tea",
+      "dish_smoothie",
+      "dish_mystery",
+      "house_decorated",
+      "pal_puppy",
+      "story_rabbit_1",
+    ];
+    localStorage.setItem(
+      "little-wonders-v1",
+      JSON.stringify({
+        world: { schema: 2, epoch: 0, discoveries: seed, fields: {} },
+        pending: false,
+        nickname: "Bạn nhỏ",
+        device: "test",
+      }),
+    );
+  });
+  await page.reload();
+  await activate(page, "Vườn nhà");
+  await activate(page, "Chim trên cành");
+  await activate(page, "Bản đồ thung lũng");
+  const pond = page.getByRole("button", { name: "Ao sen", exact: true });
+  await expect(pond).toHaveAttribute("data-state", "open");
+  await expect(pond).toHaveAttribute("data-clearing", "true");
+  const fog = pond.locator(".map-fog-clearing");
+  expect(
+    await fog.evaluate((el) => [
+      getComputedStyle(el).animationName,
+      getComputedStyle(el).opacity,
+    ]),
+  ).toEqual(["none", "0"]);
+  await pond.click();
+  await expect(page.getByRole("button", { name: "Mặt ao sen" })).toBeVisible();
+  await context.close();
 });

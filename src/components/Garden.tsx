@@ -1,5 +1,10 @@
 import { cn } from "../styles";
-import { useState, useRef, type PointerEvent, type CSSProperties } from "react";
+import {
+  useState,
+  useRef,
+  type PointerEvent,
+  type CSSProperties,
+} from "react";
 import { Art } from "./Art";
 import {
   value,
@@ -10,24 +15,68 @@ import {
   type Plot,
   type Action,
 } from "../game/engine";
-import { cropArt, itemName, ripeStage } from "../data/crops";
-import { seeds } from "../data/content";
+import { cropArt, crops, itemName, ripeStage } from "../data/crops";
+import { pals } from "../data/pals";
+import { palWish } from "../game/lunch";
 import { interactions } from "../data/interactions";
+import { scenes, type SceneHotspot } from "../data/scenes";
+import { gardenVisitors } from "../game/visitors";
+import type { SurpriseEvent } from "../game/events";
 type Props = {
+  regionId?: string;
   world: World;
   act: (a: Action) => void;
-  say: (text: string, kind?: string) => void;
+  say: (text: string, kind?: string, spoken?: string) => void;
   open: (name: string) => void;
   highlight: boolean;
   showSteps: boolean;
+  surprise?: SurpriseEvent | null;
 };
-export function Garden({ world, act, say, open, highlight, showSteps }: Props) {
+const frogSpots = [
+  { x: 20, y: 74 },
+  { x: 39, y: 77 },
+  { x: 59, y: 80 },
+];
+const snailSpots = [
+  { x: 34, y: 84 },
+  { x: 63, y: 82 },
+  { x: 86, y: 85 },
+];
+export function Garden({
+  regionId = "garden",
+  world,
+  act,
+  say,
+  open,
+  highlight,
+  showSteps,
+  surprise,
+}: Props) {
+  const scene = scenes[regionId] ?? scenes.garden;
+  const night = value<string>(world, "scene.time", "day") === "night";
+  const regionCrops = crops.filter(
+    (c) =>
+      (c.region ?? "garden") === scene.id &&
+      (!c.requires || world.discoveries.includes(c.requires)),
+  );
+  const [selectedSeed, setSeed] = useState(
+    () => regionCrops[0]?.id ?? "sunflower",
+  );
+  const seed = regionCrops.some((c) => c.id === selectedSeed)
+    ? selectedSeed
+    : (regionCrops[0]?.id ?? "sunflower");
   const counts = useRef<Record<string, number>>({});
   const reactionTimer = useRef<ReturnType<typeof setTimeout> | undefined>(
     undefined,
   );
+  const windTimer = useRef<ReturnType<typeof setTimeout> | undefined>(
+    undefined,
+  );
   const [reaction, setReaction] = useState("");
-  const [seed, setSeed] = useState("sunflower");
+  const [wind, setWind] = useState(false);
+  const [frogSpot, setFrogSpot] = useState(0);
+  const [snailSpot, setSnailSpot] = useState(0);
+  const [fireflyPos, setFireflyPos] = useState({ x: 46, y: 38 });
   const [drag, setDrag] = useState<{
     kind: string;
     x: number;
@@ -37,6 +86,7 @@ export function Garden({ world, act, say, open, highlight, showSteps }: Props) {
   const start = useRef({ x: 0, y: 0 });
   const moved = useRef(false);
   const [revealed, reveal] = useState("");
+  const visitors = gardenVisitors(world, scene.id);
   const react = (id: string, text: string, discovery?: string) => {
     setReaction(id);
     clearTimeout(reactionTimer.current);
@@ -57,7 +107,15 @@ export function Garden({ world, act, say, open, highlight, showSteps }: Props) {
     e.currentTarget.setPointerCapture(e.pointerId);
     setDrag({ kind, x: e.clientX, y: e.clientY });
   };
-  const move = (e: PointerEvent) => {
+  const move = (e: PointerEvent<HTMLElement>) => {
+    if (night) {
+      const r = e.currentTarget.getBoundingClientRect();
+      if (r.width > 0 && r.height > 0)
+        setFireflyPos({
+          x: Math.max(12, Math.min(84, ((e.clientX - r.left) / r.width) * 100)),
+          y: Math.max(18, Math.min(72, ((e.clientY - r.top) / r.height) * 100)),
+        });
+    }
     if (
       active.current === e.pointerId &&
       Math.hypot(e.clientX - start.current.x, e.clientY - start.current.y) > 8
@@ -75,7 +133,11 @@ export function Garden({ world, act, say, open, highlight, showSteps }: Props) {
     if (target && drag) {
       const slot = Number(target.getAttribute("data-soil"));
       if (drag.kind === "cloud" || drag.kind === "sun") {
-        act({ type: drag.kind === "cloud" ? "water" : "sun", slot });
+        act({
+          type: drag.kind === "cloud" ? "water" : "sun",
+          slot,
+          region: scene.id,
+        });
         react(
           drag.kind,
           drag.kind === "cloud"
@@ -83,11 +145,37 @@ export function Garden({ world, act, say, open, highlight, showSteps }: Props) {
             : "Nắng ấm giúp cây nở hoa!",
         );
       } else {
-        act({ type: "plant", slot, kind: drag.kind });
+        act({ type: "plant", slot, kind: drag.kind, region: scene.id });
         react("soil", "Hạt đã nằm trong đất. Mình tưới nước nhé!");
       }
     }
     setDrag(null);
+  };
+  const triggerHotspot = (h: SceneHotspot) => {
+    if (h.kind === "tree") {
+      act({ type: "shake" });
+      react(h.id, h.line ?? "", h.discovery);
+    } else if (h.kind === "house") {
+      open("house");
+    } else if (h.kind === "pal" && h.palId) {
+      if (h.palId === "rabbit") act({ type: "discover", id: "rabbit" });
+      open(h.palId === "rabbit" ? "lunch" : `pal:${h.palId}`);
+    } else if (h.kind === "xylophone") {
+      open("xylophone");
+      react(h.id, h.line ?? "", h.discovery);
+    } else if (h.kind === "windmill") {
+      setWind(true);
+      clearTimeout(windTimer.current);
+      windTimer.current = setTimeout(() => setWind(false), 2200);
+      act({ type: "discover", id: "wind" });
+      react(h.id, h.line ?? "", h.discovery);
+    } else if (h.kind === "reveal" || h.kind === "flower") {
+      if (h.revealTarget) reveal(h.revealTarget);
+      if (h.id === "grass") act({ type: "discover", id: "worm" });
+      react(h.id, h.line ?? "", h.discovery);
+    } else {
+      react(h.id, h.line ?? "", h.discovery);
+    }
   };
   const object = (
     id: string,
@@ -98,11 +186,13 @@ export function Garden({ world, act, say, open, highlight, showSteps }: Props) {
     label: string,
     fn: () => void,
     extra?: CSSProperties,
+    badge?: string,
   ) => (
     <button
+      key={id}
       aria-label={label}
       className={cn(
-        `object ${reaction === id ? "react-" + id : ""} ${highlight && ["cloud", "rock", "rabbit"].includes(id) ? "hint-glow" : ""}`,
+        `object ${reaction === id ? "react-" + id : ""} ${highlight && ["cloud", "rock", "rabbit"].includes(id) ? "hint-glow" : ""} ${id === "windmill" && wind ? "spin-windmill" : ""}`,
       )}
       style={{
         left: x + "%",
@@ -117,13 +207,22 @@ export function Garden({ world, act, say, open, highlight, showSteps }: Props) {
         color={
           art === "house" ? value(world, "houseColor", "#efcf9d") : undefined
         }
+        night={night}
       />
+      {badge && (
+        <span className={cn("pal-bubble")} aria-hidden="true">
+          <Art id={badge} />
+        </span>
+      )}
     </button>
   );
   return (
     <section
       className={cn("garden")}
-      aria-label="Khu Vườn Kỳ Diệu"
+      data-time={night ? "night" : "day"}
+      data-variant={scene.variant}
+      data-wind={wind ? "true" : undefined}
+      aria-label={scene.title}
       onClickCapture={(e) => {
         if (moved.current) {
           e.preventDefault();
@@ -153,24 +252,71 @@ export function Garden({ world, act, say, open, highlight, showSteps }: Props) {
       <div className={cn("hill hill-back")} />
       <div className={cn("hill hill-front")} />
       <div className={cn("path")} />
-      <h1 className={cn("sr-only")}>Khu Vườn Kỳ Diệu</h1>
-      {world.discoveries.includes("rainbow") && (
-        <div className={cn("rainbow")}>
-          <Art id="rainbow" />
+      <h1 className={cn("sr-only")}>{scene.title}</h1>
+      {night && (
+        <>
+          <div className={cn("night-stars")} aria-hidden="true">
+            {[
+              [22, 18],
+              [37, 14],
+              [62, 16],
+              [44, 26],
+              [70, 24],
+            ].map(([sx, sy], i) => (
+              <span key={i} style={{ left: sx + "%", top: sy + "%" }}>
+                <Art id="star" />
+              </span>
+            ))}
+          </div>
+          <div
+            className={cn("firefly")}
+            style={{ left: fireflyPos.x + "%", top: fireflyPos.y + "%" }}
+            aria-hidden="true"
+          >
+            <Art id="fx-firefly" />
+          </div>
+        </>
+      )}
+      {(world.discoveries.includes("rainbow") ||
+        surprise?.kind === "rainbow") &&
+        !night && (
+          <div className={cn("rainbow")}>
+            <Art id="rainbow" />
+          </div>
+        )}
+      {surprise?.kind === "shooting_star" && (
+        <div className={cn("shooting-star")} aria-hidden="true">
+          <Art id="fx-shooting-star" />
         </div>
       )}
-      <button
-        aria-label="Mặt trời"
-        className={cn(`object sun ${reaction === "sun" ? "react-sun" : ""}`)}
-        style={{ left: "74%", top: "6%", width: "calc(10 * var(--u))" }}
-        onPointerDown={(e) => down(e, "sun")}
-        onClick={() => {
-          [0, 1, 2].forEach((slot) => act({ type: "sun", slot }));
-          react("sun", "Nắng vàng ghé thăm khu vườn!");
-        }}
-      >
-        <Art id="sun" />
-      </button>
+      {surprise?.kind === "butterflies" && (
+        <div className={cn("butterfly-flock")} aria-hidden="true">
+          <Art id="butterfly" />
+          <Art id="butterfly" />
+        </div>
+      )}
+      {!night ? (
+        <button
+          aria-label="Mặt trời"
+          className={cn(`object sun ${reaction === "sun" ? "react-sun" : ""}`)}
+          style={{ left: "74%", top: "6%", width: "calc(10 * var(--u))" }}
+          onPointerDown={(e) => down(e, "sun")}
+          onClick={() => {
+            [0, 1, 2].forEach((slot) =>
+              act({ type: "sun", slot, region: scene.id }),
+            );
+            react("sun", "Nắng vàng ghé thăm khu vườn!");
+          }}
+        >
+          <Art id="sun" />
+        </button>
+      ) : (
+        object("moon", "fx-moon", 74, 6, 9, "Mặt trăng", () => {
+          act({ type: "discover", id: "moon" });
+          act({ type: "discover", id: "stars" });
+          react("moon", "Trăng tròn sáng dịu trên bầu trời đêm!", "moon");
+        })
+      )}
       <button
         aria-label="Mây tưới nước"
         className={cn(
@@ -179,96 +325,107 @@ export function Garden({ world, act, say, open, highlight, showSteps }: Props) {
         style={{ left: "50%", top: "10%", width: "calc(15 * var(--u))" }}
         onPointerDown={(e) => down(e, "cloud")}
         onClick={() => {
-          [0, 1, 2].forEach((slot) => act({ type: "water", slot }));
+          [0, 1, 2].forEach((slot) =>
+            act({ type: "water", slot, region: scene.id }),
+          );
           react("cloud", "Mưa tí tách! Con cũng có thể kéo mây tới cây.");
         }}
       >
         <Art id="cloud" />
       </button>
-      {object("tree", "tree", 3, 22, 25, "Cây táo", () => {
-        act({ type: "shake" });
-        react("tree", "Lá xào xạc… một quả táo rơi vào giỏ rồi!", "apple");
-      })}
+      {scene.hotspots
+        .filter((h) => {
+          if (h.requires && !world.discoveries.includes(h.requires))
+            return false;
+          if (h.dayOnly && night) return false;
+          if (h.nightOnly && !night) return false;
+          if (h.kind === "revealed") {
+            const unlockedByDiscovery =
+              h.revealedWhen === "butterfly" &&
+              world.discoveries.includes("butterfly");
+            if (revealed !== h.revealedWhen && !unlockedByDiscovery)
+              return false;
+          }
+          return true;
+        })
+        .map((h) => {
+          const pal =
+            h.kind === "pal" && h.palId === "puppy"
+              ? pals.find((p) => p.id === "puppy")
+              : undefined;
+          return object(
+            h.id,
+            h.art,
+            h.x,
+            h.y,
+            h.w,
+            h.label,
+            () => triggerHotspot(h),
+            h.shadow ? { filter: "drop-shadow(0 12px 0 #597a3814)" } : undefined,
+            pal ? cropArt(palWish(world, pal)) : undefined,
+          );
+        })}
       {reaction === "tree" && (
         <div className={cn("fallen-apple")}>
           <Art id="apple" />
         </div>
       )}
-      {object("bird", "bird", 17, 29, 6, "Chim trên cành", () =>
-        react("bird", "Chíp chíp! Bạn chim chào con!", "bird"),
+      {scene.hasHouse && (
+        <div
+          className={cn("garden-decorations")}
+          aria-label="Đồ trang trí đã đặt"
+        >
+          {value<{ id: string; x: number; y: number }[]>(
+            world,
+            "decorations",
+            [],
+          ).map((d, i) => (
+            <span key={i} style={{ left: d.x + "%", top: d.y + "%" }}>
+              <Art id={d.id} night={night} />
+            </span>
+          ))}
+        </div>
       )}
-      {object(
-        "house",
-        "house",
-        66,
-        37,
-        22,
-        "Ngôi Nhà Sắc Màu",
-        () => open("house"),
-        { filter: "drop-shadow(0 12px 0 #597a3814)" },
+      {scene.hasCritters && (
+        <>
+          {object(
+            "critter-frog",
+            "frog",
+            frogSpots[frogSpot].x,
+            frogSpots[frogSpot].y,
+            5.5,
+            "Ếch nhỏ",
+            () => {
+              setFrogSpot((i) => (i + 1) % frogSpots.length);
+              react("frog", "Ộp ộp! Bạn ếch nhảy sang chỗ mới!", "frog");
+            },
+          )}
+          {object(
+            "critter-snail",
+            "snail",
+            snailSpots[snailSpot].x,
+            snailSpots[snailSpot].y,
+            5,
+            "Ốc sên",
+            () => {
+              setSnailSpot((i) => (i + 1) % snailSpots.length);
+              react("snail", "Ốc sên bò thật chậm rãi!", "snail");
+            },
+          )}
+        </>
       )}
-      <div
-        className={cn("garden-decorations")}
-        aria-label="Đồ trang trí đã đặt"
-      >
-        {value<{ id: string; x: number; y: number }[]>(
-          world,
-          "decorations",
-          [],
-        ).map((d, i) => (
-          <span key={i} style={{ left: d.x + "%", top: d.y + "%" }}>
-            <Art id={d.id} />
-          </span>
-        ))}
-      </div>
-      <div
-        className={cn("house-tint")}
-        style={{ background: value(world, "houseColor", "#efcf9d") }}
-      />
-      {object("pond", "pond", 3, 50, 26, "Ao nước", () => {
-        reveal("fish");
-        react("pond", "Tõm! Cá nhỏ bơi dưới làn nước.", "fish");
-      })}
-      {revealed === "fish" &&
-        object("fish", "fish", 12, 75, 7, "Cá nhỏ", () =>
-          react("fish", "Cá quẫy đuôi chào con!", "fish"),
-        )}
-      {object("rock", "rock", 33, 62, 9, "Đá có bọ rùa", () => {
-        reveal("bug");
-        react("rock", "Kìa, bọ rùa đang trốn dưới đá!", "ladybug");
-      })}
-      {revealed === "bug" &&
-        object("bug", "bug", 38, 69, 5, "Bọ rùa", () =>
-          react("bug", "Chấm tròn trên áo bạn bọ rùa!"),
-        )}
-      {object("grass", "grass", 27, 74, 10, "Bụi cỏ có tiếng dế", () => {
-        reveal("worm");
-        react("grass", "Rích rích! Dế và sâu đang ở trong cỏ.", "grass");
-        act({ type: "discover", id: "worm" });
-      })}
-      {revealed === "worm" &&
-        object("worm", "worm", 32, 82, 6, "Sâu nhỏ", () =>
-          react("worm", "Bạn sâu uốn mình thật chậm."),
-        )}
-      {object("rabbit", "rabbit", 76, 66, 10, "Bữa Trưa Của Thỏ", () => {
-        act({ type: "discover", id: "rabbit" });
-        open("lunch");
-      })}
-      {object("flower", "flower", 90, 72, 7, "Hoa bên nhà", () => {
-        react("flower", "Hoa rung rinh gọi bướm đến chơi!");
-        reveal("butterfly");
-      })}
-      {(revealed === "butterfly" || world.discoveries.includes("butterfly")) &&
-        object("butterfly", "butterfly", 82, 32, 7, "Bướm", () =>
-          react(
-            "butterfly",
-            "Bướm thích những bông hoa con trồng!",
-            "butterfly",
-          ),
-        )}
+      {visitors.map((v) =>
+        object(v.id, v.art, v.x, v.y, 5.5, v.label, () =>
+          react(v.art, `${v.label}!`),
+        ),
+      )}
       <div className={cn("plots")} aria-label="Hạt Giống Bí Ẩn">
         {Array.from({ length: plotCount(world) }, (_, slot) => {
-          const p = value<Plot | undefined>(world, plotKey(slot), undefined);
+          const p = value<Plot | undefined>(
+            world,
+            plotKey(slot, scene.id),
+            undefined,
+          );
           const growing = p && p.stage > 0 ? p : undefined;
           const art = cropArt(growing?.kind ?? "");
           return (
@@ -279,10 +436,10 @@ export function Garden({ world, act, say, open, highlight, showSteps }: Props) {
               className={cn(`soil ${reaction === "soil" ? "react-soil" : ""}`)}
               onClick={() => {
                 if (!growing) {
-                  act({ type: "plant", slot, kind: seed });
+                  act({ type: "plant", slot, kind: seed, region: scene.id });
                   say("Hạt xuống đất rồi. Con đưa mây tới đây nhé!");
                 } else if (growing.stage === ripeStage) {
-                  act({ type: "harvest", slot });
+                  act({ type: "harvest", slot, region: scene.id });
                   say("Hái được rồi! Con bỏ vào giỏ nhé.", "flower");
                 } else
                   say(
@@ -324,7 +481,7 @@ export function Garden({ world, act, say, open, highlight, showSteps }: Props) {
       <div className={cn("seed-tray")}>
         <span>Gieo một điều bất ngờ</span>
         <div>
-          {seeds.map((s) => (
+          {regionCrops.map((s) => (
             <button
               key={s.id}
               aria-label={`Hạt ${s.name}`}
@@ -344,8 +501,11 @@ export function Garden({ world, act, say, open, highlight, showSteps }: Props) {
           ))}
         </div>
       </div>
-      <span className={cn("garden-sign sign-pond")}>Ao thì thầm</span>
-      <span className={cn("garden-sign sign-house")}>Nhà của mình</span>
+      {scene.signs.map((s) => (
+        <span key={s.text} className={cn(`garden-sign ${s.className}`)}>
+          {s.text}
+        </span>
+      ))}
       {drag && (
         <div className={cn("drag-ghost")} style={{ left: drag.x, top: drag.y }}>
           <Art id={cropArt(drag.kind)} />

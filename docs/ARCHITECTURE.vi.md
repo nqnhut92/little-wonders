@@ -8,12 +8,13 @@ React, TypeScript strict, Vite và CSS Modules render DOM/SVG. Không cần Phas
 
 Garden/Activities → Action có kiểu → apply → World → localStorage tức thì → debounce 1,5 giây → API serverless có xác thực → PostgreSQL merge_world nguyên tử.
 
-- `src/game/engine.ts`: điều kiện cây, khám phá và merge field; độc lập renderer.
-- `src/game/lunch.ts`: bốn biến thể bữa ăn và luật nhận món/đếm.
-- `src/game/hints.ts`: gợi ý theo trạng thái cây/khám phá hiện tại.
-- `src/data`: danh mục khám phá, lời thoại và điều kiện tương tác.
-- `src/components`: SVG, khu vườn, nhà, bữa ăn và sổ tay.
-- `src/services`: lưu, retry, âm thanh. `App.tsx` điều phối hồ sơ và navigation.
+- `src/game/engine.ts`: điều kiện cây, tặng quà, khám phá và merge field; độc lập renderer.
+- `src/game/lunch.ts`: trạng thái Lời mời của bạn thú và hàm thay tên dễ đọc cho Bông và Lucky.
+- `src/game/hints.ts`: gợi ý theo trạng thái cây, giỏ, bạn thú và khám phá hiện tại.
+- `src/game/visitors.ts` và `src/game/events.ts`: bộ chọn thuần cho khách thăm vườn và sự kiện bất ngờ nhận RNG tiêm từ ngoài.
+- `src/data`: danh mục khám phá, cây trồng, bạn thú, công thức, khu vực, cảnh theo dữ liệu (`scenes.ts`) và quy tắc tương tác.
+- `src/components`: SVG (`Art.tsx`), trình dựng cảnh theo dữ liệu (`Garden.tsx`), bản đồ thung lũng (`ValleyMap.tsx`), bếp, bạn thú, nhà, đàn gỗ và sổ tay.
+- `src/services`: lưu, retry, âm thanh/giới hạn đa âm (`little-wonders-audio` lưu theo trình duyệt, mặc định tắt). `App.tsx` điều phối hồ sơ và navigation.
 - `src/styles`: token thiết kế (`tokens.css`) và bản sao cục bộ của các khối focus và thanh cuộn dùng chung. `src/ui`: bộ điều khiển theme và vùng cuộn, không phụ thuộc framework. `src/components/Icons.tsx`: icon giao diện.
 - `api/index.ts`, `api/_lib/security.ts`: OAuth, session ký, ownership và CSRF.
 
@@ -37,11 +38,11 @@ Một luống là field `plot.<khu>.<số>` với `{kind, stage, water, sun, rou
 
 ## Bếp
 
-Công thức là dữ liệu trong `src/data/recipes.ts` (danh sách nguyên liệu đã sắp xếp). `cook` nhận một đến ba món đều có trong giỏ, dùng hết chúng và thêm món ăn (`dish_*`, tối đa 9) vào giỏ và sổ khám phá; tổ hợp không khớp công thức ra `dish_mystery`. Yêu cầu không hợp lệ (nồi trống, món không có, dùng món đã nấu làm nguyên liệu, chồng món đầy) không làm gì. Món ăn là một loại đồ trong giỏ, vẽ bằng bát placeholder `dish-*`.
+Công thức là dữ liệu trong `src/data/recipes.ts` (12 công thức danh sách nguyên liệu đã sắp xếp cùng `dish_mystery`). `cook` nhận một đến ba món đều có trong giỏ, dùng hết chúng và thêm món ăn (`dish_*`, tối đa 9) vào giỏ và sổ khám phá; tổ hợp không khớp công thức ra `dish_mystery`. Yêu cầu không hợp lệ (nồi trống, món không có, dùng món đã nấu làm nguyên liệu, chồng món đầy) không làm gì. Món ăn là một loại đồ trong giỏ, vẽ bằng bát placeholder `dish-*`.
 
-## Khu vực và biến thể hiếm
+## Khu vực, bạn thú và cảnh theo dữ liệu
 
-Khu là các dòng trong `src/data/regions.ts` (`ready`, `after`, `counted`, ngưỡng 0,7). `regionsToOpen` trong `src/game/regions.ts` là hàm thuần: một khu đã sẵn sàng mở khi khu trước đã mở và đủ khám phá có tính điểm, và `apply` ghi `region_<id>_open` như một khám phá thường, nên trạng thái được suy ra, merge theo union và không bao giờ khóa lại. Khám phá may rủi (`rare_*`, `shooting_star`) không tính vào mẫu số. `apply` nhận hàm ngẫu nhiên được tiêm vào; hái cà rốt, bí ngô hoặc dâu ghi khám phá hiếm với xác suất 1/8. Bảng bản đồ tạm dùng ký hiệu chữ cho đến khi có tranh bản đồ.
+Khu là các dòng trong `src/data/regions.ts` (`ready`, `after`, `counted`, ngưỡng 0,7). `garden` và `pond` (Ao sen) đã sẵn sàng; bố cục, cây và điểm chạm nằm trong `src/data/scenes.ts` nên thêm khu mới chỉ cần dữ liệu và tranh. `regionsToOpen` trong `src/game/regions.ts` là hàm thuần: một khu đã sẵn sàng mở khi khu trước đã mở và đủ khám phá có tính điểm, và `apply` ghi `region_<id>_open` như một khám phá thường, nên trạng thái được suy ra, merge theo union và không bao giờ khóa lại. Khám phá may rủi (`rare_*`, `shooting_star`) không tính vào mẫu số. `apply` nhận hàm ngẫu nhiên được tiêm vào; hái cà rốt, bí ngô hoặc dâu ghi khám phá hiếm với xác suất 1/8. `ValleyMap.tsx` là màn hình chính khi vào game và chạy hoạt ảnh sương tan tôn trọng reduced-motion khi mở khu mới. Bạn thú (`src/data/pals.ts`) dùng bộ đếm đơn điệu `n.gift_<id>` và `n.wish_<id>` để mở chương truyện và xoay Lời mời không hết hạn; Ngày/Đêm đồng bộ qua `scene.time`.
 
 ## Ngôn ngữ thiết kế giao diện
 

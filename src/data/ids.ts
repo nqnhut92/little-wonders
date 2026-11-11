@@ -7,7 +7,7 @@ export const discoveryIdPattern = /^[a-z0-9_]{1,32}$/;
 export const maxDiscoveries = 200;
 export const maxFields = 200;
 export const maxBodyBytes = 64000;
-export const maxDecorations = 20;
+export const maxDecorations = 30;
 // Every crop the schema accepts; src/data/crops.ts decides which ones the game offers.
 export const cropKinds = [
   "sunflower",
@@ -17,7 +17,10 @@ export const cropKinds = [
   "pumpkin",
   "corn",
   "watermelon",
+  "lotus",
+  "waterlily",
 ] as const;
+export const sceneTimes = ["day", "night"] as const;
 export const plantKinds = cropKinds;
 // Things a basket can hold: every crop plus apples shaken from the tree.
 export const dishKinds = [
@@ -26,13 +29,26 @@ export const dishKinds = [
   "dish_salad",
   "dish_pie",
   "dish_juice",
+  "dish_corncake",
+  "dish_applesauce",
+  "dish_pumpkinsoup",
+  "dish_cornsoup",
+  "dish_fruitbowl",
+  "dish_tea",
+  "dish_smoothie",
   "dish_mystery",
 ] as const;
 export const basketKinds = [...cropKinds, "apple", ...dishKinds] as const;
 export const maxBasket = 9;
 export const maxPlots = 6;
 export const plotKeyPattern = /^plot\.[a-z0-9_]{1,16}\.[0-9]{1,2}$/;
-export const decorationIds = ["flower", "butterfly", "star"] as const;
+export const decorationIds = [
+  "flower",
+  "butterfly",
+  "star",
+  "decor-sunflower",
+  "decor-pumpkin-lamp",
+] as const;
 export const houseColors = [
   "#efcf9d",
   "#d7a6b5",
