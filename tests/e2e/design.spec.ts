@@ -311,7 +311,10 @@ test("focus ring, forced colors and child-sized dialog controls", async ({
   page,
 }) => {
   await page.goto("/");
-  await page.keyboard.press("Tab");
+  // WebKit on macOS does not Tab onto buttons by default, so focus one after a key press:
+  // that is a keyboard interaction in every engine and shows :focus-visible.
+  await page.keyboard.press("Shift");
+  await page.getByRole("button", { name: "Sổ khám phá", exact: true }).focus();
   const ring = await page.evaluate(() => {
     const s = getComputedStyle(document.activeElement!);
     return [s.outlineStyle, s.outlineWidth, document.activeElement!.tagName];
