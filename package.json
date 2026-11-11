@@ -11,7 +11,8 @@
     "test": "vitest run",
     "test:e2e": "playwright test",
     "docs:check": "node scripts/docs-sync.mjs",
-    "docs:sync": "node scripts/docs-sync.mjs --update --reviewed"
+    "docs:sync": "node scripts/docs-sync.mjs --update --reviewed",
+    "db:migrate": "node scripts/migrate.mjs"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.0.2",
@@ -30,6 +31,7 @@
     "@types/react-dom": "^19.2.0",
     "@vitejs/plugin-react": "^5.1.0",
     "eslint": "^9.39.0",
+    "pg": "^8.23.1",
     "prettier": "^3.9.10",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.46.0",

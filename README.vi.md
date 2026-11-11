@@ -36,7 +36,7 @@ Dùng `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium` cho Chromium hệ 
 
 ## Deploy
 
-1. Tạo Neon free tier và chạy `migrations/001_initial.sql` trong SQL editor.
+1. Tạo Neon free tier, đặt `DATABASE_URL` trong `.env.local`, chạy `npm run db:migrate` (hoặc chạy `migrations/001_initial.sql` trong SQL editor).
 2. Cấu hình Google OAuth web client với `openid` và callback chính xác `https://YOUR_HOST/api/auth/callback`.
 3. Import Vercel dùng `vercel.json`: `npm ci`, `npm run build`, output `dist`.
 4. Đặt biến server-only `DATABASE_URL`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `SESSION_SECRET` (32+ ký tự ngẫu nhiên), `APP_URL` (origin HTTPS chính xác, không / cuối).

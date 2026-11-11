@@ -30,3 +30,15 @@ Before release: authenticate, create a nickname, plant and decorate; sign in on 
 Add a new version for future migrations and back up before destructive changes. New service workers activate after old tabs close. API responses are never cached. Sessions last 30 days; accounts and progress have no TTL. Rate buckets expire and are cleaned during requests; no cron/server is required.
 
 Logout clears the cookie while local gardens remain playable. Use trusted devices. Self-service account deletion/export is not implemented; an administrator can delete a parent in Neon and cascade its profiles. Add a parent-facing procedure before broad public release.
+
+## Automated migrations
+
+After `npm ci`, put the Neon connection string in server-only `DATABASE_URL` or a local ignored `.env.local`, then run:
+
+```sh
+npm run db:migrate
+```
+
+The runner verifies TLS certificates, acquires a transaction-scoped advisory lock compatible with Neon pooling, applies numbered files in order, and records checksums in `schema_migrations`. Re-running skips applied versions; changed applied files are rejected. A failed file and its version record roll back together. Previously applied SQL Editor migrations are adopted without replaying them. Add a new numbered SQL file for subsequent changes; never edit applied history.
+
+Run migrations once from a trusted development machine or a controlled release step before serving a new schema. Do not run them from browsers or every serverless request. No live Neon migration has been executed here because DATABASE_URL is absent.

@@ -36,7 +36,7 @@ Use `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium` for a system Chromiu
 
 ## Deploy
 
-1. Create free-tier Neon and run `migrations/001_initial.sql` in its SQL editor.
+1. Create free-tier Neon, set `DATABASE_URL` in `.env.local`, and run `npm run db:migrate` (or execute `migrations/001_initial.sql` in its SQL editor).
 2. Configure a Google OAuth web client with `openid` and the exact callback `https://YOUR_HOST/api/auth/callback`.
 3. Import into Vercel using `vercel.json`: `npm ci`, `npm run build`, output `dist`.
 4. Set server-only `DATABASE_URL`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `SESSION_SECRET` (32+ random characters) and `APP_URL` (exact HTTPS origin, no trailing slash).
