@@ -33,6 +33,7 @@ export default function App() {
   const [signed, setSigned] = useState(false);
   const [attempts, setAttempts] = useState(0);
   const syncing = useRef(false);
+  const selectionRequest = useRef(0);
   const hintIndex = useRef(0);
   const say = (s: string, k = "flower") => {
     setMessage(s);
@@ -80,6 +81,10 @@ export default function App() {
       });
       setStatus("Đã cất vào khu vườn của con");
     } catch (e) {
+      if (e instanceof Error && e.message === "AUTH") {
+        setSigned(false);
+        setProfiles([]);
+      }
       setStatus(
         e instanceof Error && e.message === "AUTH"
           ? "Đã cất trên máy · Cần người lớn đăng nhập lại"
@@ -116,6 +121,11 @@ export default function App() {
   const account = async () => {
     try {
       const r = await fetch("/api/profiles");
+      if (r.status === 401) {
+        setSigned(false);
+        setProfiles([]);
+        return;
+      }
       if (r.ok) {
         const data = await r.json();
         setProfiles(data.profiles);
@@ -135,11 +145,13 @@ export default function App() {
     }
   }, []);
   const choose = async (id: string, name: string) => {
-    const old = current.current;
+    const request = ++selectionRequest.current;
     try {
       const r = await fetch(`/api/progress?profile=${encodeURIComponent(id)}`);
       if (!r.ok) throw Error();
       const { world } = await r.json();
+      if (request !== selectionRequest.current) return;
+      const old = current.current;
       const cached = cachedProfile(id);
       const previous =
         old.profile === id || !old.profile ? old.world : cached?.world;
@@ -266,7 +278,10 @@ export default function App() {
             <button
               className={cn("close")}
               aria-label="Trở về vườn"
-              onClick={() => setPanel("")}
+              onClick={() => {
+                selectionRequest.current++;
+                setPanel("");
+              }}
             >
               ×
             </button>
@@ -282,7 +297,14 @@ export default function App() {
                 <Art id="cloud" />
                 <h2>Khu vườn đợi con nhé!</h2>
                 <p>Mình duỗi tay, uống nước và nhìn ra xa một chút.</p>
-                <button onClick={() => setPanel("")}>Về khu vườn</button>
+                <button
+                  onClick={() => {
+                    selectionRequest.current++;
+                    setPanel("");
+                  }}
+                >
+                  Về khu vườn
+                </button>
               </div>
             )}
             {panel === "account" && (
@@ -359,7 +381,12 @@ export default function App() {
                         </button>
                       </>
                     )}
-                    <button onClick={() => setPanel("")}>
+                    <button
+                      onClick={() => {
+                        selectionRequest.current++;
+                        setPanel("");
+                      }}
+                    >
                       Về chơi trong vườn
                     </button>
                   </>

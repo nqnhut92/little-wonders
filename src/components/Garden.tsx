@@ -25,6 +25,8 @@ export function Garden({ world, act, say, open, highlight, showSteps }: Props) {
     y: number;
   } | null>(null);
   const active = useRef<number | null>(null);
+  const start = useRef({ x: 0, y: 0 });
+  const moved = useRef(false);
   const [revealed, reveal] = useState("");
   const react = (id: string, text: string, discovery?: string) => {
     setReaction(id);
@@ -41,10 +43,17 @@ export function Garden({ world, act, say, open, highlight, showSteps }: Props) {
     if (active.current !== null) return;
     e.preventDefault();
     active.current = e.pointerId;
+    start.current = { x: e.clientX, y: e.clientY };
+    moved.current = false;
     e.currentTarget.setPointerCapture(e.pointerId);
     setDrag({ kind, x: e.clientX, y: e.clientY });
   };
   const move = (e: PointerEvent) => {
+    if (
+      active.current === e.pointerId &&
+      Math.hypot(e.clientX - start.current.x, e.clientY - start.current.y) > 8
+    )
+      moved.current = true;
     if (active.current === e.pointerId)
       setDrag((d) => (d ? { ...d, x: e.clientX, y: e.clientY } : null));
   };
@@ -101,6 +110,13 @@ export function Garden({ world, act, say, open, highlight, showSteps }: Props) {
     <section
       className={cn("garden")}
       aria-label="Khu Vườn Kỳ Diệu"
+      onClickCapture={(e) => {
+        if (moved.current) {
+          e.preventDefault();
+          e.stopPropagation();
+          moved.current = false;
+        }
+      }}
       onPointerMove={move}
       onPointerUp={up}
       onPointerCancel={() => {
