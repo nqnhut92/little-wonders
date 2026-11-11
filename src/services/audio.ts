@@ -100,6 +100,6 @@ export function speak(text: string, on: boolean) {
   const u = new SpeechSynthesisUtterance(text);
   u.voice = voice;
   u.lang = voice.lang;
-  u.rate = 1;
+  u.rate = 1.1;
   speechSynthesis.speak(u);
 }

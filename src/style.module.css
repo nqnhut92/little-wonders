@@ -1074,7 +1074,9 @@ main {
   margin: 0;
   padding: 6px 20px;
   border-radius: 999px;
-  background: var(--glass);
+  background: var(--panel);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  backdrop-filter: blur(18px) saturate(160%);
   border: 1px solid var(--glass-border);
   box-shadow: var(--glass-shadow);
   font-size: 24px;
@@ -1089,12 +1091,15 @@ main {
   gap: 4px;
   min-width: 104px;
   min-height: 92px;
-  padding: 8px 10px;
+  padding: 8px 12px;
   border-radius: var(--radius-m);
   font-weight: 800;
-  background: var(--glass);
-  border: 1px solid var(--glass-border);
-  box-shadow: var(--glass-shadow);
+  color: var(--text);
+  background: var(--panel);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  backdrop-filter: blur(18px) saturate(160%);
+  border: 1.5px solid var(--glass-border);
+  box-shadow: var(--control-shadow), var(--shadow-soft);
 }
 .map-node {
   position: absolute;
@@ -1105,6 +1110,12 @@ main {
   font-size: 14px;
   line-height: 1.2;
   white-space: nowrap;
+  color: var(--text);
+}
+.map-region small {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
 }
 .map-icon {
   position: relative;
@@ -1156,11 +1167,17 @@ main {
   }
 }
 .map-region[data-state="locked"] {
-  opacity: 0.7;
+  background: var(--surface-2);
+}
+.map-region[data-state="locked"] .map-icon {
+  opacity: 0.72;
   filter: saturate(0.45);
 }
 .map-region[data-state="soon"] {
-  opacity: 0.45;
+  background: var(--surface-2);
+}
+.map-region[data-state="soon"] .map-icon {
+  opacity: 0.55;
   filter: grayscale(0.8);
 }
 .map-art {
