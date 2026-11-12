@@ -205,12 +205,6 @@ main {
   padding: 0;
   align-self: end;
 }
-.soil:after {
-  content: "";
-  position: absolute;
-  border-top: 2px dashed var(--scene-soil-row);
-  inset: 40% 12%;
-}
 .soil-mark {
   color: var(--scene-soil-mark);
   font-size: 30px;

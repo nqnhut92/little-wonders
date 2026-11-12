@@ -130,10 +130,10 @@ export const flatArt: Record<string, Draw> = {
       {/* Signature purple bow at the neck */}
       <g
         className="puppy-bow"
-        transform="translate(60 76) scale(0.76) translate(-60 -76)"
+        transform="translate(60 74.5) scale(0.46) translate(-60 -76)"
       >
         <path
-          d="M36 72q24 8 48 0l-2 5q-22 8-44 0Z"
+          d="M28 72q32 9 64 0l-2 5q-30 9-60 0Z"
           fill="#8556c4"
         />
         <path
@@ -172,9 +172,13 @@ export const flatArt: Record<string, Draw> = {
       <circle cx="78" cy="92" r="2.8" fill="#fae8d0" opacity="0.7" />
       <circle cx="38" cy="100" r="2.2" fill="#fae8d0" opacity="0.7" />
       <circle cx="82" cy="100" r="2.2" fill="#fae8d0" opacity="0.7" />
-      {/* Cozy mint scarf */}
-      <path d="M38 73q22 12 44 0l2 8q-24 11-48 0Z" fill="#42b888" />
-      <path d="M68 78l7 17-10-2-3-15Z" fill="#329c70" />
+      {/* Festive red collar with golden sleigh bell */}
+      <path d="M39 73q21 10 42 0l1.5 6.5q-22.5 10-45 0Z" fill="#e64543" />
+      <path d="M40 76.5q20 9 40 0" stroke="#c92e2c" strokeWidth="1.8" fill="none" strokeLinecap="round" />
+      <circle cx="60" cy="82" r="5" fill="#ffd03b" stroke="#d49b1a" strokeWidth="1.2" />
+      <circle cx="58.5" cy="80.5" r="1.4" fill="#fff8c4" />
+      <circle cx="60" cy="83.2" r="1.2" fill="#8a5632" />
+      <path d="M60 83.2v2.8" stroke="#8a5632" strokeWidth="1.2" strokeLinecap="round" />
       {/* Cute cloven hooves */}
       <rect x="36" y="104" width="16" height="9" rx="4.5" fill="#633b20" />
       <rect x="68" y="104" width="16" height="9" rx="4.5" fill="#633b20" />

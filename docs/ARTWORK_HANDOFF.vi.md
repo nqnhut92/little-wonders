@@ -102,7 +102,7 @@ Giao diện theo chế độ Sáng, Tối và Theo hệ thống; tranh thì khô
 
 ## Nhất quán nhân vật
 
-Cún Lucky: nhỏ, tròn trịa, lông trắng kem, đầu tròn, tai cụp màu nâu nhạt, mắt chấm có đốm sáng, mũi nhỏ sẫm, lưỡi hồng và má hồng, nơ tím nhỏ ở cổ, đuôi ngắn cong; kiểu hoạt hình bo tròn, không phải chó thật. Tuần Lộc nhỏ: nâu ấm, bụng và mõm màu kem, hai sừng nhỏ, mũi nâu đỏ và má hồng. Không đổi quần áo giữa pose. Giữ tỉ lệ đầu/tai theo SVG tham chiếu. Chim: thân bầu xanh xám, mỏ vàng hướng phải, chân ngắn. Bướm: cánh trên hồng, dưới vàng, thân rêu mảnh, hai râu. Bọ rùa: áo đất đỏ chấm rêu; sâu xanh nhạt; cá vàng cam hướng phải. Mây/nắng mắt chấm và cười nhẹ. Duyệt reference sheet trước; dùng lại reference/seed nếu model hỗ trợ.
+Cún Lucky: nhỏ, tròn trịa, lông trắng kem, đầu tròn, tai cụp màu nâu nhạt, mắt chấm có đốm sáng, mũi nhỏ sẫm, lưỡi hồng và má hồng, nơ tím nhỏ ở cổ, đuôi ngắn cong; kiểu hoạt hình bo tròn, không phải chó thật. Tuần Lộc nhỏ: nâu ấm, bụng và mõm màu kem, hai sừng nhỏ, mũi đỏ, má hồng và đeo vòng cổ đỏ kèm chuông vàng. Không đổi quần áo giữa pose. Giữ tỉ lệ đầu/tai theo SVG tham chiếu. Chim: thân bầu xanh xám, mỏ vàng hướng phải, chân ngắn. Bướm: cánh trên hồng, dưới vàng, thân rêu mảnh, hai râu. Bọ rùa: áo đất đỏ chấm rêu; sâu xanh nhạt; cá vàng cam hướng phải. Mây/nắng mắt chấm và cười nhẹ. Duyệt reference sheet trước; dùng lại reference/seed nếu model hỗ trợ.
 
 ## Animation và lớp
 
