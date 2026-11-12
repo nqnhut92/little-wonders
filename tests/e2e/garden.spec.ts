@@ -370,6 +370,15 @@ test("map is the home screen, shows locked regions in order and keeps them close
   page,
 }) => {
   await page.goto("/");
+  await expect(page.locator(".hud-guide p")).toContainText(
+    "Chào con đến Thung lũng nhỏ!",
+  );
+  await expect(
+    page.getByRole("button", { name: "Nghỉ một chút" }),
+  ).toHaveCount(0);
+  await expect(
+    page.getByRole("button", { name: "Quay lại bản đồ" }),
+  ).toHaveCount(0);
   await expect(
     page.getByRole("button", { name: "Vườn nhà", exact: true }),
   ).toBeVisible();
@@ -386,7 +395,7 @@ test("map is the home screen, shows locked regions in order and keeps them close
   await expect(page.locator(".valley-map")).toBeVisible();
   await activate(page, "Vườn nhà");
   await expect(page.locator(".garden")).toBeVisible();
-  await activate(page, "Bản đồ thung lũng");
+  await activate(page, "Quay lại bản đồ");
   await expect(page.locator(".valley-map")).toBeVisible();
 });
 
@@ -546,7 +555,7 @@ test("fog clears on the map when a region opens, including under reduced motion"
   await page.reload();
   await activate(page, "Vườn nhà");
   await activate(page, "Chim trên cành");
-  await activate(page, "Bản đồ thung lũng");
+  await activate(page, "Quay lại bản đồ");
   const pond = page.getByRole("button", { name: "Ao sen", exact: true });
   await expect(pond).toHaveAttribute("data-state", "open");
   await expect(pond).toHaveAttribute("data-clearing", "true");
@@ -568,7 +577,7 @@ test("fog clears on the map when a region opens, including under reduced motion"
     page.getByRole("button", { name: "Đọc chuyện 1 của Capybara" }),
   ).toBeEnabled();
   await activate(page, "Trở về vườn");
-  await activate(page, "Bản đồ thung lũng");
+  await activate(page, "Quay lại bản đồ");
   await activate(page, "Vườn nhà");
   await expect(
     page.getByRole("button", { name: "Bạn Capybara" }),
@@ -615,7 +624,7 @@ test("later regions: beach gathering, building a sandcastle and the starry mount
   await expect(page.getByText("Lâu đài cát", { exact: true })).toBeVisible();
   await expect(page.getByText("Trái dừa rơi", { exact: true })).toBeVisible();
   await activate(page, "Trở về vườn");
-  await activate(page, "Bản đồ thung lũng");
+  await activate(page, "Quay lại bản đồ");
   await activate(page, "Núi sao");
   await expect(page.locator(".garden")).toHaveAttribute(
     "data-variant",

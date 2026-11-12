@@ -14,16 +14,7 @@ import { Kitchen } from "./components/Kitchen";
 import { PaintFilters } from "./components/PaintFilters";
 import { Icon, GoogleMark } from "./components/Icons";
 import { regionOpenId, regions } from "./data/regions";
-import {
-  ThemeToggle,
-  themeColors,
-  themeStorageKey,
-} from "./components/ThemeToggle";
-import {
-  createThemeController,
-  type ThemeController,
-  type ThemePreference,
-} from "./ui/theme-controller.js";
+import { regionState } from "./game/regions";
 import { createScrollRegions } from "./ui/scroll-regions.js";
 import {
   apply,
@@ -31,6 +22,7 @@ import {
   assistance,
   value,
   type Action,
+  type World,
 } from "./game/engine";
 import { upgradeWorld } from "./game/upgrade";
 import {
@@ -57,6 +49,14 @@ import {
   type SurpriseEvent,
 } from "./game/events";
 type SaveKind = "local" | "synced" | "waiting";
+function mapGreeting(world: World) {
+  const extraOpen = regions.some(
+    (r) => r.after && regionState(world.discoveries, r) === "open",
+  );
+  return extraOpen
+    ? "Thung lũng nhỏ đang đợi con! Chọn một khu đã mở để khám phá nhé!"
+    : "Chào con đến Thung lũng nhỏ! Chạm vào Vườn nhà để bắt đầu chơi nhé!";
+}
 export default function App() {
   const [local, setLocal] = useState<Local>(() => ({
     ...load(),
@@ -76,9 +76,7 @@ export default function App() {
   }, [audio, music, activeRegion]);
   const [surprise, setSurprise] = useState<SurpriseEvent | null>(null);
   const lastTouch = useRef(Date.now());
-  const [message, setMessage] = useState(
-    "Chạm vào vườn nhé. Bạn nào đang trốn ở đây ta?",
-  );
+  const [message, setMessage] = useState(() => mapGreeting(local.world));
   const [status, setStatus] = useState<{ kind: SaveKind; text: string }>({
     kind: "local",
     text: "Đã cất trên máy",
@@ -92,12 +90,6 @@ export default function App() {
   );
   const [signed, setSigned] = useState(false);
   const [attempts, setAttempts] = useState(0);
-  const [themePref, setThemePref] = useState<ThemePreference>(
-    () =>
-      (document.documentElement.dataset.themePreference as ThemePreference) ||
-      "system",
-  );
-  const themeController = useRef<ThemeController | null>(null);
   const syncing = useRef(false);
   const selectionRequest = useRef(0);
   const hintIndex = useRef(0);
@@ -243,16 +235,8 @@ export default function App() {
   }, []);
   useEffect(() => {
     const regions = createScrollRegions();
-    const theme = createThemeController({
-      storageKey: themeStorageKey,
-      colors: themeColors,
-      onChange: (state) => setThemePref(state.preference),
-    });
-    themeController.current = theme;
     return () => {
       regions.destroy();
-      theme.destroy();
-      themeController.current = null;
     };
   }, []);
   const account = async () => {
@@ -364,6 +348,20 @@ export default function App() {
         />
       )}
       {/* Controls float over the full-screen scene; there is no header or footer bar. */}
+      {activeRegion && (
+        <button
+          type="button"
+          className={cn("hud hud-back kid-button")}
+          aria-label="Quay lại bản đồ"
+          title="Quay lại bản đồ"
+          onClick={() => {
+            setActiveRegion(null);
+            setMessage(mapGreeting(local.world));
+          }}
+        >
+          <Icon name="back" size={28} />
+        </button>
+      )}
       <div className={cn("hud hud-guide glass")}>
         <Art id="puppy" />
         <p aria-live="polite">{message}</p>
@@ -375,7 +373,7 @@ export default function App() {
           onClick={() => {
             const h = activeRegion
               ? hints[hintIndex.current++ % hints.length]
-              : "Con chạm vào Vườn nhà trên bản đồ để bắt đầu chơi nhé!";
+              : mapGreeting(local.world);
             say(h, "puppy", h.replaceAll("Lucky", "Lắc-ki"));
             setAttempts((a) => a + 3);
           }}
@@ -438,15 +436,6 @@ export default function App() {
         >
           <Icon name="book" size={28} />
         </button>
-        <button
-          type="button"
-          className={cn("kid-button")}
-          aria-label="Nghỉ một chút"
-          title="Nghỉ một chút"
-          onClick={() => setPanel("rest")}
-        >
-          <Icon name="cup" size={28} />
-        </button>
         {activeRegion && (
           <>
             <button
@@ -457,15 +446,6 @@ export default function App() {
               onClick={() => setPanel("kitchen")}
             >
               <Icon name="pot" size={28} />
-            </button>
-            <button
-              type="button"
-              className={cn("kid-button")}
-              aria-label="Bản đồ thung lũng"
-              title="Bản đồ thung lũng"
-              onClick={() => setActiveRegion(null)}
-            >
-              <Icon name="map" size={28} />
             </button>
             <button
               type="button"
@@ -585,21 +565,6 @@ export default function App() {
                   </div>
                 </div>
               )}
-              {panel === "rest" && (
-                <div className={cn("activity")}>
-                  <Art id="cloud" />
-                  <h2>Khu vườn đợi con nhé!</h2>
-                  <p>Mình duỗi tay, uống nước và nhìn ra xa một chút.</p>
-                  <button
-                    onClick={() => {
-                      selectionRequest.current++;
-                      setPanel("");
-                    }}
-                  >
-                    Về khu vườn
-                  </button>
-                </div>
-              )}
               {panel === "account" && (
                 <div className={cn("activity")}>
                   <h2>Góc dành cho người lớn</h2>
@@ -607,10 +572,6 @@ export default function App() {
                     <span role="status">
                       {busy ? "Đang đồng bộ…" : status.text}
                     </span>
-                    <ThemeToggle
-                      preference={themePref}
-                      onCycle={() => themeController.current?.cycle()}
-                    />
                   </div>
                   {!gate ? (
                     <>

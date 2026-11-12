@@ -107,50 +107,12 @@
     0 8px 18px rgba(138, 98, 20, 0.22);
   --plate: #fffaf0;
   --plate-border: #eadec0;
+  --map-locked-bg: rgba(242, 246, 235, 0.74);
+  --map-locked-border: rgba(82, 104, 78, 0.28);
+  --fog-back: rgba(255, 255, 255, 0.82);
+  --fog-front: rgba(232, 242, 239, 0.94);
   --focus-ring: #52684e;
   --hover: brightness(1.03);
-}
-
-:root[data-theme="dark"] {
-  --bg: #131b1a;
-  --bg-top: #131b22;
-  --surface: #1d2826;
-  --surface-2: #27342f;
-  --surface-3: #33433c;
-  --border: rgba(255, 255, 255, 0.1);
-  --border-strong: rgba(255, 255, 255, 0.24);
-  --text: #e8eedd;
-  --muted: #adbcaa;
-  --accent: #a8cf8f;
-  --accent-strong: #bfe0a8;
-  --on-accent: #142010;
-  --accent-soft: rgba(168, 207, 143, 0.16);
-  --ok: #a8cf8f;
-  --wait: #e9c46a;
-  --shade: rgba(5, 10, 12, 0.62);
-  --shadow: 0 24px 70px rgba(0, 0, 0, 0.5);
-  --shadow-soft: 0 7px 20px rgba(0, 0, 0, 0.3);
-  --glass: linear-gradient(
-    135deg,
-    rgba(44, 53, 74, 0.62),
-    rgba(26, 31, 44, 0.5)
-  );
-  --glass-border: rgba(255, 255, 255, 0.09);
-  --glass-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.1), inset 0 -1px 0 rgba(0, 0, 0, 0.25),
-    0 12px 36px rgba(0, 0, 0, 0.35);
-  --glass-solid: #202735;
-  --panel: rgba(29, 40, 38, 0.94);
-  /* Controls float over the always-light scene, so dark ones need a near-opaque fill. */
-  --control: rgba(31, 40, 39, 0.86);
-  --control-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14);
-  --kid: linear-gradient(#6d5822, #574619);
-  --kid-ink: #f6dc97;
-  --kid-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16);
-  --plate: #e9ecd9;
-  --plate-border: #cfd5b8;
-  --focus-ring: #a8cf8f;
-  --hover: brightness(1.12);
 }
 
 html {

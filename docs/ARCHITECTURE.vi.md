@@ -15,7 +15,7 @@ Garden/Activities → Action có kiểu → `apply` → `World` → lưu `localS
 - `src/data`: danh mục khám phá, cây trồng, bạn đồng hành (`pals.ts`), công thức nấu ăn, vùng đất, cảnh theo dữ liệu (`scenes.ts`) và quy tắc tương tác.
 - `src/components`: bộ tranh SVG chibi biểu cảm (`Art.tsx` cùng các bản vẽ trong `ArtFlat.tsx` và `ArtFlatMore.tsx`, cảnh nền tràn viền và bản đồ thung lũng trong `SceneBackdrop.tsx`, hiệu ứng phát sáng cho đèn trong `PaintFilters.tsx`), trình dựng cảnh theo dữ liệu (`Garden.tsx`), bản đồ thung lũng (`ValleyMap.tsx`), bếp, bạn thú, ngôi nhà, đàn gỗ và sổ khám phá.
 - `src/services`: lưu trữ cục bộ, hàng đợi gửi lại (retry) và âm thanh Web Audio / đọc giọng nói (`little-wonders-audio` lưu theo trình duyệt, mặc định tắt; `little-wonders-music` cho nhạc nền, mặc định bật khi đã bật loa). `App.tsx` điều phối hồ sơ, vùng đất và các bảng hoạt động.
-- `src/styles`: biến thiết kế (`tokens.css`) cùng kiểu vòng focus và thanh cuộn dùng chung. `src/ui`: bộ điều khiển chế độ giao diện và vùng cuộn độc lập framework. `src/components/Icons.tsx`: icon giao diện.
+- `src/styles`: biến thiết kế (`tokens.css`) cùng kiểu vòng focus và thanh cuộn dùng chung. `src/ui`: bộ điều khiển vùng cuộn độc lập framework. `src/components/Icons.tsx`: icon giao diện.
 - `api/index.ts` và `api/_lib/security.ts`: Google OAuth, phiên đăng nhập có chữ ký, kiểm tra quyền sở hữu hồ sơ và chống CSRF.
 
 ## Lưu trữ và giải quyết xung đột
@@ -54,9 +54,9 @@ Ba người bạn đồng hành trong `src/data/pals.ts` (`puppy`, `reindeer`, `
 
 ## Ngôn ngữ thiết kế giao diện
 
-Toàn bộ màu sắc, độ bo góc và font chữ được định nghĩa bằng biến CSS trong `src/styles/tokens.css` với giao diện Sáng làm mặc định và `:root[data-theme="dark"]` ghi đè cho khung điều khiển, trong khi khung cảnh trò chơi giữ nguyên bảng màu truyện tranh tươi sáng theo trạng thái Ngày/Đêm của game. Tùy chọn giao diện (`system`, `light`, `dark`) được lưu riêng trên từng trình duyệt ở khóa `little-wonders-theme`.
+Toàn bộ màu sắc, độ bo góc và font chữ được định nghĩa bằng biến CSS trong `src/styles/tokens.css` với bảng màu Sáng kiểu truyện tranh đồng nhất cho cả khung điều khiển lẫn khung cảnh, còn nền cảnh tự chuyển giữa bảng màu Ngày/Đêm theo trạng thái `scene.time` trong game.
 
-Màn hình cảnh phủ kín `100dvh` với các cụm nút nổi hiệu ứng kính mờ: cún Lucky hướng dẫn kèm nút gợi ý ở góc dưới trái, dải nút hoạt động của bé (`56px+`) dọc góc trên phải, và duy nhất một nút bánh răng Góc người lớn (`44px`) ở góc dưới phải tại màn hình bản đồ thung lũng. Các vật thể trong cảnh co giãn theo đơn vị `--u: min(1cqw, 1.9cqh)`, được kiểm chứng bằng Playwright trên các kích thước màn hình iPad, desktop và màn hình siêu rộng.
+Màn hình cảnh phủ kín `100dvh` với các cụm nút nổi hiệu ứng kính mờ: cún Lucky hướng dẫn kèm nút gợi ý ở góc dưới trái, nút quay lại ở góc trên trái khi đang ở trong vùng đất (nằm cạnh bộ đếm giỏ đồ), dải nút hoạt động của bé (`56px+`) dọc góc trên phải, và duy nhất một nút bánh răng Góc người lớn (`44px`) ở góc dưới phải tại màn hình bản đồ thung lũng. Các vật thể trong cảnh co giãn theo đơn vị `--u: min(1cqw, 1.9cqh)`, được kiểm chứng bằng Playwright trên các kích thước màn hình iPad, desktop và màn hình siêu rộng.
 
 ## Hoạt động ngoại tuyến và hiển thị
 

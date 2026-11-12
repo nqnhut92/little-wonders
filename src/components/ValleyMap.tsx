@@ -67,7 +67,16 @@ export function ValleyMap({ world, clearing, onEnter, say }: Props) {
                     )}
                     aria-hidden="true"
                   >
-                    ☁
+                    <svg viewBox="0 0 64 48" className={cn("map-fog-svg")}>
+                      <path
+                        d="M17 34a8.5 8.5 0 0 1-1.1-16.9A11.5 11.5 0 0 1 38 13.5a9 9 0 0 1 10.8 7.7A7 7 0 0 1 47.5 35H17z"
+                        fill="var(--fog-back)"
+                      />
+                      <path
+                        d="M12 39a7.5 7.5 0 0 1-1-14.9 10 10 0 0 1 19.3-3 8 8 0 0 1 9.5 6.8 6.3 6.3 0 0 1-1.2 12.6H12z"
+                        fill="var(--fog-front)"
+                      />
+                    </svg>
                   </span>
                 )}
               </span>

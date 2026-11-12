@@ -15,7 +15,7 @@ Garden/Activities → typed Action → `apply` → `World` → immediate `localS
 - `src/data`: discovery inventory, crops, companions (`pals.ts`), recipes, regions, data-driven region scenes (`scenes.ts`) and interaction rules.
 - `src/components`: expressive chibi SVG artwork (`Art.tsx` with drawings in `ArtFlat.tsx` and `ArtFlatMore.tsx`, full-bleed backdrops and valley map in `SceneBackdrop.tsx`, and light-glow definitions in `PaintFilters.tsx`), data-driven scene renderer (`Garden.tsx`), valley map (`ValleyMap.tsx`), kitchen, companions, house, xylophone and notebook.
 - `src/services`: local persistence, retry queue and Web Audio / speech synthesis (`little-wonders-audio` stored per browser, off by default; `little-wonders-music` for background music, on by default once sound is on). `App.tsx` coordinates profiles, regions and modal panels.
-- `src/styles`: design tokens (`tokens.css`) and shared focus/scrollbar styles. `src/ui`: framework-independent theme and scroll-region controllers. `src/components/Icons.tsx`: interface icons.
+- `src/styles`: design tokens (`tokens.css`) and shared focus/scrollbar styles. `src/ui`: framework-independent scroll-region controller. `src/components/Icons.tsx`: interface icons.
 - `api/index.ts` and `api/_lib/security.ts`: Google OAuth, signed sessions, ownership checks and CSRF protection.
 
 ## Persistence and conflict resolution
@@ -54,9 +54,9 @@ Three companions in `src/data/pals.ts` (`puppy`, `reindeer`, `capybara`) track `
 
 ## Interface design language
 
-Design tokens live in `src/styles/tokens.css` with Light as default and `:root[data-theme="dark"]` overrides for UI chrome, while scene containers keep a theme-independent daylight/nighttime storybook palette. Appearance preference (`system`, `light`, `dark`) is persisted locally under `little-wonders-theme`.
+Design tokens live in `src/styles/tokens.css` with a bright storybook Light palette across both UI chrome and scenes, while scene backdrops switch between daylight and nighttime palettes via `scene.time`.
 
-The active scene fills `100dvh` with floating glass controls: the Lucky guide and hint button at the bottom left, child action buttons (`56px+`) along the top right, and a single adult-corner gear button (`44px`) at the bottom right of the valley map only. Scene objects size proportionally with `--u: min(1cqw, 1.9cqh)`, verified by Playwright layout tests across iPad, desktop and ultra-wide viewports.
+The active scene fills `100dvh` with floating glass controls: the Lucky guide and hint button at the bottom left, a top-left Back button inside regions (next to the basket counter), child action buttons (`56px+`) along the top right, and a single adult-corner gear button (`44px`) at the bottom right of the valley map only. Scene objects size proportionally with `--u: min(1cqw, 1.9cqh)`, verified by Playwright layout tests across iPad, desktop and ultra-wide viewports.
 
 ## Offline and rendering
 

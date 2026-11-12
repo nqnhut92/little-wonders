@@ -11,13 +11,12 @@ export type IconName =
   | "gear"
   | "bulb"
   | "close"
-  | "cup"
+  | "back"
   | "saved"
   | "cloud-saved"
   | "cloud-waiting"
   | "busy"
   | "pot"
-  | "map"
   | "broom"
   | "yes"
   | "no"
@@ -94,13 +93,7 @@ const paths: Record<IconName, ReactNode> = {
     </>
   ),
   close: <path {...line} strokeWidth={3} d="m6.5 6.5 11 11m0-11-11 11" />,
-  cup: (
-    <>
-      <path d="M4.5 9h11.6v5.3a5.2 5.2 0 0 1-5.2 5.2H9.7a5.2 5.2 0 0 1-5.2-5.2z" />
-      <path {...line} strokeWidth={2} d="M16 10.6h1.3a2.4 2.4 0 0 1 0 4.8H16" />
-      <path {...line} strokeWidth={2} d="M8 3.6v2.2m4-2.8v2.8" />
-    </>
-  ),
+  back: <path {...line} strokeWidth={2.8} d="M19 12H6.5m5-5.5L6 12l5.5 5.5" />,
   saved: (
     <path
       fillRule="evenodd"
@@ -129,13 +122,6 @@ const paths: Record<IconName, ReactNode> = {
         strokeWidth={2.2}
         d="M2.500 10h19M9 3.500c-1 1.300 1 2 0 3.500m5-3.500c-1 1.300 1 2 0 3.500"
       />
-    </>
-  ),
-  map: (
-    <>
-      <path d="M3 6.5 9 4v14l-6 2.500z" />
-      <path d="m10.500 4 4 2v14l-4-2z" />
-      <path d="m16 6 5-2v14l-5 2.500z" />
     </>
   ),
   broom: (

@@ -22,14 +22,6 @@ it("keeps colors in the token file instead of component styles", () => {
   );
   expect(literals).toEqual([]);
 });
-it("keeps the pre-paint theme script aligned with the runtime controller", () => {
-  const html = readFileSync("index.html", "utf8");
-  const toggle = readFileSync("src/components/ThemeToggle.tsx", "utf8");
-  const key = /themeStorageKey = "([^"]+)"/.exec(toggle)![1];
-  expect(html).toContain(`localStorage.getItem("${key}")`);
-  for (const color of toggle.match(/#[0-9a-f]{6}/g)!)
-    expect(html).toContain(color);
-});
 it("declares dedicated maskable artwork and precaches every icon", () => {
   const manifest = JSON.parse(
     readFileSync("public/manifest.webmanifest", "utf8"),

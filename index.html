@@ -16,38 +16,9 @@
     <link rel="icon" href="/icon-32.png" sizes="32x32" type="image/png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/icon-180.png" />
     <title>Little Wonders · Khu Vườn Kỳ Diệu</title>
-    <!-- Resolve Light/Dark/System before first paint. Keep the key and colors in sync with ThemeToggle.tsx. -->
-    <script>
-      (function () {
-        var preference = "system";
-        try {
-          var saved = localStorage.getItem("little-wonders-theme");
-          if (saved === "light" || saved === "dark") preference = saved;
-        } catch (e) {}
-        var dark = false;
-        try {
-          dark = matchMedia("(prefers-color-scheme: dark)").matches;
-        } catch (e) {}
-        var resolved =
-          preference === "system" ? (dark ? "dark" : "light") : preference;
-        var root = document.documentElement;
-        root.dataset.themePreference = preference;
-        root.dataset.theme = resolved;
-        root.style.colorScheme = resolved;
-        var meta = document.querySelector('meta[name="theme-color"]');
-        if (meta)
-          meta.setAttribute(
-            "content",
-            resolved === "dark" ? "#131b22" : "#edf4d2",
-          );
-      })();
-    </script>
     <style>
       html {
         background: #faf8ee;
-      }
-      html[data-theme="dark"] {
-        background: #131b1a;
       }
       .splash {
         position: fixed;
@@ -74,9 +45,6 @@
         background: #52684e;
         opacity: 0.35;
         animation: splash 1.2s ease-in-out infinite;
-      }
-      html[data-theme="dark"] .splash-dots i {
-        background: #a8cf8f;
       }
       .splash-dots i:nth-child(2) {
         animation-delay: 0.15s;

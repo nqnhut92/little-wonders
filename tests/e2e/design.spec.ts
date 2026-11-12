@@ -1,215 +1,52 @@
-import { test, expect, type Page } from "@playwright/test";
-const themeKey = "little-wonders-theme";
-const toggle = (page: Page) => page.locator(".theme-toggle");
-async function openAdult(page: Page) {
-  if (!(await toggle(page).isVisible()))
-    await page.getByRole("button", { name: "Dành cho người lớn" }).click();
-}
-const root = (page: Page) =>
-  page.evaluate(() => ({
-    theme: document.documentElement.dataset.theme,
-    preference: document.documentElement.dataset.themePreference,
-    scheme: document.documentElement.style.colorScheme,
-    meta: document
-      .querySelector('meta[name="theme-color"]')
-      ?.getAttribute("content"),
-  }));
+import { test, expect } from "@playwright/test";
 
-test.describe("appearance", () => {
-  test("defaults to System and follows the operating system only in System mode", async ({
-    page,
-  }) => {
-    await page.emulateMedia({ colorScheme: "dark" });
-    await page.goto("/");
-    expect(await root(page)).toEqual({
-      theme: "dark",
-      preference: "system",
-      scheme: "dark",
-      meta: "#131b22",
-    });
-    await openAdult(page);
-    await expect(toggle(page)).toHaveAttribute(
-      "aria-label",
-      "Giao diện: Theo hệ thống. Chuyển sang Sáng",
-    );
-    await page.emulateMedia({ colorScheme: "light" });
-    await expect.poll(async () => (await root(page)).theme).toBe("light");
-    expect((await root(page)).meta).toBe("#edf4d2");
-    await toggle(page).click();
-    await page.emulateMedia({ colorScheme: "dark" });
-    expect(await root(page)).toMatchObject({
-      theme: "light",
-      preference: "light",
-    });
-  });
-
-  test("cycles System, Light, Dark and restores each choice after reload", async ({
-    page,
-  }) => {
-    await page.emulateMedia({ colorScheme: "light" });
-    await page.goto("/");
-    const background = () =>
-      page.evaluate(
-        () => getComputedStyle(document.documentElement).backgroundColor,
+test("text and controls keep readable contrast", async ({ page }) => {
+  await page.goto("/");
+  const ratios = await page.evaluate(() => {
+    const probe = document.createElement("canvas").getContext("2d")!;
+    const rgb = (token: string) => {
+      probe.fillStyle = "#000";
+      probe.fillStyle = getComputedStyle(document.documentElement)
+        .getPropertyValue(token)
+        .trim();
+      const hex = probe.fillStyle as string;
+      return [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255);
+    };
+    const luminance = (c: number[]) => {
+      const [r, g, b] = c.map((v) =>
+        v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4,
       );
-    const light = await background();
-    for (const [preference, theme, label] of [
-      ["light", "light", "Giao diện: Sáng. Chuyển sang Tối"],
-      ["dark", "dark", "Giao diện: Tối. Chuyển sang Theo hệ thống"],
-      ["system", "light", "Giao diện: Theo hệ thống. Chuyển sang Sáng"],
-    ]) {
-      await openAdult(page);
-      await toggle(page).click();
-      await expect(toggle(page)).toHaveAttribute("aria-label", label);
-      await expect(toggle(page)).not.toHaveAttribute("aria-pressed");
-      expect(await root(page)).toMatchObject({ preference, theme });
-      expect(
-        await page.evaluate((k) => localStorage.getItem(k), themeKey),
-      ).toBe(preference);
-      await page.reload();
-      expect(await root(page)).toMatchObject({ preference, theme });
-      await openAdult(page);
-      await expect(toggle(page)).toHaveAttribute("aria-label", label);
-      expect((await background()) === light).toBe(theme === "light");
-    }
+      return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+    };
+    const ratio = (a: string, b: string) => {
+      const [x, y] = [luminance(rgb(a)), luminance(rgb(b))].sort(
+        (m, n) => n - m,
+      );
+      return (x + 0.05) / (y + 0.05);
+    };
+    return {
+      text: Math.min(
+        ratio("--text", "--bg"),
+        ratio("--text", "--surface"),
+        ratio("--text", "--surface-2"),
+        ratio("--text", "--surface-3"),
+      ),
+      muted: Math.min(
+        ratio("--muted", "--bg"),
+        ratio("--muted", "--surface"),
+        ratio("--muted", "--surface-2"),
+      ),
+      primary: ratio("--on-accent", "--accent"),
+      ring: Math.min(
+        ratio("--focus-ring", "--bg"),
+        ratio("--focus-ring", "--surface"),
+      ),
+    };
   });
-
-  test("keeps an explicit choice in memory when storage is blocked", async ({
-    page,
-  }) => {
-    await page.addInitScript((key) => {
-      const get = Storage.prototype.getItem;
-      const set = Storage.prototype.setItem;
-      Storage.prototype.getItem = function (k) {
-        if (k === key) throw new Error("blocked");
-        return get.call(this, k);
-      };
-      Storage.prototype.setItem = function (k, v) {
-        if (k === key) throw new Error("blocked");
-        return set.call(this, k, v);
-      };
-    }, themeKey);
-    await page.emulateMedia({ colorScheme: "light" });
-    await page.goto("/");
-    expect(await root(page)).toMatchObject({ preference: "system" });
-    await openAdult(page);
-    await toggle(page).click();
-    await toggle(page).click();
-    await page.emulateMedia({ colorScheme: "light" });
-    expect(await root(page)).toMatchObject({
-      preference: "dark",
-      theme: "dark",
-    });
-  });
-
-  test("synchronizes the preference between tabs, including clearing it", async ({
-    page,
-    context,
-  }) => {
-    await page.emulateMedia({ colorScheme: "light" });
-    await page.goto("/");
-    const other = await context.newPage();
-    await other.emulateMedia({ colorScheme: "light" });
-    await other.goto("/");
-    await openAdult(page);
-    await toggle(page).click();
-    await toggle(page).click();
-    await expect.poll(async () => (await root(other)).preference).toBe("dark");
-    await openAdult(other);
-    await expect(toggle(other)).toHaveAttribute("data-mode", "dark");
-    await page.evaluate((k) => localStorage.removeItem(k), themeKey);
-    await expect
-      .poll(async () => (await root(other)).preference)
-      .toBe("system");
-  });
-
-  test("themes the interface but leaves the scene artwork unchanged", async ({
-    page,
-  }) => {
-    await page.emulateMedia({ colorScheme: "light" });
-    await page.goto("/");
-    await openAdult(page);
-    await toggle(page).click();
-    await toggle(page).click();
-    expect((await root(page)).theme).toBe("dark");
-    await page.getByRole("button", { name: "Trở về vườn" }).click();
-    await page.getByRole("button", { name: "Vườn nhà", exact: true }).click();
-    const darkScene = await page.locator(".garden").evaluate((el) => {
-      const s = getComputedStyle(el);
-      return [
-        s.backgroundImage,
-        getComputedStyle(el.querySelector("h1")!).color,
-      ];
-    });
-    await page.getByRole("button", { name: "Bản đồ thung lũng" }).click();
-    await openAdult(page);
-    await toggle(page).click();
-    expect((await root(page)).theme).toBe("light");
-    await page.getByRole("button", { name: "Trở về vườn" }).click();
-    await page.getByRole("button", { name: "Vườn nhà", exact: true }).click();
-    const lightScene = await page.locator(".garden").evaluate((el) => {
-      const s = getComputedStyle(el);
-      return [
-        s.backgroundImage,
-        getComputedStyle(el.querySelector("h1")!).color,
-      ];
-    });
-    expect(darkScene).toEqual(lightScene);
-  });
-
-  test("text and controls keep readable contrast in both themes", async ({
-    page,
-  }) => {
-    await page.goto("/");
-    for (const scheme of ["light", "dark"] as const) {
-      await page.emulateMedia({ colorScheme: scheme });
-      const ratios = await page.evaluate(() => {
-        const probe = document.createElement("canvas").getContext("2d")!;
-        const rgb = (token: string) => {
-          probe.fillStyle = "#000";
-          probe.fillStyle = getComputedStyle(document.documentElement)
-            .getPropertyValue(token)
-            .trim();
-          const hex = probe.fillStyle as string;
-          return [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255);
-        };
-        const luminance = (c: number[]) => {
-          const [r, g, b] = c.map((v) =>
-            v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4,
-          );
-          return 0.2126 * r + 0.7152 * g + 0.0722 * b;
-        };
-        const ratio = (a: string, b: string) => {
-          const [x, y] = [luminance(rgb(a)), luminance(rgb(b))].sort(
-            (m, n) => n - m,
-          );
-          return (x + 0.05) / (y + 0.05);
-        };
-        return {
-          text: Math.min(
-            ratio("--text", "--bg"),
-            ratio("--text", "--surface"),
-            ratio("--text", "--surface-2"),
-            ratio("--text", "--surface-3"),
-          ),
-          muted: Math.min(
-            ratio("--muted", "--bg"),
-            ratio("--muted", "--surface"),
-            ratio("--muted", "--surface-2"),
-          ),
-          primary: ratio("--on-accent", "--accent"),
-          ring: Math.min(
-            ratio("--focus-ring", "--bg"),
-            ratio("--focus-ring", "--surface"),
-          ),
-        };
-      });
-      expect(ratios.text, scheme).toBeGreaterThanOrEqual(4.5);
-      expect(ratios.muted, scheme).toBeGreaterThanOrEqual(4.5);
-      expect(ratios.primary, scheme).toBeGreaterThanOrEqual(4.5);
-      expect(ratios.ring, scheme).toBeGreaterThanOrEqual(3);
-    }
-  });
+  expect(ratios.text).toBeGreaterThanOrEqual(4.5);
+  expect(ratios.muted).toBeGreaterThanOrEqual(4.5);
+  expect(ratios.primary).toBeGreaterThanOrEqual(4.5);
+  expect(ratios.ring).toBeGreaterThanOrEqual(3);
 });
 
 test("self-hosted Nunito renders Vietnamese and no serif remains", async ({
@@ -313,11 +150,17 @@ test("the scene fills the screen and floating controls stay inside it", async ({
       y: document.documentElement.scrollHeight - innerHeight,
     }));
     expect(overflow).toEqual({ x: 0, y: 0 });
+    const backBox = (await page
+      .getByRole("button", { name: "Quay lại bản đồ", exact: true })
+      .boundingBox())!;
+    expect(backBox.x).toBeLessThan(size.width / 2);
+    expect(backBox.y).toBeLessThan(size.height / 2);
     const boxes = [gearBox];
     for (const name of [
+      "Quay lại bản đồ",
       "Bật âm thanh",
       "Sổ khám phá",
-      "Nghỉ một chút",
+      "Bếp của vườn",
       "Nghe gợi ý",
     ]) {
       const box = (await page
