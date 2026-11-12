@@ -34,6 +34,7 @@ npm ci
 npm run dev
 npm run typecheck
 npm run lint
+npm run format:check
 npm test
 npm run docs:check
 npm run build

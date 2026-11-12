@@ -96,7 +96,12 @@ const DISH: Record<string, { fill: string; rim: string; garnish: ReactNode }> =
       rim: "#ff857d",
       garnish: (
         <>
-          <path d="M44 58q8-6 16 0t16 0" stroke="#fff5d6" strokeWidth="3" {...LINE} />
+          <path
+            d="M44 58q8-6 16 0t16 0"
+            stroke="#fff5d6"
+            strokeWidth="3"
+            {...LINE}
+          />
           <circle cx="56" cy="57" r="4" fill="#62c06a" />
           <circle cx="64" cy="59" r="3.5" fill="#4fae5a" />
         </>
@@ -141,9 +146,19 @@ const DISH: Record<string, { fill: string; rim: string; garnish: ReactNode }> =
       rim: "#ff9da8",
       garnish: (
         <>
-          <path d="M72 58 84 26l10-3" stroke="#ffc93c" strokeWidth="5" {...LINE} />
+          <path
+            d="M72 58 84 26l10-3"
+            stroke="#ffc93c"
+            strokeWidth="5"
+            {...LINE}
+          />
           <path d="M36 54a12 12 0 0 1 20-6Z" fill="#f24e5e" />
-          <path d="M36 54a12 12 0 0 1 20-6" stroke="#5cc265" strokeWidth="3.5" {...LINE} />
+          <path
+            d="M36 54a12 12 0 0 1 20-6"
+            stroke="#5cc265"
+            strokeWidth="3.5"
+            {...LINE}
+          />
         </>
       ),
     },
@@ -163,7 +178,12 @@ const DISH: Record<string, { fill: string; rim: string; garnish: ReactNode }> =
       rim: "#ffc994",
       garnish: (
         <>
-          <path d="M44 59q16-7 32 0" stroke="#c97432" strokeWidth="3" {...LINE} />
+          <path
+            d="M44 59q16-7 32 0"
+            stroke="#c97432"
+            strokeWidth="3"
+            {...LINE}
+          />
           <ellipse cx="62" cy="54" rx="7" ry="4" fill="#5cc265" />
         </>
       ),
@@ -173,7 +193,12 @@ const DISH: Record<string, { fill: string; rim: string; garnish: ReactNode }> =
       rim: "#ffb66e",
       garnish: (
         <>
-          <path d="M46 59q7-6 14 0t14 0" stroke="#fff3cf" strokeWidth="3.2" {...LINE} />
+          <path
+            d="M46 59q7-6 14 0t14 0"
+            stroke="#fff3cf"
+            strokeWidth="3.2"
+            {...LINE}
+          />
           <ellipse cx="58" cy="55" rx="3.5" ry="2" fill="#4fae5a" />
           <ellipse cx="66" cy="57" rx="3.5" ry="2" fill="#4fae5a" />
         </>
@@ -219,7 +244,12 @@ const DISH: Record<string, { fill: string; rim: string; garnish: ReactNode }> =
       rim: "#ffa3c5",
       garnish: (
         <>
-          <path d="M70 58 82 26l10-3" stroke="#5fb4e0" strokeWidth="5" {...LINE} />
+          <path
+            d="M70 58 82 26l10-3"
+            stroke="#5fb4e0"
+            strokeWidth="5"
+            {...LINE}
+          />
           <circle cx="54" cy="56" r="7" fill="#fff7e8" />
           <circle cx="54" cy="53" r="4" fill="#f24e5e" />
         </>
@@ -230,7 +260,10 @@ const DISH: Record<string, { fill: string; rim: string; garnish: ReactNode }> =
       rim: "#cfaaf5",
       garnish: (
         <>
-          <path d="m60 48 3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1Z" fill="#ffe07a" />
+          <path
+            d="m60 48 3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1Z"
+            fill="#ffe07a"
+          />
           <circle cx="44" cy="59" r="3" fill="#fff" />
           <circle cx="76" cy="58" r="2.5" fill="#fff" />
         </>
@@ -241,7 +274,12 @@ const DISH: Record<string, { fill: string; rim: string; garnish: ReactNode }> =
       rim: "#fff9eb",
       garnish: (
         <>
-          <path d="M70 58 82 26l10-3" stroke="#f25755" strokeWidth="5" {...LINE} />
+          <path
+            d="M70 58 82 26l10-3"
+            stroke="#f25755"
+            strokeWidth="5"
+            {...LINE}
+          />
           <ellipse cx="48" cy="56" rx="7" ry="4" fill="#5cc265" />
         </>
       ),
@@ -253,7 +291,12 @@ const DISH: Record<string, { fill: string; rim: string; garnish: ReactNode }> =
         <>
           <circle cx="52" cy="57" r="7" fill="#8a4e26" />
           <circle cx="68" cy="57" r="7" fill="#8a4e26" />
-          <path d="M49 55l6 4m-6 0 6-4m10 0 6 4m-6 0 6-4" stroke="#f7e3c8" strokeWidth="2" {...LINE} />
+          <path
+            d="M49 55l6 4m-6 0 6-4m10 0 6 4m-6 0 6-4"
+            stroke="#f7e3c8"
+            strokeWidth="2"
+            {...LINE}
+          />
         </>
       ),
     },
@@ -562,10 +605,7 @@ export const flatMore: Record<string, Draw> = {
     <>
       <circle cx="60" cy="70" r="39" fill="#f25553" />
       <path d="M60 109a39 39 0 0 0 34-58q4 39-46 56 6 2 12 2Z" fill="#d63e3c" />
-      <path
-        d="M60 35 40 46l15-1-5 13 10-11 10 11-5-13 15 1Z"
-        fill="#46a852"
-      />
+      <path d="M60 35 40 46l15-1-5 13 10-11 10 11-5-13 15 1Z" fill="#46a852" />
       <path
         d="M60 35V20"
         stroke="#46a852"
@@ -586,16 +626,8 @@ export const flatMore: Record<string, Draw> = {
   ),
   pumpkin: () => (
     <>
-      <path
-        d="M60 36q0-13 9-18"
-        stroke="#46a852"
-        strokeWidth="7.5"
-        {...LINE}
-      />
-      <path
-        d="M65 28q10-6 14 2-6 8-14-2Z"
-        fill="#5cc265"
-      />
+      <path d="M60 36q0-13 9-18" stroke="#46a852" strokeWidth="7.5" {...LINE} />
+      <path d="M65 28q10-6 14 2-6 8-14-2Z" fill="#5cc265" />
       <ellipse cx="33" cy="72" rx="23" ry="34" fill="#eb7a21" />
       <ellipse cx="87" cy="72" rx="23" ry="34" fill="#eb7a21" />
       <ellipse cx="46" cy="72" rx="22" ry="36" fill="#f58829" />
@@ -606,10 +638,7 @@ export const flatMore: Record<string, Draw> = {
   ),
   corn: () => (
     <>
-      <path
-        d="M60 10c20 14 24 50 13 80H47C36 60 40 24 60 10Z"
-        fill="#ffc933"
-      />
+      <path d="M60 10c20 14 24 50 13 80H47C36 60 40 24 60 10Z" fill="#ffc933" />
       {[28, 42, 56, 70].map((y) =>
         [49, 60, 71].map((x) => (
           <rect
@@ -629,12 +658,7 @@ export const flatMore: Record<string, Draw> = {
   ),
   watermelon: () => (
     <>
-      <path
-        d="M60 31q0-10 9-14"
-        stroke="#46a852"
-        strokeWidth="6.5"
-        {...LINE}
-      />
+      <path d="M60 31q0-10 9-14" stroke="#46a852" strokeWidth="6.5" {...LINE} />
       <ellipse cx="60" cy="70" rx="47" ry="39" fill="#5cc265" />
       <path
         d="M60 109c26 0 47-17 47-39 0-6-2-12-5-17-3 27-24 46-54 54 4 1 8 2 12 2Z"
@@ -659,7 +683,12 @@ export const flatMore: Record<string, Draw> = {
   ),
   blueberry: () => (
     <>
-      <path d="M60 36q-6-16 8-24" stroke="#46a852" strokeWidth="5.5" {...LINE} />
+      <path
+        d="M60 36q-6-16 8-24"
+        stroke="#46a852"
+        strokeWidth="5.5"
+        {...LINE}
+      />
       <path d="M64 20q14-11 26-2-11 13-26 2Z" fill="#5cc265" />
       {[
         [41, 64],
@@ -720,10 +749,7 @@ export const flatMore: Record<string, Draw> = {
         stroke="#fff"
         strokeWidth="2"
       />
-      <path
-        d="M6 69C8 27 38 8 60 8s52 19 54 61q-54 14-108 0Z"
-        fill="#f25553"
-      />
+      <path d="M6 69C8 27 38 8 60 8s52 19 54 61q-54 14-108 0Z" fill="#f25553" />
       <path
         d="M12 69q48 11 96 0-6-8-16-10-32 8-64 0-10 2-16 10Z"
         fill="#d63e3c"
@@ -895,15 +921,8 @@ export const flatMore: Record<string, Draw> = {
   ),
   shell: () => (
     <>
-      <path
-        d="M60 106 16 58c0-28 20-42 44-42s44 14 44 42Z"
-        fill="#ffa89e"
-      />
-      <path
-        d="M60 106 60 16c24 0 44 14 44 42Z"
-        fill="#f59187"
-        opacity="0.6"
-      />
+      <path d="M60 106 16 58c0-28 20-42 44-42s44 14 44 42Z" fill="#ffa89e" />
+      <path d="M60 106 60 16c24 0 44 14 44 42Z" fill="#f59187" opacity="0.6" />
       <path
         d="M60 106 32 30m28 76L49 20m11 86 11-86m-11 86 28-76"
         stroke="#e07065"
@@ -1148,7 +1167,12 @@ export const flatMore: Record<string, Draw> = {
       />
       <rect x="12" y="64" width="88" height="20" rx="9" fill="#f25755" />
       <rect x="12" y="75" width="88" height="9" rx="4.5" fill="#d63e3c" />
-      <path d="M22 69h68" stroke="#ffd03b" strokeWidth="3.5" strokeLinecap="round" />
+      <path
+        d="M22 69h68"
+        stroke="#ffd03b"
+        strokeWidth="3.5"
+        strokeLinecap="round"
+      />
     </>
   ),
   snowflake: () => (
@@ -1318,7 +1342,14 @@ export const flatMore: Record<string, Draw> = {
       <path d="M28 66 4 42q8 24 0 48Z" fill="#ee7924" />
       <path d="M50 40q12-20 28-6Z" fill="#ee7924" />
       <Critter body="#ff9636">
-        <ellipse cx="64" cy="80" rx="22" ry="12" fill="#ffdcb8" opacity="0.65" />
+        <ellipse
+          cx="64"
+          cy="80"
+          rx="22"
+          ry="12"
+          fill="#ffdcb8"
+          opacity="0.65"
+        />
         <path
           d="M44 48q12 18 0 36m16-40q12 22 0 44"
           stroke="#ffd4a6"
@@ -1468,7 +1499,12 @@ export const flatMore: Record<string, Draw> = {
   ),
   basket: () => (
     <>
-      <path d="M22 56q38-70 76 0" stroke="#9e683c" strokeWidth="9.5" {...LINE} />
+      <path
+        d="M22 56q38-70 76 0"
+        stroke="#9e683c"
+        strokeWidth="9.5"
+        {...LINE}
+      />
       <path d="m12 54 14 52q2 6 8 6h52q6 0 8-6l14-52Z" fill="#eba85e" />
       <path d="m60 54h48l-14 52q-2 6-8 6H60Z" fill="#d99145" opacity="0.55" />
       <path d="M17 72h86l-5 18H22Z" fill="#c97d32" />
@@ -1587,7 +1623,14 @@ export const flatMore: Record<string, Draw> = {
       <path d="M60 52h10l7 62H60Z" fill="#ede0c7" />
       <path d="M48 54 60 38l12 16Z" fill="#f25755" />
       <path d="M53 114V96a7 7 0 0 1 14 0v18Z" fill="#9e683c" />
-      <circle cx="60" cy="76" r="5" fill="#bfe8ff" stroke="#fff" strokeWidth="2" />
+      <circle
+        cx="60"
+        cy="76"
+        r="5"
+        fill="#bfe8ff"
+        stroke="#fff"
+        strokeWidth="2"
+      />
       <g className={cn("windmill-blades")}>
         {[0, 90, 180, 270].map((a) => (
           <path

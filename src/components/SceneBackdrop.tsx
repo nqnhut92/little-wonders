@@ -1114,20 +1114,42 @@ export function ValleyBackdrop({ className }: { className?: string }) {
             strokeLinejoin="round"
           />
           <path d="M120 700 v-38 a16 16 0 0 1 32 0 v38Z" fill="#b37848" />
-          <circle cx="94" cy="656" r="11" fill="#bfe8ff" stroke="#fff" strokeWidth="3" />
-          <circle cx="178" cy="656" r="11" fill="#bfe8ff" stroke="#fff" strokeWidth="3" />
+          <circle
+            cx="94"
+            cy="656"
+            r="11"
+            fill="#bfe8ff"
+            stroke="#fff"
+            strokeWidth="3"
+          />
+          <circle
+            cx="178"
+            cy="656"
+            r="11"
+            fill="#bfe8ff"
+            stroke="#fff"
+            strokeWidth="3"
+          />
         </g>
         {/* Cozy red-capped mushroom in the forest */}
         <g>
           <rect x="318" y="256" width="28" height="26" rx="6" fill="#fff7e8" />
-          <path d="M302 260c2-22 18-32 30-32s28 10 30 32q-30 8-60 0Z" fill="#f25553" />
+          <path
+            d="M302 260c2-22 18-32 30-32s28 10 30 32q-30 8-60 0Z"
+            fill="#f25553"
+          />
           <circle cx="322" cy="244" r="4.5" fill="#fff7e8" />
           <circle cx="340" cy="240" r="5.5" fill="#fff7e8" />
           <circle cx="348" cy="252" r="3.5" fill="#fff7e8" />
         </g>
         {/* Cheerful beach umbrella & sandcastle hint */}
         <g>
-          <path d="M750 185 L762 138" stroke="#b07a4e" strokeWidth="5" strokeLinecap="round" />
+          <path
+            d="M750 185 L762 138"
+            stroke="#b07a4e"
+            strokeWidth="5"
+            strokeLinecap="round"
+          />
           <path d="M726 142 c8-22 48-22 56 0Z" fill="#f25755" />
           <path d="M742 142 c6-20 20-20 26 0Z" fill="#ffd03b" />
         </g>

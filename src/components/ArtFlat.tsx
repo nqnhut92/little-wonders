@@ -123,19 +123,13 @@ export const flatArt: Record<string, Draw> = {
         fill="#f0c387"
         opacity="0.75"
       />
-      <path
-        d="M52 18q4-7 9-2 5-6 8 2-8 2-17 0Z"
-        fill="#fff7e8"
-      />
+      <path d="M52 18q4-7 9-2 5-6 8 2-8 2-17 0Z" fill="#fff7e8" />
       {/* Signature purple bow at the neck */}
       <g
         className="puppy-bow"
         transform="translate(60 74.5) scale(0.46) translate(-60 -76)"
       >
-        <path
-          d="M28 72q32 9 64 0l-2 5q-30 9-60 0Z"
-          fill="#8556c4"
-        />
+        <path d="M28 72q32 9 64 0l-2 5q-30 9-60 0Z" fill="#8556c4" />
         <path
           d="M60 76c-7-9-17-11-20-6-3 5 0 13 5 15 6 1 11-4 15-9Z"
           fill="#9b6bd6"
@@ -159,7 +153,13 @@ export const flatArt: Record<string, Draw> = {
   reindeer: () => (
     <>
       {/* Rounded velvety baby antlers */}
-      <g fill="none" stroke="#8a5632" strokeWidth="6.5" strokeLinecap="round" strokeLinejoin="round">
+      <g
+        fill="none"
+        stroke="#8a5632"
+        strokeWidth="6.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
         <path d="M44 25c-6-8-6-16-2-21m1 12-9-4M76 25c6-8 6-16 2-21m-1 12 9-4" />
       </g>
       {/* Fluffy little tail */}
@@ -174,15 +174,38 @@ export const flatArt: Record<string, Draw> = {
       <circle cx="82" cy="100" r="2.2" fill="#fae8d0" opacity="0.7" />
       {/* Festive red collar with golden sleigh bell */}
       <path d="M39 73q21 10 42 0l1.5 6.5q-22.5 10-45 0Z" fill="#e64543" />
-      <path d="M40 76.5q20 9 40 0" stroke="#c92e2c" strokeWidth="1.8" fill="none" strokeLinecap="round" />
-      <circle cx="60" cy="82" r="5" fill="#ffd03b" stroke="#d49b1a" strokeWidth="1.2" />
+      <path
+        d="M40 76.5q20 9 40 0"
+        stroke="#c92e2c"
+        strokeWidth="1.8"
+        fill="none"
+        strokeLinecap="round"
+      />
+      <circle
+        cx="60"
+        cy="82"
+        r="5"
+        fill="#ffd03b"
+        stroke="#d49b1a"
+        strokeWidth="1.2"
+      />
       <circle cx="58.5" cy="80.5" r="1.4" fill="#fff8c4" />
       <circle cx="60" cy="83.2" r="1.2" fill="#8a5632" />
-      <path d="M60 83.2v2.8" stroke="#8a5632" strokeWidth="1.2" strokeLinecap="round" />
+      <path
+        d="M60 83.2v2.8"
+        stroke="#8a5632"
+        strokeWidth="1.2"
+        strokeLinecap="round"
+      />
       {/* Cute cloven hooves */}
       <rect x="36" y="104" width="16" height="9" rx="4.5" fill="#633b20" />
       <rect x="68" y="104" width="16" height="9" rx="4.5" fill="#633b20" />
-      <path d="M44 108v5m32-5v5" stroke="#4a2b16" strokeWidth="2" strokeLinecap="round" />
+      <path
+        d="M44 108v5m32-5v5"
+        stroke="#4a2b16"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
       {/* Expressive leaf-shaped ears */}
       <ellipse
         cx="27"
@@ -227,7 +250,14 @@ export const flatArt: Record<string, Draw> = {
       <Face y={44} dx={14} mouthY={60} />
       {/* Shiny cherry-brown nose */}
       <ellipse cx="60" cy="53" rx="7" ry="5" fill="#e84f3d" />
-      <ellipse cx="57.8" cy="51.3" rx="2.3" ry="1.2" fill="#fff" opacity="0.7" />
+      <ellipse
+        cx="57.8"
+        cy="51.3"
+        rx="2.3"
+        ry="1.2"
+        fill="#fff"
+        opacity="0.7"
+      />
       <ellipse cx="37" cy="55" rx="6" ry="4.2" fill={BLUSH} opacity="0.85" />
       <ellipse cx="83" cy="55" rx="6" ry="4.2" fill={BLUSH} opacity="0.85" />
     </>
@@ -310,16 +340,16 @@ export const flatArt: Record<string, Draw> = {
       <circle cx="36.5" cy="69" r="5.8" fill={INK} />
       <circle cx="38.4" cy="67" r="2.1" fill="#fff" />
       <circle cx="34.7" cy="70.8" r="1" fill="#fff" opacity="0.85" />
-      <ellipse cx="42" cy="78.5" rx="6.5" ry="4.2" fill={BLUSH} opacity="0.88" />
-      {/* Signature tangerine sitting right on the low flat head */}
       <ellipse
-        cx="41"
-        cy="52"
-        rx="11"
-        ry="2.3"
-        fill="#9e6230"
-        opacity="0.4"
+        cx="42"
+        cy="78.5"
+        rx="6.5"
+        ry="4.2"
+        fill={BLUSH}
+        opacity="0.88"
       />
+      {/* Signature tangerine sitting right on the low flat head */}
+      <ellipse cx="41" cy="52" rx="11" ry="2.3" fill="#9e6230" opacity="0.4" />
       <ellipse cx="41" cy="44" rx="10.5" ry="8.5" fill="#ff9429" />
       <ellipse
         cx="37.5"
@@ -345,10 +375,7 @@ export const flatArt: Record<string, Draw> = {
   tree: () => (
     <>
       <ellipse cx="60" cy="113" rx="28" ry="5" fill="#6baa52" opacity="0.35" />
-      <path
-        d="M47 115c5-26 6-44 3-60h20c-3 16-2 34 3 60Z"
-        fill="#b57c4e"
-      />
+      <path d="M47 115c5-26 6-44 3-60h20c-3 16-2 34 3 60Z" fill="#b57c4e" />
       <path d="M60 55h10c-3 16-2 34 3 60H60Z" fill="#99643b" />
       <circle cx="34" cy="54" r="27" fill="#46a854" />
       <circle cx="86" cy="54" r="27" fill="#46a854" />
@@ -362,7 +389,13 @@ export const flatArt: Record<string, Draw> = {
         [61, 63],
       ].map(([x, y]) => (
         <g key={x}>
-          <path d={`M${x} ${y - 7}q2-4 5-3`} stroke="#5a3820" strokeWidth="2" fill="none" strokeLinecap="round" />
+          <path
+            d={`M${x} ${y - 7}q2-4 5-3`}
+            stroke="#5a3820"
+            strokeWidth="2"
+            fill="none"
+            strokeLinecap="round"
+          />
           <circle cx={x} cy={y} r="8.5" fill="#f25755" />
           <circle cx={x - 2.8} cy={y - 2.8} r="2.4" fill="#ffd0cc" />
         </g>

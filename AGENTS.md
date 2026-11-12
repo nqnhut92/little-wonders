@@ -2,7 +2,7 @@
 
 # Engineering instructions
 
-Use the existing checkout; do not create worktrees unless requested. Use Node 22+, `npm ci`, typecheck, lint, Vitest, docs checks and build. Run Playwright for interaction changes.
+Use the existing checkout; do not create worktrees unless requested. Use Node 22+, `npm ci`, typecheck, lint, `npm run format:check`, Vitest, docs checks and build. Format with `npm run format` (Prettier) before committing. Run Playwright for interaction changes.
 
 Keep child-facing text and speech Vietnamese. README and engineering/product documents must have synchronized English/Vietnamese pairs with top-of-file partner links. Update both and run `npm run docs:sync` after semantic review, then `npm run docs:check`.
 

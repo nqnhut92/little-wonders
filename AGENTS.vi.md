@@ -2,7 +2,7 @@
 
 # Hướng dẫn kỹ thuật
 
-Dùng checkout hiện tại; không tạo worktree trừ khi được yêu cầu. Dùng Node 22+, `npm ci`, typecheck, lint, Vitest, kiểm tra docs và build. Chạy Playwright khi đổi tương tác.
+Dùng checkout hiện tại; không tạo worktree trừ khi được yêu cầu. Dùng Node 22+, `npm ci`, typecheck, lint, `npm run format:check`, Vitest, kiểm tra docs và build. Định dạng bằng `npm run format` (Prettier) trước khi commit. Chạy Playwright khi đổi tương tác.
 
 Giữ chữ và lời nói cho bé bằng tiếng Việt. README và tài liệu kỹ thuật/sản phẩm phải có cặp Anh/Việt đồng bộ có liên kết ở đầu file. Sửa cả hai và chạy `npm run docs:sync` sau rà ý nghĩa, rồi `npm run docs:check`.
 
