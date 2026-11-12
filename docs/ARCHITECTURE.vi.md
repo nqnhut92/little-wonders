@@ -14,7 +14,7 @@ Garden/Activities → Action có kiểu → `apply` → `World` → lưu `localS
 - `src/game/visitors.ts` & `src/game/events.ts`: các hàm chọn thuần cho khách thăm vườn và sự kiện bất ngờ khi bé nghỉ tay (nhận hàm sinh số ngẫu nhiên tiêm từ ngoài).
 - `src/data`: danh mục khám phá, cây trồng, bạn đồng hành (`pals.ts`), công thức nấu ăn, vùng đất, cảnh theo dữ liệu (`scenes.ts`) và quy tắc tương tác.
 - `src/components`: bộ tranh SVG chibi biểu cảm (`Art.tsx` cùng các bản vẽ trong `ArtFlat.tsx` và `ArtFlatMore.tsx`, cảnh nền tràn viền và bản đồ thung lũng trong `SceneBackdrop.tsx`, hiệu ứng phát sáng cho đèn trong `PaintFilters.tsx`), trình dựng cảnh theo dữ liệu (`Garden.tsx`), bản đồ thung lũng (`ValleyMap.tsx`), bếp, bạn thú, ngôi nhà, đàn gỗ và sổ khám phá.
-- `src/services`: lưu trữ cục bộ, hàng đợi gửi lại (retry) và âm thanh Web Audio / đọc giọng nói (`little-wonders-audio` lưu theo trình duyệt, mặc định tắt). `App.tsx` điều phối hồ sơ, vùng đất và các bảng hoạt động.
+- `src/services`: lưu trữ cục bộ, hàng đợi gửi lại (retry) và âm thanh Web Audio / đọc giọng nói (`little-wonders-audio` lưu theo trình duyệt, mặc định tắt; `little-wonders-music` cho nhạc nền, mặc định bật khi đã bật loa). `App.tsx` điều phối hồ sơ, vùng đất và các bảng hoạt động.
 - `src/styles`: biến thiết kế (`tokens.css`) cùng kiểu vòng focus và thanh cuộn dùng chung. `src/ui`: bộ điều khiển chế độ giao diện và vùng cuộn độc lập framework. `src/components/Icons.tsx`: icon giao diện.
 - `api/index.ts` và `api/_lib/security.ts`: Google OAuth, phiên đăng nhập có chữ ký, kiểm tra quyền sở hữu hồ sơ và chống CSRF.
 
@@ -60,4 +60,4 @@ Màn hình cảnh phủ kín `100dvh` với các cụm nút nổi hiệu ứng k
 
 ## Hoạt động ngoại tuyến và hiển thị
 
-Service worker lưu sẵn (precache) khung ứng dụng và toàn bộ tài nguyên đóng gói, bao gồm các tệp font Nunito `.woff2` tự host (`latin` và `vietnamese`). Âm thanh phát các nốt ngũ cung êm dịu và đọc lời thoại tiếng Việt sau khi người dùng tương tác và bật loa.
+Service worker lưu sẵn (precache) khung ứng dụng và toàn bộ tài nguyên đóng gói, bao gồm các tệp font Nunito `.woff2` tự host (`latin` và `vietnamese`). Âm thanh phát các nốt ngũ cung êm dịu và đọc lời thoại tiếng Việt sau khi người dùng tương tác và bật loa. Nhạc nền lặp một bản CC0 ở bản đồ thung lũng và một bản khác khi vào vùng đất (`public/assets/music-*.{m4a,mp3}`, được precache để chơi offline), chuyển bản bằng cross-fade, tự nhỏ lại khi đang đọc lời thoại và tạm dừng khi tab bị ẩn.

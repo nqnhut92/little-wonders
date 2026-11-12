@@ -5,6 +5,8 @@ import { cn } from "../styles";
 export type IconName =
   | "speaker-on"
   | "speaker-off"
+  | "music-on"
+  | "music-off"
   | "book"
   | "gear"
   | "bulb"
@@ -23,6 +25,9 @@ export type IconName =
   | "night-moon";
 const speaker = (
   <path d="M4 9.5A1.5 1.5 0 0 1 5.5 8H8l4.2-3.4a1 1 0 0 1 1.6.8v13.2a1 1 0 0 1-1.6.8L8 16H5.5A1.5 1.5 0 0 1 4 14.5z" />
+);
+const note = (
+  <path d="M9 5.6a1.4 1.4 0 0 1 1.1-1.4l7.2-1.6A1.4 1.4 0 0 1 19 4v11.4a3 3 0 1 1-2.4-2.9V7.3l-5.2 1.2v8.9A3 3 0 1 1 9 14.5z" />
 );
 const line = {
   fill: "none",
@@ -47,6 +52,13 @@ const paths: Record<IconName, ReactNode> = {
     <>
       {speaker}
       <path {...line} d="m17 9.6 4.8 4.8m0-4.8L17 14.4" />
+    </>
+  ),
+  "music-on": note,
+  "music-off": (
+    <>
+      {note}
+      <path {...line} d="M3.5 3.5 20.5 20.5" />
     </>
   ),
   book: (

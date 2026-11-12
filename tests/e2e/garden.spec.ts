@@ -440,6 +440,13 @@ test("day/night toggle, xylophone, audio persistence and Ao sen region work end-
   await expect(
     page.getByRole("button", { name: "Tắt âm thanh" }),
   ).toHaveAttribute("aria-pressed", "true");
+  // Background music follows the sound switch, is on by default and has its own persisted switch.
+  await expect(
+    page.getByRole("button", { name: "Tắt nhạc nền" }),
+  ).toHaveAttribute("aria-pressed", "true");
+  for (const file of ["music-valley.m4a", "music-play.mp3"])
+    expect((await page.request.get(`/assets/${file}`)).ok()).toBe(true);
+  await page.getByRole("button", { name: "Tắt nhạc nền" }).click();
   // Day/Night toggle syncs into world state and renders moon & owl.
   await activate(page, "Chuyển sang ban đêm");
   await expect(page.locator(".garden")).toHaveAttribute("data-time", "night");
@@ -456,6 +463,9 @@ test("day/night toggle, xylophone, audio persistence and Ao sen region work end-
   await expect(
     page.getByRole("button", { name: "Tắt âm thanh" }),
   ).toHaveAttribute("aria-pressed", "true");
+  await expect(
+    page.getByRole("button", { name: "Bật nhạc nền" }),
+  ).toHaveAttribute("aria-pressed", "false");
   await activate(page, "Vườn nhà");
   await expect(page.locator(".garden")).toHaveAttribute("data-time", "night");
   // Seed region_pond_open in localStorage to verify entering Ao sen (data-driven P5).

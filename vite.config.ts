@@ -12,14 +12,14 @@ export default defineConfig({
       closeBundle() {
         const html = readFileSync("dist/index.html", "utf8");
         const sw = readFileSync("public/sw.js", "utf8");
-        // Fonts and public/assets illustrations are referenced dynamically or from CSS, so precache them offline.
+        // Fonts and public/assets illustrations and music are referenced dynamically or from CSS, so precache them offline.
         const bundled = [
           ...readdirSync("dist/assets")
             .filter((f) => f.endsWith(".woff2"))
             .sort()
             .map((f) => `/assets/${f}`),
           ...readdirSync("public/assets")
-            .filter((f) => /\.(png|jpe?g|webp|svg)$/i.test(f))
+            .filter((f) => /\.(png|jpe?g|webp|svg|mp3|m4a)$/i.test(f))
             .sort()
             .map((f) => `/assets/${f}`),
         ];
@@ -28,7 +28,7 @@ export default defineConfig({
           .update(sw)
           .update(bundled.join());
         for (const file of readdirSync("public/assets").filter((f) =>
-          /\.(png|jpe?g|webp|svg)$/i.test(f),
+          /\.(png|jpe?g|webp|svg|mp3|m4a)$/i.test(f),
         ))
           hash.update(readFileSync(`public/assets/${file}`));
         for (const file of [

@@ -14,7 +14,7 @@ Garden/Activities → typed Action → `apply` → `World` → immediate `localS
 - `src/game/visitors.ts` & `src/game/events.ts`: pure selectors for garden visitors and injected-RNG idle surprise events.
 - `src/data`: discovery inventory, crops, companions (`pals.ts`), recipes, regions, data-driven region scenes (`scenes.ts`) and interaction rules.
 - `src/components`: expressive chibi SVG artwork (`Art.tsx` with drawings in `ArtFlat.tsx` and `ArtFlatMore.tsx`, full-bleed backdrops and valley map in `SceneBackdrop.tsx`, and light-glow definitions in `PaintFilters.tsx`), data-driven scene renderer (`Garden.tsx`), valley map (`ValleyMap.tsx`), kitchen, companions, house, xylophone and notebook.
-- `src/services`: local persistence, retry queue and Web Audio / speech synthesis (`little-wonders-audio` stored per browser, off by default). `App.tsx` coordinates profiles, regions and modal panels.
+- `src/services`: local persistence, retry queue and Web Audio / speech synthesis (`little-wonders-audio` stored per browser, off by default; `little-wonders-music` for background music, on by default once sound is on). `App.tsx` coordinates profiles, regions and modal panels.
 - `src/styles`: design tokens (`tokens.css`) and shared focus/scrollbar styles. `src/ui`: framework-independent theme and scroll-region controllers. `src/components/Icons.tsx`: interface icons.
 - `api/index.ts` and `api/_lib/security.ts`: Google OAuth, signed sessions, ownership checks and CSRF protection.
 
@@ -60,4 +60,4 @@ The active scene fills `100dvh` with floating glass controls: the Lucky guide an
 
 ## Offline and rendering
 
-The service worker precaches the application shell and bundled assets, including self-hosted Nunito `.woff2` font files (`latin` and `vietnamese` subsets). Audio synthesizes gentle pentatonic notes and speaks Vietnamese phrases only after user interaction when sound is enabled.
+The service worker precaches the application shell and bundled assets, including self-hosted Nunito `.woff2` font files (`latin` and `vietnamese` subsets). Audio synthesizes gentle pentatonic notes and speaks Vietnamese phrases only after user interaction when sound is enabled. Background music loops one CC0 track on the valley map and another inside a region (`public/assets/music-*.{m4a,mp3}`, precached for offline play), cross-fades between them, lowers itself while a phrase is spoken and pauses when the tab is hidden.
