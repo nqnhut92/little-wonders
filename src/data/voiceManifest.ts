@@ -106,6 +106,7 @@ export const voiceFiles: Record<string, string> = {
   "Cạp cạp! Vịt con bơi vòng quanh lá sen!": "/assets/voice/v-5b5a985b5a.m4a",
   "Cát động đậy… ai đang trốn dưới đó vậy ta?":
     "/assets/voice/v-8e7138666a.m4a",
+  "Cây cần thêm nắng ấm!": "/assets/voice/v-007cc615e5.m4a",
   "Chấm tròn trên áo bạn bọ rùa!": "/assets/voice/v-a89a9ae076.m4a",
   "Chào bạn ốc sên đáng yêu nhé!": "/assets/voice/v-80c9314516.m4a",
   "Chào con đến Thung lũng nhỏ! Chạm vào Vườn nhà để bắt đầu chơi nhé!":
@@ -337,6 +338,7 @@ export const voiceFiles: Record<string, string> = {
   "Lucky vui lắm! Lucky vẫn chờ nước ép dưa hấu nhé!":
     "/assets/voice/v-3df7957cf5.m4a",
   "Lucky vui lắm! Lucky vẫn chờ táo nhé!": "/assets/voice/v-c8b661febe.m4a",
+  "Mầm cây đang khát nước!": "/assets/voice/v-f6436d0379.m4a",
   "Măm măm! bạn Capybara thích quá, quả quýt trên đầu rung rinh luôn!":
     "/assets/voice/v-e3f7d86c2d.m4a",
   "Mát rượi luôn! bạn Rùa con vẫy vây cảm ơn con nhé!":
@@ -346,9 +348,12 @@ export const voiceFiles: Record<string, string> = {
   "Mỗi sáng trong rừng nhỏ, bạn Sóc nhỏ lại đếm xem hôm nay hái được mấy trái việt quất tím.":
     "/assets/voice/v-e8d957d71b.m4a",
   "Một khoảng sân mới để con sáng tạo!": "/assets/voice/v-5a694b4802.m4a",
+  "Một khu vườn mới đang đợi con khám phá!": "/assets/voice/v-49660d84c1.m4a",
   "Một ngôi sao sáng lên!": "/assets/voice/v-7ba91104b5.m4a",
   "Mưa tí tách! Con cũng có thể kéo mây tới cây.":
     "/assets/voice/v-f109cf470a.m4a",
+  "Mưa tí tách! Mầm cây uống nước rồi!": "/assets/voice/v-db057c44ea.m4a",
+  "Nắng ấm giúp cây nở hoa!": "/assets/voice/v-b9adf940ee.m4a",
   "Nắng vàng ghé thăm khu vườn!": "/assets/voice/v-b8edd52449.m4a",
   "Ngày xửa ngày xưa, dưới nắng mai ấm áp, khu vườn nhỏ luôn mở cửa đón các bạn thú và những mầm xanh biết lớn.":
     "/assets/voice/v-78cd855abe.m4a",

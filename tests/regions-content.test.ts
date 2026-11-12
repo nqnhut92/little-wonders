@@ -27,10 +27,10 @@ function reachable(regionId: string) {
   return ids;
 }
 describe("every region is complete data", () => {
-  it("has a scene, and every region except the last is ready to open the next", () => {
+  it("has a scene for every region, with only the garden open to players right now", () => {
     for (const r of regions) {
       expect(scenes[r.id], r.id).toBeDefined();
-      expect(r.ready, r.id).toBe(true);
+      expect(r.ready, r.id).toBe(r.id === "garden");
     }
   });
   it("uses only artwork that exists", () => {

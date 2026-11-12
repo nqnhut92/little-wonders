@@ -36,7 +36,7 @@ export function ValleyMap({
         <h1 className={cn("valley-title")}>Thung lũng nhỏ</h1>
         <ValleyBackdrop className={cn("map-svg map-backdrop")} />
         {regions.map((r) => {
-          const state = devMode && r.ready ? "open" : states[r.id];
+          const state = devMode ? "open" : states[r.id];
           const isClearing = clearing.includes(r.id);
           const pos = coords[r.id] ?? { x: 50, y: 50 };
           return (

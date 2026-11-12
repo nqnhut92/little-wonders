@@ -70,8 +70,14 @@ export default function App() {
   const [panel, setPanel] = useState("");
   const [audio, setAudio] = useState(() => loadAudioPreference());
   useEffect(() => {
-    setBackgroundMusic(audio ? (activeRegion ? "play" : "valley") : null);
-  }, [audio, activeRegion]);
+    setBackgroundMusic(
+      audio && panel !== "xylophone"
+        ? activeRegion
+          ? "play"
+          : "valley"
+        : null,
+    );
+  }, [audio, activeRegion, panel]);
   const [surprise, setSurprise] = useState<SurpriseEvent | null>(null);
   const lastTouch = useRef(Date.now());
   const [message, setMessage] = useState(() => mapGreeting(local.world));

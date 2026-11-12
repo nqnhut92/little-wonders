@@ -237,7 +237,6 @@ export const scenes: Record<string, RegionScene> = {
         label: "Bướm",
         kind: "revealed",
         revealedWhen: "butterfly",
-        requires: "butterfly",
         line: "Bướm thích những bông hoa con trồng!",
         discovery: "butterfly",
         dayOnly: true,

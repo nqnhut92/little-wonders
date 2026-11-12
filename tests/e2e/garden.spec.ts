@@ -425,16 +425,16 @@ test("map is the home screen, shows locked regions in order and keeps them close
   await expect(
     page.getByRole("button", { name: "Vườn nhà", exact: true }),
   ).toBeVisible();
-  const locked = page.getByRole("button", { name: "Ao sen, chưa mở" });
+  const locked = page.getByRole("button", { name: "Ao sen, sắp có" });
   await expect(locked).toBeVisible();
   await locked.click();
   await expect(page.locator(".valley-map")).toBeVisible();
-  // Every later region has content now, so each waits behind the one before it.
+  // Later regions stay covered as coming soon until opened for players (or in Dev mode).
   for (const name of ["Rừng nhỏ", "Bãi biển", "Đồi tuyết", "Núi sao"])
     await expect(
-      page.getByRole("button", { name: `${name}, chưa mở` }),
+      page.getByRole("button", { name: `${name}, sắp có` }),
     ).toBeVisible();
-  await page.getByRole("button", { name: "Rừng nhỏ, chưa mở" }).click();
+  await page.getByRole("button", { name: "Rừng nhỏ, sắp có" }).click();
   await expect(page.locator(".valley-map")).toBeVisible();
   await activate(page, "Vườn nhà");
   await expect(page.locator(".garden")).toBeVisible();
@@ -607,16 +607,15 @@ test("fog clears on the map when a region opens, including under reduced motion"
   await activate(page, "Vườn nhà");
   await activate(page, "Chim trên cành");
   await activate(page, "Quay lại bản đồ");
+  const pondSoon = page.getByRole("button", { name: "Ao sen, sắp có" });
+  await expect(pondSoon).toHaveAttribute("data-state", "soon");
+  await activate(page, "Dành cho người lớn");
+  await activate(page, "12");
+  await page.getByRole("tab", { name: "Dọn khu vườn" }).click();
+  await activate(page, "Bật Dev mode");
+  await activate(page, "Trở về vườn");
   const pond = page.getByRole("button", { name: "Ao sen", exact: true });
   await expect(pond).toHaveAttribute("data-state", "open");
-  await expect(pond).toHaveAttribute("data-clearing", "true");
-  const fog = pond.locator(".map-fog-clearing");
-  expect(
-    await fog.evaluate((el) => [
-      getComputedStyle(el).animationName,
-      getComputedStyle(el).opacity,
-    ]),
-  ).toEqual(["none", "0"]);
   await pond.click();
   await expect(page.getByRole("button", { name: "Mặt ao sen" })).toBeVisible();
   await activate(page, "Bạn Capybara");

@@ -107,10 +107,15 @@ export async function collectVoiceLines() {
     "src/components/ValleyMap.tsx",
     "src/components/Garden.tsx",
     "src/components/Activities.tsx",
+    "src/components/AdultCorner.tsx",
     "src/game/events.ts",
   ]) {
     for (const line of scanStaticMessages(f)) add(line);
   }
+  add("Mưa tí tách! Mầm cây uống nước rồi!");
+  add("Nắng ấm giúp cây nở hoa!");
+  add("Mầm cây đang khát nước!");
+  add("Cây cần thêm nắng ấm!");
   for (const h of hints) add(h);
 
   // Priority 2: Garden scene, seed prompts & interactions.

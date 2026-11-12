@@ -39,6 +39,11 @@ const snailSpots = [
   { x: 62, y: 72 },
   { x: 88, y: 79 },
 ];
+const birdSpots = [
+  { x: 17, y: 29 },
+  { x: 11, y: 24 },
+  { x: 22, y: 33 },
+];
 export function Garden({
   regionId = "garden",
   world,
@@ -73,6 +78,7 @@ export function Garden({
   const [wind, setWind] = useState(false);
   const [frogSpot, setFrogSpot] = useState(0);
   const [snailSpot, setSnailSpot] = useState(0);
+  const [birdSpot, setBirdSpot] = useState(0);
   const [fireflyPos, setFireflyPos] = useState({ x: 46, y: 38 });
   const [drag, setDrag] = useState<{
     kind: string;
@@ -197,6 +203,7 @@ export function Garden({
       if (h.id === "grass") act({ type: "discover", id: "worm" });
       react(h.id, h.line ?? "", h.discovery);
     } else {
+      if (h.id === "bird") setBirdSpot((i) => (i + 1) % birdSpots.length);
       react(h.id, h.line ?? "", h.discovery);
     }
   };
@@ -384,11 +391,13 @@ export function Garden({
             h.kind === "pal" && h.palId && h.palId !== "puppy"
               ? pals.find((p) => p.id === h.palId)
               : undefined;
+          const pos =
+            h.id === "bird" ? birdSpots[birdSpot] : { x: h.x, y: h.y };
           return object(
             h.id,
             h.kind === "build" && h.stages ? h.stages[buildStage(h)] : h.art,
-            h.x,
-            h.y,
+            pos.x,
+            pos.y,
             h.w,
             h.label,
             () => triggerHotspot(h),

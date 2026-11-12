@@ -229,7 +229,7 @@ main {
 .basket-count {
   position: absolute;
   left: var(--edge-left);
-  top: calc(var(--edge-top) + var(--tap-kid) + 10px);
+  top: calc(var(--edge-top) + 88px);
   min-height: var(--tap-kid);
   z-index: 6;
   display: flex;
