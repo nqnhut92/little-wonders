@@ -1,12 +1,13 @@
 import { cn } from "../styles";
 import { regions } from "../data/regions";
-import { regionState } from "../game/regions";
+import { regionProgress, regionState } from "../game/regions";
 import { Art } from "./Art";
 import { ValleyBackdrop } from "./SceneBackdrop";
 import type { World } from "../game/engine";
 type Props = {
   world: World;
   clearing: string[];
+  devMode?: boolean;
   onEnter: (regionId: string) => void;
   say: (text: string, kind?: string) => void;
 };
@@ -19,7 +20,13 @@ const coords: Record<string, { x: number; y: number }> = {
   snow: { x: 74, y: 50 },
   stars: { x: 83, y: 20 },
 };
-export function ValleyMap({ world, clearing, onEnter, say }: Props) {
+export function ValleyMap({
+  world,
+  clearing,
+  devMode = false,
+  onEnter,
+  say,
+}: Props) {
   const states = Object.fromEntries(
     regions.map((r) => [r.id, regionState(world.discoveries, r)]),
   );
@@ -29,7 +36,7 @@ export function ValleyMap({ world, clearing, onEnter, say }: Props) {
         <h1 className={cn("valley-title")}>Thung lũng nhỏ</h1>
         <ValleyBackdrop className={cn("map-svg map-backdrop")} />
         {regions.map((r) => {
-          const state = states[r.id];
+          const state = devMode && r.ready ? "open" : states[r.id];
           const isClearing = clearing.includes(r.id);
           const pos = coords[r.id] ?? { x: 50, y: 50 };
           return (
@@ -81,6 +88,24 @@ export function ValleyMap({ world, clearing, onEnter, say }: Props) {
                 )}
               </span>
               <span className={cn("map-label")}>{r.name}</span>
+              {state === "open" &&
+                (() => {
+                  const p = regionProgress(world.discoveries, r);
+                  return (
+                    <span
+                      className={cn("map-progress")}
+                      role="progressbar"
+                      aria-label={`Tiến độ ${r.name}`}
+                      aria-valuenow={p.found}
+                      aria-valuemin={0}
+                      aria-valuemax={p.total}
+                    >
+                      <span
+                        style={{ width: `${Math.round(p.ratio * 100)}%` }}
+                      />
+                    </span>
+                  );
+                })()}
               {state === "soon" && <small>Sắp có</small>}
             </button>
           );

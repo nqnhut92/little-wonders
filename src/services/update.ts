@@ -40,6 +40,7 @@ export function watchForUpdates(env: UpdateEnv) {
   const { registration, container, page } = env;
   // The first install also fires controllerchange (clients.claim); only a replaced worker means a new version.
   const hadController = Boolean(container.controller);
+  let expectedTakeover = false;
   let reloadPending = false;
   let lastCheck = -Infinity;
 
@@ -50,8 +51,10 @@ export function watchForUpdates(env: UpdateEnv) {
     }
   };
   const activateWaiting = () => {
-    if (registration.waiting && container.controller)
+    if (registration.waiting && container.controller) {
+      expectedTakeover = true;
       registration.waiting.postMessage({ type: "SKIP_WAITING" });
+    }
   };
   const check = () => {
     const now = env.now();
@@ -61,7 +64,7 @@ export function watchForUpdates(env: UpdateEnv) {
   };
 
   container.addEventListener("controllerchange", () => {
-    if (!hadController) return;
+    if (!hadController || !expectedTakeover) return;
     reloadPending = true;
     if (page.hidden) reloadIfHidden();
     else env.notify();

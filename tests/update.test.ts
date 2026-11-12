@@ -64,6 +64,11 @@ describe("picking up a new deploy", () => {
   });
   it("does not reload while the child is playing, only once the tab is hidden", () => {
     const t = setup();
+    t.registration.installing = t.worker;
+    t.on.updatefound();
+    t.registration.waiting = { postMessage: vi.fn() };
+    t.worker.state = "installed";
+    t.worker.listener();
     t.on.controllerchange();
     expect(t.reload).not.toHaveBeenCalled();
     expect(t.notify).toHaveBeenCalledTimes(1);
@@ -75,17 +80,26 @@ describe("picking up a new deploy", () => {
   });
   it("reloads at once when the update lands in a hidden tab", () => {
     const t = setup();
+    t.registration.installing = t.worker;
+    t.on.updatefound();
+    t.registration.waiting = { postMessage: vi.fn() };
+    t.worker.state = "installed";
+    t.worker.listener();
     t.page.hidden = true;
     t.on.controllerchange();
     expect(t.reload).toHaveBeenCalledTimes(1);
     expect(t.notify).not.toHaveBeenCalled();
   });
-  it("ignores the very first install", () => {
+  it("ignores the very first install and spurious controllerchange events", () => {
     const t = setup(null);
     t.page.hidden = true;
     t.on.controllerchange();
     expect(t.reload).not.toHaveBeenCalled();
     expect(t.notify).not.toHaveBeenCalled();
+    const t2 = setup();
+    t2.on.controllerchange();
+    expect(t2.reload).not.toHaveBeenCalled();
+    expect(t2.notify).not.toHaveBeenCalled();
   });
   it("checks on return and on the interval, never while hidden or in bursts", () => {
     const t = setup();

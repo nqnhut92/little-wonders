@@ -7,6 +7,8 @@ import { assetIds } from "../src/components/Art";
 import { apply, basketOf, emptyWorld } from "../src/game/engine";
 import { gatherKinds } from "../src/data/ids";
 import { recipes } from "../src/data/recipes";
+import { pals } from "../src/data/pals";
+import { currentSeasonalEvent, seasonalInfo } from "../src/game/seasons";
 import { worldSchema } from "../api/index";
 
 const notebook = new Set(discoveries.map((d) => d.id));
@@ -100,5 +102,69 @@ describe("gathering and new dishes", () => {
     expect(new Set(recipes.map((r) => [...r.needs].sort().join())).size).toBe(
       recipes.length,
     );
+  });
+  it("cooks blueberry jam, pine tea and star cake", () => {
+    const w = {
+      ...emptyWorld(),
+      fields: {
+        basket: {
+          value: { blueberry: 3, pinecone: 1, apple: 2, sunflower: 1 },
+          clock: 1,
+          device: "d",
+        },
+      },
+    };
+    expect(
+      basketOf(
+        apply(w, { type: "cook", items: ["blueberry", "blueberry"] }, "d"),
+      ).dish_blueberry_jam,
+    ).toBe(1);
+    expect(
+      basketOf(apply(w, { type: "cook", items: ["pinecone", "apple"] }, "d"))
+        .dish_pine_tea,
+    ).toBe(1);
+    expect(
+      basketOf(
+        apply(
+          w,
+          { type: "cook", items: ["sunflower", "blueberry", "apple"] },
+          "d",
+        ),
+      ).dish_star_cake,
+    ).toBe(1);
+  });
+});
+
+describe("region stories, regional pals and seasonal lunar events", () => {
+  it("gives every region a story and every pal valid stories, thanks and wants", () => {
+    for (const r of regions) {
+      expect(scenes[r.id].story.length).toBeGreaterThan(10);
+    }
+    expect(pals.map((p) => p.id)).toEqual([
+      "puppy",
+      "reindeer",
+      "capybara",
+      "squirrel",
+      "turtle",
+      "penguin",
+      "owl",
+    ]);
+    for (const pal of pals) {
+      expect(pal.stories.length).toBe(3);
+      expect(pal.thanks.length).toBe(3);
+      expect(pal.wants.length).toBe(4);
+    }
+  });
+  it("detects Tet and Mid-Autumn from the lunar calendar and supports override", () => {
+    expect(currentSeasonalEvent(new Date("2026-02-17T12:00:00Z"))).toBe("tet");
+    expect(currentSeasonalEvent(new Date("2026-09-25T12:00:00Z"))).toBe(
+      "mid_autumn",
+    );
+    expect(currentSeasonalEvent(new Date("2026-06-15T12:00:00Z"))).toBeNull();
+    expect(currentSeasonalEvent(new Date("2026-06-15T12:00:00Z"), "tet")).toBe(
+      "tet",
+    );
+    expect(seasonalInfo("tet").line.length).toBeGreaterThan(10);
+    expect(seasonalInfo("mid_autumn").line.length).toBeGreaterThan(10);
   });
 });

@@ -5,7 +5,11 @@ import {
   luckyDiscoveries,
   type Region,
 } from "../src/data/regions";
-import { regionState, regionsToOpen } from "../src/game/regions";
+import {
+  regionProgress,
+  regionState,
+  regionsToOpen,
+} from "../src/game/regions";
 import { apply, emptyWorld, type Action, type World } from "../src/game/engine";
 
 const ids = (n: number, prefix = "d") =>
@@ -16,9 +20,14 @@ const demo: Region[] = [
   { id: "c", name: "C", ready: false, after: "b", counted: [] },
 ];
 describe("regions", () => {
-  it("opens the next region at 70% and not before", () => {
-    expect(regionsToOpen(ids(6), demo)).toEqual([]);
-    expect(regionsToOpen(ids(7), demo)).toEqual([regionOpenId("b")]);
+  it("opens the next region at 85% and not before", () => {
+    expect(regionsToOpen(ids(8), demo)).toEqual([]);
+    expect(regionsToOpen(ids(9), demo)).toEqual([regionOpenId("b")]);
+    expect(regionProgress(ids(4), demo[0])).toEqual({
+      found: 4,
+      total: 10,
+      ratio: 0.4,
+    });
   });
   it("never locks a region again when new discoveries lower the ratio", () => {
     const found = [...ids(7), regionOpenId("b")];

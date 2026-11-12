@@ -37,6 +37,7 @@ export type RegionScene = {
   id: string;
   title: string;
   variant: "garden" | "pond" | "forest" | "beach" | "snow" | "stars";
+  story: string;
   // Cloud and sun in the sky; the starry mountain has none.
   sky?: boolean;
   hasHouse: boolean;
@@ -49,6 +50,8 @@ export const scenes: Record<string, RegionScene> = {
     id: "garden",
     title: "Khu Vườn Kỳ Diệu",
     variant: "garden",
+    story:
+      "Ngày xửa ngày xưa, dưới nắng mai ấm áp, khu vườn nhỏ luôn mở cửa đón các bạn thú và những mầm xanh biết lớn.",
     hasHouse: true,
     hasCritters: true,
     signs: [
@@ -256,6 +259,8 @@ export const scenes: Record<string, RegionScene> = {
     id: "pond",
     title: "Ao Sen Thì Thầm",
     variant: "pond",
+    story:
+      "Bên bờ ao sen thơm ngát, gió nhẹ ru từng lá sen xanh và kể chuyện chú vịt con tập bơi.",
     hasHouse: false,
     hasCritters: false,
     signs: [{ text: "Bờ ao sen", className: "sign-pond" }],
@@ -356,6 +361,8 @@ export const scenes: Record<string, RegionScene> = {
     id: "forest",
     title: "Rừng Nhỏ Xanh Mát",
     variant: "forest",
+    story:
+      "Trong khu rừng xanh rì rào tiếng lá, bạn Sóc nhỏ cất giữ hạt dẻ thơm và rủ nhím con đi tìm quả ngọt.",
     hasHouse: false,
     hasCritters: false,
     signs: [{ text: "Lối mòn trong rừng", className: "sign-forest" }],
@@ -400,8 +407,9 @@ export const scenes: Record<string, RegionScene> = {
         x: 74,
         y: 38,
         w: 8,
-        label: "Bạn sóc",
-        kind: "interact",
+        label: "Bạn Sóc nhỏ",
+        kind: "pal",
+        palId: "squirrel",
         line: "Sóc nhỏ giấu hạt dẻ cho mùa đông. Tí tách tí tách!",
         discovery: "squirrel",
         dayOnly: true,
@@ -446,6 +454,8 @@ export const scenes: Record<string, RegionScene> = {
     id: "beach",
     title: "Bãi Biển Nắng Vàng",
     variant: "beach",
+    story:
+      "Trên bãi cát vàng óng ánh nắng, sóng biển hát rì rào đưa bạn Rùa con lên bờ nghe vỏ sò kể chuyện.",
     hasHouse: false,
     hasCritters: false,
     signs: [{ text: "Bờ cát vàng", className: "sign-beach" }],
@@ -528,8 +538,9 @@ export const scenes: Record<string, RegionScene> = {
         x: 79,
         y: 62,
         w: 9,
-        label: "Rùa con",
-        kind: "interact",
+        label: "Bạn Rùa con",
+        kind: "pal",
+        palId: "turtle",
         line: "Rùa con chậm rãi bò ra biển. Cố lên rùa ơi!",
         discovery: "turtle",
       },
@@ -551,6 +562,8 @@ export const scenes: Record<string, RegionScene> = {
     id: "snow",
     title: "Đồi Tuyết Lấp Lánh",
     variant: "snow",
+    story:
+      "Giữa đồi tuyết trắng xóa êm như bông, bạn Cánh cụt và gấu con cùng nhau nặn người tuyết mũi cà rốt.",
     hasHouse: false,
     hasCritters: false,
     signs: [{ text: "Đồi tuyết trắng", className: "sign-snow" }],
@@ -599,8 +612,9 @@ export const scenes: Record<string, RegionScene> = {
         x: 46,
         y: 68,
         w: 8,
-        label: "Chim cánh cụt",
-        kind: "interact",
+        label: "Bạn Cánh cụt",
+        kind: "pal",
+        palId: "penguin",
         line: "Chim cánh cụt lạch bạch, lạch bạch đi chơi.",
         discovery: "penguin",
       },
@@ -632,6 +646,8 @@ export const scenes: Record<string, RegionScene> = {
     id: "stars",
     title: "Núi Sao Lung Linh",
     variant: "stars",
+    story:
+      "Trên đỉnh núi cao gần bầu trời đêm, bạn Cú mèo thắp đèn ngôi sao và kể chuyện về từng chòm sao sáng.",
     sky: false,
     hasHouse: false,
     hasCritters: false,
@@ -698,9 +714,11 @@ export const scenes: Record<string, RegionScene> = {
         x: 82,
         y: 46,
         w: 8,
-        label: "Cú mèo ngắm sao",
-        kind: "interact",
+        label: "Bạn Cú mèo",
+        kind: "pal",
+        palId: "owl",
         line: "Cú mèo cũng thích ngắm sao giống con đó!",
+        discovery: "owl",
       },
       {
         id: "shooting-star",

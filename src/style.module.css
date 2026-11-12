@@ -77,8 +77,7 @@ main {
   inset: 0;
   /* One scene unit: objects scale with the smaller of the width and 1.9 x the height,
      so very wide or very tall screens never push them off the scene. */
-  container-type: size;
-  --u: min(1cqw, 1.9cqh);
+  --u: min(1vw, 1.9dvh);
   overflow: hidden;
   isolation: isolate;
   background-color: var(--scene-grass);
@@ -134,6 +133,8 @@ main {
   z-index: 3;
   aspect-ratio: 1;
   touch-action: none;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 .art {
   width: 100%;
@@ -227,8 +228,8 @@ main {
 }
 .basket-count {
   position: absolute;
-  left: calc(var(--edge-left) + var(--tap-kid) + 10px);
-  top: var(--edge-top);
+  left: var(--edge-left);
+  top: calc(var(--edge-top) + var(--tap-kid) + 10px);
   min-height: var(--tap-kid);
   z-index: 6;
   display: flex;
@@ -323,11 +324,20 @@ main {
   font-size: 13px;
   font-weight: 700;
   color: var(--scene-sign);
-  pointer-events: none;
+  background: none;
+  border: 0;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+.seasonal-ornament {
+  left: 60%;
+  top: 12%;
+  width: calc(7 * var(--u));
+  z-index: 3;
 }
 .sign-pond {
   left: 10%;
-  top: 91%;
+  top: 41%;
 }
 .sign-house {
   left: 79%;
@@ -362,13 +372,22 @@ main {
   position: absolute;
   z-index: 20;
 }
-.hud-guide {
-  bottom: var(--edge-bottom);
+.hud-top-left {
+  top: var(--edge-top);
   left: var(--edge-left);
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  pointer-events: none;
+}
+.hud-top-left > * {
+  pointer-events: auto;
+}
+.hud-guide {
   display: flex;
   align-items: center;
   gap: 10px;
-  max-width: min(320px, 30vw);
+  max-width: min(300px, 28vw);
   min-height: 74px;
   padding: 6px 10px 6px 12px;
   border-radius: var(--radius-l);
@@ -378,8 +397,7 @@ main {
   right: var(--edge-right);
 }
 .hud-back {
-  top: var(--edge-top);
-  left: var(--edge-left);
+  flex-shrink: 0;
 }
 .hud-guide > .art {
   width: 52px;
@@ -1132,6 +1150,20 @@ main {
   white-space: nowrap;
   color: var(--text);
 }
+.map-progress {
+  width: 64px;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+}
+.map-progress > span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--accent);
+  transition: width 0.3s ease;
+}
 .map-region small {
   font-size: 12px;
   font-weight: 700;
@@ -1392,6 +1424,8 @@ main {
   height: 100%;
   z-index: 0;
   pointer-events: none;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 .backdrop-snowfall {
   animation: snowfall 14s linear infinite;

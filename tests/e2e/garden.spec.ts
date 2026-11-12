@@ -540,13 +540,23 @@ test("fog clears on the map when a region opens, including under reduced motion"
   const page = await context.newPage();
   await page.goto(baseURL!);
   await page.evaluate(() => {
-    // 39 counted discoveries (< 70% of 57), excluding "bird", so tapping bird opens Ao sen.
+    // 49 counted discoveries (< 85% of 58), excluding "bird", so tapping bird opens Ao sen.
     const seed = [
       "rain",
       "sun",
       "sunflower",
       "carrot",
       "berry",
+      "story_puppy_2",
+      "story_puppy_3",
+      "story_reindeer_1",
+      "story_reindeer_2",
+      "night",
+      "moon",
+      "stars",
+      "firefly",
+      "owl",
+      "xylophone",
       "butterfly",
       "worm",
       "ladybug",
@@ -700,4 +710,61 @@ test("seed tray announces seed name and voice clips are precached", async ({
   );
   const worker = await (await page.request.get("/sw.js")).text();
   expect(worker).toContain("/assets/voice/");
+});
+
+test("region story sign, regional pals and seasonal events work end-to-end", async ({
+  page,
+}) => {
+  await page.goto("/?season=tet");
+  await page.evaluate(() => {
+    localStorage.setItem(
+      "little-wonders-v1",
+      JSON.stringify({
+        pending: false,
+        nickname: "Bạn nhỏ",
+        device: "d",
+        world: {
+          schema: 2,
+          epoch: 0,
+          discoveries: [
+            "region_pond_open",
+            "region_forest_open",
+            "region_beach_open",
+            "region_snow_open",
+            "region_stars_open",
+          ],
+          fields: {},
+        },
+      }),
+    );
+  });
+  await page.reload();
+  await activate(page, "Vườn nhà");
+  await expect(
+    page.getByRole("button", { name: "Hoa mai ngày Tết" }),
+  ).toBeVisible();
+  await activate(page, "Hoa mai ngày Tết");
+  await expect(page.locator(".hud-guide p")).toContainText("Chúc mừng năm mới");
+  await activate(page, "Nghe chuyện Khu Vườn Kỳ Diệu: Nhà của mình");
+  await expect(page.locator(".hud-guide p")).toContainText("Ngày xửa ngày xưa");
+
+  await activate(page, "Quay lại bản đồ");
+  await activate(page, "Rừng nhỏ");
+  await activate(page, "Bạn Sóc nhỏ");
+  await expect(
+    page.getByRole("heading", { name: "Lời mời của Sóc nhỏ" }),
+  ).toBeVisible();
+  await activate(page, "Giỏ thức ăn");
+  await expect(
+    page.getByRole("button", { name: "Đọc chuyện 1 của Sóc nhỏ" }),
+  ).toBeEnabled();
+  await activate(page, "Trở về vườn");
+
+  await page.goto("/?season=mid_autumn");
+  await activate(page, "Vườn nhà");
+  await expect(
+    page.getByRole("button", { name: "Đèn ông sao Trung thu" }),
+  ).toBeVisible();
+  await activate(page, "Đèn ông sao Trung thu");
+  await expect(page.locator(".hud-guide p")).toContainText("Tết Trung thu");
 });

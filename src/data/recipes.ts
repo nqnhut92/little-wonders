@@ -51,6 +51,21 @@ export const recipes: Recipe[] = [
     name: "Hạt dẻ nướng thơm",
     needs: ["chestnut", "chestnut"],
   },
+  {
+    dish: "dish_blueberry_jam",
+    name: "Mứt việt quất",
+    needs: ["blueberry", "blueberry"],
+  },
+  {
+    dish: "dish_pine_tea",
+    name: "Trà thông ấm áp",
+    needs: ["apple", "pinecone"],
+  },
+  {
+    dish: "dish_star_cake",
+    name: "Bánh ánh sao",
+    needs: ["apple", "blueberry", "sunflower"],
+  },
 ];
 // Any other mix is a surprise that is always fine to eat.
 export const mysteryDish = { dish: "dish_mystery", name: "Món bất ngờ" };

@@ -300,6 +300,44 @@ const DISH: Record<string, { fill: string; rim: string; garnish: ReactNode }> =
         </>
       ),
     },
+    "dish-blueberry-jam": {
+      fill: "#6b55b6",
+      rim: "#9884df",
+      garnish: (
+        <>
+          <circle cx="52" cy="57" r="6" fill="#463587" />
+          <circle cx="67" cy="59" r="6" fill="#463587" />
+          <circle cx="60" cy="53" r="4" fill="#8370cb" />
+        </>
+      ),
+    },
+    "dish-pine-tea": {
+      fill: "#a8c78a",
+      rim: "#d5ebc0",
+      garnish: (
+        <>
+          <path
+            d="M60 47c-6 4-8 12-4 16 4 2 10-2 10-8 0-4-2-7-6-8Z"
+            fill="#56874a"
+          />
+          <circle cx="71" cy="54" r="4" fill="#f36f65" />
+        </>
+      ),
+    },
+    "dish-star-cake": {
+      fill: "#f5c967",
+      rim: "#fde29c",
+      garnish: (
+        <>
+          <path
+            d="m60 46 4 8 8 1-6 6 2 8-8-4-8 4 2-8-6-6 8-1Z"
+            fill="#fff7d6"
+            stroke="#d99a32"
+            strokeWidth="2"
+          />
+        </>
+      ),
+    },
   };
 const dish =
   ({

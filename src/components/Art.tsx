@@ -92,6 +92,9 @@ export const assetIds = [
   "star-lantern",
   "dish-coconut",
   "dish-chestnut",
+  "dish-blueberry-jam",
+  "dish-pine-tea",
+  "dish-star-cake",
 ];
 export function Art({
   id,

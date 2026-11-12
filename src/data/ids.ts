@@ -40,6 +40,9 @@ export const dishKinds = [
   "dish_smoothie",
   "dish_coconut",
   "dish_chestnut",
+  "dish_blueberry_jam",
+  "dish_pine_tea",
+  "dish_star_cake",
   "dish_mystery",
 ] as const;
 // Things picked up in a scene rather than grown: shaken from a tree or found on the ground.

@@ -10,6 +10,13 @@ const explored = (found: string[], region: Region) =>
     ? 0
     : region.counted.filter((id) => found.includes(id)).length /
       region.counted.length;
+/** Discovery progress within a region (found count, total counted items, and 0..1 ratio). */
+export function regionProgress(found: string[], region: Region) {
+  const total = region.counted.length;
+  const count =
+    total === 0 ? 0 : region.counted.filter((id) => found.includes(id)).length;
+  return { found: count, total, ratio: total === 0 ? 0 : count / total };
+}
 // Once recorded, a region stays open even if new discoveries later push the ratio below the threshold.
 export function regionState(found: string[], region: Region): RegionState {
   if (!region.after || found.includes(regionOpenId(region.id))) return "open";

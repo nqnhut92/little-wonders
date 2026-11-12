@@ -46,8 +46,9 @@ export async function collectVoiceLines() {
         import { interactions } from "./src/data/interactions";
         import { palSpeak } from "./src/game/lunch";
         import { crops, itemName } from "./src/data/crops";
+        import { seasonalInfo } from "./src/game/seasons";
         import { voiceKey } from "./src/services/voice";
-        export { discoveries, hints, pals, regions, dishes, scenes, interactions, palSpeak, crops, itemName, voiceKey };
+        export { discoveries, hints, pals, regions, dishes, scenes, interactions, palSpeak, crops, itemName, seasonalInfo, voiceKey };
       `,
       resolveDir: process.cwd(),
       loader: "ts",
@@ -71,6 +72,7 @@ export async function collectVoiceLines() {
     palSpeak,
     crops,
     itemName,
+    seasonalInfo,
     voiceKey,
   } = mod;
 
@@ -96,6 +98,10 @@ export async function collectVoiceLines() {
 
   // Priority 1: Greetings, hints, ValleyMap, and core UI lines.
   add("Chào con! Khu vườn đang đợi con đó!");
+  add("Thung lũng nhỏ đang đợi con! Chọn một khu đã mở để khám phá nhé!");
+  add("Chào con đến Thung lũng nhỏ! Chạm vào Vườn nhà để bắt đầu chơi nhé!");
+  add("Khu này sắp có rồi, con chờ nhé!");
+  add("Con chơi thêm ở khu trước để mở khu này nhé!");
   for (const f of [
     "src/App.tsx",
     "src/components/ValleyMap.tsx",
@@ -134,11 +140,15 @@ export async function collectVoiceLines() {
   }
   for (const d of dishes) add(`Xong rồi! ${d.name}.`);
 
-  // Priority 4: Later regions & unlock announcements.
+  // Priority 4: Later regions, region stories, seasonal greetings & unlock announcements.
+  for (const season of ["tet", "mid_autumn"]) {
+    add(seasonalInfo(season).line);
+  }
   for (const r of regions) {
     if (r.after) add(`${r.name} đã mở ra rồi! Sương đang tan đó!`);
   }
   for (const [id, scene] of Object.entries(scenes)) {
+    if (scene.story) add(scene.story);
     if (id === "garden") continue;
     for (const h of scene.hotspots) {
       if (h.line) add(h.line);

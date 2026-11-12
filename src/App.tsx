@@ -87,6 +87,7 @@ export default function App() {
     [],
   );
   const [signed, setSigned] = useState(false);
+  const [devMode, setDevMode] = useState(false);
   const [attempts, setAttempts] = useState(0);
   const syncing = useRef(false);
   const selectionRequest = useRef(0);
@@ -100,6 +101,7 @@ export default function App() {
     setLocal((old) => {
       const world = apply(old.world, a, old.device);
       if (world === old.world) return old;
+      if (devMode) return { ...old, world };
       const opened = regions
         .filter(
           (r) =>
@@ -360,6 +362,7 @@ export default function App() {
         <ValleyMap
           world={local.world}
           clearing={clearing}
+          devMode={devMode}
           say={say}
           onEnter={(id) => {
             setClearing((prev) => prev.filter((x) => x !== id));
@@ -370,38 +373,40 @@ export default function App() {
         />
       )}
       {/* Controls float over the full-screen scene; there is no header or footer bar. */}
-      {activeRegion && (
-        <button
-          type="button"
-          className={cn("hud hud-back kid-button")}
-          aria-label="Quay lại bản đồ"
-          title="Quay lại bản đồ"
-          onClick={() => {
-            setActiveRegion(null);
-            setMessage(mapGreeting(local.world));
-          }}
-        >
-          <Icon name="back" size={28} />
-        </button>
-      )}
-      <div className={cn("hud hud-guide glass")}>
-        <Art id="puppy" />
-        <p aria-live="polite">{message}</p>
-        <button
-          type="button"
-          className={cn("kid-button")}
-          aria-label="Nghe gợi ý"
-          title="Nghe gợi ý"
-          onClick={() => {
-            const h = activeRegion
-              ? hints[hintIndex.current++ % hints.length]
-              : mapGreeting(local.world);
-            say(h, "puppy", h.replaceAll("Lucky", "Lắc-ki"));
-            setAttempts((a) => a + 3);
-          }}
-        >
-          <Icon name="bulb" size={28} />
-        </button>
+      <div className={cn("hud hud-top-left")}>
+        {activeRegion && (
+          <button
+            type="button"
+            className={cn("hud-back kid-button")}
+            aria-label="Quay lại bản đồ"
+            title="Quay lại bản đồ"
+            onClick={() => {
+              setActiveRegion(null);
+              setMessage(mapGreeting(local.world));
+            }}
+          >
+            <Icon name="back" size={28} />
+          </button>
+        )}
+        <div className={cn("hud-guide glass")}>
+          <Art id="puppy" />
+          <p aria-live="polite">{message}</p>
+          <button
+            type="button"
+            className={cn("kid-button")}
+            aria-label="Nghe gợi ý"
+            title="Nghe gợi ý"
+            onClick={() => {
+              const h = activeRegion
+                ? hints[hintIndex.current++ % hints.length]
+                : mapGreeting(local.world);
+              say(h, "puppy", h.replaceAll("Lucky", "Lắc-ki"));
+              setAttempts((a) => a + 3);
+            }}
+          >
+            <Icon name="bulb" size={28} />
+          </button>
+        </div>
       </div>
       {!activeRegion && (
         <button
@@ -535,6 +540,14 @@ export default function App() {
                   signed={signed}
                   profiles={profiles}
                   currentProfile={local.profile}
+                  devMode={devMode}
+                  onToggleDevMode={() => {
+                    setDevMode((was) => {
+                      if (was)
+                        setLocal((old) => ({ ...load(), device: old.device }));
+                      return !was;
+                    });
+                  }}
                   nickname={nickname}
                   setNickname={setNickname}
                   onChoose={(id, name) => void choose(id, name)}

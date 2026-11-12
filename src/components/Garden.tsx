@@ -16,6 +16,7 @@ import { palWish } from "../game/lunch";
 import { interactions } from "../data/interactions";
 import { scenes, type SceneHotspot } from "../data/scenes";
 import { gardenVisitors } from "../game/visitors";
+import { currentSeasonalEvent, seasonalInfo } from "../game/seasons";
 import { SceneBackdrop, drawnVariants } from "./SceneBackdrop";
 import type { SurpriseEvent } from "../game/events";
 type Props = {
@@ -91,6 +92,12 @@ export function Garden({
       : 0);
   const hasCrops = regionCrops.length > 0;
   const visitors = gardenVisitors(world, scene.id);
+  const seasonParam =
+    typeof window !== "undefined"
+      ? new URLSearchParams(window.location.search).get("season")
+      : null;
+  const season = currentSeasonalEvent(new Date(), seasonParam);
+  const seasonal = season ? seasonalInfo(season) : null;
   const react = (id: string, text: string, discovery?: string) => {
     setReaction(id);
     clearTimeout(reactionTimer.current);
@@ -385,9 +392,7 @@ export function Garden({
             h.w,
             h.label,
             () => triggerHotspot(h),
-            h.shadow
-              ? { filter: "drop-shadow(0 12px 0 #597a3814)" }
-              : undefined,
+            undefined,
             pal ? cropArt(palWish(world, pal)) : undefined,
           );
         })}
@@ -538,10 +543,27 @@ export function Garden({
           </div>
         </div>
       )}
+      {seasonal && (
+        <button
+          type="button"
+          className={cn("object seasonal-ornament")}
+          aria-label={seasonal.label}
+          title={seasonal.label}
+          onClick={() => say(seasonal.line, seasonal.art)}
+        >
+          <Art id={seasonal.art} night={night} />
+        </button>
+      )}
       {scene.signs.map((s) => (
-        <span key={s.text} className={cn(`garden-sign ${s.className}`)}>
+        <button
+          type="button"
+          key={s.text}
+          className={cn(`garden-sign ${s.className}`)}
+          aria-label={`Nghe chuyện ${scene.title}: ${s.text}`}
+          onClick={() => say(scene.story, "flower")}
+        >
           {s.text}
-        </span>
+        </button>
       ))}
       {drag && (
         <div className={cn("drag-ghost")} style={{ left: drag.x, top: drag.y }}>

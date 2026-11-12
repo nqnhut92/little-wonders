@@ -121,8 +121,19 @@ export function loopBounds(
 }
 const musicBuffers = new Map<string, Promise<AudioBuffer>>();
 const voiceBuffers = new Map<string, Promise<AudioBuffer>>();
+const musicOffsets = new Map<MusicTrack, number>();
 let musicGain: GainNode | undefined;
-let musicNow: { source: AudioBufferSourceNode; fade: GainNode } | undefined;
+let musicNow:
+  | {
+      track: MusicTrack;
+      source: AudioBufferSourceNode;
+      fade: GainNode;
+      loopStart: number;
+      loopEnd: number;
+      offset: number;
+      startedAt: number;
+    }
+  | undefined;
 let musicWanted: MusicTrack | null = null;
 let musicRequest = 0;
 let audioListening = false;
@@ -146,14 +157,23 @@ function loadAudioBuffer(
 }
 function stopMusic() {
   if (!ctx || !musicNow) return;
-  const { source, fade } = musicNow;
+  const { track, source, fade, loopStart, loopEnd, offset, startedAt } =
+    musicNow;
   musicNow = undefined;
+  const len = Math.max(0.01, loopEnd - loopStart);
+  const elapsed = Math.max(0, ctx.currentTime - startedAt);
+  musicOffsets.set(track, loopStart + ((offset - loopStart + elapsed) % len));
   fade.gain.cancelScheduledValues(ctx.currentTime);
   fade.gain.setTargetAtTime(0, ctx.currentTime, 0.25);
   source.stop(ctx.currentTime + 1.2);
 }
 function duckMusic(ducked: boolean) {
-  if (!ctx || !musicGain) return;
+  if (!ctx) return;
+  if (!ducked && !document.hidden && ctx.state !== "running") {
+    enablePlaybackSession();
+    void ctx.resume();
+  }
+  if (!musicGain) return;
   musicGain.gain.cancelScheduledValues(ctx.currentTime);
   musicGain.gain.setTargetAtTime(
     ducked ? duckedLevel : musicLevel,
@@ -166,17 +186,72 @@ function listenForAudio() {
   if (audioListening) return;
   audioListening = true;
   const wake = () => {
-    if (!document.hidden && ctx && ctx.state === "suspended") {
+    if (document.hidden || !ctx) return;
+    if (ctx.state !== "running") {
       enablePlaybackSession();
-      void ctx.resume();
+      void ctx.resume().then(() => {
+        if (musicWanted && !musicNow) startMusic(musicWanted, ++musicRequest);
+      });
+    } else if (musicWanted && !musicNow) {
+      startMusic(musicWanted, ++musicRequest);
     }
   };
-  addEventListener("pointerdown", wake);
-  addEventListener("keydown", wake);
+  addEventListener("pointerdown", wake, { capture: true });
+  addEventListener("touchend", wake, { capture: true });
+  addEventListener("keydown", wake, { capture: true });
   document.addEventListener("visibilitychange", () => {
     if (document.hidden) void ctx?.suspend();
     else if (musicWanted) wake();
   });
+}
+function startMusic(track: MusicTrack, request: number) {
+  try {
+    const context = ensureContext();
+    if (!musicGain) {
+      musicGain = context.createGain();
+      musicGain.gain.value = musicLevel;
+      musicGain.connect(context.destination);
+    }
+    const out = musicGain;
+    loadAudioBuffer(context, musicFiles[track], musicBuffers)
+      .then((buffer) => {
+        if (request !== musicRequest || musicWanted !== track) return;
+        stopMusic();
+        const source = context.createBufferSource();
+        const fade = context.createGain();
+        const [start, end] = loopBounds(
+          buffer.getChannelData(0),
+          buffer.sampleRate,
+        );
+        const saved = musicOffsets.get(track);
+        const offset =
+          saved !== undefined && saved >= start && saved < end ? saved : start;
+        source.buffer = buffer;
+        source.loop = true;
+        source.loopStart = start;
+        source.loopEnd = end;
+        fade.gain.setValueAtTime(0, context.currentTime);
+        fade.gain.linearRampToValueAtTime(1, context.currentTime + 1.2);
+        source.connect(fade);
+        fade.connect(out);
+        source.start(0, offset);
+        musicNow = {
+          track,
+          source,
+          fade,
+          loopStart: start,
+          loopEnd: end,
+          offset,
+          startedAt: context.currentTime,
+        };
+      })
+      .catch(() => {
+        // Offline or unsupported file: the game simply stays without music until the next change.
+        if (request === musicRequest) musicWanted = null;
+      });
+  } catch {
+    musicWanted = null;
+  }
 }
 /** Loops the given background track, cross-fading from the previous one; null fades to silence. */
 export function setBackgroundMusic(track: MusicTrack | null) {
@@ -189,42 +264,7 @@ export function setBackgroundMusic(track: MusicTrack | null) {
     duckMusic(false);
     return;
   }
-  try {
-    const context = ensureContext();
-    if (!musicGain) {
-      musicGain = context.createGain();
-      musicGain.gain.value = musicLevel;
-      musicGain.connect(context.destination);
-    }
-    const out = musicGain;
-    loadAudioBuffer(context, musicFiles[track], musicBuffers)
-      .then((buffer) => {
-        if (request !== musicRequest) return;
-        stopMusic();
-        const source = context.createBufferSource();
-        const fade = context.createGain();
-        const [start, end] = loopBounds(
-          buffer.getChannelData(0),
-          buffer.sampleRate,
-        );
-        source.buffer = buffer;
-        source.loop = true;
-        source.loopStart = start;
-        source.loopEnd = end;
-        fade.gain.setValueAtTime(0, context.currentTime);
-        fade.gain.linearRampToValueAtTime(1, context.currentTime + 1.2);
-        source.connect(fade);
-        fade.connect(out);
-        source.start(0, start);
-        musicNow = { source, fade };
-      })
-      .catch(() => {
-        // Offline or unsupported file: the game simply stays without music until the next change.
-        if (request === musicRequest) musicWanted = null;
-      });
-  } catch {
-    musicWanted = null;
-  }
+  startMusic(track, request);
 }
 let lastSpeech = 0;
 let speechRequest = 0;

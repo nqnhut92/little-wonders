@@ -101,6 +101,21 @@ export const discoveries = [
   ["star_lantern", "Đèn ngôi sao", "star-lantern"],
   ["dish_coconut", "Nước dừa mát lạnh", "dish-coconut"],
   ["dish_chestnut", "Hạt dẻ nướng thơm", "dish-chestnut"],
+  ["dish_blueberry_jam", "Mứt việt quất", "dish-blueberry-jam"],
+  ["dish_pine_tea", "Trà thông ấm áp", "dish-pine-tea"],
+  ["dish_star_cake", "Bánh ánh sao", "dish-star-cake"],
+  ["story_squirrel_1", "Chuyện của Sóc nhỏ 1", "squirrel"],
+  ["story_squirrel_2", "Chuyện của Sóc nhỏ 2", "squirrel"],
+  ["story_squirrel_3", "Chuyện của Sóc nhỏ 3", "squirrel"],
+  ["story_turtle_1", "Chuyện của Rùa con 1", "turtle"],
+  ["story_turtle_2", "Chuyện của Rùa con 2", "turtle"],
+  ["story_turtle_3", "Chuyện của Rùa con 3", "turtle"],
+  ["story_penguin_1", "Chuyện của Cánh cụt 1", "penguin"],
+  ["story_penguin_2", "Chuyện của Cánh cụt 2", "penguin"],
+  ["story_penguin_3", "Chuyện của Cánh cụt 3", "penguin"],
+  ["story_owl_1", "Chuyện của Cú mèo 1", "owl"],
+  ["story_owl_2", "Chuyện của Cú mèo 2", "owl"],
+  ["story_owl_3", "Chuyện của Cú mèo 3", "owl"],
 ].map(([id, name, art]) => ({ id, name, art }));
 export const seeds = crops.map((c) => ({ id: c.id, name: c.name }));
 export const hints = [

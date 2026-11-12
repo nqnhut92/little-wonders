@@ -12,7 +12,7 @@ export type Region = {
   // Discoveries of this region. Chance-based ones are left out so no child is stuck for lack of luck.
   counted: string[];
 };
-export const unlockRatio = 0.7;
+export const unlockRatio = 0.85;
 // Chance-based discoveries never count toward opening the next region.
 export const luckyDiscoveries = [
   "rare_carrot_twin",
@@ -64,9 +64,24 @@ const uncounted = [
   "firefly_forest",
   "dish_coconut",
   "dish_chestnut",
+  "dish_blueberry_jam",
+  "dish_pine_tea",
+  "dish_star_cake",
   "story_capybara_1",
   "story_capybara_2",
   "story_capybara_3",
+  "story_squirrel_1",
+  "story_squirrel_2",
+  "story_squirrel_3",
+  "story_turtle_1",
+  "story_turtle_2",
+  "story_turtle_3",
+  "story_penguin_1",
+  "story_penguin_2",
+  "story_penguin_3",
+  "story_owl_1",
+  "story_owl_2",
+  "story_owl_3",
 ];
 const elsewhere = [
   ...pondIds,

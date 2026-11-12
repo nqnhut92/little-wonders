@@ -122,7 +122,7 @@ test("the scene fills the screen and floating controls stay inside it", async ({
     expect(gearBox.y).toBeGreaterThan(size.height / 2);
     expect(gearBox.x).toBeGreaterThan(size.width / 2);
     const guideBox = (await page.locator(".hud-guide").boundingBox())!;
-    expect(guideBox.y).toBeGreaterThan(size.height / 2);
+    expect(guideBox.y).toBeLessThan(size.height / 2);
     expect(guideBox.x).toBeLessThan(size.width / 2);
     const mapControls = await page
       .locator(".hud")
