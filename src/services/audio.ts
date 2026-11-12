@@ -1,3 +1,6 @@
+import { voiceFiles } from "../data/voiceManifest";
+import { voiceKey } from "./voice";
+
 const audioStorageKey = "little-wonders-audio";
 export function loadAudioPreference(): boolean {
   try {
@@ -21,28 +24,44 @@ export const maxVoices = 6;
 export const pentatonicNotes = [
   523.25, 587.33, 659.25, 783.99, 880, 1046.5, 1174.66, 1318.51,
 ];
+function enablePlaybackSession() {
+  try {
+    const nav = navigator as Navigator & { audioSession?: { type: string } };
+    if (nav.audioSession && nav.audioSession.type !== "playback") {
+      nav.audioSession.type = "playback";
+    }
+  } catch {
+    /* ignore when AudioSession API is unavailable */
+  }
+}
+function ensureContext(): AudioContext {
+  ctx ??= new AudioContext();
+  enablePlaybackSession();
+  void ctx.resume();
+  listenForAudio();
+  return ctx;
+}
 function playTone(freq: number, endFreq: number, duration: number) {
   if (activeVoices >= maxVoices) return false;
   try {
-    ctx ??= new AudioContext();
-    void ctx.resume();
+    const context = ensureContext();
     activeVoices++;
-    const o = ctx.createOscillator(),
-      g = ctx.createGain();
+    const o = context.createOscillator(),
+      g = context.createGain();
     o.connect(g);
-    g.connect(ctx.destination);
-    o.frequency.setValueAtTime(freq, ctx.currentTime);
+    g.connect(context.destination);
+    o.frequency.setValueAtTime(freq, context.currentTime);
     o.frequency.exponentialRampToValueAtTime(
       endFreq,
-      ctx.currentTime + duration * 0.5,
+      context.currentTime + duration * 0.5,
     );
-    g.gain.setValueAtTime(0.05, ctx.currentTime);
-    g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
+    g.gain.setValueAtTime(0.05, context.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, context.currentTime + duration);
     o.onended = () => {
       activeVoices = Math.max(0, activeVoices - 1);
     };
     o.start();
-    o.stop(ctx.currentTime + duration);
+    o.stop(context.currentTime + duration);
     return true;
   } catch {
     activeVoices = Math.max(0, activeVoices - 1);
@@ -100,23 +119,28 @@ export function loopBounds(
   if (end - first < sampleRate) return [0, samples.length / sampleRate];
   return [first / sampleRate, end / sampleRate];
 }
-const musicBuffers = new Map<MusicTrack, Promise<AudioBuffer>>();
+const musicBuffers = new Map<string, Promise<AudioBuffer>>();
+const voiceBuffers = new Map<string, Promise<AudioBuffer>>();
 let musicGain: GainNode | undefined;
 let musicNow: { source: AudioBufferSourceNode; fade: GainNode } | undefined;
 let musicWanted: MusicTrack | null = null;
 let musicRequest = 0;
-let musicListening = false;
-function loadMusic(context: AudioContext, track: MusicTrack) {
-  let buffer = musicBuffers.get(track);
+let audioListening = false;
+function loadAudioBuffer(
+  context: AudioContext,
+  url: string,
+  cache: Map<string, Promise<AudioBuffer>>,
+) {
+  let buffer = cache.get(url);
   if (!buffer) {
-    buffer = fetch(musicFiles[track])
+    buffer = fetch(url)
       .then((r) => {
-        if (!r.ok) throw Error("music unavailable");
+        if (!r.ok) throw Error("audio unavailable");
         return r.arrayBuffer();
       })
       .then((data) => context.decodeAudioData(data));
-    buffer.catch(() => musicBuffers.delete(track));
-    musicBuffers.set(track, buffer);
+    buffer.catch(() => cache.delete(url));
+    cache.set(url, buffer);
   }
   return buffer;
 }
@@ -138,17 +162,20 @@ function duckMusic(ducked: boolean) {
   );
 }
 // Browsers keep audio suspended until a touch, so every touch resumes it; a hidden tab stays quiet.
-function listenForMusic() {
-  if (musicListening) return;
-  musicListening = true;
+function listenForAudio() {
+  if (audioListening) return;
+  audioListening = true;
   const wake = () => {
-    if (musicWanted && !document.hidden) void ctx?.resume();
+    if (!document.hidden && ctx && ctx.state === "suspended") {
+      enablePlaybackSession();
+      void ctx.resume();
+    }
   };
   addEventListener("pointerdown", wake);
   addEventListener("keydown", wake);
   document.addEventListener("visibilitychange", () => {
     if (document.hidden) void ctx?.suspend();
-    else wake();
+    else if (musicWanted) wake();
   });
 }
 /** Loops the given background track, cross-fading from the previous one; null fades to silence. */
@@ -158,20 +185,19 @@ export function setBackgroundMusic(track: MusicTrack | null) {
   const request = ++musicRequest;
   if (!track) {
     stopMusic();
+    stopSpeech();
+    duckMusic(false);
     return;
   }
   try {
-    ctx ??= new AudioContext();
-    const context = ctx;
-    void context.resume();
-    listenForMusic();
+    const context = ensureContext();
     if (!musicGain) {
       musicGain = context.createGain();
       musicGain.gain.value = musicLevel;
       musicGain.connect(context.destination);
     }
     const out = musicGain;
-    loadMusic(context, track)
+    loadAudioBuffer(context, musicFiles[track], musicBuffers)
       .then((buffer) => {
         if (request !== musicRequest) return;
         stopMusic();
@@ -201,7 +227,23 @@ export function setBackgroundMusic(track: MusicTrack | null) {
   }
 }
 let lastSpeech = 0;
+let speechRequest = 0;
 let speaking: SpeechSynthesisUtterance | undefined;
+let speakingSource: AudioBufferSourceNode | undefined;
+function stopSpeech() {
+  if (speakingSource) {
+    const prev = speakingSource;
+    speakingSource = undefined;
+    try {
+      prev.stop();
+    } catch {
+      /* already stopped */
+    }
+  }
+  speaking = undefined;
+  if (typeof window !== "undefined" && "speechSynthesis" in window)
+    speechSynthesis.cancel();
+}
 // Device voices only (no paid service). Prefer an on-device Vietnamese voice: network voices
 // can start before they are ready and fall back to reading letter by letter.
 function vietnameseVoice() {
@@ -212,27 +254,66 @@ function vietnameseVoice() {
 }
 if (typeof window !== "undefined" && "speechSynthesis" in window)
   speechSynthesis.addEventListener?.("voiceschanged", () => vietnameseVoice());
-export function speak(text: string, on: boolean) {
-  if (Date.now() - lastSpeech < 1600) return;
-  if (!on || !("speechSynthesis" in window)) return;
+function speakWithSynthesis(text: string, request: number) {
+  if (typeof window === "undefined" || !("speechSynthesis" in window)) {
+    if (request === speechRequest) duckMusic(false);
+    return;
+  }
   const voice = vietnameseVoice();
-  if (!voice) return;
-  lastSpeech = Date.now();
+  if (!voice) {
+    if (request === speechRequest) duckMusic(false);
+    return;
+  }
   speechSynthesis.cancel();
   const u = new SpeechSynthesisUtterance(text);
   u.voice = voice;
   u.lang = voice.lang;
   u.rate = 1.1;
-  // Music steps back while Lucky talks; the timer covers browsers that never report the end.
   speaking = u;
   duckMusic(true);
   const done = () => {
     if (speaking !== u) return;
     speaking = undefined;
-    duckMusic(false);
+    if (request === speechRequest) duckMusic(false);
   };
   u.onend = done;
   u.onerror = done;
   setTimeout(done, 12000);
   speechSynthesis.speak(u);
+}
+export function speak(text: string, on: boolean) {
+  if (!on || Date.now() - lastSpeech < 1600) return;
+  lastSpeech = Date.now();
+  const request = ++speechRequest;
+  stopSpeech();
+  const file = voiceFiles[voiceKey(text)];
+  if (!file) {
+    speakWithSynthesis(text, request);
+    return;
+  }
+  try {
+    const context = ensureContext();
+    duckMusic(true);
+    loadAudioBuffer(context, file, voiceBuffers)
+      .then((buffer) => {
+        if (request !== speechRequest) return;
+        const source = context.createBufferSource();
+        source.buffer = buffer;
+        source.connect(context.destination);
+        speakingSource = source;
+        const done = () => {
+          if (speakingSource !== source) return;
+          speakingSource = undefined;
+          if (request === speechRequest) duckMusic(false);
+        };
+        source.onended = done;
+        setTimeout(done, Math.ceil(buffer.duration * 1000) + 500);
+        source.start();
+      })
+      .catch(() => {
+        if (request === speechRequest) speakWithSynthesis(text, request);
+      });
+  } catch {
+    speakWithSynthesis(text, request);
+  }
 }

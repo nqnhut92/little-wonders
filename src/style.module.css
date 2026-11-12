@@ -624,7 +624,7 @@ main {
 }
 .discovery-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(126px, 1fr));
   gap: 16px;
 }
 .discovery-grid button {
@@ -632,15 +632,18 @@ main {
   border: 1px solid var(--border);
   border-radius: var(--radius-m);
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
+  min-height: 126px;
   padding: 12px;
-  font-size: 13px;
+  transition: transform 0.16s ease;
+}
+.discovery-grid button.replay {
+  transform: scale(1.06);
 }
 .discovery-grid .art {
-  width: 90px;
-  height: 90px;
+  width: 102px;
+  height: 102px;
   padding: 6px;
   border-radius: var(--radius-s);
   background: var(--plate);
@@ -1536,6 +1539,12 @@ main {
   display: grid;
   gap: 8px;
 }
+.adult-profile-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  align-items: center;
+}
 .adult-list button {
   display: flex;
   align-items: center;
@@ -1545,6 +1554,12 @@ main {
   margin: 0;
   text-align: left;
   border: 2px solid transparent;
+}
+.adult-list .adult-delete {
+  width: auto;
+  padding: 0 14px;
+  color: var(--muted);
+  font-size: 13px;
 }
 .adult-list button[aria-pressed="true"] {
   border-color: var(--accent);

@@ -32,6 +32,8 @@ import {
   stash,
   cachedProfile,
   synchronize,
+  forgetProfile,
+  resetLocal,
   type Local,
 } from "./services/progress";
 import {
@@ -283,7 +285,11 @@ export default function App() {
       persist(next);
       setLocal(next);
       setPanel("");
-      say(`Chào ${name}! Khu vườn đang đợi con.`);
+      say(
+        `Chào ${name}! Khu vườn đang đợi con đó!`,
+        "flower",
+        "Chào con! Khu vườn đang đợi con đó!",
+      );
     } catch {
       setMessage(
         "Chưa mở được khu vườn. Mình vẫn có thể chơi trên máy này nhé.",
@@ -306,6 +312,29 @@ export default function App() {
       await choose(p.id, p.nickname);
     } catch {
       setMessage("Chưa tạo được hồ sơ. Người lớn thử lại khi có mạng nhé.");
+    }
+  };
+  const removeProfile = async (id: string): Promise<boolean> => {
+    try {
+      const r = await fetch(`/api/profiles?id=${encodeURIComponent(id)}`, {
+        method: "DELETE",
+        headers: { "X-Little-Wonders": "1" },
+      });
+      if (!r.ok) throw Error();
+      setProfiles((prev) => prev.filter((p) => p.id !== id));
+      forgetProfile(id);
+      if (current.current.profile === id) {
+        const fresh = resetLocal(current.current.device);
+        setLocal(fresh);
+        setActiveRegion(null);
+        setClearing([]);
+        setStatus({ kind: "local", text: "Đã cất trên máy" });
+        setMessage(mapGreeting(fresh.world));
+      }
+      return true;
+    } catch {
+      setMessage("Chưa xóa được hồ sơ. Người lớn thử lại khi có mạng nhé.");
+      return false;
     }
   };
   const night = value<string>(local.world, "scene.time", "day") === "night";
@@ -510,6 +539,7 @@ export default function App() {
                   setNickname={setNickname}
                   onChoose={(id, name) => void choose(id, name)}
                   onCreate={() => void create()}
+                  onDelete={(id) => removeProfile(id)}
                   onLogout={async () => {
                     await fetch("/api/auth/logout", {
                       method: "POST",

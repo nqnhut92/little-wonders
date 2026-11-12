@@ -12,3 +12,5 @@ Nhạc nền là tài nguyên của bên thứ ba, đã được hiến tặng c
 
 - `public/assets/music-valley.m4a` (bản đồ thung lũng): "Children's March Theme" của Cleyton Kauffman, <https://opengameart.org/content/childrens-march-theme>. Nén lại từ tệp WAV của tác giả thành AAC mono 80 kbps.
 - `public/assets/music-play.mp3` (trong vùng đất): "Happy Lullaby (song17)" của cynicmusic (cynicmusic.com, pixelsphere.org), <https://opengameart.org/content/happy-lullaby-song17>. Tệp MP3 gốc của tác giả, không chỉnh sửa.
+
+Các tệp giọng nói tiếng Việt miền Nam trong `public/assets/voice/*.m4a` được sinh sẵn cục bộ qua `scripts/generate-voice.mjs` bằng [VietVoice-TTS](https://github.com/nguyenvulebinh/VietVoice-TTS) (giấy phép MIT), mẫu giọng nữ trò chuyện miền Nam `#170` (tốc độ `0.85x`, AAC mono 48 kbps), lập chỉ mục trong `src/data/voiceManifest.ts`.

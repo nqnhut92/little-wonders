@@ -14,7 +14,7 @@ self.addEventListener("install", (event) => {
         "/",
         new Response(html, { headers: { "Content-Type": "text/html" } }),
       );
-      await cache.addAll([
+      const assets = [
         "/favicon.ico",
         "/favicon.svg",
         "/icon-32.png",
@@ -26,7 +26,11 @@ self.addEventListener("install", (event) => {
         "/manifest.webmanifest",
         ...files,
         ...BUNDLED,
-      ]);
+      ];
+      // Batch precaching so iOS Safari does not fail installation on hundreds of concurrent fetches.
+      for (let i = 0; i < assets.length; i += 24) {
+        await cache.addAll(assets.slice(i, i + 24));
+      }
     })(),
   );
 });

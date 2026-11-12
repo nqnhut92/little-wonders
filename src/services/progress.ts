@@ -47,6 +47,19 @@ export function persist(l: Local) {
   stash(l);
   localStorage.setItem(key, JSON.stringify(l));
 }
+export function forgetProfile(id: string) {
+  localStorage.removeItem(key + "-" + id);
+}
+export function resetLocal(device: string = crypto.randomUUID()): Local {
+  const fresh: Local = {
+    world: emptyWorld(),
+    pending: false,
+    nickname: "Bạn nhỏ",
+    device,
+  };
+  localStorage.setItem(key, JSON.stringify(fresh));
+  return fresh;
+}
 export async function synchronize(
   l: Local,
   fetcher: typeof fetch = fetch,

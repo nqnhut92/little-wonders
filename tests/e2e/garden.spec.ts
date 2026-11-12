@@ -18,9 +18,15 @@ test("garden chain, notebook and saved house survive reload", async ({
   await activate(page, "Ao nước");
   await activate(page, "Sổ khám phá");
   await expect(
-    page.getByText("Hoa hướng dương", { exact: true }),
+    page
+      .locator(".notebook")
+      .getByRole("button", { name: "Hoa hướng dương", exact: true }),
   ).toBeVisible();
-  await expect(page.getByText("Bọ rùa dưới đá", { exact: true })).toBeVisible();
+  await expect(
+    page
+      .locator(".notebook")
+      .getByRole("button", { name: "Bọ rùa dưới đá", exact: true }),
+  ).toBeVisible();
   await activate(page, "Trở về vườn");
   await activate(page, "Ngôi Nhà Sắc Màu");
   await expect(
@@ -60,7 +66,11 @@ test("Lucky accepts any gift, advances wish on watermelon and unlocks story chap
   await expect(page.getByText("Lucky đang thích táo")).toBeVisible();
   await activate(page, "Trở về vườn");
   await activate(page, "Sổ khám phá");
-  await expect(page.getByText("Bữa trưa đủ ba")).toBeVisible();
+  await expect(
+    page
+      .locator(".notebook")
+      .getByRole("button", { name: "Bữa trưa đủ ba", exact: true }),
+  ).toBeVisible();
 });
 test("drag seed and cloud into soil with real pointer input", async ({
   page,
@@ -105,7 +115,11 @@ test("cached garden survives offline navigation and stores new discoveries", asy
   await activate(page, "Chim trên cành");
   await page.reload();
   await activate(page, "Sổ khám phá");
-  await expect(page.getByText("Chim trên cành", { exact: true })).toBeVisible();
+  await expect(
+    page
+      .locator(".notebook")
+      .getByRole("button", { name: "Chim trên cành", exact: true }),
+  ).toBeVisible();
 });
 
 test("touch controls grow a plant without mouse or reading, with reduced motion", async ({
@@ -282,8 +296,16 @@ test("tabs merge discoveries and keep independent writer identities", async ({
   await other.getByRole("button", { name: "Ao nước" }).click();
   for (const p of [page, other]) {
     await p.getByRole("button", { name: "Sổ khám phá" }).click();
-    await expect(p.getByText("Táo rơi", { exact: true })).toBeVisible();
-    await expect(p.getByText("Cá trong ao", { exact: true })).toBeVisible();
+    await expect(
+      p
+        .locator(".notebook")
+        .getByRole("button", { name: "Táo rơi", exact: true }),
+    ).toBeVisible();
+    await expect(
+      p
+        .locator(".notebook")
+        .getByRole("button", { name: "Cá trong ao", exact: true }),
+    ).toBeVisible();
   }
   for (const p of [page, other])
     await p.getByRole("button", { name: "Trở về vườn" }).click();
@@ -344,7 +366,9 @@ test("an adult clears one region from the adult corner and the notebook stays", 
   ).toHaveCount(0);
   await activate(page, "Sổ khám phá");
   await expect(
-    page.getByText("Hoa hướng dương", { exact: true }),
+    page
+      .locator(".notebook")
+      .getByRole("button", { name: "Hoa hướng dương", exact: true }),
   ).toBeVisible();
 });
 test("starting over from the adult corner needs a second confirmation", async ({
@@ -429,7 +453,11 @@ test("kitchen cooks apples into a surprise dish and records it", async ({
   await expect(page.locator(".meal-feedback")).toContainText("Món bất ngờ");
   await activate(page, "Trở về vườn");
   await activate(page, "Sổ khám phá");
-  await expect(page.getByText("Món bất ngờ", { exact: true })).toBeVisible();
+  await expect(
+    page
+      .locator(".notebook")
+      .getByRole("button", { name: "Món bất ngờ", exact: true }),
+  ).toBeVisible();
 });
 
 test("first harvest brings the little reindeer and lets the child gift watermelon", async ({
@@ -634,8 +662,21 @@ test("later regions: beach gathering, building a sandcastle and the starry mount
   await expect(page.getByLabel("Giỏ của con")).toContainText("1");
   for (let i = 0; i < 2; i++) await activate(page, "Lâu đài cát");
   await activate(page, "Sổ khám phá");
-  await expect(page.getByText("Lâu đài cát", { exact: true })).toBeVisible();
-  await expect(page.getByText("Trái dừa rơi", { exact: true })).toBeVisible();
+  const sandcastleCard = page.locator(".notebook").getByRole("button", {
+    name: "Lâu đài cát",
+    exact: true,
+  });
+  await expect(sandcastleCard).toBeVisible();
+  await expect(sandcastleCard).toHaveText("");
+  await expect(
+    page
+      .locator(".notebook")
+      .getByRole("button", { name: "Trái dừa rơi", exact: true }),
+  ).toBeVisible();
+  await sandcastleCard.click();
+  await expect(page.locator(".hud-guide p")).toHaveText(
+    "Con đã khám phá lâu đài cát!",
+  );
   await activate(page, "Trở về vườn");
   await activate(page, "Quay lại bản đồ");
   await activate(page, "Núi sao");
@@ -646,4 +687,17 @@ test("later regions: beach gathering, building a sandcastle and the starry mount
   await expect(page.getByRole("button", { name: "Mặt trời" })).toHaveCount(0);
   await activate(page, "Ông trăng");
   await expect(page.getByRole("button", { name: "Chòm sao" })).toBeVisible();
+});
+
+test("seed tray announces seed name and voice clips are precached", async ({
+  page,
+}) => {
+  await openGarden(page);
+  await activate(page, "Bật âm thanh");
+  await activate(page, "Hạt Hướng dương");
+  await expect(page.locator(".hud-guide p")).toHaveText(
+    "Con kéo hạt hướng dương xuống luống đất nhé!",
+  );
+  const worker = await (await page.request.get("/sw.js")).text();
+  expect(worker).toContain("/assets/voice/");
 });

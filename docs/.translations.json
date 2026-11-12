@@ -2,8 +2,8 @@
   "AGENTS.md": {
     "vi": "AGENTS.vi.md",
     "hashes": [
-      "802232d83b0b1c74a730dc2d5118eeb07ed2f1575e6af39e691e36c97a3819b7",
-      "f97e925fdf10f938ed299cc66944d906a5f98ac9c8cbdd293fdd217926d5ee44"
+      "f5ce6c0ca5a16faecf74111238cdbb751633c9eec0b08a93d94dee3baa7d3056",
+      "ba2e2f7260d64ec7835de92ae7a130dbaed81ee2a41fa85642c536481faf72dd"
     ]
   },
   "README.md": {
@@ -16,15 +16,15 @@
   "docs/ARCHITECTURE.md": {
     "vi": "docs/ARCHITECTURE.vi.md",
     "hashes": [
-      "8e72b582e2e810f07d4442527f9977f98da0c6535cf5976d5bac400d260e0d24",
-      "422ba232dd403982648634ee6328b4d0baf82d5a4d8f5e7a76cb39be7c67af86"
+      "3b8fd078090086cba1e5c813b76417b26fc85d2b44b9108d07d1bec7a96223c8",
+      "88c06f645ee64805f15cf95a47eaf944b83eb5d485a35a1887c4dc6c56a36dd9"
     ]
   },
   "public/assets/PROVENANCE.md": {
     "vi": "public/assets/PROVENANCE.vi.md",
     "hashes": [
-      "b8d19693e6915c0e09300c2cecdaa8838cf2b7557d0502428f0909062d8e4fd8",
-      "89deed6bc2beec12f80e3bafb10ff7a778d08edcdbf66d12c7003c000a256352"
+      "a42fe30fc44ae5ee47ca05d316e90ea0a0e62acc27f5e68cd16c3d3b5c549b9d",
+      "f286325cdba3b4cc37232780036508be0d8716af47f0d807004a4544fa348dfd"
     ]
   }
 }

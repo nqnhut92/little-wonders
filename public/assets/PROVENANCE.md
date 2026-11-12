@@ -12,3 +12,5 @@ Background music is third-party and dedicated to the public domain under Creativ
 
 - `public/assets/music-valley.m4a` (valley map): "Children's March Theme" by Cleyton Kauffman, <https://opengameart.org/content/childrens-march-theme>. Re-encoded from the author's WAV to mono AAC at 80 kbps.
 - `public/assets/music-play.mp3` (inside a region): "Happy Lullaby (song17)" by cynicmusic (cynicmusic.com, pixelsphere.org), <https://opengameart.org/content/happy-lullaby-song17>. The author's MP3, unmodified.
+
+Spoken Vietnamese narration clips in `public/assets/voice/*.m4a` are pre-generated locally via `scripts/generate-voice.mjs` using [VietVoice-TTS](https://github.com/nguyenvulebinh/VietVoice-TTS) (MIT License), Southern female conversational preset `#170` (`0.85x` speed, 48 kbps mono AAC), mapped in `src/data/voiceManifest.ts`.

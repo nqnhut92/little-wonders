@@ -46,11 +46,12 @@ async function request(
   method = "GET",
   body?: unknown,
   origin = "https://garden.example",
+  query: Record<string, string> = {},
 ) {
   const token = uid ? await sign({ sub: uid }) : "";
   const req = {
     method,
-    query: { route, profile: id },
+    query: { route, profile: id, ...query },
     body,
     headers: { cookie: "lw_session=" + token, origin, "x-little-wonders": "1" },
   } as unknown as VercelRequest;
@@ -273,4 +274,52 @@ it("rejects bad discovery ids, too many discoveries and too many fields", async 
   expect((await post({ schema: 3, discoveries: [], fields: {} })).code).toBe(
     400,
   );
+});
+it("deletes only profiles owned by the signed-in parent", async () => {
+  const created = await request("profiles", owner, "POST", {
+    nickname: "Hồ sơ xóa thử",
+  });
+  expect(created.code).toBe(201);
+  const targetId = created.data.id as string;
+
+  const wrongOwner = await request(
+    "profiles",
+    other,
+    "DELETE",
+    undefined,
+    "https://garden.example",
+    { id: targetId },
+  );
+  expect(wrongOwner.code).toBe(404);
+
+  const badOrigin = await request(
+    "profiles",
+    owner,
+    "DELETE",
+    undefined,
+    "https://evil.example",
+    { id: targetId },
+  );
+  expect(badOrigin.code).toBe(403);
+
+  const deleted = await request(
+    "profiles",
+    owner,
+    "DELETE",
+    undefined,
+    "https://garden.example",
+    { id: targetId },
+  );
+  expect(deleted.code).toBe(200);
+  expect(deleted.data).toEqual({ deleted: targetId });
+
+  const again = await request(
+    "profiles",
+    owner,
+    "DELETE",
+    undefined,
+    "https://garden.example",
+    { id: targetId },
+  );
+  expect(again.code).toBe(404);
 });

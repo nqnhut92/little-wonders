@@ -10,6 +10,8 @@ Engineering tooling uses English: GitHub Actions workflow, job and step names, t
 
 Keep rules in `src/game`, content in `src/data`, assets in `Art.tsx`, and persistence/audio in `src/services`. No database calls in renderers. Validate sessions and ownership server-side. Never log/commit credentials. Preserve pending local progress on API failure. Discoveries merge by union; conflict changes require compatible migrations/tests.
 
+Spoken Southern Vietnamese voice clips in `public/assets/voice/*.m4a` are pre-generated locally by `npm run voice:sync` (`scripts/generate-voice.mjs`: incremental content-hashed clips using VietVoice-TTS MIT preset `#170` at `0.85x`, `nfe=32`, `!` normalized to `.`, encoded to 48 kbps mono AAC). Whenever adding or editing child-facing spoken lines, run `npm run voice:sync -- --prune --clean` to generate only missing clips, update `src/data/voiceManifest.ts`, and delete temporary `/tmp` model caches; never commit model checkpoints or Python virtual environments.
+
 Use stable asset IDs across `src/components/Art.tsx`, `src/components/ArtFlat.tsx`, `src/components/ArtFlatMore.tsx` and `src/components/SceneBackdrop.tsx`. No logic or text baked into art. No advertising, behavioral tracking, penalties, streaks, countdowns or Parent Mode.
 
 Commit identity: Nicholas Nguyen <134213451+nqnhut92@users.noreply.github.com>. Do not sign commits. Push only when authorized in the current conversation, directly to main according to git-main-workflow.

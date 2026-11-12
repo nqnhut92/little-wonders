@@ -22,13 +22,18 @@ type Props = {
   setNickname: (v: string) => void;
   onChoose: (id: string, name: string) => void;
   onCreate: () => void;
+  onDelete: (id: string) => Promise<boolean>;
   onLogout: () => void;
   onClose: () => void;
 };
 
 type Tab = "save" | "tidy";
 // Nothing waiting: the list of regions. Otherwise the one thing being confirmed.
-type Confirm = null | { region: string } | "all";
+type Confirm =
+  | null
+  | { region: string }
+  | "all"
+  | { deleteProfile: { id: string; nickname: string } };
 
 // Everything an adult can do, in two clearly named places: where the garden is saved, and tidying it up.
 export function AdultCorner(p: Props) {
@@ -58,8 +63,12 @@ export function AdultCorner(p: Props) {
     (r) => regionState(p.world.discoveries, r) === "open",
   );
   const target =
-    confirm && confirm !== "all"
+    confirm && confirm !== "all" && "region" in confirm
       ? regions.find((r) => r.id === confirm.region)
+      : null;
+  const deletingProfile =
+    confirm && confirm !== "all" && "deleteProfile" in confirm
+      ? confirm.deleteProfile
       : null;
 
   return (
@@ -122,37 +131,81 @@ export function AdultCorner(p: Props) {
             </>
           ) : (
             <>
-              {p.profiles.length > 0 && (
-                <>
-                  <h3>Chọn khu vườn của bé</h3>
-                  <div className={cn("adult-list")}>
-                    {p.profiles.map((x) => (
-                      <button
-                        key={x.id}
-                        aria-pressed={x.id === p.currentProfile}
-                        onClick={() => p.onChoose(x.id, x.nickname)}
-                      >
-                        {x.nickname}
-                      </button>
-                    ))}
+              {deletingProfile ? (
+                <div className={cn("adult-confirm")}>
+                  <h3>Xóa hồ sơ &ldquo;{deletingProfile.nickname}&rdquo;?</h3>
+                  <p>
+                    Toàn bộ khu vườn và sổ tay khám phá của hồ sơ này sẽ bị xóa
+                    hẳn, không khôi phục lại được.
+                  </p>
+                  <div className={cn("adult-actions")}>
+                    <button type="button" onClick={() => setConfirm(null)}>
+                      Hủy
+                    </button>
+                    <button
+                      type="button"
+                      className={cn("danger")}
+                      onClick={async () => {
+                        const ok = await p.onDelete(deletingProfile.id);
+                        setConfirm(null);
+                        if (ok) {
+                          setDone(
+                            `Đã xóa hồ sơ "${deletingProfile.nickname}".`,
+                          );
+                        }
+                      }}
+                    >
+                      Xác nhận xóa
+                    </button>
                   </div>
+                </div>
+              ) : (
+                <>
+                  {done && <p role="status">{done}</p>}
+                  {p.profiles.length > 0 && (
+                    <>
+                      <h3>Chọn khu vườn của bé</h3>
+                      <div className={cn("adult-list")}>
+                        {p.profiles.map((x) => (
+                          <div key={x.id} className={cn("adult-profile-row")}>
+                            <button
+                              type="button"
+                              aria-pressed={x.id === p.currentProfile}
+                              onClick={() => p.onChoose(x.id, x.nickname)}
+                            >
+                              {x.nickname}
+                            </button>
+                            <button
+                              type="button"
+                              className={cn("adult-delete")}
+                              aria-label={`Xóa hồ sơ ${x.nickname}`}
+                              title={`Xóa hồ sơ ${x.nickname}`}
+                              onClick={() => setConfirm({ deleteProfile: x })}
+                            >
+                              Xóa
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    </>
+                  )}
+                  <h3>Thêm bé mới</h3>
+                  <label>
+                    Biệt danh của bé (không nhập tên thật)
+                    <input
+                      maxLength={24}
+                      value={p.nickname}
+                      onChange={(e) => p.setNickname(e.target.value)}
+                    />
+                  </label>
+                  <button className={cn("quiet-primary")} onClick={p.onCreate}>
+                    Tạo khu vườn cho bé
+                  </button>
+                  <button className={cn("wide-button")} onClick={p.onLogout}>
+                    Đăng xuất
+                  </button>
                 </>
               )}
-              <h3>Thêm bé mới</h3>
-              <label>
-                Biệt danh của bé (không nhập tên thật)
-                <input
-                  maxLength={24}
-                  value={p.nickname}
-                  onChange={(e) => p.setNickname(e.target.value)}
-                />
-              </label>
-              <button className={cn("quiet-primary")} onClick={p.onCreate}>
-                Tạo khu vườn cho bé
-              </button>
-              <button className={cn("wide-button")} onClick={p.onLogout}>
-                Đăng xuất
-              </button>
             </>
           )}
         </section>

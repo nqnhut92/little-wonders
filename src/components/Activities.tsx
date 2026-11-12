@@ -1,5 +1,5 @@
 import { cn } from "../styles";
-import { useState, useRef, type PointerEvent } from "react";
+import { useState, useRef, useEffect, type PointerEvent } from "react";
 import { Art } from "./Art";
 import { palSpeak, palStatus } from "../game/lunch";
 import { playNote } from "../services/audio";
@@ -321,16 +321,20 @@ export function Notebook({ world, say }: { world: World; say: Props["say"] }) {
   return (
     <div className={cn("notebook activity")}>
       <h2>Sổ Tay Khám Phá</h2>
-      <p>Những điều kỳ diệu con đã gặp</p>
-      {!world.discoveries.length && (
-        <p>Chạm vào cây, ao hoặc bụi cỏ để gặp bạn mới nhé!</p>
-      )}
+      <p>
+        {world.discoveries.length
+          ? "Chạm vào từng hình để nghe lại nhé!"
+          : "Chạm vào cây, ao hoặc bụi cỏ để gặp bạn mới nhé!"}
+      </p>
       <div className={cn("discovery-grid")}>
         {discoveries
           .filter((d) => world.discoveries.includes(d.id))
           .map((d) => (
             <button
+              type="button"
               key={d.id}
+              aria-label={d.name}
+              title={d.name}
               className={cn(replay === d.id ? "replay" : "")}
               onClick={() => {
                 setReplay(d.id);
@@ -339,7 +343,6 @@ export function Notebook({ world, say }: { world: World; say: Props["say"] }) {
               }}
             >
               <Art id={d.art} />
-              <span>{d.name}</span>
             </button>
           ))}
       </div>
@@ -367,6 +370,16 @@ export function Xylophone({
   const release = (pointerId: number) => {
     active.current.delete(pointerId);
   };
+  useEffect(() => {
+    const end = (e: globalThis.PointerEvent) =>
+      active.current.delete(e.pointerId);
+    window.addEventListener("pointerup", end);
+    window.addEventListener("pointercancel", end);
+    return () => {
+      window.removeEventListener("pointerup", end);
+      window.removeEventListener("pointercancel", end);
+    };
+  }, []);
   return (
     <div className={cn("activity")}>
       <h2>Đàn gỗ ngũ cung</h2>

@@ -521,7 +521,10 @@ export function Garden({
                 className={cn(seed === s.id ? "selected" : "")}
                 onClick={() => {
                   setSeed(s.id);
-                  say("Con kéo hạt xuống luống đất nhé!");
+                  say(
+                    `Con kéo hạt ${s.name.toLowerCase()} xuống luống đất nhé!`,
+                    s.art,
+                  );
                 }}
                 onPointerDown={(e) => {
                   setSeed(s.id);

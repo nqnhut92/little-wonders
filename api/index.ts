@@ -153,7 +153,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           .json({ message: "Mình chờ một chút rồi thử đăng nhập lại nhé." });
       }
     }
-    if (req.method === "POST" && !csrf(req))
+    if ((req.method === "POST" || req.method === "DELETE") && !csrf(req))
       return res.status(403).json({ message: "Yêu cầu không hợp lệ." });
     if (route === "auth/login" && req.method === "GET") {
       const state = randomBytes(24).toString("hex"),
@@ -206,7 +206,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         message:
           "Người lớn cần đăng nhập lại. Tiến trình vẫn được cất trên máy.",
       });
-    if (req.method === "POST") {
+    if (req.method === "POST" || req.method === "DELETE") {
       const bucket = createHash("sha256")
         .update(uid + route + new Date().toISOString().slice(0, 16))
         .digest("hex");
@@ -236,6 +236,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       if (!rows.length)
         return res.status(409).json({ message: "Tài khoản đã có đủ hồ sơ." });
       return res.status(201).json(rows[0]);
+    }
+    if (route === "profiles" && req.method === "DELETE") {
+      const id = z.uuid().parse(req.query.id);
+      const rows =
+        await sql`DELETE FROM profiles WHERE id=${id} AND parent_id=${uid} RETURNING id`;
+      if (!rows.length)
+        return res.status(404).json({ message: "Không tìm thấy hồ sơ." });
+      return res.json({ deleted: rows[0].id });
     }
     if (route === "progress") {
       const id = z
