@@ -234,90 +234,134 @@ export const flatArt: Record<string, Draw> = {
   ),
   capybara: () => (
     <>
-      {/* Plump cinnamon-brown body & cozy cream belly */}
-      <path d="M29 111c-6-23 5-43 31-43s37 20 31 43Z" fill="#c2834e" />
+      {/* Ground shadow */}
+      <ellipse cx="62" cy="112" rx="44" ry="5" fill="#4f6d3a" opacity="0.22" />
+      {/* Back legs tucked in loaf pose */}
+      <ellipse cx="89" cy="107" rx="13" ry="6.5" fill="#7a4c28" />
+      <ellipse cx="38" cy="107" rx="11" ry="6" fill="#7a4c28" />
+      {/* Plump potato-loaf body (horizontal rounded bean silhouette) */}
       <path
-        d="M32 105c9 6 47 6 56 0-1 4-2 6-5 6H37c-3 0-4-2-5-6Z"
-        fill="#ab6e3b"
+        d="M36 62c18-5 44-3 57 7 12 9 14 27 6 37-6 6-54 6-67 1-10-4-11-36 4-45Z"
+        fill="#c88b55"
       />
-      <ellipse cx="60" cy="95" rx="18" ry="14" fill="#f5dfc3" />
-      {/* Sculpted front arms */}
+      {/* Warm lower-belly shade & soft cream chest patch */}
       <path
-        d="M36 80c-6 6-8 17-4 24 3 4 9 4 12-1 2-5 0-15-8-23Z"
-        fill="#b37542"
+        d="M30 98c18 7 54 7 69 0-2 5-5 8-10 9-14 2-44 2-53-1-4-1-5-4-6-8Z"
+        fill="#ae713d"
       />
+      <ellipse cx="44" cy="94" rx="14" ry="11" fill="#e0ab78" />
+      {/* Short stubby front & hind paws with 3 dark toes */}
+      <rect x="27" y="102" width="15" height="9.5" rx="4.8" fill="#6b4022" />
+      <rect x="52" y="103" width="15" height="9.5" rx="4.8" fill="#6b4022" />
+      <rect x="81" y="102" width="16" height="9.5" rx="4.8" fill="#6b4022" />
       <path
-        d="M84 80c6 6 8 17 4 24-3 4-9 4-12-1-2-5 0-15 8-23Z"
-        fill="#b37542"
-      />
-      {/* Cute little chocolate-brown paws */}
-      <ellipse cx="41" cy="109.5" rx="10.5" ry="5.5" fill="#7a4b27" />
-      <ellipse cx="79" cy="109.5" rx="10.5" ry="5.5" fill="#7a4b27" />
-      <path
-        d="M38 109v4m4-4.5v4.5M78 108.5v4.5m4-4v4"
-        stroke="#573318"
+        d="M31.5 107.5v3.5m4.5-3.5v3.5m20.5-3v3.5m4.5-3.5v3.5m24.5-3.5v3.5m4.5-3.5v3.5"
+        stroke="#472812"
         strokeWidth="1.6"
         strokeLinecap="round"
       />
-      {/* Little rounded capybara ears */}
+      {/* Tiny dark-brown ear pinned back on the crown */}
       <ellipse
         cx="31"
-        cy="28"
-        rx="8.5"
-        ry="7"
-        fill="#7a4b27"
-        transform="rotate(-18 31 28)"
+        cy="30"
+        rx="5"
+        ry="3.5"
+        fill="#5e371c"
+        transform="rotate(-18 31 30)"
       />
-      <ellipse
-        cx="89"
-        cy="28"
-        rx="8.5"
-        ry="7"
-        fill="#7a4b27"
-        transform="rotate(18 89 28)"
-      />
-      <ellipse
-        cx="31"
-        cy="28.5"
-        rx="4.8"
-        ry="3.8"
-        fill={BLUSH}
-        opacity="0.85"
-        transform="rotate(-18 31 28.5)"
-      />
-      <ellipse
-        cx="89"
-        cy="28.5"
-        rx="4.8"
-        ry="3.8"
-        fill={BLUSH}
-        opacity="0.85"
-        transform="rotate(18 89 28.5)"
-      />
-      {/* Big round capybara head with soft cheek jowls */}
+      {/* Iconic boxy capybara head & big blunt snout facing left */}
       <path
-        d="M26 49c0-18 14-28 34-28s34 10 34 28c3 14-9 26-34 26S23 63 26 49Z"
-        fill="#cf8f57"
+        d="M27 29c14-3 29 0 35 9 6 9 6 26-2 34-8 7-31 7-42 2-9-4-11-18-9-29 2-10 8-14 18-16Z"
+        fill="#d4965e"
+      />
+      {/* Darker warm brown bridge & big blunt square muzzle patch */}
+      <path
+        d="M11 45c2-9 9-14 18-14 10 0 16 7 16 19 0 13-7 22-19 22-11 0-17-7-15-27Z"
+        fill="#8c5832"
+      />
+      <ellipse cx="25" cy="54" rx="13" ry="14" fill="#9c643b" />
+      {/* Curved slit nostrils & iconic vertical philtrum + chill w-mouth */}
+      <ellipse
+        cx="18.5"
+        cy="46.5"
+        rx="2.6"
+        ry="1.6"
+        fill={INK}
+        transform="rotate(-20 18.5 46.5)"
+      />
+      <ellipse
+        cx="29.5"
+        cy="46.5"
+        rx="2.6"
+        ry="1.6"
+        fill={INK}
+        transform="rotate(20 29.5 46.5)"
       />
       <path
-        d="M28 57c7 13 19 18 32 18s25-5 32-18c-6 16-18 20-32 20S34 73 28 57Z"
-        fill="#ba7b45"
+        d="M24 49v9m-6.5 1.5q3.2 4 6.5 0 3.3 4 6.5 0"
+        fill="none"
+        stroke={INK}
+        strokeWidth="2.2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
-      {/* Signature tangerine balanced on top of the head */}
-      <ellipse cx="60" cy="21.5" rx="10" ry="2.2" fill="#9e6230" opacity="0.4" />
-      <ellipse cx="60" cy="14.5" rx="9.5" ry="7.8" fill="#ff9429" />
-      <ellipse cx="57" cy="12" rx="3.2" ry="1.8" fill="#ffc978" opacity="0.8" />
-      <path d="M60 7c0-2 1.5-3.5 3-4" stroke="#5a3820" strokeWidth="1.8" fill="none" strokeLinecap="round" />
-      <path d="M61 6.8c4-3 9-2 10 1.5-3 2.5-7 2-10-1.5Z" fill="#5cc265" />
-      {/* Warm biscuit muzzle, nostrils, sparkling chibi eyes & rosy cheeks */}
-      <ellipse cx="60" cy="56.5" rx="18" ry="13.5" fill="#f5dfc3" />
-      <Face y={43.5} dx={15} mouthY={59.5} />
-      <ellipse cx="60" cy="51" rx="7.5" ry="4.8" fill="#6b4022" />
-      <circle cx="57.2" cy="51" r="1.4" fill={INK} />
-      <circle cx="62.8" cy="51" r="1.4" fill={INK} />
-      <ellipse cx="58" cy="49.3" rx="2.2" ry="1" fill="#fff" opacity="0.55" />
-      <ellipse cx="35" cy="55.5" rx="6.5" ry="4.5" fill={BLUSH} opacity="0.85" />
-      <ellipse cx="85" cy="55.5" rx="6.5" ry="4.5" fill={BLUSH} opacity="0.85" />
+      {/* Cute little pink tongue tip */}
+      <path d="M21.5 60.2q2.5 3.8 5 0Z" fill="#ff8fa0" />
+      {/* Relaxed chill eye with gentle upward arch (not angry) & rosy cheek */}
+      <circle cx="48" cy="45.5" r="5" fill={INK} />
+      <circle cx="49.5" cy="43.8" r="1.9" fill="#fff" />
+      <circle cx="46.5" cy="47.2" r="0.9" fill="#fff" opacity="0.85" />
+      <path
+        d="M42.5 39q5.5-2.5 10.5 0.5"
+        fill="none"
+        stroke="#573318"
+        strokeWidth="2.2"
+        strokeLinecap="round"
+      />
+      <ellipse cx="52" cy="54" rx="6" ry="3.8" fill={BLUSH} opacity="0.85" />
+      {/* Tiny folded ear in foreground */}
+      <ellipse
+        cx="61"
+        cy="34"
+        rx="6.8"
+        ry="4.6"
+        fill="#6b4022"
+        transform="rotate(22 61 34)"
+      />
+      <ellipse
+        cx="61"
+        cy="34.5"
+        rx="3.6"
+        ry="2.3"
+        fill="#b5794c"
+        transform="rotate(22 61 34.5)"
+      />
+      {/* Signature tangerine balanced on top of the flat head */}
+      <ellipse
+        cx="44"
+        cy="27.5"
+        rx="10.5"
+        ry="2.2"
+        fill="#8c5832"
+        opacity="0.45"
+      />
+      <ellipse cx="44" cy="20" rx="10" ry="8.2" fill="#ff9429" />
+      <ellipse
+        cx="40.8"
+        cy="17.2"
+        rx="3.4"
+        ry="1.9"
+        fill="#ffd085"
+        opacity="0.85"
+      />
+      <path
+        d="M44 12c0-2 1.5-3.5 3-4"
+        stroke="#5a3820"
+        strokeWidth="1.8"
+        fill="none"
+        strokeLinecap="round"
+      />
+      <path d="M45 11.8c4-3 9-2 10 1.5-3 2.5-7 2-10-1.5Z" fill="#5cc265" />
     </>
   ),
   tree: () => (
