@@ -37,9 +37,7 @@ import {
   sound,
   speak,
   loadAudioPreference,
-  loadMusicPreference,
   saveAudioPreference,
-  saveMusicPreference,
   setBackgroundMusic,
 } from "./services/audio";
 import { hints } from "./data/content";
@@ -68,12 +66,9 @@ export default function App() {
   const [clearing, setClearing] = useState<string[]>([]);
   const [panel, setPanel] = useState("");
   const [audio, setAudio] = useState(() => loadAudioPreference());
-  const [music, setMusic] = useState(() => loadMusicPreference());
   useEffect(() => {
-    setBackgroundMusic(
-      audio && music ? (activeRegion ? "play" : "valley") : null,
-    );
-  }, [audio, music, activeRegion]);
+    setBackgroundMusic(audio ? (activeRegion ? "play" : "valley") : null);
+  }, [audio, activeRegion]);
   const [surprise, setSurprise] = useState<SurpriseEvent | null>(null);
   const lastTouch = useRef(Date.now());
   const [message, setMessage] = useState(() => mapGreeting(local.world));
@@ -411,22 +406,6 @@ export default function App() {
         >
           <Icon name={audio ? "speaker-on" : "speaker-off"} size={28} />
         </button>
-        {audio && (
-          <button
-            type="button"
-            className={cn("kid-button")}
-            aria-label={music ? "Tắt nhạc nền" : "Bật nhạc nền"}
-            title={music ? "Tắt nhạc nền" : "Bật nhạc nền"}
-            aria-pressed={music}
-            onClick={() => {
-              const next = !music;
-              setMusic(next);
-              saveMusicPreference(next);
-            }}
-          >
-            <Icon name={music ? "music-on" : "music-off"} size={28} />
-          </button>
-        )}
         <button
           type="button"
           className={cn("kid-button")}

@@ -79,7 +79,7 @@ test("self-hosted Nunito renders Vietnamese and no serif remains", async ({
     expect(family).not.toMatch(/Georgia|(?<!sans-)serif/);
   }
   for (const url of fonts)
-    expect(new URL(url).origin).toBe("http://127.0.0.1:4173");
+    expect(new URL(url).origin).toBe(new URL(page.url()).origin);
   const worker = await (await page.request.get("/sw.js")).text();
   expect(worker).toMatch(/nunito-vietnamese-[^"]+\.woff2/);
   expect(worker).toMatch(/nunito-latin-[^"]+\.woff2/);

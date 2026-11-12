@@ -110,6 +110,7 @@ test("cached garden survives offline navigation and stores new discoveries", asy
 
 test("touch controls grow a plant without mouse or reading, with reduced motion", async ({
   browser,
+  baseURL,
 }) => {
   const context = await browser.newContext({
     hasTouch: true,
@@ -117,7 +118,7 @@ test("touch controls grow a plant without mouse or reading, with reduced motion"
     reducedMotion: "reduce",
   });
   const page = await context.newPage();
-  await page.goto("http://127.0.0.1:4173");
+  await page.goto(baseURL!);
   await page.getByRole("button", { name: "Vườn nhà", exact: true }).tap();
   await page.getByRole("button", { name: "Luống đất 1", exact: true }).tap();
   for (let round = 0; round < 3; round++)
@@ -373,9 +374,9 @@ test("map is the home screen, shows locked regions in order and keeps them close
   await expect(page.locator(".hud-guide p")).toContainText(
     "Chào con đến Thung lũng nhỏ!",
   );
-  await expect(
-    page.getByRole("button", { name: "Nghỉ một chút" }),
-  ).toHaveCount(0);
+  await expect(page.getByRole("button", { name: "Nghỉ một chút" })).toHaveCount(
+    0,
+  );
   await expect(
     page.getByRole("button", { name: "Quay lại bản đồ" }),
   ).toHaveCount(0);
@@ -449,13 +450,9 @@ test("day/night toggle, xylophone, audio persistence and Ao sen region work end-
   await expect(
     page.getByRole("button", { name: "Tắt âm thanh" }),
   ).toHaveAttribute("aria-pressed", "true");
-  // Background music follows the sound switch, is on by default and has its own persisted switch.
-  await expect(
-    page.getByRole("button", { name: "Tắt nhạc nền" }),
-  ).toHaveAttribute("aria-pressed", "true");
+  // Background music follows the sound switch; both tracks ship with the app.
   for (const file of ["music-valley.m4a", "music-play.mp3"])
     expect((await page.request.get(`/assets/${file}`)).ok()).toBe(true);
-  await page.getByRole("button", { name: "Tắt nhạc nền" }).click();
   // Day/Night toggle syncs into world state and renders moon & owl.
   await activate(page, "Chuyển sang ban đêm");
   await expect(page.locator(".garden")).toHaveAttribute("data-time", "night");
@@ -472,9 +469,6 @@ test("day/night toggle, xylophone, audio persistence and Ao sen region work end-
   await expect(
     page.getByRole("button", { name: "Tắt âm thanh" }),
   ).toHaveAttribute("aria-pressed", "true");
-  await expect(
-    page.getByRole("button", { name: "Bật nhạc nền" }),
-  ).toHaveAttribute("aria-pressed", "false");
   await activate(page, "Vườn nhà");
   await expect(page.locator(".garden")).toHaveAttribute("data-time", "night");
   // Seed region_pond_open in localStorage to verify entering Ao sen (data-driven P5).
@@ -491,13 +485,14 @@ test("day/night toggle, xylophone, audio persistence and Ao sen region work end-
 
 test("fog clears on the map when a region opens, including under reduced motion", async ({
   browser,
+  baseURL,
 }) => {
   const context = await browser.newContext({
     viewport: { width: 1194, height: 834 },
     reducedMotion: "reduce",
   });
   const page = await context.newPage();
-  await page.goto("http://127.0.0.1:4173");
+  await page.goto(baseURL!);
   await page.evaluate(() => {
     // 39 counted discoveries (< 70% of 57), excluding "bird", so tapping bird opens Ao sen.
     const seed = [

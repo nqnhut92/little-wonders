@@ -78,22 +78,6 @@ export function playNote(barIndex: number, on: boolean): boolean {
   const freq = pentatonicNotes[barIndex % pentatonicNotes.length];
   return playTone(freq, freq, 0.45);
 }
-export const musicStorageKey = "little-wonders-music";
-// Music follows the main sound switch and is on by default once sound is on.
-export function loadMusicPreference(): boolean {
-  try {
-    return localStorage.getItem(musicStorageKey) !== "0";
-  } catch {
-    return true;
-  }
-}
-export function saveMusicPreference(on: boolean) {
-  try {
-    localStorage.setItem(musicStorageKey, on ? "1" : "0");
-  } catch {
-    /* keep in memory when storage is blocked */
-  }
-}
 export type MusicTrack = "valley" | "play";
 // CC0 recordings; sources are listed in public/assets/PROVENANCE.md.
 export const musicFiles: Record<MusicTrack, string> = {

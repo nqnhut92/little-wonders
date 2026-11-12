@@ -4,6 +4,7 @@ export default ts.config(
   {
     ignores: [
       "dist",
+      "dist-e2e*",
       "node_modules",
       "playwright-report",
       "test-results",

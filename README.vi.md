@@ -20,7 +20,7 @@ Khu vườn và thung lũng truyện tranh ưu tiên cảm ứng dành cho trẻ
   - **Capybara**: đội quýt cam ngồi bên Ao sen và về chơi ở vườn nhà sau khi bé làm quen.
   - Mỗi người bạn có Lời mời món ăn không bao giờ hết hạn và 3 chương truyện tiếng Việt ấm áp. Tặng món nào bạn cũng vui và tính vào tiến độ mở truyện; tặng đúng món đang mong muốn sẽ chuyển sang Lời mời tiếp theo.
 - **Bếp của vườn**: Kết hợp 1 đến 3 nguyên liệu trong giỏ để nấu 14 công thức (các món súp, mứt dâu, salad, bánh nướng, nước ép, bánh bắp, táo nghiền, tô trái cây, trà hoa hướng dương, sinh tố, nước dừa, hạt dẻ nướng, cùng món bất ngờ lúc nào cũng măm được).
-- **Ngôi nhà sắc màu & Vui chơi tự do**: Đổi 5 màu sơn tường và đặt tối đa 30 món trang trí. Chuyển đổi Ngày/Đêm đồng bộ (`scene.time`) với mặt trăng, sao, đom đóm bay theo tay, hoa ngủ đêm và cú mèo; gõ đàn gỗ ngũ cung 8 thanh hỗ trợ chạm nhiều ngón; quay chong chóng gió; và bắt gặp các sự kiện bất ngờ dịu dàng khi bé nghỉ tay. Âm thanh và giọng đọc tiếng Việt mặc định tắt và lưu riêng trên từng trình duyệt; nhạc nền nhẹ nhàng phát khi bật loa và có nút bật/tắt riêng.
+- **Ngôi nhà sắc màu & Vui chơi tự do**: Đổi 5 màu sơn tường và đặt tối đa 30 món trang trí. Chuyển đổi Ngày/Đêm đồng bộ (`scene.time`) với mặt trăng, sao, đom đóm bay theo tay, hoa ngủ đêm và cú mèo; gõ đàn gỗ ngũ cung 8 thanh hỗ trợ chạm nhiều ngón; quay chong chóng gió; và bắt gặp các sự kiện bất ngờ dịu dàng khi bé nghỉ tay. Âm thanh và giọng đọc tiếng Việt mặc định tắt và lưu riêng trên từng trình duyệt; nhạc nền nhẹ nhàng phát khi bật loa.
 - **Giao diện ưu tiên trẻ nhỏ & Đồng bộ đám mây**: Bảng màu sáng kiểu truyện tranh đồng nhất cho cả khung cảnh lẫn các nút điều khiển; bố cục tràn màn hình (`56px+` cho nút của bé, nút quay lại góc trên trái khi ở trong khu chơi, nút bánh răng `44px` của người lớn chỉ hiện ở bản đồ thung lũng); font Nunito tự host đầy đủ dấu tiếng Việt; lưu tức thì vào `localStorage` kèm đồng bộ đa tab và PostgreSQL serverless (`merge_world` schema v2) qua Google OpenID Connect dành cho phụ huynh.
 
 Xem thêm [kiến trúc](docs/ARCHITECTURE.vi.md) và [nguồn hình ảnh](public/assets/PROVENANCE.vi.md).
@@ -41,7 +41,7 @@ npx playwright install --with-deps chromium webkit
 npm run test:e2e
 ```
 
-Dùng `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium` cho Chromium hệ thống hoặc đặt `PLAYWRIGHT_BROWSERS_PATH` tới thư mục ghi được. Bộ kiểm thử trình duyệt chạy trên bản build production.
+Dùng `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium` cho Chromium hệ thống hoặc đặt `PLAYWRIGHT_BROWSERS_PATH` tới thư mục ghi được. Bộ kiểm thử trình duyệt chạy trên bản build production đặt ở `dist-e2e`, tách khỏi `dist`. Để chạy bộ thứ hai cùng lúc trong cùng checkout, đặt riêng `E2E_PORT` và `E2E_OUT_DIR` cho nó (ví dụ `E2E_PORT=4174 E2E_OUT_DIR=dist-e2e-2`).
 
 ### Chơi thử cục bộ không cần cấu hình đám mây
 

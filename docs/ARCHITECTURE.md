@@ -14,7 +14,7 @@ Garden/Activities → typed Action → `apply` → `World` → immediate `localS
 - `src/game/visitors.ts` & `src/game/events.ts`: pure selectors for garden visitors and injected-RNG idle surprise events.
 - `src/data`: discovery inventory, crops, companions (`pals.ts`), recipes, regions, data-driven region scenes (`scenes.ts`) and interaction rules.
 - `src/components`: expressive chibi SVG artwork (`Art.tsx` with drawings in `ArtFlat.tsx` and `ArtFlatMore.tsx`, full-bleed backdrops and valley map in `SceneBackdrop.tsx`, and light-glow definitions in `PaintFilters.tsx`), data-driven scene renderer (`Garden.tsx`), valley map (`ValleyMap.tsx`), kitchen, companions, house, xylophone and notebook.
-- `src/services`: local persistence, retry queue and Web Audio / speech synthesis (`little-wonders-audio` stored per browser, off by default; `little-wonders-music` for background music, on by default once sound is on). `App.tsx` coordinates profiles, regions and modal panels.
+- `src/services`: local persistence, retry queue and Web Audio / speech synthesis (`little-wonders-audio` stored per browser, off by default). `App.tsx` coordinates profiles, regions and modal panels.
 - `src/styles`: design tokens (`tokens.css`) and shared focus/scrollbar styles. `src/ui`: framework-independent scroll-region controller. `src/components/Icons.tsx`: interface icons.
 - `api/index.ts` and `api/_lib/security.ts`: Google OAuth, signed sessions, ownership checks and CSRF protection.
 

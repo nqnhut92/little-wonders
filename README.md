@@ -20,7 +20,7 @@ A Vietnamese touch-first storybook garden and valley for children aged 4–6, bu
   - **Capybara**: relaxing by the lotus pond with a tangerine balanced on its head, and visiting the home garden once discovered.
   - Each companion has non-expiring food wishes and three unlockable Vietnamese story chapters. Any gift counts toward stories; matching the current wish rotates to the next one.
 - **Garden Kitchen**: Combine one to three basket ingredients in the cooking pot across 14 recipes (soups, jam, salad, pie, juice, corn cake, applesauce, fruit bowl, sunflower tea, smoothie, coconut water and roasted chestnuts, plus an always-edible surprise dish).
-- **Color House & Free Play**: Paint the house across five wall colors and place up to 30 decorations. Toggle synced Day/Night (`scene.time`) with moon, stars, interactive fireflies, sleeping flowers and night owl; play the 8-bar pentatonic xylophone with multi-touch; spin the windmill; and discover gentle idle surprise events. Audio and Vietnamese speech synthesis default to off and persist per browser; gentle background music plays while sound is on and has its own switch.
+- **Color House & Free Play**: Paint the house across five wall colors and place up to 30 decorations. Toggle synced Day/Night (`scene.time`) with moon, stars, interactive fireflies, sleeping flowers and night owl; play the 8-bar pentatonic xylophone with multi-touch; spin the windmill; and discover gentle idle surprise events. Audio and Vietnamese speech synthesis default to off and persist per browser; gentle background music plays while sound is on.
 - **Child-First Interface & Cloud Sync**: Bright storybook light palette across both scenes and UI chrome; full-screen responsive layout (`56px+` child buttons, top-left Back button inside regions, `44px` adult gear corner on the valley map only); self-hosted Nunito with Vietnamese glyphs; immediate `localStorage` persistence with multi-tab and serverless PostgreSQL (`merge_world` schema v2) synchronization via Google OpenID Connect for parents.
 
 See [architecture](docs/ARCHITECTURE.md) and [asset provenance](public/assets/PROVENANCE.md).
@@ -41,7 +41,7 @@ npx playwright install --with-deps chromium webkit
 npm run test:e2e
 ```
 
-Use `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium` for a system Chromium, or a writable `PLAYWRIGHT_BROWSERS_PATH`. Browser tests serve the production build.
+Use `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium` for a system Chromium, or a writable `PLAYWRIGHT_BROWSERS_PATH`. Browser tests serve a production build from `dist-e2e`, separate from `dist`. To run a second suite in the same checkout at the same time, give it its own `E2E_PORT` and `E2E_OUT_DIR` (for example `E2E_PORT=4174 E2E_OUT_DIR=dist-e2e-2`).
 
 ### Local play without external cloud setup
 

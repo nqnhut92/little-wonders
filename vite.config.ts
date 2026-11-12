@@ -3,18 +3,23 @@ import react from "@vitejs/plugin-react";
 import { localApi } from "./dev/local-api";
 import { readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { createHash } from "node:crypto";
+// Follows --outDir so browser tests can build beside the regular dist folder.
+let outDir = "dist";
 export default defineConfig({
   plugins: [
     react(),
     localApi(),
     {
       name: "version-offline-shell",
+      configResolved(config) {
+        outDir = config.build.outDir;
+      },
       closeBundle() {
-        const html = readFileSync("dist/index.html", "utf8");
+        const html = readFileSync(`${outDir}/index.html`, "utf8");
         const sw = readFileSync("public/sw.js", "utf8");
         // Fonts and public/assets illustrations and music are referenced dynamically or from CSS, so precache them offline.
         const bundled = [
-          ...readdirSync("dist/assets")
+          ...readdirSync(`${outDir}/assets`)
             .filter((f) => f.endsWith(".woff2"))
             .sort()
             .map((f) => `/assets/${f}`),
@@ -45,7 +50,7 @@ export default defineConfig({
           hash.update(readFileSync(`public/${file}`));
         const id = hash.digest("hex").slice(0, 12);
         writeFileSync(
-          "dist/sw.js",
+          `${outDir}/sw.js`,
           sw
             .replace("__BUILD_ID__", id)
             .replace(
