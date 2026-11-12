@@ -19,7 +19,8 @@ export type IconName =
   | "yes"
   | "no"
   | "day-sun"
-  | "night-moon";
+  | "night-moon"
+  | "rotate";
 const speaker = (
   <path d="M4 9.5A1.5 1.5 0 0 1 5.5 8H8l4.2-3.4a1 1 0 0 1 1.6.8v13.2a1 1 0 0 1-1.6.8L8 16H5.5A1.5 1.5 0 0 1 4 14.5z" />
 );
@@ -133,6 +134,15 @@ const paths: Record<IconName, ReactNode> = {
     <path d="M15.5 3.6a8.6 8.6 0 1 0 5.4 13.7A7 7 0 0 1 15.5 3.6z" />
   ),
   busy: <path {...line} d="M12 4a8 8 0 1 1-7.4 5" />,
+  rotate: (
+    <>
+      <rect {...line} x="3" y="8" width="18" height="11" rx="2.5" />
+      <path
+        {...line}
+        d="M7 5.5A8 8 0 0 1 12 4a8 8 0 0 1 4 1.1M14.2 2.8l2 2.4-3 .9"
+      />
+    </>
+  ),
 };
 export function Icon({ name, size = 24 }: { name: IconName; size?: number }) {
   return (

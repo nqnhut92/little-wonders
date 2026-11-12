@@ -1,7 +1,9 @@
 // Picks up a new deploy without any message to the child: the service worker checks for a newer sw.js
-// (its BUILD_ID changes with every build), the waiting worker takes over, and the page reloads only
-// while the tab is hidden so nothing flickers mid-play. Pending local progress lives in storage and survives.
+// (its BUILD_ID changes with every build) and the waiting worker takes over. A hidden tab reloads silently;
+// a visible one is told through UPDATE_READY so a calm dialog can offer the reload (no timer, nothing is
+// forced mid-play). Pending local progress lives in storage and survives.
 
+export const UPDATE_READY = "little-wonders:update-ready";
 export const UPDATE_CHECK_MS = 30 * 60 * 1000;
 const MIN_GAP_MS = 5000;
 
@@ -28,6 +30,8 @@ export interface UpdateEnv {
   container: Container;
   page: Page;
   reload(): void;
+  // Called when the new version is ready while the child is still looking at the page.
+  notify(): void;
   now(): number;
   setInterval(fn: () => void, ms: number): unknown;
 }
@@ -59,7 +63,8 @@ export function watchForUpdates(env: UpdateEnv) {
   container.addEventListener("controllerchange", () => {
     if (!hadController) return;
     reloadPending = true;
-    reloadIfHidden();
+    if (page.hidden) reloadIfHidden();
+    else env.notify();
   });
   registration.addEventListener("updatefound", () => {
     const worker = registration.installing;
@@ -91,6 +96,7 @@ export function registerServiceWorker() {
           addEventListener: (type, fn) => document.addEventListener(type, fn),
         },
         reload: () => location.reload(),
+        notify: () => window.dispatchEvent(new Event(UPDATE_READY)),
         now: () => Date.now(),
         setInterval: (fn, ms) => window.setInterval(fn, ms),
       }),

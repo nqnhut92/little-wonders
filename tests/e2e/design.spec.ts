@@ -288,3 +288,16 @@ test.describe("pending states", () => {
     await expect(pending).toHaveCount(0);
   });
 });
+
+test("touch screens held upright are asked to turn sideways", async ({
+  page,
+  hasTouch,
+}) => {
+  test.skip(!hasTouch, "desktop windows never see the rotate prompt");
+  const prompt = page.getByRole("dialog", { name: /Xoay ngang/ });
+  await page.setViewportSize({ width: 834, height: 1194 });
+  await page.goto("/");
+  await expect(prompt).toBeVisible();
+  await page.setViewportSize({ width: 1194, height: 834 });
+  await expect(prompt).toBeHidden();
+});

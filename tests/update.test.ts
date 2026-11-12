@@ -28,11 +28,13 @@ function setup(controller: unknown = {}) {
   let tick = () => {};
   let time = 100000;
   const reload = vi.fn();
+  const notify = vi.fn();
   watchForUpdates({
     registration,
     container,
     page,
     reload,
+    notify,
     now: () => time,
     setInterval: (fn) => (tick = fn),
   });
@@ -43,6 +45,7 @@ function setup(controller: unknown = {}) {
     registration,
     page,
     reload,
+    notify,
     tick: () => tick(),
     advance: (ms: number) => (time += ms),
   };
@@ -63,6 +66,7 @@ describe("picking up a new deploy", () => {
     const t = setup();
     t.on.controllerchange();
     expect(t.reload).not.toHaveBeenCalled();
+    expect(t.notify).toHaveBeenCalledTimes(1);
     t.page.hidden = true;
     t.pageOn.visibilitychange();
     expect(t.reload).toHaveBeenCalledTimes(1);
@@ -74,12 +78,14 @@ describe("picking up a new deploy", () => {
     t.page.hidden = true;
     t.on.controllerchange();
     expect(t.reload).toHaveBeenCalledTimes(1);
+    expect(t.notify).not.toHaveBeenCalled();
   });
   it("ignores the very first install", () => {
     const t = setup(null);
     t.page.hidden = true;
     t.on.controllerchange();
     expect(t.reload).not.toHaveBeenCalled();
+    expect(t.notify).not.toHaveBeenCalled();
   });
   it("checks on return and on the interval, never while hidden or in bursts", () => {
     const t = setup();

@@ -12,6 +12,8 @@ import "@fontsource/nunito/vietnamese-700.css";
 import "@fontsource/nunito/vietnamese-800.css";
 import "./styles/tokens.css";
 import App from "./App";
+import { UpdatePrompt } from "./components/UpdatePrompt";
+import { RotatePrompt } from "./components/RotatePrompt";
 import { registerServiceWorker } from "./services/update";
 // Shared design-language blocks go after the app's own styles.
 import "./styles/focus.css";
@@ -20,6 +22,8 @@ import "./styles/scroll.css";
 createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <App />
+    <RotatePrompt />
+    <UpdatePrompt />
     <Analytics />
   </React.StrictMode>,
 );
