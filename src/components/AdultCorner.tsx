@@ -150,7 +150,7 @@ export function AdultCorner(p: Props) {
               <button className={cn("quiet-primary")} onClick={p.onCreate}>
                 Tạo khu vườn cho bé
               </button>
-              <button className={cn("link-button")} onClick={p.onLogout}>
+              <button className={cn("wide-button")} onClick={p.onLogout}>
                 Đăng xuất
               </button>
             </>

@@ -26,7 +26,9 @@ export function RotatePrompt() {
         aria-labelledby="rotate-title"
       >
         <div className={cn("modal-body")}>
-          <Icon name="rotate" size={64} />
+          <div className={cn("prompt-icon")}>
+            <Icon name="rotate" size={64} />
+          </div>
           <h2 id="rotate-title">Xoay ngang màn hình nhé!</h2>
           <p>
             Tắt khóa xoay trong Trung tâm điều khiển, rồi xoay iPad ngang để vào

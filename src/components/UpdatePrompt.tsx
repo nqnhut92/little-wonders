@@ -21,14 +21,16 @@ export function UpdatePrompt() {
         aria-labelledby="update-title"
       >
         <div className={cn("modal-body")}>
-          <Icon name="busy" size={56} />
+          <div className={cn("prompt-icon")}>
+            <Icon name="cloud-saved" size={56} />
+          </div>
           <h2 id="update-title">Vườn có bản mới rồi!</h2>
           <p>
             Tải lại trang để vào bản mới nhé. Những gì con đã chơi vẫn được giữ.
           </p>
           <button
             type="button"
-            className={cn("kid-button")}
+            className={cn("quiet-primary")}
             onClick={() => location.reload()}
           >
             Tải lại trang

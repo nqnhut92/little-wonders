@@ -1580,13 +1580,9 @@ main {
   border: 2px solid var(--clay);
   background: var(--surface);
 }
-.link-button {
-  display: block;
-  margin: 14px auto 0;
-  text-align: center;
-  color: var(--muted);
-  background: transparent;
-  text-decoration: underline;
+.wide-button {
+  width: 100%;
+  margin: 8px 0 0;
 }
 .adult-done {
   display: flex;
@@ -1598,4 +1594,9 @@ main {
   color: var(--ok);
   background: var(--accent-soft);
   font-weight: 800;
+}
+.prompt-icon {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 4px;
 }
