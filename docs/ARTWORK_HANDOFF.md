@@ -6,7 +6,7 @@
 
 No production artwork or Gemini images have been generated. The game uses coherent temporary authored vectors and remains playable without an art upgrade. Update both language versions whenever an asset or its interaction changes.
 
-Flat, friendly storybook for Vietnamese children aged 4–6: simple rounded shapes, bright flat fills, no outlines, one darker tone for shade, big dot eyes #4a3b35 with a white highlight and pink cheeks #ffb3a7. Sky #bfe6f7, grass #8fd083, yellow #ffc93c, red #f0605d, blue #5fb4e0, purple #9b6bd6, cream-white puppy #fff6e5 with a small purple bow #9b6bd6. Avoid harsh contrast, frightening faces, tiny noisy detail, text, logos and watermarks.
+Flat, friendly storybook for Vietnamese children aged 4–6: expressive chibi proportions, simple rounded shapes, bright flat fills, layered soft shade, big sparkling eyes #3b2d28 with dual white highlights, curved eyebrows, cheerful open smiles, sculpted paws with pink pads, and rosy cheeks #ff9ea2. Sky #bfe6f7, grass #8fd083, yellow #ffc93c, red #f0605d, blue #5fb4e0, purple #9b6bd6, cream-white puppy #fff7e8 with a small purple bow #9b6bd6. Avoid harsh contrast, frightening faces, tiny noisy detail, text, logos and watermarks.
 
 ## Complete inventory and file specifications
 

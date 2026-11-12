@@ -7,20 +7,51 @@ const LINE = {
   strokeLinecap: "round",
   strokeLinejoin: "round",
 } as const;
-function Eye({ x, y, r = 4.5 }: { x: number; y: number; r?: number }) {
+function Eye({ x, y, r = 5.2 }: { x: number; y: number; r?: number }) {
   return (
     <>
       <circle cx={x} cy={y} r={r} fill={INK} />
-      <circle cx={x + r * 0.32} cy={y - r * 0.32} r={r * 0.32} fill="#fff" />
+      <circle cx={x + r * 0.34} cy={y - r * 0.34} r={r * 0.36} fill="#fff" />
+      <circle
+        cx={x - r * 0.32}
+        cy={y + r * 0.34}
+        r={r * 0.17}
+        fill="#fff"
+        opacity="0.85"
+      />
     </>
   );
 }
-function Smile({ x, y, w = 6 }: { x: number; y: number; w?: number }) {
-  return (
+function Smile({
+  x,
+  y,
+  w = 6,
+  open = true,
+}: {
+  x: number;
+  y: number;
+  w?: number;
+  open?: boolean;
+}) {
+  return open ? (
+    <>
+      <path
+        d={`M${x - w} ${y}q${w} ${w * 1.65} ${w * 2} 0Z`}
+        fill="#d94b58"
+        stroke={INK}
+        strokeWidth="1.9"
+        strokeLinejoin="round"
+      />
+      <path
+        d={`M${x - w * 0.65} ${y + w * 0.48}q${w * 0.65} ${w * 0.7} ${w * 1.3} 0Z`}
+        fill="#ff8fa0"
+      />
+    </>
+  ) : (
     <path
       d={`M${x - w} ${y}q${w} ${w} ${w * 2} 0`}
       stroke={INK}
-      strokeWidth="2.2"
+      strokeWidth="2.3"
       {...LINE}
     />
   );
@@ -29,7 +60,7 @@ function Cheeks({
   x1,
   x2,
   y,
-  r = 5,
+  r = 5.4,
 }: {
   x1: number;
   x2: number;
@@ -38,8 +69,22 @@ function Cheeks({
 }) {
   return (
     <>
-      <circle cx={x1} cy={y} r={r} fill={BLUSH} />
-      <circle cx={x2} cy={y} r={r} fill={BLUSH} />
+      <ellipse
+        cx={x1}
+        cy={y}
+        rx={r * 1.15}
+        ry={r * 0.78}
+        fill={BLUSH}
+        opacity="0.85"
+      />
+      <ellipse
+        cx={x2}
+        cy={y}
+        rx={r * 1.15}
+        ry={r * 0.78}
+        fill={BLUSH}
+        opacity="0.85"
+      />
     </>
   );
 }
@@ -442,52 +487,80 @@ export const flatMore: Record<string, Draw> = {
   hedgehog: () => (
     <>
       <path
-        d="M16 96C10 56 46 34 76 46l12-10-2 14 14-4-8 13 13 2-10 10 9 8-12 4c-4 8-12 13-24 13Z"
-        fill="#8a5a36"
+        d="M14 96C8 54 44 30 76 44l13-11-2 15 15-4-8 13 14 2-11 10 9 8-12 5c-4 8-13 14-26 14Z"
+        fill="#7c4e2d"
       />
       <path
-        d="M62 96c0-20 12-34 26-34 12 0 22 14 24 28q-4 6-12 6Z"
-        fill="#f7e3c8"
+        d="M24 88c0-26 24-40 48-34l8-6-2 10 9-2-6 9 8 2-8 8c-8 10-20 13-37 13Z"
+        fill="#9a643d"
       />
-      <Eye x={88} y={76} r={4} />
-      <circle cx="111" cy="89" r="4.5" fill={INK} />
-      <circle cx="80" cy="86" r="4.5" fill={BLUSH} />
-      <ellipse cx="40" cy="98" rx="9" ry="5" fill="#f7e3c8" />
-      <ellipse cx="74" cy="98" rx="9" ry="5" fill="#f7e3c8" />
+      <path
+        d="M58 96c0-22 14-36 29-36 13 0 23 14 25 29q-4 7-13 7Z"
+        fill="#fae6cd"
+      />
+      <ellipse cx="64" cy="48" rx="6" ry="5" fill="#fae6cd" />
+      <ellipse cx="64" cy="48" rx="3.2" ry="2.6" fill={BLUSH} />
+      <Eye x={86} y={74} r={4.8} />
+      <Smile x={95} y={84} w={4} open={false} />
+      <circle cx="111" cy="86" r="5" fill={INK} />
+      <circle cx="109.5" cy="84.5" r="1.6" fill="#fff" opacity="0.7" />
+      <ellipse cx="78" cy="84" rx="5.5" ry="3.8" fill={BLUSH} opacity="0.85" />
+      <ellipse cx="38" cy="98" rx="10" ry="5.5" fill="#f5d5b0" />
+      <ellipse cx="74" cy="98" rx="10" ry="5.5" fill="#f5d5b0" />
     </>
   ),
   squirrel: () => (
     <>
+      {/* Huge fluffy curled tail */}
       <path
-        d="M72 104c36-4 44-50 20-76-16-16-42-4-34 16 8 16 30 8 24 34Z"
-        fill="#d98032"
+        d="M68 104c42-2 52-52 24-80-16-16-42-2-34 18 8 15 28 8 22 36Z"
+        fill="#d97b29"
       />
-      <ellipse cx="50" cy="86" rx="23" ry="24" fill="#f0a850" />
-      <ellipse cx="48" cy="92" rx="11" ry="14" fill="#fff0d6" />
-      <path d="M30 40 27 22l14 9Zm22-2 5-16 8 16Z" fill="#f0a850" />
-      <circle cx="44" cy="52" r="20" fill="#f0a850" />
-      <Eye x={36} y={50} r={4} />
-      <Eye x={52} y={50} r={4} />
-      <ellipse cx="44" cy="57" rx="3" ry="2.2" fill={INK} />
-      <Cheeks x1={30} x2={58} y={58} r={4} />
-      <circle cx="40" cy="78" r="8" fill="#a86a3e" />
-      <path d="M33 74q7-6 14 0Z" fill="#8a5a36" />
+      <path
+        d="M84 36c12 10 14 34 2 50 4-16-6-22-12-34-4-8 2-20 10-16Z"
+        fill="#f5a64c"
+        opacity="0.65"
+      />
+      {/* Plump body & cream belly */}
+      <ellipse cx="48" cy="86" rx="24" ry="24" fill="#f29d38" />
+      <ellipse cx="46" cy="90" rx="13" ry="15" fill="#fff2db" />
+      <ellipse cx="36" cy="108" rx="9" ry="5" fill="#d97b29" />
+      <ellipse cx="58" cy="108" rx="9" ry="5" fill="#d97b29" />
+      {/* Perky ears with inner pink */}
+      <path d="M27 38 23 17l16 11Zm24-2 6-18 10 18Z" fill="#f29d38" />
+      <path d="M29 35 26 22l10 7Zm23-2 4-12 6 12Z" fill={BLUSH} />
+      {/* Big round head */}
+      <ellipse cx="44" cy="50" rx="23" ry="21" fill="#f29d38" />
+      <ellipse cx="44" cy="58" rx="13" ry="9" fill="#fff2db" />
+      <Eye x={34} y={48} r={4.8} />
+      <Eye x={54} y={48} r={4.8} />
+      <ellipse cx="44" cy="54" rx="3.8" ry="2.6" fill={INK} />
+      <Smile x={44} y={58} w={4.5} />
+      <Cheeks x1={27} x2={61} y={56} r={4.5} />
+      {/* Little hands hugging an acorn */}
+      <circle cx="42" cy="80" r="9.5" fill="#a86434" />
+      <path d="M33 76q9-8 18 0Z" fill="#73411f" />
+      <ellipse cx="33" cy="79" rx="5.5" ry="4" fill="#e08826" />
+      <ellipse cx="51" cy="79" rx="5.5" ry="4" fill="#e08826" />
     </>
   ),
   woodpecker: () => (
     <>
-      <rect x="28" y="8" width="18" height="108" rx="8" fill="#b07a4e" />
-      <rect x="38" y="8" width="8" height="108" rx="4" fill="#96643c" />
+      <rect x="26" y="8" width="18" height="108" rx="8" fill="#b07a4e" />
+      <rect x="36" y="8" width="8" height="108" rx="4" fill="#946037" />
       <path
-        d="M46 96c-4-26 2-52 22-58 18-4 28 14 22 32-6 16-24 24-44 26Z"
-        fill="#4a5568"
+        d="M44 96c-4-26 3-52 24-58 19-4 29 14 23 33-6 16-25 23-47 25Z"
+        fill="#3d4859"
       />
-      <ellipse cx="66" cy="76" rx="10" ry="14" fill="#fff6e5" />
-      <circle cx="74" cy="46" r="17" fill="#fff6e5" />
-      <path d="M60 38q10-16 28-6-12 0-16 10Z" fill="#f0605d" />
-      <path d="M89 44l22 5-22 6Z" fill="#ffc93c" />
-      <Eye x={78} y={46} r={4} />
-      <circle cx="70" cy="54" r="4" fill={BLUSH} />
+      <ellipse cx="66" cy="75" rx="12" ry="15" fill="#fff8eb" />
+      <path d="M54 66q12 16 24-2-4 18-24 2Z" fill="#2c3545" opacity="0.4" />
+      {/* Vibrant red crest & big expressive head */}
+      <path d="M55 36c6-18 22-20 32-8-10 0-15 6-18 14Z" fill="#f24e4e" />
+      <circle cx="74" cy="46" r="18.5" fill="#fff8eb" />
+      <path d="M90 43l23 5-23 7Z" fill="#ffb82e" />
+      <Eye x={78} y={44} r={4.8} />
+      <Smile x={83} y={53} w={3.5} open={false} />
+      <ellipse cx="69" cy="53" rx="5" ry="3.5" fill={BLUSH} />
     </>
   ),
   "coconut-tree": () => (
@@ -554,30 +627,33 @@ export const flatMore: Record<string, Draw> = {
   crab: () => (
     <>
       <path
-        d="M26 70 12 58m82 12 14-12M30 90l-14 10m74-10 14 10M36 98l-8 12m56-12 8 12"
-        stroke="#d94a48"
-        strokeWidth="6"
+        d="M26 70 11 56m83 14 15-14M30 90l-15 10m75-10 15 10M36 98l-8 12m56-12 8 12"
+        stroke="#d64240"
+        strokeWidth="6.5"
         strokeLinecap="round"
       />
-      <circle cx="14" cy="46" r="12" fill="#f0605d" />
-      <circle cx="106" cy="46" r="12" fill="#f0605d" />
+      <circle cx="14" cy="44" r="13.5" fill="#f25755" />
+      <circle cx="106" cy="44" r="13.5" fill="#f25755" />
       <path
-        d="M14 46 8 34m98 12 6-12"
+        d="M14 44 7 31m99 13 7-13"
         stroke="#fff6e5"
-        strokeWidth="3"
+        strokeWidth="3.5"
         strokeLinecap="round"
       />
-      <ellipse cx="60" cy="78" rx="36" ry="26" fill="#f0605d" />
+      <ellipse cx="60" cy="78" rx="37" ry="27" fill="#f25755" />
+      <ellipse cx="60" cy="85" rx="22" ry="15" fill="#ff928a" opacity="0.65" />
       <path
-        d="M48 56V44m24 12V44"
-        stroke="#f0605d"
-        strokeWidth="6"
+        d="M47 56V43m26 13V43"
+        stroke="#f25755"
+        strokeWidth="6.5"
         strokeLinecap="round"
       />
-      <Eye x={48} y={42} r={6} />
-      <Eye x={72} y={42} r={6} />
-      <Smile x={60} y={80} w={8} />
-      <Cheeks x1={40} x2={80} y={80} />
+      <circle cx="47" cy="41" r="8.5" fill="#ffffff" />
+      <circle cx="73" cy="41" r="8.5" fill="#ffffff" />
+      <Eye x={47} y={41} r={5.5} />
+      <Eye x={73} y={41} r={5.5} />
+      <Smile x={60} y={76} w={7.5} />
+      <Cheeks x1={38} x2={82} y={77} />
     </>
   ),
   "sandcastle-1": sandcastle(1),
@@ -597,34 +673,37 @@ export const flatMore: Record<string, Draw> = {
   ),
   turtle: () => (
     <>
-      <ellipse cx="34" cy="96" rx="12" ry="7" fill="#9bd68a" />
-      <ellipse cx="76" cy="96" rx="12" ry="7" fill="#9bd68a" />
-      <circle cx="98" cy="70" r="16" fill="#9bd68a" />
-      <path d="M12 92q6-52 44-52t42 52Z" fill="#4fae5a" />
+      <ellipse cx="32" cy="96" rx="13" ry="7.5" fill="#8ed479" />
+      <ellipse cx="74" cy="96" rx="13" ry="7.5" fill="#8ed479" />
+      <circle cx="97" cy="68" r="18" fill="#8ed479" />
+      <path d="M12 92q6-54 44-54t42 54Z" fill="#45a852" />
+      <path d="M14 92h82a4 4 0 0 1 0 6H14a4 4 0 0 1 0-6Z" fill="#f7de9c" />
       <path
         d="M36 62l12-10h16l12 10-6 16H42Zm-18 30 12-14m58 14-10-14"
-        stroke="#3d9449"
+        stroke="#2f823b"
         strokeWidth="4"
         {...LINE}
       />
-      <Eye x={102} y={66} r={4} />
-      <Smile x={104} y={75} w={4} />
-      <circle cx="94" cy="76" r="3.5" fill={BLUSH} />
+      <Eye x={102} y={64} r={5} />
+      <Smile x={103} y={74} w={4.5} />
+      <ellipse cx="92" cy="74" rx="4.5" ry="3.2" fill={BLUSH} />
     </>
   ),
   seagull: () => (
     <>
       <path
-        d="M6 58q28-26 54 6 26-32 54-6-28-6-54 20Q34 52 6 58Z"
+        d="M6 58q28-28 54 6 26-34 54-6-28-6-54 22Q34 52 6 58Z"
         fill="#ffffff"
       />
       <path
         d="M6 58q10-6 20-6-6 4-10 8Zm108 0q-10-6-20-6 6 4 10 8Z"
-        fill="#8a97a8"
+        fill="#6b7c93"
       />
-      <path d="M56 72l4 12 4-12Z" fill="#ffb020" />
-      <Eye x={54} y={64} r={2.6} />
-      <Eye x={66} y={64} r={2.6} />
+      <circle cx="60" cy="64" r="15" fill="#ffffff" />
+      <path d="M55 72l5 12 5-12Z" fill="#ffa818" />
+      <Eye x={53} y={62} r={3.6} />
+      <Eye x={67} y={62} r={3.6} />
+      <Cheeks x1={47} x2={73} y={68} r={3.2} />
     </>
   ),
   "pine-snow": () => (
@@ -673,38 +752,79 @@ export const flatMore: Record<string, Draw> = {
   "snowman-3": snowman(3),
   "polar-bear": () => (
     <>
-      <ellipse cx="60" cy="90" rx="36" ry="26" fill="#ffffff" />
-      <ellipse cx="60" cy="98" rx="18" ry="14" fill="#eef4fa" />
-      <circle cx="36" cy="26" r="11" fill="#ffffff" />
-      <circle cx="84" cy="26" r="11" fill="#ffffff" />
-      <circle cx="36" cy="26" r="5.5" fill={BLUSH} />
-      <circle cx="84" cy="26" r="5.5" fill={BLUSH} />
-      <ellipse cx="60" cy="50" rx="32" ry="28" fill="#ffffff" />
-      <ellipse cx="60" cy="60" rx="14" ry="10" fill="#eef4fa" />
-      <Eye x={47} y={46} r={5} />
-      <Eye x={73} y={46} r={5} />
-      <ellipse cx="60" cy="56" rx="5.5" ry="3.8" fill={INK} />
-      <Smile x={60} y={62} w={5} />
-      <Cheeks x1={38} x2={82} y={58} />
-      <path d="M40 76q20 10 40 0l1 7q-21 10-42 0Z" fill="#5fb4e0" />
+      {/* Chubby sitting polar bear cub */}
+      <ellipse cx="60" cy="90" rx="35" ry="25" fill="#ffffff" />
+      <ellipse cx="60" cy="96" rx="19" ry="15" fill="#eaf3fc" />
+      {/* Sculpted front arms */}
+      <path
+        d="M34 78c-7 6-9 17-4 24 3 4 10 3 12-2 2-5 0-15-8-22Z"
+        fill="#f2f7fc"
+      />
+      <path
+        d="M86 78c7 6 9 17 4 24-3 4-10 3-12-2-2-5 0-15 8-22Z"
+        fill="#f2f7fc"
+      />
+      {/* Round hind paws with pink pads */}
+      <ellipse cx="41" cy="109" rx="11" ry="6.5" fill="#ffffff" />
+      <ellipse cx="79" cy="109" rx="11" ry="6.5" fill="#ffffff" />
+      <circle cx="41" cy="110" r="3" fill={BLUSH} opacity="0.8" />
+      <circle cx="79" cy="110" r="3" fill={BLUSH} opacity="0.8" />
+      {/* Round bear ears */}
+      <circle cx="34" cy="24" r="12.5" fill="#ffffff" />
+      <circle cx="86" cy="24" r="12.5" fill="#ffffff" />
+      <circle cx="34" cy="24" r="6.5" fill={BLUSH} />
+      <circle cx="86" cy="24" r="6.5" fill={BLUSH} />
+      {/* Big round cub head & muzzle */}
+      <ellipse cx="60" cy="48" rx="34" ry="29" fill="#ffffff" />
+      <path
+        d="M29 56c6 14 20 20 31 20s25-6 31-20c-6 17-18 22-31 22S35 73 29 56Z"
+        fill="#e3eef8"
+      />
+      <ellipse cx="60" cy="58" rx="16" ry="11.5" fill="#eaf3fc" />
+      <path
+        d="M42 36q5-3 9 0M69 36q4-3 9 0"
+        fill="none"
+        stroke={INK}
+        strokeWidth="2.2"
+        strokeLinecap="round"
+      />
+      <Eye x={46} y={45} r={5.8} />
+      <Eye x={74} y={45} r={5.8} />
+      <ellipse cx="60" cy="53" rx="6.5" ry="4.5" fill={INK} />
+      <ellipse cx="58" cy="51.5" rx="2.2" ry="1.1" fill="#fff" opacity="0.65" />
+      <Smile x={60} y={59} w={5.5} />
+      <Cheeks x1={36} x2={84} y={56} />
+      {/* Cozy winter scarf */}
+      <path d="M37 74q23 11 46 0l2 8q-25 11-50 0Z" fill="#4fa9e0" />
+      <path d="M68 79l7 16-10-2-3-14Z" fill="#398dc4" />
     </>
   ),
   penguin: () => (
     <>
-      <ellipse cx="46" cy="110" rx="12" ry="6" fill="#ffb020" />
-      <ellipse cx="74" cy="110" rx="12" ry="6" fill="#ffb020" />
+      <ellipse cx="45" cy="110" rx="12" ry="6" fill="#ffa51f" />
+      <ellipse cx="75" cy="110" rx="12" ry="6" fill="#ffa51f" />
+      {/* Round baby penguin body & flippers */}
       <path
-        d="M60 10c-26 0-36 36-36 62s14 38 36 38 36-12 36-38-10-62-36-62Z"
-        fill="#3f4d63"
+        d="M26 66c-10 6-14 20-8 28 4 3 10-4 12-14ZM94 66c10 6 14 20 8 28-4 3-10-4-12-14Z"
+        fill="#324158"
       />
       <path
-        d="M60 38c-10-10-24-4-24 12 0 10 4 16 4 26 0 18 8 30 20 30s20-12 20-30c0-10 4-16 4-26 0-16-14-22-24-12Z"
+        d="M60 12c-28 0-37 34-37 60s14 38 37 38 37-12 37-38-9-60-37-60Z"
+        fill="#394963"
+      />
+      {/* Heart-shaped white face & belly */}
+      <path
+        d="M60 39c-11-11-26-4-26 12 0 10 3 16 3 26 0 18 9 30 23 30s23-12 23-30c0-10 3-16 3-26 0-16-15-23-26-12Z"
         fill="#ffffff"
       />
-      <Eye x={48} y={48} r={4.5} />
-      <Eye x={72} y={48} r={4.5} />
-      <path d="M52 56h16l-8 10Z" fill="#ffb020" />
-      <Cheeks x1={42} x2={78} y={60} r={4.5} />
+      {/* Cute winter knit cap */}
+      <path d="M35 28q25-18 50 0-25-6-50 0Z" fill="#f25755" />
+      <rect x="33" y="25" width="54" height="7" rx="3.5" fill="#fff7e8" />
+      <circle cx="60" cy="13" r="6.5" fill="#fff7e8" />
+      <Eye x={47} y={48} r={5.4} />
+      <Eye x={73} y={48} r={5.4} />
+      <path d="M51 55q9-3 18 0l-9 11Z" fill="#ffa51f" />
+      <Cheeks x1={39} x2={81} y={59} r={4.8} />
     </>
   ),
   sled: () => (
@@ -788,110 +908,125 @@ export const flatMore: Record<string, Draw> = {
   butterfly: () => (
     <>
       <ellipse
-        cx="34"
-        cy="44"
-        rx="25"
-        ry="31"
-        fill="#f58fb8"
-        transform="rotate(-25 34 44)"
+        cx="33"
+        cy="43"
+        rx="26"
+        ry="32"
+        fill="#f77fb0"
+        transform="rotate(-24 33 43)"
       />
       <ellipse
-        cx="86"
-        cy="44"
-        rx="25"
-        ry="31"
-        fill="#f58fb8"
-        transform="rotate(25 86 44)"
+        cx="87"
+        cy="43"
+        rx="26"
+        ry="32"
+        fill="#f77fb0"
+        transform="rotate(24 87 43)"
       />
-      <ellipse cx="38" cy="84" rx="18" ry="21" fill="#ffc93c" />
-      <ellipse cx="82" cy="84" rx="18" ry="21" fill="#ffc93c" />
-      <circle cx="32" cy="42" r="8" fill="#ffd0e2" />
-      <circle cx="88" cy="42" r="8" fill="#ffd0e2" />
-      <circle cx="38" cy="86" r="5" fill="#ffe7a8" />
-      <circle cx="82" cy="86" r="5" fill="#ffe7a8" />
+      <ellipse cx="37" cy="84" rx="19" ry="22" fill="#ffc93c" />
+      <ellipse cx="83" cy="84" rx="19" ry="22" fill="#ffc93c" />
+      <circle cx="31" cy="40" r="9.5" fill="#ffd4e6" />
+      <circle cx="89" cy="40" r="9.5" fill="#ffd4e6" />
+      <circle cx="37" cy="86" r="6" fill="#fff0ba" />
+      <circle cx="83" cy="86" r="6" fill="#fff0ba" />
       <path
-        d="M56 30 48 14m16 16 8-16"
+        d="M55 28q-6-12-12-14m22 14q6-12 12-14"
         stroke={INK}
-        strokeWidth="3"
+        strokeWidth="3.2"
+        fill="none"
         strokeLinecap="round"
       />
-      <rect x="53" y="28" width="14" height="72" rx="7" fill="#7a5aa8" />
-      <Eye x={56.5} y={40} r={2.4} />
-      <Eye x={63.5} y={40} r={2.4} />
+      <circle cx="43" cy="14" r="3.2" fill="#7a5aa8" />
+      <circle cx="77" cy="14" r="3.2" fill="#7a5aa8" />
+      <rect x="52" y="34" width="16" height="66" rx="8" fill="#7a5aa8" />
+      <circle cx="60" cy="36" r="11" fill="#8b69ba" />
+      <Eye x={55.5} y={35} r={2.8} />
+      <Eye x={64.5} y={35} r={2.8} />
+      <Smile x={60} y={40} w={3.2} open={false} />
     </>
   ),
   worm: () => (
     <>
       <path
         d="M17 82q13-40 28-8t30 0 22-14"
-        stroke="#9bd68a"
-        strokeWidth="24"
+        stroke="#8fd47b"
+        strokeWidth="25"
         {...LINE}
       />
-      <circle cx="98" cy="54" r="18" fill="#9bd68a" />
-      <Eye x={92} y={50} r={3.6} />
-      <Eye x={105} y={50} r={3.6} />
-      <Smile x={98} y={58} w={5} />
-      <Cheeks x1={87} x2={109} y={59} r={3.2} />
+      <circle cx="98" cy="54" r="19.5" fill="#9ce087" />
+      <Eye x={91} y={50} r={4.4} />
+      <Eye x={105} y={50} r={4.4} />
+      <Smile x={98} y={58} w={4.8} />
+      <Cheeks x1={86} x2={110} y={58} r={3.6} />
     </>
   ),
   bird: () => (
     <>
       <path
         d="M46 94v16m22-16v16"
-        stroke="#ffb020"
-        strokeWidth="5"
+        stroke="#ffa51f"
+        strokeWidth="5.5"
         strokeLinecap="round"
       />
-      <path d="M26 62 4 50l6 28Z" fill="#4a9fd0" />
-      <Critter body="#5fb4e0">
-        <ellipse cx="62" cy="80" rx="20" ry="13" fill="#d8f0fb" />
-        <path d="M40 60q16 26 34 0Z" fill="#4a9fd0" />
-        <path d="M94 56l20 8-20 8Z" fill="#ffb020" />
-        <Eye x={80} y={54} />
-        <circle cx="78" cy="68" r="4.5" fill={BLUSH} />
+      <path d="M26 62 4 48l6 30Z" fill="#3f94c9" />
+      {/* Cute feather tuft on top */}
+      <path d="M54 38q-2-12 6-14 4 4 2 10 6-6 9-1-2 6-8 8Z" fill="#54b0e3" />
+      <Critter body="#54b0e3">
+        <ellipse cx="63" cy="79" rx="22" ry="14" fill="#e1f4fc" />
+        <path d="M36 58q18 28 36 0-16-8-36 0Z" fill="#3f94c9" />
+        <path d="M93 55l21 8-21 9Z" fill="#ffa51f" />
+        <Eye x={79} y={53} r={5.6} />
+        <Smile x={85} y={64} w={4} open={false} />
+        <ellipse cx="75" cy="67" rx="5.5" ry="3.8" fill={BLUSH} />
       </Critter>
     </>
   ),
   fish: () => (
     <>
-      <path d="M28 66 4 44v44Z" fill="#f0822a" />
-      <path d="M52 40q10-18 26-6Z" fill="#f0822a" />
-      <Critter body="#ff9a3c">
+      <path d="M28 66 4 42q8 24 0 48Z" fill="#ee7924" />
+      <path d="M50 40q12-20 28-6Z" fill="#ee7924" />
+      <Critter body="#ff9636">
+        <ellipse cx="64" cy="80" rx="22" ry="12" fill="#ffdcb8" opacity="0.65" />
         <path
           d="M44 48q12 18 0 36m16-40q12 22 0 44"
-          stroke="#ffd0a0"
+          stroke="#ffd4a6"
           strokeWidth="5"
           {...LINE}
         />
-        <Eye x={80} y={58} />
-        <Smile x={86} y={72} w={4} />
-        <circle cx="74" cy="72" r="4.5" fill={BLUSH} />
+        <Eye x={80} y={57} r={5.6} />
+        <Smile x={85} y={69} w={4.5} />
+        <ellipse cx="73" cy="70" rx="5" ry="3.5" fill={BLUSH} />
       </Critter>
     </>
   ),
   bug: () => (
     <>
       <path
-        d="M44 30 36 16m40 14 8-14"
+        d="M44 30 35 15m41 15 9-15"
         stroke={INK}
         strokeWidth="3.5"
         strokeLinecap="round"
       />
-      <Critter body="#f0605d">
+      <circle cx="35" cy="15" r="3.2" fill={INK} />
+      <circle cx="85" cy="15" r="3.2" fill={INK} />
+      <Critter body="#f25553">
         <path d="M60 37v58" stroke={INK} strokeWidth="3" />
         {[
-          [42, 58],
-          [78, 58],
+          [42, 59],
+          [78, 59],
           [46, 80],
           [74, 80],
         ].map(([x, y]) => (
-          <circle key={`${x}${y}`} cx={x} cy={y} r="6" fill={INK} />
+          <circle key={`${x}${y}`} cx={x} cy={y} r="6.5" fill={INK} />
         ))}
       </Critter>
-      <path d="M32 50a36 29 0 0 1 56 0q-28 12-56 0Z" fill={INK} />
-      <circle cx="50" cy="46" r="3.6" fill="#fff" />
-      <circle cx="70" cy="46" r="3.6" fill="#fff" />
+      <path d="M31 50a36 29 0 0 1 58 0q-29 13-58 0Z" fill={INK} />
+      <circle cx="49" cy="45" r="5" fill="#fff" />
+      <circle cx="71" cy="45" r="5" fill="#fff" />
+      <circle cx="50" cy="45" r="2.6" fill={INK} />
+      <circle cx="72" cy="45" r="2.6" fill={INK} />
+      <circle cx="39" cy="49" r="3.5" fill={BLUSH} />
+      <circle cx="81" cy="49" r="3.5" fill={BLUSH} />
     </>
   ),
   "decor-sunflower": () => (
@@ -1009,77 +1144,86 @@ export const flatMore: Record<string, Draw> = {
   ),
   owl: () => (
     <>
-      <path d="M32 40 30 18l18 12Zm56 0 2-22-18 12Z" fill="#a86a3e" />
-      <ellipse cx="60" cy="68" rx="34" ry="40" fill="#b9814f" />
-      <ellipse cx="60" cy="82" rx="20" ry="22" fill="#f7e3c8" />
+      <ellipse cx="48" cy="108" rx="9" ry="4.5" fill="#ffa51f" />
+      <ellipse cx="72" cy="108" rx="9" ry="4.5" fill="#ffa51f" />
+      <path d="M31 40 27 16l21 13Zm58 0 4-24-21 13Z" fill="#9e6236" />
+      <ellipse cx="60" cy="68" rx="35" ry="40" fill="#ba7e4b" />
+      <ellipse cx="60" cy="82" rx="22" ry="22" fill="#fae7cf" />
       <path
-        d="M50 78q4 4 8 0m4 0q4 4 8 0m-14 10q4 4 8 0"
-        stroke="#d9b98c"
-        strokeWidth="2.6"
+        d="M49 78q4 4 8 0m6 0q4 4 8 0m-16 10q4 4 8 0"
+        stroke="#d6b385"
+        strokeWidth="2.8"
         {...LINE}
       />
       <ellipse
         cx="24"
-        cy="76"
-        rx="8"
-        ry="20"
-        fill="#a86a3e"
-        transform="rotate(12 24 76)"
+        cy="75"
+        rx="9"
+        ry="21"
+        fill="#9e6236"
+        transform="rotate(14 24 75)"
       />
       <ellipse
         cx="96"
-        cy="76"
-        rx="8"
-        ry="20"
-        fill="#a86a3e"
-        transform="rotate(-12 96 76)"
+        cy="75"
+        rx="9"
+        ry="21"
+        fill="#9e6236"
+        transform="rotate(-14 96 75)"
       />
-      <circle cx="46" cy="52" r="13" fill="#fff" />
-      <circle cx="74" cy="52" r="13" fill="#fff" />
-      <Eye x={47} y={53} r={6} />
-      <Eye x={73} y={53} r={6} />
-      <path d="m54 62 6 9 6-9Z" fill="#ffb020" />
+      {/* Big round owl spectacles & sparkling eyes */}
+      <circle cx="45" cy="52" r="15" fill="#fae7cf" />
+      <circle cx="75" cy="52" r="15" fill="#fae7cf" />
+      <circle cx="45" cy="52" r="12" fill="#ffffff" />
+      <circle cx="75" cy="52" r="12" fill="#ffffff" />
+      <Eye x={46} y={53} r={7} />
+      <Eye x={74} y={53} r={7} />
+      <path d="m53 60 7 10 7-10q-7-3-14 0Z" fill="#ffa51f" />
+      <Cheeks x1={33} x2={87} y={64} r={4.5} />
     </>
   ),
   frog: () => (
     <>
-      <ellipse cx="30" cy="98" rx="14" ry="7" fill="#4fae5a" />
-      <ellipse cx="90" cy="98" rx="14" ry="7" fill="#4fae5a" />
-      <circle cx="42" cy="44" r="14" fill="#62c06a" />
-      <circle cx="78" cy="44" r="14" fill="#62c06a" />
-      <ellipse cx="60" cy="74" rx="38" ry="28" fill="#62c06a" />
-      <ellipse cx="60" cy="88" rx="22" ry="12" fill="#c8f0b8" />
-      <circle cx="42" cy="43" r="9" fill="#fff" />
-      <circle cx="78" cy="43" r="9" fill="#fff" />
-      <Eye x={43} y={44} r={5} />
-      <Eye x={77} y={44} r={5} />
-      <Smile x={60} y={68} w={12} />
-      <Cheeks x1={36} x2={84} y={70} />
+      <ellipse cx="29" cy="99" rx="15" ry="7.5" fill="#46a852" />
+      <ellipse cx="91" cy="99" rx="15" ry="7.5" fill="#46a852" />
+      <circle cx="41" cy="42" r="15.5" fill="#5cc265" />
+      <circle cx="79" cy="42" r="15.5" fill="#5cc265" />
+      <ellipse cx="60" cy="74" rx="39" ry="29" fill="#5cc265" />
+      <ellipse cx="60" cy="86" rx="24" ry="14" fill="#d4f5c4" />
+      <circle cx="41" cy="41" r="10.5" fill="#ffffff" />
+      <circle cx="79" cy="41" r="10.5" fill="#ffffff" />
+      <Eye x={42} y={42} r={6.2} />
+      <Eye x={78} y={42} r={6.2} />
+      <Smile x={60} y={65} w={10} />
+      <Cheeks x1={33} x2={87} y={68} r={5.8} />
     </>
   ),
   snail: () => (
     <>
       <path
-        d="M92 66 88 46m12 22 6-18"
-        stroke="#f2cf9a"
-        strokeWidth="4.5"
+        d="M92 66 87 44m13 24 7-19"
+        stroke="#f5d29c"
+        strokeWidth="5"
         strokeLinecap="round"
       />
-      <circle cx="88" cy="44" r="4" fill={INK} />
-      <circle cx="107" cy="48" r="4" fill={INK} />
+      <circle cx="87" cy="42" r="6" fill="#ffffff" />
+      <circle cx="107" cy="47" r="6" fill="#ffffff" />
+      <Eye x={87} y={42} r={3.8} />
+      <Eye x={107} y={47} r={3.8} />
       <path
-        d="M14 100q-2-10 10-10h52q10 0 12-14 2-12 12-12t12 12q0 24-22 24Z"
-        fill="#f2cf9a"
+        d="M14 100q-2-10 10-10h52q10 0 12-15 2-13 13-13t13 13q0 25-24 25Z"
+        fill="#f5d29c"
       />
-      <circle cx="50" cy="66" r="28" fill="#f58a70" />
+      <circle cx="49" cy="65" r="29" fill="#f78568" />
+      <circle cx="43" cy="54" r="10" fill="#ffa991" opacity="0.45" />
       <path
-        d="M50 66c0-9 11-9 11 0 0 14-21 14-21 0 0-19 30-19 30 0"
-        stroke="#d9634c"
-        strokeWidth="4.5"
+        d="M49 65c0-9 11-9 11 0 0 14-21 14-21 0 0-19 30-19 30 0"
+        stroke="#d65a42"
+        strokeWidth="4.8"
         {...LINE}
       />
-      <Smile x={102} y={80} w={4} />
-      <circle cx="94" cy="80" r="3.5" fill={BLUSH} />
+      <Smile x={102} y={78} w={4.2} />
+      <ellipse cx="93" cy="79" rx="4.2" ry="3" fill={BLUSH} />
     </>
   ),
   windmill: () => (
@@ -1181,58 +1325,63 @@ export const flatMore: Record<string, Draw> = {
   ),
   duck: () => (
     <>
-      <ellipse cx="64" cy="82" rx="36" ry="24" fill="#ffd84d" />
-      <path d="M52 78q20-8 34 6-16 12-34-6Z" fill="#f5bf2a" />
-      <path d="M96 70l14-10-4 22Z" fill="#ffd84d" />
-      <circle cx="42" cy="46" r="23" fill="#ffd84d" />
-      <path d="M22 46 4 50q6 10 18 8Z" fill="#ff9a3c" />
-      <Eye x={38} y={42} />
-      <circle cx="44" cy="56" r="4.5" fill={BLUSH} />
+      <ellipse cx="64" cy="82" rx="37" ry="25" fill="#ffd84d" />
+      <ellipse cx="56" cy="90" rx="22" ry="12" fill="#ffe88a" opacity="0.7" />
+      <path d="M52 78q22-10 36 6-16 14-36-6Z" fill="#f2b824" />
+      <path d="M96 69l15-11-4 24Z" fill="#ffd84d" />
+      {/* Fluffy duckling head & top tuft */}
+      <path d="M38 24q-4-8 3-10 4 2 3 7 4-5 7-1-1 4-6 6Z" fill="#ffd84d" />
+      <circle cx="42" cy="46" r="24" fill="#ffd84d" />
+      <path d="M21 44 3 49q6 11 19 9Z" fill="#ff8f2b" />
+      <Eye x={37} y={42} r={5.6} />
+      <Smile x={31} y={53} w={4} open={false} />
+      <ellipse cx="45" cy="55" rx="5.2" ry="3.6" fill={BLUSH} />
     </>
   ),
   dragonfly: () => (
     <>
       <ellipse
-        cx="36"
+        cx="35"
         cy="46"
-        rx="26"
-        ry="10"
-        fill="#bfe6f7"
-        transform="rotate(-18 36 46)"
+        rx="27"
+        ry="11"
+        fill="#b8e4f9"
+        transform="rotate(-18 35 46)"
       />
       <ellipse
-        cx="84"
+        cx="85"
         cy="46"
-        rx="26"
-        ry="10"
-        fill="#bfe6f7"
-        transform="rotate(18 84 46)"
+        rx="27"
+        ry="11"
+        fill="#b8e4f9"
+        transform="rotate(18 85 46)"
       />
       <ellipse
         cx="38"
         cy="66"
-        rx="20"
-        ry="8"
-        fill="#d8f0fb"
+        rx="21"
+        ry="8.5"
+        fill="#d8f1fc"
         transform="rotate(14 38 66)"
       />
       <ellipse
         cx="82"
         cy="66"
-        rx="20"
-        ry="8"
-        fill="#d8f0fb"
+        rx="21"
+        ry="8.5"
+        fill="#d8f1fc"
         transform="rotate(-14 82 66)"
       />
-      <rect x="55" y="40" width="10" height="70" rx="5" fill="#4fb58a" />
+      <rect x="55" y="40" width="10" height="70" rx="5" fill="#46b588" />
       <path
         d="M55 64h10m-10 14h10m-10 14h10"
-        stroke="#3a9470"
+        stroke="#33916b"
         strokeWidth="3"
       />
-      <circle cx="60" cy="34" r="12" fill="#4fb58a" />
-      <Eye x={55} y={32} r={3.4} />
-      <Eye x={65} y={32} r={3.4} />
+      <circle cx="60" cy="34" r="13.5" fill="#46b588" />
+      <Eye x={54.5} y={32} r={4} />
+      <Eye x={65.5} y={32} r={4} />
+      <Smile x={60} y={38} w={3.5} open={false} />
     </>
   ),
   "pond-lantern": ({ night }) => (

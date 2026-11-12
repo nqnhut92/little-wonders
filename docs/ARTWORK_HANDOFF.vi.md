@@ -6,7 +6,7 @@
 
 Chưa tạo artwork production hoặc ảnh Gemini. Game dùng vector tạm tự vẽ nhất quán và vẫn chơi được khi chưa nâng cấp hình. Cập nhật cả hai ngôn ngữ mỗi khi đổi asset hoặc tương tác của nó.
 
-Truyện tranh phẳng, thân thiện cho trẻ Việt 4–6 tuổi: hình khối tròn đơn giản, màu phẳng tươi, không viền, một tông đậm hơn làm bóng, mắt chấm to #4a3b35 có đốm sáng trắng và má hồng #ffb3a7. Trời #bfe6f7, cỏ #8fd083, vàng #ffc93c, đỏ #f0605d, xanh dương #5fb4e0, tím #9b6bd6, cún trắng kem #fff6e5 đeo nơ tím nhỏ #9b6bd6. Tránh tương phản gắt, mặt đáng sợ, chi tiết nhỏ rối, chữ, logo và watermark.
+Truyện tranh phẳng, thân thiện cho trẻ Việt 4–6 tuổi: tỉ lệ chibi biểu cảm, hình khối tròn đơn giản, màu phẳng tươi, lớp bóng mềm có chiều sâu, mắt tròn to lấp lánh #3b2d28 có hai đốm sáng trắng, chân mày cong, miệng cười tươi, bàn chân có đệm thịt hồng và má hồng #ff9ea2. Trời #bfe6f7, cỏ #8fd083, vàng #ffc93c, đỏ #f0605d, xanh dương #5fb4e0, tím #9b6bd6, cún trắng kem #fff7e8 đeo nơ tím nhỏ #9b6bd6. Tránh tương phản gắt, mặt đáng sợ, chi tiết nhỏ rối, chữ, logo và watermark.
 
 ## Danh mục đầy đủ và quy cách file
 

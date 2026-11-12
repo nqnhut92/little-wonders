@@ -373,9 +373,9 @@ main {
   display: flex;
   align-items: center;
   gap: 10px;
-  max-width: min(310px, 29vw);
-  min-height: 72px;
-  padding: 6px 8px 6px 12px;
+  max-width: min(320px, 30vw);
+  min-height: 74px;
+  padding: 6px 10px 6px 12px;
   border-radius: var(--radius-l);
 }
 .hud-adult {
@@ -383,9 +383,11 @@ main {
   right: var(--edge-right);
 }
 .hud-guide > .art {
-  width: 40px;
-  height: 48px;
+  width: 52px;
+  height: 56px;
   flex-shrink: 0;
+  transform-origin: 50% 90%;
+  animation: sway 4.5s ease-in-out infinite;
 }
 .hud-guide p {
   flex: 1;
@@ -926,6 +928,21 @@ main {
   opacity: 1;
   animation: drizzle 0.6s linear infinite;
 }
+.art-puppy,
+.art-reindeer,
+.art-polar-bear,
+.art-penguin,
+.art-squirrel,
+.art-hedgehog,
+.art-owl,
+.art-frog,
+.art-duck,
+.art-bird,
+.art-turtle,
+.art-crab {
+  transform-origin: 50% 92%;
+  animation: breathe 3.8s ease-in-out infinite;
+}
 .art-worm {
   animation: crawl 5s ease-in-out infinite;
 }
@@ -934,6 +951,11 @@ main {
 }
 .replay > .art {
   animation: hop 0.8s ease;
+}
+@keyframes breathe {
+  50% {
+    transform: translateY(-2px) scale(1.02, 0.985);
+  }
 }
 @keyframes drizzle {
   from {
@@ -1088,16 +1110,16 @@ main {
   display: grid;
   place-items: center;
   gap: 4px;
-  min-width: 104px;
-  min-height: 92px;
-  padding: 8px 12px;
-  border-radius: var(--radius-m);
+  min-width: 108px;
+  min-height: 96px;
+  padding: 8px 14px;
+  border-radius: var(--radius-l);
   font-weight: 800;
   color: var(--text);
   background: var(--panel);
   -webkit-backdrop-filter: blur(18px) saturate(160%);
   backdrop-filter: blur(18px) saturate(160%);
-  border: 1.5px solid var(--glass-border);
+  border: 2px solid var(--glass-border);
   box-shadow: var(--control-shadow), var(--shadow-soft);
 }
 .map-node {
