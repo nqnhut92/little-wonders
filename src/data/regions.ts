@@ -28,6 +28,7 @@ const pondIds = [
   "duck",
   "dragonfly",
   "pond_lantern",
+  "pal_capybara",
 ];
 // Each later region lists its own discoveries; the garden counts everything that belongs to no other region.
 const forestIds = [
@@ -59,7 +60,14 @@ const snowIds = [
 ];
 const starIds = ["telescope", "moon_face", "constellation", "star_lantern"];
 // Seen only at night or found in other regions' scenes: never part of a count.
-const uncounted = ["firefly_forest", "dish_coconut", "dish_chestnut"];
+const uncounted = [
+  "firefly_forest",
+  "dish_coconut",
+  "dish_chestnut",
+  "story_capybara_1",
+  "story_capybara_2",
+  "story_capybara_3",
+];
 const elsewhere = [
   ...pondIds,
   ...forestIds,

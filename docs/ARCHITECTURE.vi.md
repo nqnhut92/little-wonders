@@ -2,56 +2,62 @@
 
 # Kiến trúc
 
-React, TypeScript strict, Vite và CSS Modules render DOM/SVG. Không cần Phaser cho cảnh nhỏ này; pointer capture hỗ trợ chạm và chuột. Không có backend chạy liên tục hoặc dịch vụ AI trả phí.
+React, TypeScript strict, Vite và CSS Modules trực tiếp dựng DOM và SVG. Pointer capture gốc xử lý thao tác chạm và chuột mượt mà, không cần game engine nặng nề hay backend chạy liên tục.
 
 ## Luồng dữ liệu
 
-Garden/Activities → Action có kiểu → apply → World → localStorage tức thì → debounce 1,5 giây → API serverless có xác thực → PostgreSQL merge_world nguyên tử.
+Garden/Activities → Action có kiểu → `apply` → `World` → lưu `localStorage` tức thì → debounce 1,5 giây → API serverless có xác thực → PostgreSQL `merge_world` nguyên tử.
 
-- `src/game/engine.ts`: điều kiện cây, tặng quà, khám phá và merge field; độc lập renderer.
-- `src/game/lunch.ts`: trạng thái Lời mời của bạn thú và hàm thay tên dễ đọc cho Lucky và Tuần Lộc nhỏ.
-- `src/game/hints.ts`: gợi ý theo trạng thái cây, giỏ, bạn thú và khám phá hiện tại.
-- `src/game/visitors.ts` và `src/game/events.ts`: bộ chọn thuần cho khách thăm vườn và sự kiện bất ngờ nhận RNG tiêm từ ngoài.
-- `src/data`: danh mục khám phá, cây trồng, bạn thú, công thức, khu vực, cảnh theo dữ liệu (`scenes.ts`) và quy tắc tương tác.
-- `src/components`: tranh SVG phẳng (`Art.tsx`, hình vẽ trong `ArtFlat.tsx` và `ArtFlatMore.tsx`, nền cảnh trong `SceneBackdrop.tsx`), trình dựng cảnh theo dữ liệu (`Garden.tsx`), bản đồ thung lũng (`ValleyMap.tsx`), bếp, bạn thú, nhà, đàn gỗ và sổ tay.
-- `src/services`: lưu, retry, âm thanh/giới hạn đa âm (`little-wonders-audio` lưu theo trình duyệt, mặc định tắt). `App.tsx` điều phối hồ sơ và navigation.
-- `src/styles`: token thiết kế (`tokens.css`) và bản sao cục bộ của các khối focus và thanh cuộn dùng chung. `src/ui`: bộ điều khiển theme và vùng cuộn, không phụ thuộc framework. `src/components/Icons.tsx`: icon giao diện.
-- `api/index.ts`, `api/_lib/security.ts`: OAuth, session ký, ownership và CSRF.
+- `src/game/engine.ts`: điều kiện cây lớn, tặng quà, nấu ăn, khám phá và gộp (merge) các trường dữ liệu; hoàn toàn độc lập với trình dựng hình.
+- `src/game/lunch.ts`: trạng thái Lời mời của bạn thú và bộ chuyển đổi cách phát âm tiếng Việt tự nhiên cho Lucky, Tuần Lộc nhỏ và Capybara.
+- `src/game/hints.ts`: gợi ý theo ngữ cảnh dựa trên trạng thái cây trồng, giỏ đồ, bạn thú và khám phá hiện tại.
+- `src/game/visitors.ts` & `src/game/events.ts`: các hàm chọn thuần cho khách thăm vườn và sự kiện bất ngờ khi bé nghỉ tay (nhận hàm sinh số ngẫu nhiên tiêm từ ngoài).
+- `src/data`: danh mục khám phá, cây trồng, bạn đồng hành (`pals.ts`), công thức nấu ăn, vùng đất, cảnh theo dữ liệu (`scenes.ts`) và quy tắc tương tác.
+- `src/components`: bộ tranh SVG chibi biểu cảm (`Art.tsx` cùng các bản vẽ trong `ArtFlat.tsx` và `ArtFlatMore.tsx`, cảnh nền tràn viền và bản đồ thung lũng trong `SceneBackdrop.tsx`, hiệu ứng phát sáng cho đèn trong `PaintFilters.tsx`), trình dựng cảnh theo dữ liệu (`Garden.tsx`), bản đồ thung lũng (`ValleyMap.tsx`), bếp, bạn thú, ngôi nhà, đàn gỗ và sổ khám phá.
+- `src/services`: lưu trữ cục bộ, hàng đợi gửi lại (retry) và âm thanh Web Audio / đọc giọng nói (`little-wonders-audio` lưu theo trình duyệt, mặc định tắt). `App.tsx` điều phối hồ sơ, vùng đất và các bảng hoạt động.
+- `src/styles`: biến thiết kế (`tokens.css`) cùng kiểu vòng focus và thanh cuộn dùng chung. `src/ui`: bộ điều khiển chế độ giao diện và vùng cuộn độc lập framework. `src/components/Icons.tsx`: icon giao diện.
+- `api/index.ts` và `api/_lib/security.ts`: Google OAuth, phiên đăng nhập có chữ ký, kiểm tra quyền sở hữu hồ sơ và chống CSRF.
 
-## Lưu và xung đột
+## Lưu trữ và giải quyết xung đột
 
-World schema 2 (schema 1 vẫn được nhận và nâng cấp khi đọc bằng hàm thuần, idempotent `upgradeWorld`) chứa `epoch`, ID khám phá và các field `{value,clock,device}`. Khám phá merge theo union. `epoch` cao hơn (tăng bởi action `resetAll`, thiếu thì coi là 0) thay thế toàn bộ world của epoch thấp hơn. Field tên `n.<tên>` là bộ đếm: giá trị lớn hơn luôn thắng bất kể clock, nên tiến độ không bao giờ lùi. `mergeWorld` (TypeScript) và `merge_world` (migration 002) cài cùng quy tắc, và `tests/world-v2.test.ts` chạy cả hai trên cùng fixture. ID khám phá gồm chữ thường, số, gạch dưới tối đa 32 ký tự, có tiền tố nhóm; API kiểm theo mẫu thay vì danh sách cố định, cho phép 200 khám phá và 200 field, và kiểm từng field theo mẫu key (`api/index.ts`). Định danh, mẫu và giới hạn nằm ở `src/data/ids.ts`. Migration 001 không bao giờ bị sửa. Khi đang deploy, API cũ có thể gọi hàm SQL mới với payload v1, vẫn hợp lệ; client bản trước đợt này tải lại world schema 2 sẽ bỏ bản trên máy và lấy lại từ server. Chỉnh sửa mới dùng bộ đếm logic lớn hơn mọi clock đã thấy, không dùng giờ máy. Mỗi lần mở app sinh writer ID ngẫu nhiên để các tab không tạo cùng cặp writer/clock. Clock bằng nhau chọn writer theo thứ tự ký tự. Clock kiểu timestamp cũ vẫn tương thích: chỉnh sửa sau tăng vượt chúng.
+World schema 2 (schema 1 vẫn được chấp nhận và tự nâng cấp khi đọc qua hàm thuần, idempotent `upgradeWorld`) lưu `epoch`, danh sách ID khám phá và các trường có nhãn `{value, clock, device}`. Khám phá được gộp theo phép hợp (union). Giá trị `epoch` cao hơn (tăng khi gọi `resetAll`; mặc định 0 nếu khuyết) sẽ thay thế toàn bộ dữ liệu của `epoch` thấp hơn. Các trường bắt đầu bằng `n.` là bộ đếm đơn điệu chỉ tăng: giá trị số lớn hơn luôn thắng bất kể clock để số lần tặng quà và mở truyện của bạn thú không bao giờ bị lùi. `mergeWorld` (TypeScript) và `merge_world` (`migrations/002_world_v2.sql`) thực thi cùng một tập quy tắc và được kiểm chứng chéo trong `tests/world-v2.test.ts`.
 
-Storage event chỉ merge tab khác khi cùng hồ sơ. Mỗi hồ sơ có bản dự phòng riêng. Request của lựa chọn hồ sơ cũ không thay lựa chọn hiện tại. Bữa ăn đang làm, bữa đã xong, luống cây, màu nhà và trang trí được lưu dài hạn. Thay đổi quan trọng lưu ngay rồi gửi batch; lỗi mạng/401 giữ pending. Retry khi có mạng và mỗi 30 giây.
+ID khám phá tuân theo mẫu `/^[a-z0-9_]{1,32}$/` và phân nhóm theo tiền tố (`harvest_`, `rare_`, `region_`, `pal_`, `story_`, `dish_`). Toàn bộ định danh, mẫu kiểm tra và giới hạn nằm tại `src/data/ids.ts`. Mỗi chỉnh sửa mới tăng bộ đếm logic vượt lên trên mọi clock đã thấy, kết hợp UUID thiết bị sinh ngẫu nhiên mỗi lần mở ứng dụng để phân xử khi bằng clock.
 
-Server UPDATE merge dưới khóa hàng. Retry giống nhau không tăng revision. Đơn vị xung đột là field: hai bố cục đồng thời chọn một bố cục toàn bộ, không union đồ trang trí. Bộ đếm logic giữ thứ tự đã quan sát, không suy ra thứ tự thời gian thực giữa thiết bị mất kết nối. Client cũ/mới và chỉnh cùng field vẫn cần kiểm thử trước phát hành. Không thu lịch sử từng cú chạm.
+Sự kiện `storage` giữa các tab chỉ gộp thay đổi khi cùng một hồ sơ. Thay đổi quan trọng được lưu ngay vào `localStorage` rồi gửi theo đợt lên server; nếu lỗi mạng hoặc hết phiên (401), dữ liệu đang chờ vẫn được giữ nguyên trên máy và tự thử lại khi có mạng hoặc mỗi 30 giây. Câu lệnh `UPDATE` trên server gộp nguyên tử dưới khóa dòng (row lock) và không tăng `revision` nếu nhận lại cùng một nội dung.
 
-## Lưu trữ và bảo mật
+## Cơ sở dữ liệu và bảo mật
 
-`parents` chỉ chứa Google subject; `profiles` chứa owner, nickname, world JSONB có version và revision. Khám phá và thiết kế là thành viên gọn trong document này. `schema_migrations` theo dõi migration; `rate_limits` chứa bucket hash ngắn hạn.
+Bảng `parents` chỉ lưu định danh Google `sub`; bảng `profiles` lưu khóa ngoại chủ sở hữu, tên gọi của bé, cột JSONB `world` và số `revision`. Bảng `schema_migrations` theo dõi các bản nâng cấp SQL; bảng `rate_limits` lưu các nhóm giới hạn tần suất đã băm ngắn hạn.
 
-Parent identity lấy từ session ký, không nhận user ID do client khai báo. Mọi thao tác hồ sơ lọc parent ID. POST cần Origin chính xác và header riêng. OAuth kiểm state ký, nonce, chữ ký Google, issuer và audience. Cookie Secure, HttpOnly, SameSite=Lax. API xác thực dùng no-store và không được service worker cache.
+Danh tính phụ huynh luôn lấy từ cookie phiên có chữ ký (`HttpOnly`, `Secure`, `SameSite=Lax`), không bao giờ tin ID từ phía client gửi lên. Mọi truy vấn đọc/ghi hồ sơ đều lọc theo `parent_id`. Các yêu cầu `POST` kiểm tra chính xác `Origin` và header riêng. Luồng OAuth kiểm tra `state` có chữ ký, `nonce`, chữ ký JWT của Google, `issuer` và `audience`. Phản hồi API có xác thực luôn gắn `Cache-Control: no-store` và không lưu trong bộ nhớ đệm của service worker.
 
-## Cây, thu hoạch và giỏ
+## Cây trồng, thu hoạch và giỏ đồ
 
-Một luống là field `plot.<khu>.<số>` với `{kind, stage, water, sun, rounds?}`: stage 0 là trống, rồi hạt, mầm, lớn và chín. Mỗi vòng đủ nước và nắng đưa cây lên một giai đoạn và xóa hai cờ; cây là dữ liệu trong `src/data/crops.ts` (`care` là số vòng mỗi giai đoạn). `harvest` đưa cây chín vào field `basket` (tối đa 9 mỗi loại), làm trống luống và ghi `harvest_<cây>`. `shake` thêm một quả táo vào giỏ, `feed` dùng một món trong giỏ (bàn ăn luôn có món cơ bản nên giỏ trống không chặn bé) và `resetGarden` làm trống luống, giỏ và đồ trang trí, còn khám phá, màu nhà và bữa ăn dở được giữ. Số luống suy ra từ các khám phá `harvest_*` khác nhau (3 đến 6), không lưu riêng. `upgradeWorld` chuyển field `plant0..2` cũ thành `plot.garden.N`: cây đủ nước và nắng thành chín, cây khác giữ hạt và cờ, và plot đã có không bị ghi đè.
+Mỗi luống đất được lưu ở trường `plot.<vùng>.<ô>` với cấu trúc `{kind, stage, water, sun, rounds?}`: `stage = 0` là ô đất trống, `1..4` tương ứng hạt giống, nảy mầm, cây lớn và chín. Mỗi vòng tưới đủ nước và sưởi nắng sẽ tích lũy tiến độ theo thông số `care` của từng loại cây (`src/data/crops.ts`). Hành động `harvest` đưa nông sản chín vào `basket` (tối đa 9 mỗi loại), làm trống luống, mở khóa `harvest_<cây>` cùng `pal_reindeer`, đồng thời quay xác suất `1/8` cho các biến thể cây trồng hiếm (`rare_carrot_twin`, `rare_pumpkin_giant`, `rare_berry_heart`).
 
-## Bếp
+Hành động `shake` nhặt các vật phẩm trong cảnh (`apple`, `coconut`, `shell`, `pinecone`) bỏ vào giỏ. `resetGarden` dọn sạch luống cây, giỏ đồ và đồ trang trí nhà nhưng giữ nguyên mọi khám phá, vùng đất đã mở và tiến độ kết bạn. Số lượng luống đất ở vườn nhà (từ 3 đến 6) được suy ra trực tiếp từ số khám phá `harvest_*` khác nhau.
 
-Công thức là dữ liệu trong `src/data/recipes.ts` (12 công thức danh sách nguyên liệu đã sắp xếp cùng `dish_mystery`). `cook` nhận một đến ba món đều có trong giỏ, dùng hết chúng và thêm món ăn (`dish_*`, tối đa 9) vào giỏ và sổ khám phá; tổ hợp không khớp công thức ra `dish_mystery`. Yêu cầu không hợp lệ (nồi trống, món không có, dùng món đã nấu làm nguyên liệu, chồng món đầy) không làm gì. Món ăn là một loại đồ trong giỏ, vẽ bằng bát placeholder `dish-*`.
+## Bếp của vườn
 
-## Khu vực, bạn thú và cảnh theo dữ liệu
+Công thức nấu ăn được khai báo trong `src/data/recipes.ts` (14 công thức nguyên liệu đã sắp xếp cùng món bất ngờ `dish_mystery`). Hành động `cook` dùng từ 1 đến 3 nguyên liệu thô đang có trong giỏ và thêm món ăn vừa nấu (`dish_*`, tối đa 9) vào giỏ cũng như sổ khám phá. Tổ hợp không khớp công thức chuẩn sẽ tạo ra `dish_mystery` để bé luôn được thưởng khi thử nghiệm. Mỗi món ăn đều có hình minh họa riêng trong `src/components/ArtFlatMore.tsx`.
 
-Khu là các dòng trong `src/data/regions.ts` (`ready`, `after`, `counted`, ngưỡng 0,7). Cả sáu khu đã sẵn sàng; bố cục, cây và điểm chạm nằm trong `src/data/scenes.ts` nên thêm khu mới chỉ cần dữ liệu và tranh. Khu không có cây trồng (bãi biển, đồi tuyết, núi sao) không hiện luống và khay hạt; `sky: false` bỏ mặt trời và mây. Loại điểm chạm có `gather` (bỏ dừa, vỏ sò hoặc quả thông vào giỏ qua action `shake` kèm `kind`) và `build` (lâu đài cát, người tuyết hoặc chòm sao lớn thêm một bậc mỗi lần chạm, lưu ở trạng thái cục bộ, ghi khám phá ở bậc cuối rồi có thể làm lại). Khu chưa có tranh nền dùng nền SVG vẽ trong `src/components/SceneBackdrop.tsx` (1600×900, chỉ cắt không kéo giãn, có lớp ban đêm). `src/components/PaintFilters.tsx` vẽ một lần ở gốc app các bộ lọc SVG dùng chung: `lw-paint` cho mọi tranh vector trong `Art` vẻ màu nước (mép hơi run, màu đọng đậm ở viền, vân giấy) và `lw-paint-scene` làm tương tự cho nền vẽ. Các chi tiết chuyển động (lá rơi, sóng, tuyết rơi, cực quang, sao lấp lánh, đom đóm) nằm ngoài bộ lọc để trình duyệt không phải lọc lại mỗi khung hình; chế độ giảm chuyển động sẽ dừng chúng. Mỗi khu sau chỉ tính khám phá của riêng nó, và mọi khám phá đó đều chạm tới được trong cảnh (`tests/regions-content.test.ts`). `regionsToOpen` trong `src/game/regions.ts` là hàm thuần: một khu đã sẵn sàng mở khi khu trước đã mở và đủ khám phá có tính điểm, và `apply` ghi `region_<id>_open` như một khám phá thường, nên trạng thái được suy ra, merge theo union và không bao giờ khóa lại. Khám phá may rủi (`rare_*`, `shooting_star`) không tính vào mẫu số. `apply` nhận hàm ngẫu nhiên được tiêm vào; hái cà rốt, bí ngô hoặc dâu ghi khám phá hiếm với xác suất 1/8. `ValleyMap.tsx` là màn hình chính khi vào game và chạy hoạt ảnh sương tan tôn trọng reduced-motion khi mở khu mới. Bạn thú (`src/data/pals.ts`) dùng bộ đếm đơn điệu `n.gift_<id>` và `n.wish_<id>` để mở chương truyện và xoay Lời mời không hết hạn; Ngày/Đêm đồng bộ qua `scene.time`.
+## Vùng đất, bạn đồng hành và cảnh theo dữ liệu
+
+Cả sáu vùng đất (`garden`, `pond`, `forest`, `beach`, `snow`, `stars`) được định nghĩa trong `src/data/regions.ts` (`ready`, `after`, `counted`, ngưỡng mở `0.7`) cùng bố cục điểm chạm trong `src/data/scenes.ts`. Những vùng không trồng cây (`beach`, `snow`, `stars`) tự động ẩn khay hạt giống, và `sky: false` ở `stars` ẩn mặt trời cùng mây mưa ban ngày.
+
+Các loại điểm chạm gồm có `gather` (thêm `coconut`, `shell` hoặc `pinecone` vào giỏ) và `build` (đắp lâu đài cát, người tuyết hoặc nối chòm sao lớn dần qua từng lần chạm và ghi nhận khám phá ở bước cuối). Mỗi vùng đất có cảnh nền vector 1600×900 riêng trong `src/components/SceneBackdrop.tsx` với bảng màu Ngày/Đêm và chuyển động môi trường (gợn nước, lá thu rơi, sóng biển, tuyết rơi, cực quang và sao lấp lánh) tự động dừng khi bật `prefers-reduced-motion: reduce`.
+
+Hàm thuần `regionsToOpen` trong `src/game/regions.ts` mở khóa vùng tiếp theo ngay khi đạt 70% khám phá có tính điểm của vùng trước đó và ghi `region_<id>_open` vào `discoveries`, giúp trạng thái mở vùng được gộp theo phép hợp và không bao giờ khóa lại. Các khám phá may rủi (`rare_*`, `shooting_star`) không tính vào mẫu số mở vùng.
+
+Ba người bạn đồng hành trong `src/data/pals.ts` (`puppy`, `reindeer`, `capybara`) dùng các bộ đếm đơn điệu `n.gift_<id>` và `n.wish_<id>` để mở khóa 3 chương truyện cho mỗi bạn (`[1, 3, 6]` lần tặng quà) và xoay vòng Lời mời món ăn không hết hạn.
 
 ## Ngôn ngữ thiết kế giao diện
 
-Màu, bo góc và font là biến CSS trong `src/styles/tokens.css`; `src/style.module.css` không còn màu viết cứng. Bộ token Sáng là mặc định, `:root[data-theme="dark"]` ghi đè. Các vùng cảnh (`.garden`, `.house-canvas`, `.lunch-scene`) lặp lại token Sáng và dùng bảng màu `--scene-*` không theo theme, nên tranh trông giống nhau ở mọi chế độ; tranh đặt trên bảng theo theme nằm trên một nền sáng. Ngày và đêm của game sẽ là trạng thái game, độc lập với chế độ giao diện.
+Toàn bộ màu sắc, độ bo góc và font chữ được định nghĩa bằng biến CSS trong `src/styles/tokens.css` với giao diện Sáng làm mặc định và `:root[data-theme="dark"]` ghi đè cho khung điều khiển, trong khi khung cảnh trò chơi giữ nguyên bảng màu truyện tranh tươi sáng theo trạng thái Ngày/Đêm của game. Tùy chọn giao diện (`system`, `light`, `dark`) được lưu riêng trên từng trình duyệt ở khóa `little-wonders-theme`.
 
-Lựa chọn (`system`, `light`, `dark`) lưu theo trình duyệt trong localStorage với khóa `little-wonders-theme` và không bao giờ đồng bộ. Script nội tuyến trong `index.html` xác định nó trước lần vẽ đầu; `ThemeToggle.tsx` bọc bộ điều khiển, vốn chỉ theo thay đổi hệ thống ở chế độ Theo hệ thống, giữ lựa chọn trong bộ nhớ khi storage bị chặn, đồng bộ giữa các tab và cập nhật `theme-color`. Khóa lưu và màu phải khớp ở cả hai nơi (`tests/design.test.ts`).
+Màn hình cảnh phủ kín `100dvh` với các cụm nút nổi hiệu ứng kính mờ: cún Lucky hướng dẫn kèm nút gợi ý ở góc dưới trái, dải nút hoạt động của bé (`56px+`) dọc góc trên phải, và duy nhất một nút bánh răng Góc người lớn (`44px`) ở góc dưới phải tại màn hình bản đồ thung lũng. Các vật thể trong cảnh co giãn theo đơn vị `--u: min(1cqw, 1.9cqh)`, được kiểm chứng bằng Playwright trên các kích thước màn hình iPad, desktop và màn hình siêu rộng.
 
-Game không có header hay thanh dưới. Cảnh phủ kín viewport (`100dvh`, tính cả vùng an toàn) và các nút nổi trên cảnh: cún Lucky hướng dẫn kèm nút gợi ý ở góc dưới trái, các nút cho bé ở góc trên phải, và duy nhất một nút bánh răng cho người lớn ở góc dưới phải trên màn hình bản đồ chính (không hiện trong màn chơi; phần chọn chế độ giao diện và trạng thái lưu nằm gọn bên trong Góc dành cho người lớn). Vật trong cảnh giữ vị trí theo phần trăm; kích thước dùng một đơn vị cảnh `--u: min(1cqw, 1.9cqh)`, nên màn rất rộng hay rất cao không đẩy vật ra ngoài cảnh, và có test trình duyệt kiểm không nút nào che vật chạm được hoặc điểm khu trên bản đồ ở cỡ iPad, desktop và siêu rộng. Nút dành cho bé 56px, nút người lớn 44px. Nút nổi, khay hạt và hộp thoại dùng chất liệu kính; ở chế độ Tối các nút có nền gần như đặc vì cảnh luôn sáng. Có nền đặc dự phòng khi không hỗ trợ blur, khi giảm độ trong suốt và ở forced colors. Hộp thoại giữ nút đóng bên ngoài phần cuộn. `index.html` có splash trong `#root`; danh sách hồ sơ hiện skeleton có nhãn.
+## Hoạt động ngoại tuyến và hiển thị
 
-## Ngoại tuyến và hiển thị
-
-Service worker precache shell và bundle. File font Nunito được tham chiếu từ CSS chứ không từ HTML, nên bản build liệt kê mọi `.woff2` trong bundle vào worker để dùng ngoại tuyến. Cache ID phụ thuộc nội dung build; worker mới chờ đóng tab cũ, không ngắt trò chơi. SVG scale theo tỉ lệ cảnh có giới hạn; reduced-motion tắt animation. Âm thanh chỉ bắt đầu sau thao tác và được giới hạn tần suất. Lời nói dùng giọng Việt nếu có, còn hình ảnh và hiệu ứng tổng hợp vẫn dùng được khi không có giọng.
+Service worker lưu sẵn (precache) khung ứng dụng và toàn bộ tài nguyên đóng gói, bao gồm các tệp font Nunito `.woff2` tự host (`latin` và `vietnamese`). Âm thanh phát các nốt ngũ cung êm dịu và đọc lời thoại tiếng Việt sau khi người dùng tương tác và bật loa.

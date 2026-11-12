@@ -232,6 +232,94 @@ export const flatArt: Record<string, Draw> = {
       <ellipse cx="83" cy="55" rx="6" ry="4.2" fill={BLUSH} opacity="0.85" />
     </>
   ),
+  capybara: () => (
+    <>
+      {/* Plump cinnamon-brown body & cozy cream belly */}
+      <path d="M29 111c-6-23 5-43 31-43s37 20 31 43Z" fill="#c2834e" />
+      <path
+        d="M32 105c9 6 47 6 56 0-1 4-2 6-5 6H37c-3 0-4-2-5-6Z"
+        fill="#ab6e3b"
+      />
+      <ellipse cx="60" cy="95" rx="18" ry="14" fill="#f5dfc3" />
+      {/* Sculpted front arms */}
+      <path
+        d="M36 80c-6 6-8 17-4 24 3 4 9 4 12-1 2-5 0-15-8-23Z"
+        fill="#b37542"
+      />
+      <path
+        d="M84 80c6 6 8 17 4 24-3 4-9 4-12-1-2-5 0-15 8-23Z"
+        fill="#b37542"
+      />
+      {/* Cute little chocolate-brown paws */}
+      <ellipse cx="41" cy="109.5" rx="10.5" ry="5.5" fill="#7a4b27" />
+      <ellipse cx="79" cy="109.5" rx="10.5" ry="5.5" fill="#7a4b27" />
+      <path
+        d="M38 109v4m4-4.5v4.5M78 108.5v4.5m4-4v4"
+        stroke="#573318"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+      />
+      {/* Little rounded capybara ears */}
+      <ellipse
+        cx="31"
+        cy="28"
+        rx="8.5"
+        ry="7"
+        fill="#7a4b27"
+        transform="rotate(-18 31 28)"
+      />
+      <ellipse
+        cx="89"
+        cy="28"
+        rx="8.5"
+        ry="7"
+        fill="#7a4b27"
+        transform="rotate(18 89 28)"
+      />
+      <ellipse
+        cx="31"
+        cy="28.5"
+        rx="4.8"
+        ry="3.8"
+        fill={BLUSH}
+        opacity="0.85"
+        transform="rotate(-18 31 28.5)"
+      />
+      <ellipse
+        cx="89"
+        cy="28.5"
+        rx="4.8"
+        ry="3.8"
+        fill={BLUSH}
+        opacity="0.85"
+        transform="rotate(18 89 28.5)"
+      />
+      {/* Big round capybara head with soft cheek jowls */}
+      <path
+        d="M26 49c0-18 14-28 34-28s34 10 34 28c3 14-9 26-34 26S23 63 26 49Z"
+        fill="#cf8f57"
+      />
+      <path
+        d="M28 57c7 13 19 18 32 18s25-5 32-18c-6 16-18 20-32 20S34 73 28 57Z"
+        fill="#ba7b45"
+      />
+      {/* Signature tangerine balanced on top of the head */}
+      <ellipse cx="60" cy="21.5" rx="10" ry="2.2" fill="#9e6230" opacity="0.4" />
+      <ellipse cx="60" cy="14.5" rx="9.5" ry="7.8" fill="#ff9429" />
+      <ellipse cx="57" cy="12" rx="3.2" ry="1.8" fill="#ffc978" opacity="0.8" />
+      <path d="M60 7c0-2 1.5-3.5 3-4" stroke="#5a3820" strokeWidth="1.8" fill="none" strokeLinecap="round" />
+      <path d="M61 6.8c4-3 9-2 10 1.5-3 2.5-7 2-10-1.5Z" fill="#5cc265" />
+      {/* Warm biscuit muzzle, nostrils, sparkling chibi eyes & rosy cheeks */}
+      <ellipse cx="60" cy="56.5" rx="18" ry="13.5" fill="#f5dfc3" />
+      <Face y={43.5} dx={15} mouthY={59.5} />
+      <ellipse cx="60" cy="51" rx="7.5" ry="4.8" fill="#6b4022" />
+      <circle cx="57.2" cy="51" r="1.4" fill={INK} />
+      <circle cx="62.8" cy="51" r="1.4" fill={INK} />
+      <ellipse cx="58" cy="49.3" rx="2.2" ry="1" fill="#fff" opacity="0.55" />
+      <ellipse cx="35" cy="55.5" rx="6.5" ry="4.5" fill={BLUSH} opacity="0.85" />
+      <ellipse cx="85" cy="55.5" rx="6.5" ry="4.5" fill={BLUSH} opacity="0.85" />
+    </>
+  ),
   tree: () => (
     <>
       <ellipse cx="60" cy="113" rx="28" ry="5" fill="#6baa52" opacity="0.35" />

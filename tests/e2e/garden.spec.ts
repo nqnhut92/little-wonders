@@ -549,6 +549,20 @@ test("fog clears on the map when a region opens, including under reduced motion"
   ).toEqual(["none", "0"]);
   await pond.click();
   await expect(page.getByRole("button", { name: "Mặt ao sen" })).toBeVisible();
+  await activate(page, "Bạn Capybara");
+  await expect(
+    page.getByRole("heading", { name: "Lời mời của Capybara" }),
+  ).toBeVisible();
+  await activate(page, "Giỏ thức ăn");
+  await expect(
+    page.getByRole("button", { name: "Đọc chuyện 1 của Capybara" }),
+  ).toBeEnabled();
+  await activate(page, "Trở về vườn");
+  await activate(page, "Bản đồ thung lũng");
+  await activate(page, "Vườn nhà");
+  await expect(
+    page.getByRole("button", { name: "Bạn Capybara" }),
+  ).toBeVisible();
   await context.close();
 });
 

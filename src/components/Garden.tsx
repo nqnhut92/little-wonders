@@ -174,6 +174,7 @@ export function Garden({
       open("house");
     } else if (h.kind === "pal" && h.palId) {
       if (h.palId === "puppy") act({ type: "discover", id: "puppy" });
+      if (h.discovery) act({ type: "discover", id: h.discovery });
       open(h.palId === "puppy" ? "lunch" : `pal:${h.palId}`);
     } else if (h.kind === "xylophone") {
       open("xylophone");
@@ -373,8 +374,8 @@ export function Garden({
         })
         .map((h) => {
           const pal =
-            h.kind === "pal" && h.palId === "reindeer"
-              ? pals.find((p) => p.id === "reindeer")
+            h.kind === "pal" && h.palId && h.palId !== "puppy"
+              ? pals.find((p) => p.id === h.palId)
               : undefined;
           return object(
             h.id,

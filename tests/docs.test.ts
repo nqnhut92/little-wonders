@@ -41,7 +41,7 @@ it("rejects one-sided translation changes and accepts reviewed paired updates", 
 it("rejects missing translated documents", () => {
   const dir = fixture();
   try {
-    rmSync(join(dir, "docs/ARTWORK_HANDOFF.vi.md"));
+    rmSync(join(dir, "docs/ARCHITECTURE.vi.md"));
     expect(run(dir).status).toBe(1);
   } finally {
     rmSync(dir, { recursive: true, force: true });

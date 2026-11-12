@@ -55,6 +55,26 @@ export const pals: Pal[] = [
       "Ấm áp quá, cảm ơn con nhiều!",
     ],
   },
+  {
+    id: "capybara",
+    name: "Capybara",
+    spokenName: "bạn Ca-pi-ba-ra",
+    art: "capybara",
+    arrives: "pal_capybara",
+    freeFoods: ["watermelon", "carrot", "apple"],
+    wants: ["watermelon", "lotus", "corn", "dish_tea"],
+    chapters: [1, 3, 6],
+    stories: [
+      "Bạn Capybara đội quả quýt cam tròn xoe trên đầu, ngồi thư giãn bên bờ ao sen mát rượi.",
+      "Vịt con và bạn ếch xanh thích leo lên lưng Capybara ngồi hóng gió, cả bọn cùng cười tít mắt.",
+      "Chiều mát, Capybara mang hương sen về vườn nhà nằm phơi nắng cùng Lucky và Tuần Lộc nhỏ.",
+    ],
+    thanks: [
+      "Măm măm! Capybara thích quá, quả quýt trên đầu rung rinh luôn!",
+      "Ngon lành quá! Bạn Capybara híp mắt cảm ơn con nhé!",
+      "Thơm mát tuyệt vời! Capybara vui lắm!",
+    ],
+  },
 ];
 export const palDiscovery = (id: string) => `pal_${id}`;
 export const storyDiscovery = (id: string, n: number) => `story_${id}_${n}`;

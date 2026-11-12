@@ -2,36 +2,29 @@
   "AGENTS.md": {
     "vi": "AGENTS.vi.md",
     "hashes": [
-      "ec1b580837ef227b26cb080cd71212b4228c43696f9a23896f5da96cf685225d",
-      "4cad33c73bb99e1ed5c5203184927f5d204336c5aef233d2714a897887982b8d"
+      "15d4bac8412e71416e185c9f6ec830e629f4fb0da2e8124d50d8a37262cd4548",
+      "71a260591790019bcb40f320b54c0618106aac2025d0abbf8a9885e54ee5c670"
     ]
   },
   "README.md": {
     "vi": "README.vi.md",
     "hashes": [
-      "53ca7723d63389599fc53b75c8e6d5e7f15664fa0bdf77be04535a8be8cb85bf",
-      "8c07362e7eb44a14d08dee5ef826fa0046b48ab14a61fa29a759cd073eef1303"
+      "5b7109566ce21ad4e892c1ccb8d30f6ad86343afe028201994bb71fb1948ca27",
+      "aca9b7961d6900c84e0246cc45db151905bc193d34c5a535dab82e9154e5063e"
     ]
   },
   "docs/ARCHITECTURE.md": {
     "vi": "docs/ARCHITECTURE.vi.md",
     "hashes": [
-      "cac699bd086eea40138bd989a0668af08f8069d750edaa63530087540e388598",
-      "1592716695638fc1f1661237d5088e819b63f234c77356a4bb7027e0f0f1479e"
-    ]
-  },
-  "docs/ARTWORK_HANDOFF.md": {
-    "vi": "docs/ARTWORK_HANDOFF.vi.md",
-    "hashes": [
-      "a52341211e4ba0873287447b90adaeee9f68f44462981ae6f4a132f476da41e7",
-      "a0321f38b14d15aed829c53992c9b698b397257ac41a2dd5a0d4e2807762ebbf"
+      "898654d2a5566569fb5c700092e048b8b3fbfa9f12d83d1dea4b2fb8cfd08c2b",
+      "d4c79c370cd12c4b67e5e141b4e4e776312134c6fcb6a6a6d0a2ffc91b5266ad"
     ]
   },
   "public/assets/PROVENANCE.md": {
     "vi": "public/assets/PROVENANCE.vi.md",
     "hashes": [
-      "988381593dc22fcbf06d89f98cf1167b02ccae6cbcbb0a306de115b5cc7a742f",
-      "42727bc25594797830389a3dde631e31c7c6497dd3cf6da5fa5b8f8c72ecf79a"
+      "bf1b33e12575accbff413e5c1ce49323f822a0be8c0b20811247a7cc60566f95",
+      "d2f4eaa9ccba56650873ef6cbdc6cd7144567b7ea8e5c460e2380fafbe396e45"
     ]
   }
 }
