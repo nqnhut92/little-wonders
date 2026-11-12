@@ -44,7 +44,7 @@ export type Action =
   | { type: "gift"; pal: string; kind: string }
   | { type: "cook"; items: string[] }
   | { type: "feed"; kind: string }
-  | { type: "resetGarden" }
+  | { type: "resetRegion"; region: string }
   | { type: "discover"; id: string }
   | { type: "set"; key: string; value: unknown }
   | { type: "resetAll" };
@@ -202,15 +202,23 @@ export function apply(
     const held = basketOf(w)[a.kind] ?? 0;
     if (held > 0) set("basket", { ...basketOf(w), [a.kind]: held - 1 });
   }
-  // "Vườn mới": clears beds, basket and decorations. Discoveries, regions and friends stay.
-  if (a.type === "resetGarden") {
+  // Adult corner, one region: its beds go empty again (the house garden also loses its decorations).
+  // Discoveries, opened regions, friends and the basket stay; "resetAll" is the only way to wipe those.
+  if (a.type === "resetRegion") {
     for (const [key, stamp] of Object.entries(w.fields)) {
       const p = stamp.value as Plot;
-      if (plotKeyPattern.test(key) && p.stage > 0)
+      if (
+        plotKeyPattern.test(key) &&
+        key.startsWith(`plot.${a.region}.`) &&
+        p.stage > 0
+      )
         set(key, { kind: p.kind, stage: 0, water: false, sun: false });
     }
-    if (Object.values(basketOf(w)).some((n) => n > 0)) set("basket", {});
-    if (value<unknown[]>(w, "decorations", []).length) set("decorations", []);
+    if (
+      a.region === gardenRegion &&
+      value<unknown[]>(w, "decorations", []).length
+    )
+      set("decorations", []);
   }
   if (a.type === "harvest") {
     const p = plot(a.slot);
@@ -263,6 +271,16 @@ export function apply(
   }
   return changed ? n : w;
 }
+// Something in this region the adult corner could still clear.
+export const regionHasProgress = (w: World, region: string) =>
+  Object.entries(w.fields).some(
+    ([key, stamp]) =>
+      plotKeyPattern.test(key) &&
+      key.startsWith(`plot.${region}.`) &&
+      (stamp.value as Plot).stage > 0,
+  ) ||
+  (region === gardenRegion &&
+    value<unknown[]>(w, "decorations", []).length > 0);
 export const counter = (w: World, k: string) => Number(w.fields[k]?.value ?? 0);
 export const basketOf = (w: World): Basket =>
   (w.fields.basket?.value as Basket | undefined) ?? {};

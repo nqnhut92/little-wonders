@@ -12,7 +12,8 @@ import {
 import { Art } from "./components/Art";
 import { Kitchen } from "./components/Kitchen";
 import { PaintFilters } from "./components/PaintFilters";
-import { Icon, GoogleMark } from "./components/Icons";
+import { Icon } from "./components/Icons";
+import { AdultCorner } from "./components/AdultCorner";
 import { regionOpenId, regions } from "./data/regions";
 import { regionState } from "./game/regions";
 import { createScrollRegions } from "./ui/scroll-regions.js";
@@ -88,9 +89,6 @@ export default function App() {
   const syncing = useRef(false);
   const selectionRequest = useRef(0);
   const hintIndex = useRef(0);
-  const holdTimer = useRef<ReturnType<typeof setTimeout> | undefined>(
-    undefined,
-  );
   const say = (s: string, k = "flower", spoken?: string) => {
     setMessage(s);
     sound(k, audio);
@@ -448,28 +446,6 @@ export default function App() {
             >
               <Icon name={night ? "day-sun" : "night-moon"} size={28} />
             </button>
-            <button
-              type="button"
-              className={cn("kid-button hold-button")}
-              aria-label="Vườn mới. Giữ một giây"
-              title="Vườn mới. Giữ một giây"
-              onPointerDown={() => {
-                holdTimer.current = setTimeout(() => setPanel("fresh"), 1000);
-              }}
-              onPointerUp={() => clearTimeout(holdTimer.current)}
-              onPointerLeave={() => clearTimeout(holdTimer.current)}
-              onPointerCancel={() => clearTimeout(holdTimer.current)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") setPanel("fresh");
-              }}
-              onClick={(e) => {
-                // A quick tap only explains how to use it; keyboard activation already opened the question.
-                if (e.detail === 0) return;
-                setMessage("Giữ nút chổi một giây để dọn vườn mới nhé!");
-              }}
-            >
-              <Icon name="broom" size={28} />
-            </button>
           </>
         )}
       </nav>
@@ -513,149 +489,39 @@ export default function App() {
                 <Kitchen world={local.world} act={act} say={say} />
               )}
               {panel === "xylophone" && <Xylophone act={act} audio={audio} />}
-              {panel === "fresh" && (
-                <div className={cn("activity")}>
-                  <Art id="grass" />
-                  <h2>Dọn một khu vườn mới nhé?</h2>
-                  <p>
-                    Luống, giỏ và đồ trang trí sẽ trống. Sổ khám phá vẫn còn.
-                  </p>
-                  <div className={cn("gate")}>
-                    <button
-                      type="button"
-                      className={cn("kid-button")}
-                      aria-label="Có, dọn vườn mới"
-                      onClick={() => {
-                        act({ type: "resetGarden" });
-                        setPanel("");
-                        say("Khu vườn mới đang đợi con gieo hạt!");
-                      }}
-                    >
-                      <Icon name="yes" size={30} />
-                    </button>
-                    <button
-                      type="button"
-                      className={cn("kid-button")}
-                      aria-label="Không, giữ khu vườn"
-                      onClick={() => setPanel("")}
-                    >
-                      <Icon name="no" size={30} />
-                    </button>
-                  </div>
-                </div>
-              )}
               {panel === "account" && (
-                <div className={cn("activity")}>
-                  <h2>Góc dành cho người lớn</h2>
-                  <div className={cn("adult-meta")}>
-                    <span role="status">
-                      {busy ? "Đang đồng bộ…" : status.text}
-                    </span>
-                  </div>
-                  {!gate ? (
-                    <>
-                      <p>
-                        Nhờ người lớn giúp nhé. Bảy cộng năm bằng bao nhiêu?
-                      </p>
-                      <div className={cn("gate")}>
-                        {[10, 12, 14].map((n) => (
-                          <button
-                            key={n}
-                            onClick={() => {
-                              if (n === 12) {
-                                setGate(true);
-                                void account();
-                              } else setMessage("Mình nhờ người lớn giúp nhé.");
-                            }}
-                          >
-                            {n}
-                          </button>
-                        ))}
-                      </div>
-                    </>
-                  ) : (
-                    <>
-                      <p>
-                        Chỉ cần biệt danh của bé. Không nhập tên thật hoặc thông
-                        tin riêng tư.
-                      </p>
-                      {loadingProfiles && !signed ? (
-                        <div
-                          className={cn("skeleton-list")}
-                          role="status"
-                          aria-busy="true"
-                          aria-label="Đang mở danh sách khu vườn"
-                        >
-                          <div
-                            className={cn("skeleton-row")}
-                            aria-hidden="true"
-                          />
-                          <div
-                            className={cn("skeleton-row")}
-                            aria-hidden="true"
-                          />
-                        </div>
-                      ) : !signed ? (
-                        <>
-                          <a className={cn("primary")} href="/api/auth/login">
-                            <span className={cn("provider-mark")}>
-                              <GoogleMark />
-                            </span>
-                            Tiếp tục với Google
-                          </a>
-                          <p className={cn("footnote")}>
-                            Con có thể chơi trên máy này trước. Đăng nhập giúp
-                            lưu giữa các thiết bị. Chỉ dùng để nhận ra tài khoản
-                            người lớn, không xin quyền nào khác.
-                          </p>
-                        </>
-                      ) : (
-                        <>
-                          <div className={cn("profiles")}>
-                            {profiles.map((p) => (
-                              <button
-                                key={p.id}
-                                onClick={() => void choose(p.id, p.nickname)}
-                              >
-                                {p.nickname}
-                              </button>
-                            ))}
-                          </div>
-                          <label>
-                            Biệt danh của bé
-                            <input
-                              maxLength={24}
-                              value={nickname}
-                              onChange={(e) => setNickname(e.target.value)}
-                            />
-                          </label>
-                          <button onClick={() => void create()}>
-                            Tạo khu vườn cho bé
-                          </button>
-                          <button
-                            onClick={async () => {
-                              await fetch("/api/auth/logout", {
-                                method: "POST",
-                                headers: { "X-Little-Wonders": "1" },
-                              });
-                              setSigned(false);
-                            }}
-                          >
-                            Đăng xuất
-                          </button>
-                        </>
-                      )}
-                      <button
-                        onClick={() => {
-                          selectionRequest.current++;
-                          setPanel("");
-                        }}
-                      >
-                        Về chơi trong vườn
-                      </button>
-                    </>
-                  )}
-                </div>
+                <AdultCorner
+                  world={local.world}
+                  act={act}
+                  say={say}
+                  status={status.text}
+                  busy={busy}
+                  gate={gate}
+                  onPass={() => {
+                    setGate(true);
+                    void account();
+                  }}
+                  onWrong={() => setMessage("Mình nhờ người lớn giúp nhé.")}
+                  loadingProfiles={loadingProfiles}
+                  signed={signed}
+                  profiles={profiles}
+                  currentProfile={local.profile}
+                  nickname={nickname}
+                  setNickname={setNickname}
+                  onChoose={(id, name) => void choose(id, name)}
+                  onCreate={() => void create()}
+                  onLogout={async () => {
+                    await fetch("/api/auth/logout", {
+                      method: "POST",
+                      headers: { "X-Little-Wonders": "1" },
+                    });
+                    setSigned(false);
+                  }}
+                  onClose={() => {
+                    selectionRequest.current++;
+                    setPanel("");
+                  }}
+                />
               )}
             </div>
           </section>

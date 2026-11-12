@@ -1494,3 +1494,108 @@ main {
   top: 92%;
   color: var(--scene-sign-night);
 }
+
+/* Adult corner: two named places (save, tidy) instead of one long pile of buttons. */
+.adult {
+  max-width: 540px;
+  margin: 0 auto;
+}
+.adult h2 {
+  margin-bottom: 8px;
+}
+.adult h3 {
+  margin: 18px 0 6px;
+  font-size: 16px;
+  font-weight: 800;
+  text-align: left;
+}
+.adult p {
+  text-align: left;
+}
+.adult-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  padding: 5px;
+  margin-bottom: 8px;
+  border-radius: 999px;
+  background: var(--surface-3);
+}
+.adult-tabs button {
+  margin: 0;
+  background: transparent;
+}
+.adult-tabs button[aria-selected="true"] {
+  color: var(--on-accent);
+  background: var(--accent);
+}
+.adult-section {
+  text-align: left;
+}
+.adult-list {
+  display: grid;
+  gap: 8px;
+}
+.adult-list button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  margin: 0;
+  text-align: left;
+  border: 2px solid transparent;
+}
+.adult-list button[aria-pressed="true"] {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+.adult-list small {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+.adult-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 14px;
+}
+.adult-actions button {
+  margin: 0;
+}
+.quiet-primary {
+  width: 100%;
+  margin: 8px 0 0;
+  color: var(--on-accent);
+  background: var(--accent);
+}
+.danger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  color: var(--text);
+  border: 2px solid var(--clay);
+  background: var(--surface);
+}
+.link-button {
+  display: block;
+  margin: 14px auto 0;
+  text-align: center;
+  color: var(--muted);
+  background: transparent;
+  text-decoration: underline;
+}
+.adult-done {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 12px 0 0;
+  padding: 10px 14px;
+  border-radius: var(--radius-s);
+  color: var(--ok);
+  background: var(--accent-soft);
+  font-weight: 800;
+}

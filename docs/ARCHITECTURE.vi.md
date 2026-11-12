@@ -36,7 +36,7 @@ Danh tính phụ huynh luôn lấy từ cookie phiên có chữ ký (`HttpOnly`,
 
 Mỗi luống đất được lưu ở trường `plot.<vùng>.<ô>` với cấu trúc `{kind, stage, water, sun, rounds?}`: `stage = 0` là ô đất trống, `1..4` tương ứng hạt giống, nảy mầm, cây lớn và chín. Mỗi vòng tưới đủ nước và sưởi nắng sẽ tích lũy tiến độ theo thông số `care` của từng loại cây (`src/data/crops.ts`). Hành động `harvest` đưa nông sản chín vào `basket` (tối đa 9 mỗi loại), làm trống luống, mở khóa `harvest_<cây>` cùng `pal_reindeer`, đồng thời quay xác suất `1/8` cho các biến thể cây trồng hiếm (`rare_carrot_twin`, `rare_pumpkin_giant`, `rare_berry_heart`).
 
-Hành động `shake` nhặt các vật phẩm trong cảnh (`apple`, `coconut`, `shell`, `pinecone`) bỏ vào giỏ. `resetGarden` dọn sạch luống cây, giỏ đồ và đồ trang trí nhà nhưng giữ nguyên mọi khám phá, vùng đất đã mở và tiến độ kết bạn. Số lượng luống đất ở vườn nhà (từ 3 đến 6) được suy ra trực tiếp từ số khám phá `harvest_*` khác nhau.
+Hành động `shake` nhặt các vật phẩm trong cảnh (`apple`, `coconut`, `shell`, `pinecone`) bỏ vào giỏ. `resetRegion` (chỉ ở góc người lớn, từng khu đã mở một) làm trống luống cây của khu đó, thêm đồ trang trí nhà nếu là Vườn nhà, nhưng giữ nguyên khám phá, vùng đất đã mở, tiến độ kết bạn và giỏ đồ; `resetAll` (cũng ở góc người lớn, phải xác nhận lần hai) xóa toàn bộ qua `epoch` mới. Góc người lớn nằm sau phép cộng và có hai tab: lưu khu vườn (đăng nhập Google, hồ sơ) và dọn khu vườn. Số lượng luống đất ở vườn nhà (từ 3 đến 6) được suy ra trực tiếp từ số khám phá `harvest_*` khác nhau.
 
 ## Bếp của vườn
 

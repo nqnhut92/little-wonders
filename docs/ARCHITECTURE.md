@@ -36,7 +36,7 @@ Parent identity is derived strictly from the signed `HttpOnly`, `Secure`, `SameS
 
 Each soil bed is stored in field `plot.<region>.<slot>` as `{kind, stage, water, sun, rounds?}` where stage `0` is empty and stages `1..4` represent seed, sprout, grown and ripe. Completing both water and sun advances the plant after `care` rounds (`src/data/crops.ts`). `harvest` moves a ripe crop into `basket` (up to 9 per item), clears the bed, unlocks `harvest_<crop>` and `pal_reindeer`, and rolls a `1/8` chance for rare crop variants (`rare_carrot_twin`, `rare_pumpkin_giant`, `rare_berry_heart`).
 
-`shake` gathers scene items (`apple`, `coconut`, `shell`, `pinecone`) into the basket. `resetGarden` clears beds, basket and house decorations while preserving discoveries, unlocked regions and companion progress. The number of garden beds (3 to 6) is derived from distinct `harvest_*` discoveries.
+`shake` gathers scene items (`apple`, `coconut`, `shell`, `pinecone`) into the basket. `resetRegion` (adult corner only, one opened region at a time) empties that region's beds, plus the house decorations for the home garden, while preserving discoveries, unlocked regions, companion progress and the basket; `resetAll` (also adult corner, behind a second confirmation) wipes everything through a new `epoch`. The adult corner sits behind a sum gate and has two tabs: save the garden (Google sign-in, profiles) and tidy it up. The number of garden beds (3 to 6) is derived from distinct `harvest_*` discoveries.
 
 ## Kitchen
 

@@ -5,6 +5,7 @@ import {
   emptyWorld,
   plotCount,
   plotKey,
+  regionHasProgress,
   type Action,
   type Plot,
   type World,
@@ -171,23 +172,30 @@ describe("apples, feeding and a fresh garden", () => {
     const empty = emptyWorld();
     expect(apply(empty, { type: "feed", kind: "carrot" }, "d")).toBe(empty);
   });
-  it("fresh garden clears beds, basket and decorations but keeps discoveries and the house", () => {
+  it("resetting a region empties only its beds and keeps everything else", () => {
     let w = run(
       ripe(),
       { type: "set", key: "decorations", value: [{ id: "star", x: 1, y: 1 }] },
       { type: "set", key: "houseColor", value: "#d7a6b5" },
       { type: "shake" },
+      { type: "plant", slot: 0, kind: "lotus", region: "pond" },
     );
-    w = run(w, { type: "resetGarden" });
+    expect(regionHasProgress(w, "garden")).toBe(true);
+    expect(regionHasProgress(w, "pond")).toBe(true);
+    w = run(w, { type: "resetRegion", region: "garden" });
     expect(plot(w)).toMatchObject({ stage: 0 });
-    expect(basketOf(w)).toEqual({});
     expect(w.fields.decorations.value).toEqual([]);
+    expect(w.fields["plot.pond.0"].value).toMatchObject({ stage: 1 });
+    expect(basketOf(w)).toEqual({ apple: 1 });
     expect(w.fields.houseColor.value).toBe("#d7a6b5");
     expect(w.discoveries).toEqual(
       expect.arrayContaining(["carrot", "apple", "rain", "sun"]),
     );
     expect(w.epoch).toBe(0);
-    expect(apply(w, { type: "resetGarden" }, "d")).toBe(w);
+    expect(regionHasProgress(w, "garden")).toBe(false);
+    expect(apply(w, { type: "resetRegion", region: "garden" }, "d")).toBe(w);
+    w = run(w, { type: "resetRegion", region: "pond" });
+    expect(w.fields["plot.pond.0"].value).toMatchObject({ stage: 0 });
     expect(worldSchema.safeParse(w).success).toBe(true);
   });
   it("offers seven garden crops plus pond crops, each with artwork and a notebook entry", () => {
