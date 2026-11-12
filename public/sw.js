@@ -30,6 +30,10 @@ self.addEventListener("install", (event) => {
     })(),
   );
 });
+// The page asks for takeover once a new worker is installed (see src/services/update.ts).
+self.addEventListener("message", (event) => {
+  if (event.data && event.data.type === "SKIP_WAITING") self.skipWaiting();
+});
 self.addEventListener("activate", (event) => {
   event.waitUntil(
     (async () => {

@@ -12,6 +12,7 @@ import "@fontsource/nunito/vietnamese-700.css";
 import "@fontsource/nunito/vietnamese-800.css";
 import "./styles/tokens.css";
 import App from "./App";
+import { registerServiceWorker } from "./services/update";
 // Shared design-language blocks go after the app's own styles.
 import "./styles/focus.css";
 import "./styles/scroll.css";
@@ -22,7 +23,4 @@ createRoot(document.getElementById("root")!).render(
     <Analytics />
   </React.StrictMode>,
 );
-if ("serviceWorker" in navigator && import.meta.env.PROD)
-  window.addEventListener("load", () => {
-    void navigator.serviceWorker.register("/sw.js");
-  });
+registerServiceWorker();
