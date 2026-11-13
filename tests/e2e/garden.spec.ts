@@ -858,3 +858,92 @@ test("drag ghost tracks pointer, pal story has no modal scrollbar, house support
   await expect(page.locator(".fallen-apple")).toBeVisible();
   await expect(page.getByLabel("Quả thông 1")).toBeVisible();
 });
+
+test("clicking the tree trunk above the pond triggers the tree, not the pond", async ({
+  page,
+}) => {
+  await openGarden(page);
+  const tree = page.getByRole("button", { name: "Cây táo" });
+  const pond = page.getByRole("button", { name: "Ao nước" });
+  const pondBox = await pond.boundingBox();
+  expect(pondBox).not.toBeNull();
+  // Top 15% of the pond's square button is transparent space overlapping the tree trunk.
+  const hitX = pondBox!.x + pondBox!.width * 0.5;
+  const hitY = pondBox!.y + pondBox!.height * 0.15;
+  const hitLabel = await page.evaluate(
+    ([x, y]) =>
+      document
+        .elementFromPoint(x, y)
+        ?.closest("button")
+        ?.getAttribute("aria-label") ??
+      document.elementFromPoint(x, y)?.tagName,
+    [hitX, hitY],
+  );
+  expect(hitLabel).toBe("Cây táo");
+  await page.mouse.click(hitX, hitY);
+  await expect(tree).toHaveClass(/react-tree/);
+  await expect(pond).not.toHaveClass(/react-pond/);
+  // Clicking the painted water ellipse itself still triggers the pond.
+  await page.mouse.click(
+    pondBox!.x + pondBox!.width * 0.5,
+    pondBox!.y + pondBox!.height * 0.65,
+  );
+  await expect(pond).toHaveClass(/react-pond/);
+});
+
+test("clicking the flower at night uses night lines instead of daytime sun/butterfly lines", async ({
+  page,
+}) => {
+  await openGarden(page);
+  await activate(page, "Chuyển sang ban đêm");
+  await activate(page, "Hoa bên nhà");
+  await expect(page.locator(".hud-guide p")).toContainText("ánh trăng");
+});
+
+test("house decorations drop centered on pointer and move live while dragged", async ({
+  page,
+}) => {
+  await openGarden(page);
+  await activate(page, "Ngôi Nhà Sắc Màu");
+  const canvas = page.locator(".house-canvas");
+  const canvasBox = await canvas.boundingBox();
+  expect(canvasBox).not.toBeNull();
+
+  const decor = page.getByRole("button", { name: "Trang trí ngôi sao" });
+  const decorBox = await decor.boundingBox();
+  expect(decorBox).not.toBeNull();
+
+  const dropX = canvasBox!.x + canvasBox!.width * 0.72;
+  const dropY = canvasBox!.y + canvasBox!.height * 0.45;
+  await page.mouse.move(
+    decorBox!.x + decorBox!.width / 2,
+    decorBox!.y + decorBox!.height / 2,
+  );
+  await page.mouse.down();
+  await page.mouse.move(dropX, dropY, { steps: 6 });
+  await page.mouse.up();
+
+  const placed = canvas.getByRole("button", { name: "Di chuyển đồ trang trí" });
+  await expect(placed).toHaveCount(1);
+  const placedBox = await placed.boundingBox();
+  expect(placedBox).not.toBeNull();
+  expect(Math.abs(placedBox!.x + placedBox!.width / 2 - dropX)).toBeLessThan(3);
+  expect(Math.abs(placedBox!.y + placedBox!.height / 2 - dropY)).toBeLessThan(
+    3,
+  );
+
+  // Dragging inside the canvas updates position live before pointerup
+  const moveX = canvasBox!.x + canvasBox!.width * 0.25;
+  const moveY = canvasBox!.y + canvasBox!.height * 0.6;
+  await page.mouse.move(
+    placedBox!.x + placedBox!.width / 2,
+    placedBox!.y + placedBox!.height / 2,
+  );
+  await page.mouse.down();
+  await page.mouse.move(moveX, moveY, { steps: 6 });
+  await expect(placed).toHaveClass(/house-decor-dragging/);
+  const midBox = await placed.boundingBox();
+  expect(Math.abs(midBox!.x + midBox!.width / 2 - moveX)).toBeLessThan(8);
+  await page.mouse.up();
+  await expect(placed).not.toHaveClass(/house-decor-dragging/);
+});

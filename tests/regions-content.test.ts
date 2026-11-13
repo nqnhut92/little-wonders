@@ -168,4 +168,14 @@ describe("region stories, regional pals and seasonal lunar events", () => {
     expect(seasonalInfo("tet").line.length).toBeGreaterThan(10);
     expect(seasonalInfo("mid_autumn").line.length).toBeGreaterThan(10);
   });
+  it("keeps scene hotspots clear of the soil plots area on every map", () => {
+    for (const scene of Object.values(scenes)) {
+      for (const h of scene.hotspots) {
+        if (h.id === "house") continue;
+        const overlapsPlots =
+          h.x + h.w > 43 && h.x < 69 && h.y + h.w > 58 && h.y < 77;
+        expect(overlapsPlots, `${scene.id}:${h.id}`).toBe(false);
+      }
+    }
+  });
 });

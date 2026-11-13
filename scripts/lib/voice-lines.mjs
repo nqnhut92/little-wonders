@@ -124,6 +124,7 @@ export async function collectVoiceLines() {
   }
   for (const entry of Object.values(interactions)) {
     for (const line of entry.lines) add(line);
+    if (entry.nightLines) for (const line of entry.nightLines) add(line);
   }
   for (const h of scenes.garden.hotspots) {
     if (h.line) add(h.line);

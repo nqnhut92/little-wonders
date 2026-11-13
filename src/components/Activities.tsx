@@ -220,20 +220,26 @@ export function House({ world, act, say }: Props) {
     x: number;
     y: number;
   } | null>(null);
+  const [movingDecor, setMovingDecor] = useState<{
+    index: number;
+    x: number;
+    y: number;
+  } | null>(null);
   const dragPointer = useRef<number | null>(null);
+  const movePointer = useRef<number | null>(null);
   const canvasRef = useRef<HTMLDivElement | null>(null);
   const save = (a: Action) => {
     act(a);
     act({ type: "discover", id: "house" });
   };
+  const decorCoords = (r: DOMRect, clientX: number, clientY: number) => ({
+    x: Math.max(6, Math.min(94, ((clientX - r.left) / r.width) * 100)),
+    y: Math.max(10, Math.min(90, ((clientY - r.top) / r.height) * 100)),
+  });
   const placeAt = (id: string, clientX: number, clientY: number) => {
     const r = canvasRef.current?.getBoundingClientRect();
     if (!r) return;
-    const item = {
-      id,
-      x: Math.max(5, Math.min(90, ((clientX - r.left) / r.width) * 100)),
-      y: Math.max(5, Math.min(85, ((clientY - r.top) / r.height) * 100)),
-    };
+    const item = { id, ...decorCoords(r, clientX, clientY) };
     const next = [...decorations.slice(-(maxDecorations - 1)), item];
     save({
       type: "set",
@@ -258,39 +264,55 @@ export function House({ world, act, say }: Props) {
         <div className={cn("big-house")}>
           <Art id="house" color={color} night={night} />
         </div>
-        {decorations.map((d, i) => (
-          <button
-            aria-label="Di chuyển đồ trang trí"
-            key={i}
-            style={{ left: d.x + "%", top: d.y + "%" }}
-            onClick={(e) => e.stopPropagation()}
-            onPointerDown={(e) =>
-              e.currentTarget.setPointerCapture(e.pointerId)
-            }
-            onPointerUp={(e) => {
-              e.stopPropagation();
-              const r = e.currentTarget.parentElement!.getBoundingClientRect();
-              const items = decorations.map((v, j) =>
-                j === i
-                  ? {
-                      ...v,
-                      x: Math.max(
-                        0,
-                        Math.min(90, ((e.clientX - r.left) / r.width) * 100),
-                      ),
-                      y: Math.max(
-                        0,
-                        Math.min(85, ((e.clientY - r.top) / r.height) * 100),
-                      ),
-                    }
-                  : v,
-              );
-              save({ type: "set", key: "decorations", value: items });
-            }}
-          >
-            <Art id={d.id} night={night} />
-          </button>
-        ))}
+        {decorations.map((d, i) => {
+          const isMoving = movingDecor?.index === i;
+          const pos = isMoving ? movingDecor : d;
+          return (
+            <button
+              aria-label="Di chuyển đồ trang trí"
+              key={i}
+              className={cn(isMoving ? "house-decor-dragging" : "")}
+              style={{ left: pos.x + "%", top: pos.y + "%" }}
+              onClick={(e) => e.stopPropagation()}
+              onPointerDown={(e) => {
+                if (movePointer.current !== null) return;
+                e.stopPropagation();
+                movePointer.current = e.pointerId;
+                e.currentTarget.setPointerCapture(e.pointerId);
+                setMovingDecor({ index: i, x: d.x, y: d.y });
+              }}
+              onPointerMove={(e) => {
+                if (movePointer.current !== e.pointerId) return;
+                const r = canvasRef.current?.getBoundingClientRect();
+                if (!r) return;
+                setMovingDecor({
+                  index: i,
+                  ...decorCoords(r, e.clientX, e.clientY),
+                });
+              }}
+              onPointerCancel={(e) => {
+                if (movePointer.current !== e.pointerId) return;
+                movePointer.current = null;
+                setMovingDecor(null);
+              }}
+              onPointerUp={(e) => {
+                if (movePointer.current !== e.pointerId) return;
+                e.stopPropagation();
+                movePointer.current = null;
+                setMovingDecor(null);
+                const r = canvasRef.current?.getBoundingClientRect();
+                if (!r) return;
+                const nextPos = decorCoords(r, e.clientX, e.clientY);
+                const items = decorations.map((v, j) =>
+                  j === i ? { ...v, ...nextPos } : v,
+                );
+                save({ type: "set", key: "decorations", value: items });
+              }}
+            >
+              <Art id={d.id} night={night} />
+            </button>
+          );
+        })}
       </div>
       <div className={cn("palette")}>
         {["#efcf9d", "#d7a6b5", "#a5bca0", "#a2becb", "#e7bc7b"].map((c, i) => (

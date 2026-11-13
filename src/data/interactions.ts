@@ -1,7 +1,7 @@
 // Stable IDs connect renderer reactions, contextual dialogue, and discovery triggers.
 export const interactions: Record<
   string,
-  { lines: string[]; discovery?: string; effect: string }
+  { lines: string[]; nightLines?: string[]; discovery?: string; effect: string }
 > = {
   tree: {
     lines: [
@@ -52,6 +52,10 @@ export const interactions: Record<
     lines: [
       "Hoa rung rinh gọi bướm đến chơi!",
       "Bông hoa đang đón nắng. Con nhìn đôi cánh kia nhé!",
+    ],
+    nightLines: [
+      "Hoa khép cánh ngủ ngon dưới ánh trăng.",
+      "Đêm xuống rồi, bông hoa lặng lẽ chờ nắng mai.",
     ],
     effect: "sway",
   },

@@ -144,6 +144,13 @@ textarea {
   transform: translateZ(0);
   backface-visibility: hidden;
 }
+.object-pond,
+.object-pond > .art {
+  pointer-events: none;
+}
+.object-pond > .art * {
+  pointer-events: visiblePainted;
+}
 .art {
   width: 100%;
   height: 100%;
@@ -625,6 +632,14 @@ textarea {
   padding: 0;
   background: transparent;
   touch-action: none;
+  transform: translate(-50%, -50%);
+  transition: transform 0.12s ease;
+}
+.house-canvas button.house-decor-dragging {
+  transform: translate(-50%, -50%) scale(1.16);
+  filter: drop-shadow(0 8px 8px rgba(0, 0, 0, 0.16));
+  z-index: 2;
+  transition: none;
 }
 .palette {
   display: flex;
@@ -1088,6 +1103,7 @@ textarea {
   position: absolute;
   width: 10.34%;
   aspect-ratio: 1;
+  transform: translate(-50%, -50%);
 }
 .garden-decorations .art {
   width: 100%;

@@ -118,9 +118,10 @@ export function Garden({
     clearTimeout(reactionTimer.current);
     reactionTimer.current = setTimeout(() => setReaction(""), 850);
     const entry = interactions[id];
+    const lines = night && entry?.nightLines ? entry.nightLines : entry?.lines;
     const count = counts.current[id] ?? 0;
     counts.current[id] = count + 1;
-    say(entry ? entry.lines[count % entry.lines.length] : text, id);
+    say(lines ? lines[count % lines.length] : text, id);
     const found = entry?.discovery || discovery;
     if (found) act({ type: "discover", id: found });
   };
@@ -243,7 +244,7 @@ export function Garden({
       key={id}
       aria-label={label}
       className={cn(
-        `object ${reaction === id ? "react-" + id : ""} ${highlight && ["cloud", "rock", "puppy"].includes(id) ? "hint-glow" : ""} ${id === "windmill" && wind ? "spin-windmill" : ""}`,
+        `object ${art === "pond" ? "object-pond" : ""} ${reaction === id ? "react-" + id : ""} ${highlight && ["cloud", "rock", "puppy"].includes(id) ? "hint-glow" : ""} ${id === "windmill" && wind ? "spin-windmill" : ""}`,
       )}
       style={{
         left: x + "%",

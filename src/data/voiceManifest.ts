@@ -359,6 +359,8 @@ export const voiceFiles: Record<string, string> = {
   "Đám mây trôi bồng bềnh dưới ánh sao đêm.": "/assets/voice/v-b90ea1e3b4.m4a",
   "Đàn bướm rực rỡ vừa bay ngang qua vườn!": "/assets/voice/v-3e107fa520.m4a",
   "Đắp mái vòm trắng muốt lên nào!": "/assets/voice/v-19bc22350d.m4a",
+  "Đêm xuống rồi, bông hoa lặng lẽ chờ nắng mai.":
+    "/assets/voice/v-979aac6e39.m4a",
   "Đêm xuống, cặp sừng nhỏ của bạn Tuần Lộc lấp lánh dưới ánh trăng cùng đom đóm.":
     "/assets/voice/v-3cc152a733.m4a",
   "Đêm yên tĩnh quá, bạn cú chớp đôi mắt tròn.":
@@ -402,6 +404,7 @@ export const voiceFiles: Record<string, string> = {
   "Hạt đã nằm trong đất. Mình tưới nước nhé!": "/assets/voice/v-b11f6ba751.m4a",
   "Hạt xuống đất rồi. Con đưa mây tới đây nhé!":
     "/assets/voice/v-d57ca9e27a.m4a",
+  "Hoa khép cánh ngủ ngon dưới ánh trăng.": "/assets/voice/v-abc576bfb9.m4a",
   "Hoa rung rinh gọi bướm đến chơi!": "/assets/voice/v-5ad5a9392b.m4a",
   "Hơi ấm bốc lên nghi ngút từ suối nước nóng giữa trời tuyết!":
     "/assets/voice/v-09ac599d0c.m4a",
