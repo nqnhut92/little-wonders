@@ -91,6 +91,129 @@ function Cheeks({
 const STAR = "m60 8 15 33 36 4-27 25 8 36-32-18-32 18 8-36L9 45l36-4Z";
 const DISH: Record<string, { fill: string; rim: string; garnish: ReactNode }> =
   {
+    "dish-lotus-tea": {
+      fill: "#f7b3cc",
+      rim: "#ffd4e3",
+      garnish: (
+        <>
+          <path d="M50 61q10-14 20 0Z" fill="#ff7aa8" />
+          <path d="M55 61q5-10 10 0Z" fill="#ffd9ec" />
+        </>
+      ),
+    },
+    "dish-lotus-sweet": {
+      fill: "#ffe4a8",
+      rim: "#fff2cf",
+      garnish: (
+        <>
+          <circle cx="52" cy="59" r="4" fill="#ffd03b" />
+          <circle cx="62" cy="57" r="4" fill="#f7e2b5" />
+          <circle cx="69" cy="60" r="3.5" fill="#ffd03b" />
+        </>
+      ),
+    },
+    "dish-berry-tart": {
+      fill: "#7459a8",
+      rim: "#a289d4",
+      garnish: (
+        <>
+          <circle cx="54" cy="58" r="5" fill="#4b68c8" />
+          <circle cx="66" cy="58" r="5" fill="#4b68c8" />
+          <circle cx="60" cy="55" r="4.5" fill="#b36d3b" />
+        </>
+      ),
+    },
+    "dish-honey-tea": {
+      fill: "#ffbf3c",
+      rim: "#ffe08c",
+      garnish: (
+        <>
+          <ellipse cx="60" cy="59" rx="10" ry="5" fill="#fff4b8" />
+          <circle cx="60" cy="58" r="4" fill="#e68a1e" />
+        </>
+      ),
+    },
+    "dish-pineapple-juice": {
+      fill: "#ffd43b",
+      rim: "#ffea8a",
+      garnish: (
+        <>
+          <path
+            d="M72 58 84 26l10-3"
+            stroke="#ff7a3c"
+            strokeWidth="5"
+            {...LINE}
+          />
+          <circle cx="52" cy="57" r="6" fill="#fff099" />
+        </>
+      ),
+    },
+    "dish-tropical-bowl": {
+      fill: "#ff9a47",
+      rim: "#ffc07a",
+      garnish: (
+        <>
+          <circle cx="52" cy="58" r="5" fill="#ffd43b" />
+          <circle cx="62" cy="56" r="5" fill="#fff3d6" />
+          <circle cx="70" cy="59" r="4.5" fill="#ffe159" />
+        </>
+      ),
+    },
+    "dish-mint-cocoa": {
+      fill: "#7a4d3b",
+      rim: "#a6705a",
+      garnish: (
+        <>
+          <ellipse
+            cx="56"
+            cy="57"
+            rx="5"
+            ry="3"
+            fill="#63d18f"
+            transform="rotate(-20 56 57)"
+          />
+          <ellipse
+            cx="64"
+            cy="57"
+            rx="5"
+            ry="3"
+            fill="#48b876"
+            transform="rotate(20 64 57)"
+          />
+        </>
+      ),
+    },
+    "dish-cranberry-pie": {
+      fill: "#d1415c",
+      rim: "#f06e86",
+      garnish: (
+        <>
+          <circle cx="54" cy="58" r="4.5" fill="#b82542" />
+          <circle cx="64" cy="58" r="4.5" fill="#b82542" />
+          <circle cx="59" cy="54" r="4" fill="#e64564" />
+        </>
+      ),
+    },
+    "dish-starfruit-juice": {
+      fill: "#ffe052",
+      rim: "#fff1a6",
+      garnish: (
+        <polygon
+          points="60,50 63,56 70,56 64,60 66,66 60,62 54,66 56,60 50,56 57,56"
+          fill="#fff7cc"
+        />
+      ),
+    },
+    "dish-moon-tea": {
+      fill: "#b8a9f5",
+      rim: "#dcd4ff",
+      garnish: (
+        <>
+          <circle cx="60" cy="58" r="6" fill="#fff6cc" />
+          <circle cx="62" cy="56" r="5" fill="#b8a9f5" />
+        </>
+      ),
+    },
     "dish-soup": {
       fill: "#f25b58",
       rim: "#ff857d",
@@ -1881,6 +2004,401 @@ export const flatMore: Record<string, Draw> = {
       <path d="M60 33c13 10 27 31 27 59H66q10-30-6-59Z" fill="#eb9426" />
       <circle cx="56" cy="72" r="11" fill="#fff5b8" />
       <rect x="44" y="88" width="32" height="6" rx="3" fill="#c97424" />
+    </>
+  ),
+  pineapple: () => (
+    <>
+      <path d="M60 18 48 42h24Z" fill="#52b858" />
+      <path d="M44 26 56 44l6-18Z" fill="#3e9c46" />
+      <path d="M76 26 64 44l-6-18Z" fill="#68cf6c" />
+      <ellipse cx="60" cy="72" rx="24" ry="30" fill="#ffb82e" />
+      <path
+        d="M44 58l32 24M44 82l32-24"
+        stroke="#d98218"
+        strokeWidth="3"
+        {...LINE}
+      />
+    </>
+  ),
+  banana: () => (
+    <>
+      <path
+        d="M32 76c14 18 46 14 58-24-4-6-10-4-14 4-10 20-32 22-44 20Z"
+        fill="#ffe042"
+      />
+      <path
+        d="M28 70c16 14 44 8 54-26-4-4-8-2-11 4-10 18-30 22-43 22Z"
+        fill="#ffd024"
+      />
+      <rect x="78" y="42" width="7" height="8" rx="3" fill="#8f6338" />
+    </>
+  ),
+  mint: () => (
+    <>
+      <path d="M60 98V48" stroke="#3aa86b" strokeWidth="5" {...LINE} />
+      <ellipse
+        cx="44"
+        cy="64"
+        rx="16"
+        ry="9"
+        fill="#5cd68d"
+        transform="rotate(-24 44 64)"
+      />
+      <ellipse
+        cx="76"
+        cy="64"
+        rx="16"
+        ry="9"
+        fill="#46bd78"
+        transform="rotate(24 76 64)"
+      />
+      <ellipse cx="60" cy="40" rx="12" ry="16" fill="#74e8a4" />
+    </>
+  ),
+  cranberry: () => (
+    <>
+      <path d="M36 52q24-18 48 0" stroke="#469e54" strokeWidth="4" {...LINE} />
+      <circle cx="44" cy="66" r="14" fill="#d92b4b" />
+      <circle cx="72" cy="70" r="13" fill="#b81d3a" />
+      <circle cx="58" cy="54" r="12" fill="#ed3b5b" />
+      <circle cx="54" cy="50" r="3" fill="#ff99ab" />
+    </>
+  ),
+  starfruit: () => (
+    <>
+      <polygon
+        points="60,20 71,44 96,48 77,66 82,92 60,79 38,92 43,66 24,48 49,44"
+        fill="#ffe047"
+      />
+      <polygon
+        points="60,30 67,46 84,49 71,61 74,78 60,70 46,78 49,61 36,49 53,46"
+        fill="#fff099"
+      />
+    </>
+  ),
+  moonflower: () => (
+    <>
+      <path d="M60 100V56" stroke="#489968" strokeWidth="5" {...LINE} />
+      <circle cx="60" cy="44" r="24" fill="#dcd2ff" />
+      <circle cx="60" cy="44" r="15" fill="#fff4c4" />
+      <circle cx="65" cy="40" r="11" fill="#dcd2ff" />
+    </>
+  ),
+  honey: () => (
+    <>
+      <ellipse cx="60" cy="70" rx="26" ry="28" fill="#ffb82e" />
+      <path d="M40 50c12 10 28 10 40 0v-6H40Z" fill="#ffd966" />
+      <rect x="40" y="34" width="40" height="10" rx="5" fill="#a86232" />
+      <ellipse cx="52" cy="68" rx="6" ry="10" fill="#ffe699" opacity="0.7" />
+    </>
+  ),
+  lilypad: () => (
+    <>
+      <ellipse cx="60" cy="76" rx="40" ry="18" fill="#52bd63" />
+      <path d="M60 76 96 68q-14-10-36 8Z" fill="#2f8f47" />
+      <circle cx="48" cy="72" r="5" fill="#8ae096" />
+    </>
+  ),
+  tadpole: () => (
+    <>
+      <path d="M66 64q18-10 28 2-12 10-28 4Z" fill="#525d73" />
+      <ellipse cx="52" cy="64" rx="18" ry="13" fill="#3a4357" />
+      <Eye x={44} y={62} r={4} />
+      <Smile x={46} y={68} w={3.5} open={false} />
+    </>
+  ),
+  "paper-boat-1": () => (
+    <>
+      <polygon
+        points="24,78 96,78 82,92 38,92"
+        fill="#f7f9fc"
+        stroke={INK}
+        strokeWidth="2.5"
+      />
+      <polygon
+        points="44,78 60,56 76,78"
+        fill="#e3edf7"
+        stroke={INK}
+        strokeWidth="2.5"
+      />
+    </>
+  ),
+  "paper-boat-2": () => (
+    <>
+      <ellipse cx="60" cy="94" rx="40" ry="7" fill="#9cd9f5" />
+      <polygon
+        points="22,76 98,76 82,92 38,92"
+        fill="#fff"
+        stroke={INK}
+        strokeWidth="2.5"
+      />
+      <polygon
+        points="42,76 60,48 78,76"
+        fill="#dcebf7"
+        stroke={INK}
+        strokeWidth="2.5"
+      />
+    </>
+  ),
+  "paper-boat-3": () => (
+    <>
+      <ellipse cx="60" cy="95" rx="44" ry="8" fill="#82ccf2" />
+      <polygon
+        points="20,76 100,76 84,92 36,92"
+        fill="#fff"
+        stroke={INK}
+        strokeWidth="2.5"
+      />
+      <polygon
+        points="40,76 60,42 80,76"
+        fill="#d9ecfa"
+        stroke={INK}
+        strokeWidth="2.5"
+      />
+      <polygon points="60,30 76,37 60,44" fill="#ff7373" />
+    </>
+  ),
+  kingfisher: () => (
+    <>
+      <ellipse cx="62" cy="68" rx="18" ry="15" fill="#2d9cdb" />
+      <ellipse cx="58" cy="72" rx="11" ry="10" fill="#ff9447" />
+      <circle cx="54" cy="48" r="13" fill="#2389c9" />
+      <polygon points="42,48 22,52 44,54" fill="#3a4357" />
+      <Eye x={50} y={46} r={3.8} />
+    </>
+  ),
+  "treehouse-1": () => (
+    <>
+      <rect x="44" y="64" width="6" height="44" rx="3" fill="#a86a3a" />
+      <rect x="70" y="64" width="6" height="44" rx="3" fill="#a86a3a" />
+      <path
+        d="M48 76h24m-24 12h24m-24 12h24"
+        stroke="#c9854c"
+        strokeWidth="4"
+      />
+    </>
+  ),
+  "treehouse-2": () => (
+    <>
+      <rect x="44" y="64" width="6" height="44" rx="3" fill="#a86a3a" />
+      <rect x="70" y="64" width="6" height="44" rx="3" fill="#a86a3a" />
+      <path
+        d="M48 76h24m-24 12h24m-24 12h24"
+        stroke="#c9854c"
+        strokeWidth="4"
+      />
+      <rect x="30" y="54" width="60" height="12" rx="4" fill="#8c542b" />
+      <polygon points="24,54 60,26 96,54" fill="#52b858" />
+    </>
+  ),
+  "treehouse-3": () => (
+    <>
+      <rect x="44" y="68" width="6" height="40" rx="3" fill="#a86a3a" />
+      <rect x="70" y="68" width="6" height="40" rx="3" fill="#a86a3a" />
+      <path d="M48 78h24m-24 12h24" stroke="#c9854c" strokeWidth="4" />
+      <rect x="32" y="42" width="56" height="28" rx="4" fill="#d99a5b" />
+      <polygon points="22,44 60,18 98,44" fill="#46a852" />
+      <circle cx="60" cy="56" r="7" fill="#fff2a6" />
+    </>
+  ),
+  "hollow-log": () => (
+    <>
+      <ellipse cx="60" cy="82" rx="38" ry="18" fill="#8c5a36" />
+      <ellipse cx="34" cy="82" rx="12" ry="15" fill="#4a2c18" />
+      <path d="M48 66q12-6 26 0" stroke="#5cc265" strokeWidth="6" {...LINE} />
+    </>
+  ),
+  fox: () => (
+    <>
+      <ellipse
+        cx="78"
+        cy="78"
+        rx="18"
+        ry="10"
+        fill="#ff7a29"
+        transform="rotate(-18 78 78)"
+      />
+      <circle cx="88" cy="74" r="7" fill="#fff5e6" />
+      <ellipse cx="56" cy="76" rx="18" ry="16" fill="#ff7a29" />
+      <polygon points="36,36 44,54 54,48" fill="#ff7a29" />
+      <polygon points="74,36 66,54 56,48" fill="#ff7a29" />
+      <circle cx="56" cy="56" r="16" fill="#ff8c3b" />
+      <Eye x={50} y={54} r={3.8} />
+      <Eye x={62} y={54} r={3.8} />
+      <circle cx="56" cy="61" r="3" fill={INK} />
+    </>
+  ),
+  "tidal-pool": () => (
+    <>
+      <ellipse cx="60" cy="82" rx="42" ry="18" fill="#6dc9eb" />
+      <ellipse cx="60" cy="82" rx="30" ry="11" fill="#9ce0f7" />
+      <circle cx="30" cy="78" r="7" fill="#9ea8b3" />
+      <circle cx="88" cy="84" r="6" fill="#8994a1" />
+    </>
+  ),
+  starfish: () => (
+    <>
+      <polygon
+        points="60,24 70,48 96,52 76,69 82,94 60,81 38,94 44,69 24,52 50,48"
+        fill="#ff8447"
+      />
+      <Eye x={54} y={58} r={3.5} />
+      <Eye x={66} y={58} r={3.5} />
+      <Smile x={60} y={66} w={4} open={false} />
+    </>
+  ),
+  dolphin: () => (
+    <>
+      <path
+        d="M24 76c14-36 52-42 72-14-12 4-20 10-26 20-8-8-24-8-46-6Z"
+        fill="#4faee3"
+      />
+      <path d="M56 38 66 24 70 40Z" fill="#3a96cc" />
+      <Eye x={74} y={56} r={3.6} />
+    </>
+  ),
+  lighthouse: ({ night }) => (
+    <>
+      {night && (
+        <polygon points="50,34 10,18 10,50" fill="#fff3a6" opacity="0.45" />
+      )}
+      <polygon points="44,98 76,98 68,42 52,42" fill="#f7f9fc" />
+      <rect x="49" y="56" width="22" height="12" fill="#f25755" />
+      <rect x="47" y="78" width="26" height="10" fill="#f25755" />
+      <rect x="50" y="30" width="20" height="12" rx="2" fill="#ffd43b" />
+      <polygon points="46,30 60,18 74,30" fill="#d9413f" />
+    </>
+  ),
+  "igloo-1": () => (
+    <>
+      <ellipse cx="60" cy="92" rx="40" ry="12" fill="#dff3fc" />
+      <path
+        d="M26 90a34 18 0 0 1 68 0Z"
+        fill="#ffffff"
+        stroke="#b8e0f5"
+        strokeWidth="3"
+      />
+    </>
+  ),
+  "igloo-2": () => (
+    <>
+      <ellipse cx="60" cy="92" rx="42" ry="12" fill="#dff3fc" />
+      <path
+        d="M24 90a36 28 0 0 1 72 0Z"
+        fill="#ffffff"
+        stroke="#b8e0f5"
+        strokeWidth="3"
+      />
+      <path d="M32 76h56" stroke="#c5e6f7" strokeWidth="2.5" />
+    </>
+  ),
+  "igloo-3": () => (
+    <>
+      <ellipse cx="60" cy="92" rx="42" ry="12" fill="#dff3fc" />
+      <path
+        d="M24 90a36 34 0 0 1 72 0Z"
+        fill="#ffffff"
+        stroke="#b8e0f5"
+        strokeWidth="3"
+      />
+      <path d="M46 90a14 16 0 0 1 28 0Z" fill="#7ab8d9" />
+    </>
+  ),
+  "snow-drift": () => (
+    <>
+      <path d="M18 90c14-26 36-32 54-16 14-8 26 0 32 16Z" fill="#ffffff" />
+      <path d="M24 90c16-14 48-14 72 0Z" fill="#e6f5fc" />
+    </>
+  ),
+  "arctic-fox": () => (
+    <>
+      <ellipse
+        cx="78"
+        cy="78"
+        rx="18"
+        ry="10"
+        fill="#f7fbff"
+        transform="rotate(-18 78 78)"
+      />
+      <ellipse cx="56" cy="76" rx="18" ry="15" fill="#ffffff" />
+      <polygon points="38,38 44,54 54,48" fill="#ffffff" />
+      <polygon points="74,38 66,54 56,48" fill="#ffffff" />
+      <circle cx="56" cy="56" r="15" fill="#ffffff" />
+      <Eye x={50} y={54} r={3.6} />
+      <Eye x={62} y={54} r={3.6} />
+      <circle cx="56" cy="60" r="2.8" fill={INK} />
+    </>
+  ),
+  "hot-spring": () => (
+    <>
+      <ellipse cx="60" cy="84" rx="42" ry="16" fill="#8ea1b3" />
+      <ellipse cx="60" cy="84" rx="34" ry="11" fill="#63d1eb" />
+      <path
+        d="M44 62q-4-10 2-18M60 60q-4-10 2-18M76 62q-4-10 2-18"
+        stroke="#ffffff"
+        strokeWidth="3.5"
+        opacity="0.8"
+        {...LINE}
+      />
+    </>
+  ),
+  aurora: () => (
+    <>
+      <path
+        d="M10 66c22-28 40-10 60-30s30-8 40-20"
+        stroke="#5effc1"
+        strokeWidth="14"
+        opacity="0.55"
+        {...LINE}
+      />
+      <path
+        d="M14 54c22-26 40-8 60-28s28-6 36-16"
+        stroke="#a68cff"
+        strokeWidth="10"
+        opacity="0.5"
+        {...LINE}
+      />
+    </>
+  ),
+  "star-cloud": () => (
+    <>
+      <circle cx="42" cy="66" r="18" fill="#eef4ff" />
+      <circle cx="62" cy="58" r="22" fill="#ffffff" />
+      <circle cx="80" cy="68" r="16" fill="#eef4ff" />
+      <rect x="34" y="66" width="52" height="18" rx="9" fill="#ffffff" />
+    </>
+  ),
+  "moon-rabbit": () => (
+    <>
+      <ellipse cx="52" cy="34" rx="6" ry="16" fill="#ffffff" />
+      <ellipse cx="68" cy="34" rx="6" ry="16" fill="#ffffff" />
+      <ellipse cx="52" cy="34" rx="3" ry="10" fill="#ffb8cc" />
+      <ellipse cx="68" cy="34" rx="3" ry="10" fill="#ffb8cc" />
+      <circle cx="60" cy="60" r="18" fill="#ffffff" />
+      <Eye x={54} y={58} r={3.6} />
+      <Eye x={66} y={58} r={3.6} />
+      <Smile x={60} y={65} w={4} open={false} />
+    </>
+  ),
+  "meteor-rock": () => (
+    <>
+      <polygon points="34,76 46,42 74,38 90,68 72,92 42,90" fill="#70689c" />
+      <circle cx="56" cy="60" r="6" fill="#ffd947" />
+      <circle cx="72" cy="70" r="5" fill="#7df2ff" />
+      <circle cx="52" cy="78" r="4" fill="#ff85c0" />
+    </>
+  ),
+  comet: () => (
+    <>
+      <path
+        d="M84 30 34 74M92 38 48 82"
+        stroke="#b8ecff"
+        strokeWidth="6"
+        opacity="0.7"
+        {...LINE}
+      />
+      <circle cx="38" cy="74" r="13" fill="#fff299" />
+      <circle cx="38" cy="74" r="8" fill="#ffffff" />
     </>
   ),
 };

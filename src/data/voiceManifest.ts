@@ -3,33 +3,42 @@ export const voiceFiles: Record<string, string> = {
   "Ấm áp quá, cảm ơn con nhiều!": "/assets/voice/v-045eb8bf24.m4a",
   "Ấm bụng quá! bạn Cánh cụt vỗ cánh cảm ơn con nhé!":
     "/assets/voice/v-5973f481b5.m4a",
+  "Ánh đèn vàng ấm áp vươn xa trên mặt biển đêm.":
+    "/assets/voice/v-ae2fc07705.m4a",
+  "Ánh đèn xanh dịu dàng soi sáng mặt ao yên tĩnh.":
+    "/assets/voice/v-0d3037264f.m4a",
   "Ánh sáng ấm áp soi cả ao sen.": "/assets/voice/v-a82758eb78.m4a",
   "Ao sen đã mở ra rồi! Sương đang tan đó!": "/assets/voice/v-84e634a171.m4a",
   "Ào… ào… sóng vỗ nhẹ vào bờ cát.": "/assets/voice/v-3f627c9404.m4a",
+  "Bắc một chiếc thang gỗ lên cành cây nào!": "/assets/voice/v-1cbff02726.m4a",
   "Bãi biển đã mở ra rồi! Sương đang tan đó!": "/assets/voice/v-381c73e036.m4a",
   "Bạn cá bơi một vòng rồi nghỉ dưới lá.": "/assets/voice/v-df1e297c1a.m4a",
   "Bạn Cánh cụt đi lạch bạch trên đồi tuyết trắng, vỗ cánh chào từng bông tuyết rơi.":
     "/assets/voice/v-9c87be4cb7.m4a",
-  "bạn Cánh cụt vui lắm! bạn Cánh cụt vẫn chờ súp bí ngô cà rốt nhé!":
-    "/assets/voice/v-318495eff9.m4a",
-  "bạn Cánh cụt vui lắm! bạn Cánh cụt vẫn chờ táo nghiền mật ngọt nhé!":
-    "/assets/voice/v-0174df874e.m4a",
+  "bạn Cánh cụt vui lắm! bạn Cánh cụt vẫn chờ bánh nam việt quất nhé!":
+    "/assets/voice/v-553e98a654.m4a",
   "bạn Cánh cụt vui lắm! bạn Cánh cụt vẫn chờ táo nhé!":
     "/assets/voice/v-402182a3aa.m4a",
+  "bạn Cánh cụt vui lắm! bạn Cánh cụt vẫn chờ trà bạc hà ấm nhé!":
+    "/assets/voice/v-5fe9c941bc.m4a",
   "bạn Cánh cụt vui lắm! bạn Cánh cụt vẫn chờ trà thông ấm áp nhé!":
     "/assets/voice/v-02b7156262.m4a",
+  "Bạn cáo nhỏ vẫy chiếc đuôi bông xù chào con!":
+    "/assets/voice/v-029036340f.m4a",
+  "Bạn cáo tuyết trắng muốt như cục bông vẫy đuôi chào con!":
+    "/assets/voice/v-08792ba391.m4a",
   "Bạn Capybara đội quả quýt cam tròn xoe trên đầu, ngồi thư giãn bên bờ ao sen mát rượi.":
     "/assets/voice/v-661cd2d1ad.m4a",
   "Bạn Capybara đội quýt cam vẫy tay chào con!":
     "/assets/voice/v-9186840819.m4a",
-  "bạn Capybara vui lắm! bạn Capybara vẫn chờ bắp nhé!":
-    "/assets/voice/v-9db236d7cb.m4a",
+  "bạn Capybara vui lắm! bạn Capybara vẫn chờ chè hạt sen bắp ngọt nhé!":
+    "/assets/voice/v-3201925ceb.m4a",
   "bạn Capybara vui lắm! bạn Capybara vẫn chờ dưa hấu nhé!":
     "/assets/voice/v-1646348313.m4a",
   "bạn Capybara vui lắm! bạn Capybara vẫn chờ hoa sen nhé!":
     "/assets/voice/v-c57827f6a3.m4a",
-  "bạn Capybara vui lắm! bạn Capybara vẫn chờ trà hoa hướng dương nhé!":
-    "/assets/voice/v-ab85a7921d.m4a",
+  "bạn Capybara vui lắm! bạn Capybara vẫn chờ trà sen thơm ngát nhé!":
+    "/assets/voice/v-41f7e2d110.m4a",
   "Bạn Cú mèo mở to đôi mắt tròn xoe trên đỉnh núi sao, đếm từng ngôi sao sáng.":
     "/assets/voice/v-c4d950c9a3.m4a",
   "bạn Cú mèo thuộc tên mọi chòm sao trên trời để kể cho con và Lucky nghe mỗi tối.":
@@ -38,24 +47,26 @@ export const voiceFiles: Record<string, string> = {
     "/assets/voice/v-de1723143f.m4a",
   "bạn Cú mèo vui lắm! bạn Cú mèo vẫn chờ hướng dương nhé!":
     "/assets/voice/v-f7190f94ea.m4a",
-  "bạn Cú mèo vui lắm! bạn Cú mèo vẫn chờ sinh tố dưa hấu dâu nhé!":
-    "/assets/voice/v-f2a91c958b.m4a",
-  "bạn Cú mèo vui lắm! bạn Cú mèo vẫn chờ trà hoa hướng dương nhé!":
-    "/assets/voice/v-3b89c855d7.m4a",
+  "bạn Cú mèo vui lắm! bạn Cú mèo vẫn chờ nước khế ánh sao nhé!":
+    "/assets/voice/v-6a250e7874.m4a",
+  "bạn Cú mèo vui lắm! bạn Cú mèo vẫn chờ trà hoa dạ hương nhé!":
+    "/assets/voice/v-e49ac1058b.m4a",
   "Ban đêm, bạn Rùa con ngắm bọt sóng lấp lánh rồi kể chuyện biển cả cho vỏ sò nghe.":
     "/assets/voice/v-2933d38f1f.m4a",
   "Bạn nhím chào con! Gai của nhím mềm như bàn chải đó.":
     "/assets/voice/v-c5277a0a8a.m4a",
   "bạn Rùa con bò thật chậm trên bãi cát vàng, lắng nghe tiếng sóng biển vỗ rì rào.":
     "/assets/voice/v-965b67cc48.m4a",
-  "bạn Rùa con vui lắm! bạn Rùa con vẫn chờ dưa hấu nhé!":
-    "/assets/voice/v-b843d3d4f5.m4a",
   "bạn Rùa con vui lắm! bạn Rùa con vẫn chờ dừa nhé!":
     "/assets/voice/v-c7097f056f.m4a",
-  "bạn Rùa con vui lắm! bạn Rùa con vẫn chờ nước dừa mát lạnh nhé!":
-    "/assets/voice/v-0fd1553a14.m4a",
-  "bạn Rùa con vui lắm! bạn Rùa con vẫn chờ nước ép dưa hấu nhé!":
-    "/assets/voice/v-9e3ee6679b.m4a",
+  "bạn Rùa con vui lắm! bạn Rùa con vẫn chờ dứa thơm nhé!":
+    "/assets/voice/v-8973fca6e0.m4a",
+  "bạn Rùa con vui lắm! bạn Rùa con vẫn chờ nước ép dứa mát nhé!":
+    "/assets/voice/v-7dbb9158ed.m4a",
+  "bạn Rùa con vui lắm! bạn Rùa con vẫn chờ tô trái cây nhiệt đới nhé!":
+    "/assets/voice/v-bcffb6a2a8.m4a",
+  "Bạn sao biển màu cam nằm phơi mình thật êm!":
+    "/assets/voice/v-e3d31b6c85.m4a",
   "Bạn sâu thích nghỉ dưới bóng lá mát.": "/assets/voice/v-2f5c10f615.m4a",
   "Bạn sâu uốn mình thật chậm.": "/assets/voice/v-afe3a04b97.m4a",
   "Bạn sâu uốn mình, còn bạn dế đang hát!": "/assets/voice/v-93cfaa8396.m4a",
@@ -63,12 +74,12 @@ export const voiceFiles: Record<string, string> = {
     "/assets/voice/v-b59251a44c.m4a",
   "bạn Sóc nhỏ ôm đầy hai má hạt dẻ thơm lừng, nhảy thoăn thoắt trên cành thông xanh.":
     "/assets/voice/v-55d8a588c4.m4a",
+  "bạn Sóc nhỏ vui lắm! bạn Sóc nhỏ vẫn chờ bánh việt quất hạt dẻ nhé!":
+    "/assets/voice/v-eab2096a27.m4a",
   "bạn Sóc nhỏ vui lắm! bạn Sóc nhỏ vẫn chờ hạt dẻ nhé!":
     "/assets/voice/v-07ccc58e24.m4a",
-  "bạn Sóc nhỏ vui lắm! bạn Sóc nhỏ vẫn chờ hạt dẻ nướng thơm nhé!":
-    "/assets/voice/v-3468cbfdfb.m4a",
-  "bạn Sóc nhỏ vui lắm! bạn Sóc nhỏ vẫn chờ mứt việt quất nhé!":
-    "/assets/voice/v-57e2c32e6e.m4a",
+  "bạn Sóc nhỏ vui lắm! bạn Sóc nhỏ vẫn chờ trà mật ong ấm nhé!":
+    "/assets/voice/v-f9450031a1.m4a",
   "bạn Sóc nhỏ vui lắm! bạn Sóc nhỏ vẫn chờ việt quất nhé!":
     "/assets/voice/v-71952e1dac.m4a",
   "Bạn Tuần Lộc nhỏ cũng mê vị ngọt mát của dưa hấu đỏ giống hệt Lucky luôn đấy!":
@@ -87,14 +98,23 @@ export const voiceFiles: Record<string, string> = {
     "/assets/voice/v-b7e29c7f17.m4a",
   "Bầu trời chuyển sang ban đêm rồi, có sao và đom đóm kìa!":
     "/assets/voice/v-a158769587.m4a",
+  "Bầu trời đêm bỗng biến thành dải lụa bảy sắc.":
+    "/assets/voice/v-81d0e1814e.m4a",
   "Bên bờ ao sen thơm ngát, gió nhẹ ru từng lá sen xanh và kể chuyện chú vịt con tập bơi.":
     "/assets/voice/v-17d3448b96.m4a",
+  "Bộ lông dày giúp bạn ấy giữ ấm suốt mùa đông.":
+    "/assets/voice/v-ee6b848914.m4a",
+  "Bộ lông xanh lấp lánh của bạn ấy đẹp quá!": "/assets/voice/v-f46000bb80.m4a",
   "Bọ rùa giấu đôi cánh dưới chiếc áo đỏ.": "/assets/voice/v-9361d28abe.m4a",
+  "Bói cá xanh biếc đậu trên cành trúc ngắm mặt ao!":
+    "/assets/voice/v-dfe5e191e9.m4a",
   "Bông hoa đang đón nắng. Con nhìn đôi cánh kia nhé!":
     "/assets/voice/v-5b1184d5f7.m4a",
   "Bông tuyết có sáu cánh, không bông nào giống bông nào.":
     "/assets/voice/v-4318418928.m4a",
   "Bướm thích những bông hoa con trồng!": "/assets/voice/v-7741206dc1.m4a",
+  "Cá heo nhảy vọt lên khỏi mặt biển xanh biếc!":
+    "/assets/voice/v-5b4b434605.m4a",
   "Cá quẫy đuôi chào con!": "/assets/voice/v-b90aeda977.m4a",
   "Cảm ơn con nha, bạn Sóc nhỏ sẽ cất dành một miếng cho mùa đông!":
     "/assets/voice/v-aa653c2c18.m4a",
@@ -103,15 +123,21 @@ export const voiceFiles: Record<string, string> = {
   "Cảm ơn con nhiều nha, hết lạnh cóng rồi!": "/assets/voice/v-94cb43e169.m4a",
   "Cảm ơn con nhiều, đêm nay ngắm sao thật là vui!":
     "/assets/voice/v-3b0e11dc74.m4a",
+  "Cáo nhỏ thích chạy nhảy giữa thảm lá vàng trong rừng.":
+    "/assets/voice/v-d83900ffb7.m4a",
   "Cạp cạp! Vịt con bơi vòng quanh lá sen!": "/assets/voice/v-5b5a985b5a.m4a",
   "Cát động đậy… ai đang trốn dưới đó vậy ta?":
     "/assets/voice/v-8e7138666a.m4a",
   "Cây cần thêm nắng ấm!": "/assets/voice/v-007cc615e5.m4a",
+  "Chạm nhẹ vào đá thấy ấm áp như giữ ánh sao.":
+    "/assets/voice/v-7034b5fbfe.m4a",
   "Chấm tròn trên áo bạn bọ rùa!": "/assets/voice/v-a89a9ae076.m4a",
   "Chào bạn ốc sên đáng yêu nhé!": "/assets/voice/v-80c9314516.m4a",
   "Chào con đến Thung lũng nhỏ! Chạm vào Vườn nhà để bắt đầu chơi nhé!":
     "/assets/voice/v-312fd5852b.m4a",
   "Chào con! Khu vườn đang đợi con đó!": "/assets/voice/v-d943f43a00.m4a",
+  "Chiếc lá xanh tròn xoe như chiếc ô che nắng cho ao.":
+    "/assets/voice/v-7749fd28d8.m4a",
   "Chiều mát, bạn Capybara mang hương sen về vườn nhà nằm phơi nắng cùng Lucky và Tuần Lộc nhỏ.":
     "/assets/voice/v-0237dd8f86.m4a",
   "Chiều xuống, bạn Cánh cụt cùng gấu bông tuyết trượt vèo trên đồi tuyết cười vang.":
@@ -134,7 +160,9 @@ export const voiceFiles: Record<string, string> = {
   "Con chơi thêm ở khu trước để mở khu này nhé!":
     "/assets/voice/v-2991862ae6.m4a",
   "Con chọn hạt rồi chạm luống đất nhé!": "/assets/voice/v-b11d570314.m4a",
+  "Con đã khám phá bạc hà tuyết!": "/assets/voice/v-a686a088e8.m4a",
   "Con đã khám phá bạn bướm!": "/assets/voice/v-ad699592a0.m4a",
+  "Con đã khám phá bạn cáo nhỏ!": "/assets/voice/v-2324239cda.m4a",
   "Con đã khám phá bạn capybara!": "/assets/voice/v-8bcbdae7e9.m4a",
   "Con đã khám phá bạn cú mèo!": "/assets/voice/v-ad01fe8db8.m4a",
   "Con đã khám phá bạn cún lucky!": "/assets/voice/v-3be2c016dd.m4a",
@@ -144,22 +172,29 @@ export const voiceFiles: Record<string, string> = {
   "Con đã khám phá bạn tuần lộc nhỏ!": "/assets/voice/v-742e840087.m4a",
   "Con đã khám phá bánh ánh sao!": "/assets/voice/v-6ea896332f.m4a",
   "Con đã khám phá bánh bắp ngọt!": "/assets/voice/v-4b20cf0736.m4a",
+  "Con đã khám phá bánh nam việt quất!": "/assets/voice/v-f9465f6183.m4a",
   "Con đã khám phá bánh táo bí ngô!": "/assets/voice/v-1f485bb27f.m4a",
+  "Con đã khám phá bánh việt quất hạt dẻ!": "/assets/voice/v-a0ce0f916e.m4a",
   "Con đã khám phá bí ngô khổng lồ!": "/assets/voice/v-6fb6090792.m4a",
   "Con đã khám phá bọ rùa dưới đá!": "/assets/voice/v-af2c15a274.m4a",
   "Con đã khám phá bông tuyết sáu cánh!": "/assets/voice/v-451160a980.m4a",
   "Con đã khám phá bữa ăn sắc màu!": "/assets/voice/v-1fc06677cd.m4a",
   "Con đã khám phá bữa trưa đủ ba!": "/assets/voice/v-f8fd78324e.m4a",
+  "Con đã khám phá cá heo nhảy sóng!": "/assets/voice/v-2b6c8fe43a.m4a",
   "Con đã khám phá cà rốt đôi!": "/assets/voice/v-736a40a9fe.m4a",
   "Con đã khám phá cà rốt lớn rồi!": "/assets/voice/v-a07dcc4448.m4a",
   "Con đã khám phá cá trong ao!": "/assets/voice/v-efcfbbeda2.m4a",
+  "Con đã khám phá cáo tuyết trắng!": "/assets/voice/v-e2498da0df.m4a",
   "Con đã khám phá cầu vồng sau mưa!": "/assets/voice/v-1d193f736e.m4a",
+  "Con đã khám phá chè hạt sen bắp ngọt!": "/assets/voice/v-63f7ce714c.m4a",
+  "Con đã khám phá chim bói cá!": "/assets/voice/v-9782a37dec.m4a",
   "Con đã khám phá chim cánh cụt!": "/assets/voice/v-e1268f1ba3.m4a",
   "Con đã khám phá chim gõ kiến!": "/assets/voice/v-00a069d485.m4a",
   "Con đã khám phá chim hải âu!": "/assets/voice/v-4ab04143f3.m4a",
   "Con đã khám phá chim trên cành!": "/assets/voice/v-ba5591c5b9.m4a",
   "Con đã khám phá chòm sao bạn cún!": "/assets/voice/v-03b462e290.m4a",
   "Con đã khám phá chong chóng quay!": "/assets/voice/v-574beea51c.m4a",
+  "Con đã khám phá chuối vàng ngọt!": "/assets/voice/v-4b3ffc884a.m4a",
   "Con đã khám phá chuồn chuồn kim!": "/assets/voice/v-bec4abba3d.m4a",
   "Con đã khám phá chuyện của cánh cụt 1!": "/assets/voice/v-bf3461c4d9.m4a",
   "Con đã khám phá chuyện của cánh cụt 2!": "/assets/voice/v-81186fcadc.m4a",
@@ -183,6 +218,8 @@ export const voiceFiles: Record<string, string> = {
   "Con đã khám phá chuyện của tuần lộc 2!": "/assets/voice/v-585e416922.m4a",
   "Con đã khám phá chuyện của tuần lộc 3!": "/assets/voice/v-6d9814d5bb.m4a",
   "Con đã khám phá cua bò ngang!": "/assets/voice/v-e3aa4ab05c.m4a",
+  "Con đã khám phá cực quang lung linh!": "/assets/voice/v-df6eb96413.m4a",
+  "Con đã khám phá đá thiên thạch!": "/assets/voice/v-7e06f00253.m4a",
   "Con đã khám phá đàn bướm bay qua!": "/assets/voice/v-73c11ae44f.m4a",
   "Con đã khám phá đàn gỗ ngũ cung!": "/assets/voice/v-11c3995e51.m4a",
   "Con đã khám phá dâu chín!": "/assets/voice/v-57937c5f64.m4a",
@@ -190,57 +227,86 @@ export const voiceFiles: Record<string, string> = {
   "Con đã khám phá dế trong cỏ!": "/assets/voice/v-814e9f17f6.m4a",
   "Con đã khám phá đèn hoa đăng!": "/assets/voice/v-6d5699a874.m4a",
   "Con đã khám phá đèn ngôi sao!": "/assets/voice/v-3e539f08e2.m4a",
+  "Con đã khám phá đom đóm bên ao!": "/assets/voice/v-3c3b452061.m4a",
   "Con đã khám phá đom đóm lung linh!": "/assets/voice/v-6db335c995.m4a",
   "Con đã khám phá đom đóm trong rừng!": "/assets/voice/v-e487595ec9.m4a",
+  "Con đã khám phá dứa thơm chín vàng!": "/assets/voice/v-53a6ecebf6.m4a",
   "Con đã khám phá gấu bông tuyết!": "/assets/voice/v-fda4f81c22.m4a",
   "Con đã khám phá gió mát thổi qua!": "/assets/voice/v-2b22bd0fb7.m4a",
+  "Con đã khám phá hái bạc hà tuyết!": "/assets/voice/v-e535a64423.m4a",
   "Con đã khám phá hái bắp!": "/assets/voice/v-1603fa1f0b.m4a",
   "Con đã khám phá hái bí ngô!": "/assets/voice/v-d675c6cbd0.m4a",
   "Con đã khám phá hái cà chua!": "/assets/voice/v-1063d38174.m4a",
   "Con đã khám phá hái cà rốt!": "/assets/voice/v-365b8000fb.m4a",
+  "Con đã khám phá hái chuối vàng!": "/assets/voice/v-04c6233acb.m4a",
   "Con đã khám phá hái dâu!": "/assets/voice/v-e1431f0880.m4a",
   "Con đã khám phá hái dưa hấu!": "/assets/voice/v-f8ba4b7505.m4a",
+  "Con đã khám phá hái dứa thơm!": "/assets/voice/v-2c87b1aeaf.m4a",
+  "Con đã khám phá hái hoa dạ hương!": "/assets/voice/v-a25a09cd5b.m4a",
   "Con đã khám phá hái hoa hướng dương!": "/assets/voice/v-56760073bb.m4a",
   "Con đã khám phá hái hoa sen!": "/assets/voice/v-9d18056edb.m4a",
   "Con đã khám phá hái hoa súng!": "/assets/voice/v-1ab045b58c.m4a",
+  "Con đã khám phá hái khế ngôi sao!": "/assets/voice/v-370e39cbae.m4a",
+  "Con đã khám phá hái nam việt quất!": "/assets/voice/v-765c0b6ed8.m4a",
   "Con đã khám phá hái việt quất!": "/assets/voice/v-b41bdb5cca.m4a",
   "Con đã khám phá hạt dẻ nảy mầm!": "/assets/voice/v-72de284f57.m4a",
   "Con đã khám phá hạt dẻ nướng thơm!": "/assets/voice/v-13d70942af.m4a",
+  "Con đã khám phá hoa dạ hương!": "/assets/voice/v-26f27664e1.m4a",
   "Con đã khám phá hoa hướng dương!": "/assets/voice/v-11f8461269.m4a",
   "Con đã khám phá hoa sen nở!": "/assets/voice/v-6878c26b16.m4a",
   "Con đã khám phá hoa súng tím!": "/assets/voice/v-cebee2ec25.m4a",
   "Con đã khám phá hoa trước cửa!": "/assets/voice/v-b3bb34bb03.m4a",
+  "Con đã khám phá hươu sao ban đêm!": "/assets/voice/v-44a8eb848a.m4a",
+  "Con đã khám phá khế ngôi sao!": "/assets/voice/v-550aa39624.m4a",
   "Con đã khám phá kính thiên văn!": "/assets/voice/v-a19187b4be.m4a",
   "Con đã khám phá lâu đài cát!": "/assets/voice/v-b37c8896b8.m4a",
+  "Con đã khám phá lều tuyết iglu!": "/assets/voice/v-4c34a0a739.m4a",
+  "Con đã khám phá mật ong rừng!": "/assets/voice/v-0657d2981d.m4a",
   "Con đã khám phá mặt trăng tròn!": "/assets/voice/v-26dd1f090e.m4a",
   "Con đã khám phá món bất ngờ!": "/assets/voice/v-dcd8f3583a.m4a",
   "Con đã khám phá mưa tưới vườn!": "/assets/voice/v-26ef2943ad.m4a",
   "Con đã khám phá mứt dâu!": "/assets/voice/v-666fe240f6.m4a",
   "Con đã khám phá mứt việt quất!": "/assets/voice/v-80b6dd8e01.m4a",
+  "Con đã khám phá nam việt quất!": "/assets/voice/v-9955d39332.m4a",
   "Con đã khám phá nắng ấm!": "/assets/voice/v-6e25446350.m4a",
   "Con đã khám phá ngôi nhà của bé!": "/assets/voice/v-e84759413d.m4a",
+  "Con đã khám phá ngọn hải đăng!": "/assets/voice/v-397d7339fa.m4a",
   "Con đã khám phá người tuyết!": "/assets/voice/v-aa8d2fec86.m4a",
+  "Con đã khám phá nhà cây nhỏ!": "/assets/voice/v-d3736794a3.m4a",
   "Con đã khám phá nhà nấm tí hon!": "/assets/voice/v-9d6bcd4856.m4a",
   "Con đã khám phá nhặt hạt dẻ!": "/assets/voice/v-f16165acb7.m4a",
+  "Con đã khám phá nòng nọc nhỏ!": "/assets/voice/v-af0bea7357.m4a",
   "Con đã khám phá nước dừa mát lạnh!": "/assets/voice/v-8e19a2a70f.m4a",
   "Con đã khám phá nước ép dưa hấu!": "/assets/voice/v-6bcb68bc16.m4a",
+  "Con đã khám phá nước ép dứa mát!": "/assets/voice/v-633248ffe0.m4a",
+  "Con đã khám phá nước khế ánh sao!": "/assets/voice/v-3e802a8071.m4a",
   "Con đã khám phá ông trăng cười!": "/assets/voice/v-bafe130bbc.m4a",
   "Con đã khám phá quả thông!": "/assets/voice/v-128a1ad3a3.m4a",
   "Con đã khám phá rùa con ra biển!": "/assets/voice/v-195bd93001.m4a",
   "Con đã khám phá salad nhiều màu!": "/assets/voice/v-22eaa8d109.m4a",
   "Con đã khám phá sân nhà rực rỡ!": "/assets/voice/v-1e8ee8d1b2.m4a",
   "Con đã khám phá sao băng lướt qua!": "/assets/voice/v-50949229dc.m4a",
+  "Con đã khám phá sao biển cam!": "/assets/voice/v-503471fb9b.m4a",
+  "Con đã khám phá sao chổi đuôi dài!": "/assets/voice/v-f894fecfb7.m4a",
   "Con đã khám phá sâu dưới lá!": "/assets/voice/v-ce590c69db.m4a",
   "Con đã khám phá sinh tố dưa hấu dâu!": "/assets/voice/v-dcbbc06b2f.m4a",
   "Con đã khám phá sóc giấu hạt!": "/assets/voice/v-2f5ad11438.m4a",
   "Con đã khám phá sóng vỗ bờ!": "/assets/voice/v-6e0103171e.m4a",
+  "Con đã khám phá suối nước nóng!": "/assets/voice/v-9e324224d4.m4a",
   "Con đã khám phá súp bắp bí ngô!": "/assets/voice/v-fa91cf9260.m4a",
   "Con đã khám phá súp bí ngô cà rốt!": "/assets/voice/v-c73f42bfa8.m4a",
   "Con đã khám phá súp cà chua cà rốt!": "/assets/voice/v-16ffad10b7.m4a",
   "Con đã khám phá táo nghiền mật ngọt!": "/assets/voice/v-ce8bbf50c7.m4a",
   "Con đã khám phá táo rơi!": "/assets/voice/v-e3994b9576.m4a",
+  "Con đã khám phá thỏ ngọc trên mây!": "/assets/voice/v-af559e1015.m4a",
+  "Con đã khám phá thuyền giấy trên ao!": "/assets/voice/v-752e90f4f1.m4a",
   "Con đã khám phá tô trái cây mát!": "/assets/voice/v-422591daf6.m4a",
+  "Con đã khám phá tô trái cây nhiệt đới!": "/assets/voice/v-8aee8779bf.m4a",
+  "Con đã khám phá trà bạc hà ấm!": "/assets/voice/v-bd8ddf7c86.m4a",
+  "Con đã khám phá trà hoa dạ hương!": "/assets/voice/v-bc1a1ba39b.m4a",
   "Con đã khám phá trà hoa hướng dương!": "/assets/voice/v-f66467ca3e.m4a",
+  "Con đã khám phá trà mật ong ấm!": "/assets/voice/v-adf10cabba.m4a",
+  "Con đã khám phá trà sen thơm ngát!": "/assets/voice/v-0337796c34.m4a",
   "Con đã khám phá trà thông ấm áp!": "/assets/voice/v-4c8d49ab5f.m4a",
   "Con đã khám phá trái dừa rơi!": "/assets/voice/v-04c1eb8925.m4a",
   "Con đã khám phá trăng soi mặt ao!": "/assets/voice/v-5f5c96308f.m4a",
@@ -251,19 +317,31 @@ export const voiceFiles: Record<string, string> = {
   "Con đã khám phá vườn ban đêm!": "/assets/voice/v-3c4b6c3723.m4a",
   "Con đã khám phá xe trượt tuyết!": "/assets/voice/v-4c17c08a61.m4a",
   "Con đắp một ụ cát tròn tròn!": "/assets/voice/v-8b2cf81f20.m4a",
+  "Con gấp một chiếc thuyền giấy xinh xắn!": "/assets/voice/v-6ba90c026a.m4a",
   "Con gõ hoặc vuốt qua các thanh gỗ để tạo giai điệu nhé!":
     "/assets/voice/v-4ae0e08969.m4a",
+  "Con kéo hạt bạc hà tuyết xuống luống đất nhé!":
+    "/assets/voice/v-7ac38d1b38.m4a",
   "Con kéo hạt bắp xuống luống đất nhé!": "/assets/voice/v-aa25b921d0.m4a",
   "Con kéo hạt bí ngô xuống luống đất nhé!": "/assets/voice/v-8cbd78eff9.m4a",
   "Con kéo hạt cà chua xuống luống đất nhé!": "/assets/voice/v-dd3eaeaa68.m4a",
   "Con kéo hạt cà rốt xuống luống đất nhé!": "/assets/voice/v-58a491a9d4.m4a",
+  "Con kéo hạt chuối vàng xuống luống đất nhé!":
+    "/assets/voice/v-89cbbc0706.m4a",
   "Con kéo hạt dâu xuống luống đất nhé!": "/assets/voice/v-5fabdfd362.m4a",
   "Con kéo hạt dưa hấu xuống luống đất nhé!": "/assets/voice/v-1e18df8037.m4a",
+  "Con kéo hạt dứa thơm xuống luống đất nhé!": "/assets/voice/v-f94a39846c.m4a",
   "Con kéo hạt hạt dẻ xuống luống đất nhé!": "/assets/voice/v-d585d6328f.m4a",
+  "Con kéo hạt hoa dạ hương xuống luống đất nhé!":
+    "/assets/voice/v-1594b5643a.m4a",
   "Con kéo hạt hoa sen xuống luống đất nhé!": "/assets/voice/v-7a52ceb5f3.m4a",
   "Con kéo hạt hoa súng xuống luống đất nhé!": "/assets/voice/v-c2f008340e.m4a",
   "Con kéo hạt hướng dương xuống luống đất nhé!":
     "/assets/voice/v-191cc9abb7.m4a",
+  "Con kéo hạt khế ngôi sao xuống luống đất nhé!":
+    "/assets/voice/v-9657893545.m4a",
+  "Con kéo hạt nam việt quất xuống luống đất nhé!":
+    "/assets/voice/v-585d030322.m4a",
   "Con kéo hạt việt quất xuống luống đất nhé!":
     "/assets/voice/v-60e9ab938b.m4a",
   "Con thấy quả táo đỏ không? Lá cây đang đung đưa đó!":
@@ -276,7 +354,11 @@ export const voiceFiles: Record<string, string> = {
   "Cún Lucky vẫy đuôi chào con thật vui!": "/assets/voice/v-b06cb1b794.m4a",
   "Cuối ngày Lucky nằm cạnh bạn Tuần Lộc nhỏ, hai đứa cùng nhìn mặt trời lặn thật êm.":
     "/assets/voice/v-e1c1908911.m4a",
+  "Dải cực quang xanh tím nhảy múa trên bầu trời đêm tuyết!":
+    "/assets/voice/v-adb75dc47f.m4a",
+  "Đám mây trôi bồng bềnh dưới ánh sao đêm.": "/assets/voice/v-b90ea1e3b4.m4a",
   "Đàn bướm rực rỡ vừa bay ngang qua vườn!": "/assets/voice/v-3e107fa520.m4a",
+  "Đắp mái vòm trắng muốt lên nào!": "/assets/voice/v-19bc22350d.m4a",
   "Đêm xuống, cặp sừng nhỏ của bạn Tuần Lộc lấp lánh dưới ánh trăng cùng đom đóm.":
     "/assets/voice/v-3cc152a733.m4a",
   "Đêm yên tĩnh quá, bạn cú chớp đôi mắt tròn.":
@@ -295,9 +377,13 @@ export const voiceFiles: Record<string, string> = {
     "/assets/voice/v-d5a8012074.m4a",
   "Đồi tuyết đã mở ra rồi! Sương đang tan đó!":
     "/assets/voice/v-63aaba5140.m4a",
+  "Đom đóm bay là là trên những đóa sen đêm!": "/assets/voice/v-46feb576e6.m4a",
   "Đom đóm thắp đèn xanh lấp lánh trong rừng đêm!":
     "/assets/voice/v-4b087d988d.m4a",
   "Đưa mây tới mầm cây để tưới nhé!": "/assets/voice/v-e77758da62.m4a",
+  "Đụn tuyết khẽ rung… có đôi mắt tròn đang ngó ra!":
+    "/assets/voice/v-8b0470714b.m4a",
+  "Dựng mái lá xanh che nắng mưa nhé!": "/assets/voice/v-d7c018f9f8.m4a",
   "Ếch nhỏ chào con rồi trốn sang chỗ mới kìa!":
     "/assets/voice/v-ab14bd9493.m4a",
   "Gần xong rồi, thấy đôi tai cụp chưa?": "/assets/voice/v-c66d885582.m4a",
@@ -305,6 +391,8 @@ export const voiceFiles: Record<string, string> = {
   "Gâu gâu! Lucky cảm ơn con nhiều lắm!": "/assets/voice/v-6f1ce38057.m4a",
   "Gió thổi qua làm hoa lá rung rinh thật thích!":
     "/assets/voice/v-b00af8efc4.m4a",
+  "Giọt mật ong vàng óng thơm lừng! Mình cho vào giỏ nhé.":
+    "/assets/voice/v-e28c620d27.m4a",
   "Giữa đồi tuyết trắng xóa êm như bông, bạn Cánh cụt và gấu con cùng nhau nặn người tuyết mũi cà rốt.":
     "/assets/voice/v-426ed2764b.m4a",
   "Gợn nước tròn lan ra. Cá đang quẫy đuôi đó!":
@@ -315,6 +403,8 @@ export const voiceFiles: Record<string, string> = {
   "Hạt xuống đất rồi. Con đưa mây tới đây nhé!":
     "/assets/voice/v-d57ca9e27a.m4a",
   "Hoa rung rinh gọi bướm đến chơi!": "/assets/voice/v-5ad5a9392b.m4a",
+  "Hơi ấm bốc lên nghi ngút từ suối nước nóng giữa trời tuyết!":
+    "/assets/voice/v-09ac599d0c.m4a",
   "Hôm nay Lucky đánh hơi thấy mùi dưa hấu ngọt lịm. Gâu! Lucky thích nhất là dưa hấu mát lạnh.":
     "/assets/voice/v-6eafd9692f.m4a",
   "Hú hù! bạn Cú mèo thích mê luôn, cảm ơn con nhé!":
@@ -322,14 +412,22 @@ export const voiceFiles: Record<string, string> = {
   "Hú hù! Bạn cú thức dậy ngắm sao cùng con!": "/assets/voice/v-70cd2b8ee6.m4a",
   "Hú hù! Cú mèo canh giấc ngủ cho cả khu rừng.":
     "/assets/voice/v-a54971d232.m4a",
+  "Hươu sao dạo bước nhẹ nhàng dưới ánh trăng trong rừng!":
+    "/assets/voice/v-1461f8349e.m4a",
   "Khu này sắp có rồi, con chờ nhé!": "/assets/voice/v-7799265e47.m4a",
   "Kìa, bọ rùa đang trốn dưới đá!": "/assets/voice/v-3fd9f5d7c0.m4a",
   "Kìa! Cầu vồng bảy sắc đang lung linh trên bầu trời!":
     "/assets/voice/v-dec57cafb6.m4a",
+  "Lá sen rung rinh… có bạn nhỏ nào đang bơi dưới lá kìa!":
+    "/assets/voice/v-aa16898f3f.m4a",
   "Lá xào xạc… một quả táo rơi rồi!": "/assets/voice/v-60b72ad598.m4a",
   "Lá xào xạc… một quả táo rơi vào giỏ rồi!": "/assets/voice/v-5a40557de7.m4a",
   "Lăn một quả cầu tuyết thật to!": "/assets/voice/v-dc17c2e618.m4a",
   "Lâu đài cát xong rồi, có cả lá cờ nhỏ!": "/assets/voice/v-12df5baa1d.m4a",
+  "Lều tuyết Iglu ấm áp xong rồi, vào trú gió thôi!":
+    "/assets/voice/v-6755eb58f3.m4a",
+  "Lớp rêu xanh phủ mềm trên thân gỗ mát rượi.":
+    "/assets/voice/v-b585c64b63.m4a",
   "Lucky chạy quanh các luống đất, vẫy đuôi tít mù khi thấy mầm xanh nhú lên dưới nắng.":
     "/assets/voice/v-4b5a67e8bb.m4a",
   "Lucky thích lắm, cảm ơn con nhé!": "/assets/voice/v-ce976e2000.m4a",
@@ -338,6 +436,8 @@ export const voiceFiles: Record<string, string> = {
   "Lucky vui lắm! Lucky vẫn chờ nước ép dưa hấu nhé!":
     "/assets/voice/v-3df7957cf5.m4a",
   "Lucky vui lắm! Lucky vẫn chờ táo nhé!": "/assets/voice/v-c8b661febe.m4a",
+  "Mai mốt lớn lên nòng nọc sẽ thành bạn ếch xanh đấy.":
+    "/assets/voice/v-ea65503593.m4a",
   "Mầm cây đang khát nước!": "/assets/voice/v-f6436d0379.m4a",
   "Măm măm! bạn Capybara thích quá, quả quýt trên đầu rung rinh luôn!":
     "/assets/voice/v-e3f7d86c2d.m4a",
@@ -355,8 +455,11 @@ export const voiceFiles: Record<string, string> = {
   "Mưa tí tách! Mầm cây uống nước rồi!": "/assets/voice/v-db057c44ea.m4a",
   "Nắng ấm giúp cây nở hoa!": "/assets/voice/v-b9adf940ee.m4a",
   "Nắng vàng ghé thăm khu vườn!": "/assets/voice/v-b8edd52449.m4a",
+  "Ngâm chân gần suối ấm áp dễ chịu quá!": "/assets/voice/v-d6e37ea972.m4a",
   "Ngày xửa ngày xưa, dưới nắng mai ấm áp, khu vườn nhỏ luôn mở cửa đón các bạn thú và những mầm xanh biết lớn.":
     "/assets/voice/v-78cd855abe.m4a",
+  "Ngọn hải đăng xoay đèn sáng dẫn đường cho thuyền về bờ!":
+    "/assets/voice/v-dfb829b709.m4a",
   "Ngon lành quá! Bạn Capybara híp mắt cảm ơn con nhé!":
     "/assets/voice/v-1c84f22e7d.m4a",
   "Ngon quá chừng! Đuôi bạn Sóc nhỏ xù lên vui tít mắt!":
@@ -372,12 +475,19 @@ export const voiceFiles: Record<string, string> = {
     "/assets/voice/v-f62335de19.m4a",
   "Người tuyết có mũi cà rốt và khăn quàng rồi!":
     "/assets/voice/v-012d743dc7.m4a",
+  "Nhà cây ấm áp đã xong rồi, ngắm rừng thích mê!":
+    "/assets/voice/v-b5cd88da1a.m4a",
   "Nhà nấm tí hon! Nấm trong rừng chỉ để ngắm thôi, mình không ăn nhé.":
     "/assets/voice/v-11590464da.m4a",
   "Nhìn qua kính thấy mặt trăng thật gần, có cả những cái hố tròn!":
     "/assets/voice/v-18a0e3c2b0.m4a",
+  "Những đốm sao trên lưng bạn ấy sáng lấp lánh.":
+    "/assets/voice/v-721c87d313.m4a",
   "Nối thêm ngôi sao nữa nào!": "/assets/voice/v-d3cccef0bd.m4a",
+  "Nòng nọc vẫy đuôi tí xíu chào con!": "/assets/voice/v-9fa5ffa531.m4a",
   "Núi sao đã mở ra rồi! Sương đang tan đó!": "/assets/voice/v-0075a913f6.m4a",
+  "Nước biển mát lạnh đọng lại giữa những viên đá cuội.":
+    "/assets/voice/v-43f25b1a06.m4a",
   "Ồ! Một ngôi sao băng vừa lướt qua bầu trời đêm!":
     "/assets/voice/v-f822d63d26.m4a",
   "Ốc sên bò thật chậm rãi!": "/assets/voice/v-bc88351e95.m4a",
@@ -396,25 +506,39 @@ export const voiceFiles: Record<string, string> = {
     "/assets/voice/v-2c0bae5621.m4a",
   "Sao băng vụt qua! Con ước một điều thật đẹp nhé.":
     "/assets/voice/v-d2aef5a0d3.m4a",
+  "Sao biển có năm cánh xinh như ngôi sao dưới biển.":
+    "/assets/voice/v-d61dff8ea3.m4a",
+  "Sao chổi kéo đuôi ánh sáng dài bay ngang đỉnh núi!":
+    "/assets/voice/v-e5a0b468e8.m4a",
   "Sóc nhỏ giấu hạt dẻ cho mùa đông. Tí tách tí tách!":
     "/assets/voice/v-53edec973a.m4a",
   "Sột soạt… có ai cuộn tròn trong đống lá kìa!":
     "/assets/voice/v-4ced48e293.m4a",
   "Tết Trung thu tới rồi! Đèn ông sao lung linh soi sáng khu vườn đêm nay đó!":
     "/assets/voice/v-b9db5e8ae1.m4a",
+  "Thả thuyền nhẹ nhàng xuống mặt ao nào!": "/assets/voice/v-693511dd84.m4a",
   "Thêm cái đầu tròn tròn nào!": "/assets/voice/v-e02fb0d76f.m4a",
   "Thêm một tầng nữa nào!": "/assets/voice/v-834718a401.m4a",
+  "Thỏ ngọc mỉm cười vẫy tay chào con từ đám mây!":
+    "/assets/voice/v-5701652d3b.m4a",
+  "Thỏ ngọc thích ngắm trăng tròn cùng bạn Cú mèo.":
+    "/assets/voice/v-2d39262961.m4a",
   "Thơm mát tuyệt vời! bạn Capybara vui lắm!": "/assets/voice/v-0c5532292d.m4a",
   "Thung lũng nhỏ đang đợi con! Chọn một khu đã mở để khám phá nhé!":
     "/assets/voice/v-9a00406f83.m4a",
+  "Thuyền giấy căng buồm lướt êm trên sóng nước!":
+    "/assets/voice/v-873d397418.m4a",
   "Tình tang! Con gõ đàn gỗ nhé!": "/assets/voice/v-1aa9c101e1.m4a",
   "Tình tang! Tiếng đàn gỗ vang khắp vườn!": "/assets/voice/v-cb35fb281d.m4a",
   "Tình tang! Tiếng đàn vang trên mặt ao!": "/assets/voice/v-c436eb73b5.m4a",
+  "Tõm! Bọt nước tung trắng xóa vui mắt quá!": "/assets/voice/v-c0b6069ab3.m4a",
   "Tõm! Cá bơi dưới tán sen hồng.": "/assets/voice/v-de0073d306.m4a",
   "Tõm! Cá nhỏ bơi dưới làn nước.": "/assets/voice/v-71281c07c8.m4a",
   "Trăng tròn sáng dịu trên bầu trời đêm!": "/assets/voice/v-ac9b86a5df.m4a",
   "Trên bãi cát vàng óng ánh nắng, sóng biển hát rì rào đưa bạn Rùa con lên bờ nghe vỏ sò kể chuyện.":
     "/assets/voice/v-e96c976dee.m4a",
+  "Trên đám mây mềm có đôi tai dài đang vẫy kìa!":
+    "/assets/voice/v-c0a08ec14a.m4a",
   "Trên đỉnh núi cao gần bầu trời đêm, bạn Cú mèo thắp đèn ngôi sao và kể chuyện về từng chòm sao sáng.":
     "/assets/voice/v-c393ba9248.m4a",
   "Trời lạnh mà có một tách trà thông ấm áp thì bạn Cánh cụt thích mê luôn đấy!":
@@ -422,25 +546,40 @@ export const voiceFiles: Record<string, string> = {
   "Trời sáng rồi! Nắng ấm quay lại vườn!": "/assets/voice/v-1778099168.m4a",
   "Trong khu rừng xanh rì rào tiếng lá, bạn Sóc nhỏ cất giữ hạt dẻ thơm và rủ nhím con đi tìm quả ngọt.":
     "/assets/voice/v-3c48a07705.m4a",
+  "Trong khúc gỗ rỗng có đôi tai nhọn nhô ra kìa!":
+    "/assets/voice/v-600ae03466.m4a",
+  "Trong vũng nước trong veo có gì năm cánh kìa!":
+    "/assets/voice/v-192a418391.m4a",
   "Tuyết rơi lả tả, một quả thông lăn xuống. Mình nhặt vào giỏ nhé!":
     "/assets/voice/v-eb585332b1.m4a",
+  "Tuyết trắng mềm xốp như bông gòn vậy!": "/assets/voice/v-eb05c0eb7c.m4a",
   "Vèo! Xe trượt tuyết lướt xuống đồi thật nhanh!":
     "/assets/voice/v-8813f355f6.m4a",
+  "Vệt sáng bạc lấp lánh vắt ngang bầu trời sao.":
+    "/assets/voice/v-cd5d6e54d0.m4a",
+  "Viên đá thiên thạch phát sáng lấp lánh đủ bảy sắc!":
+    "/assets/voice/v-c0c43d3a16.m4a",
   "Vịt con và bạn ếch xanh thích leo lên lưng bạn Capybara ngồi hóng gió, cả bọn cùng cười tít mắt.":
     "/assets/voice/v-869c8da8f4.m4a",
   "Vịt nhỏ vẫy cánh làm nước gợn sóng.": "/assets/voice/v-7596adc47d.m4a",
   "Vỏ sò xinh quá! Áp vào tai nghe tiếng biển rì rào.":
     "/assets/voice/v-be9a141571.m4a",
   "Vù vù! Chong chóng quay theo làn gió mát!": "/assets/voice/v-1fb1f25acc.m4a",
+  "Xếp vòng gạch tuyết đầu tiên thật tròn!": "/assets/voice/v-981eec345e.m4a",
   "Xong rồi! Bánh ánh sao.": "/assets/voice/v-8d069f6d5b.m4a",
   "Xong rồi! Bánh bắp ngọt.": "/assets/voice/v-90f300c8ed.m4a",
+  "Xong rồi! Bánh nam việt quất.": "/assets/voice/v-984e5d5f77.m4a",
   "Xong rồi! Bánh táo bí ngô.": "/assets/voice/v-bd548ec6a7.m4a",
+  "Xong rồi! Bánh việt quất hạt dẻ.": "/assets/voice/v-8f494b477b.m4a",
+  "Xong rồi! Chè hạt sen bắp ngọt.": "/assets/voice/v-cfc3235777.m4a",
   "Xong rồi! Hạt dẻ nướng thơm.": "/assets/voice/v-c56ca60fd1.m4a",
   "Xong rồi! Món bất ngờ.": "/assets/voice/v-781d285c7c.m4a",
   "Xong rồi! Mứt dâu.": "/assets/voice/v-b3d5479b4e.m4a",
   "Xong rồi! Mứt việt quất.": "/assets/voice/v-ad8cda72aa.m4a",
   "Xong rồi! Nước dừa mát lạnh.": "/assets/voice/v-e7f443541f.m4a",
   "Xong rồi! Nước ép dưa hấu.": "/assets/voice/v-d287b9c4ff.m4a",
+  "Xong rồi! Nước ép dứa mát.": "/assets/voice/v-4586c79052.m4a",
+  "Xong rồi! Nước khế ánh sao.": "/assets/voice/v-641d399723.m4a",
   "Xong rồi! Salad nhiều màu.": "/assets/voice/v-e43def3ae6.m4a",
   "Xong rồi! Sinh tố dưa hấu dâu.": "/assets/voice/v-4f617d833b.m4a",
   "Xong rồi! Súp bắp bí ngô.": "/assets/voice/v-c2fc9c6a26.m4a",
@@ -448,6 +587,11 @@ export const voiceFiles: Record<string, string> = {
   "Xong rồi! Súp cà chua cà rốt.": "/assets/voice/v-6e07fe92f3.m4a",
   "Xong rồi! Táo nghiền mật ngọt.": "/assets/voice/v-d1dc169c93.m4a",
   "Xong rồi! Tô trái cây mát.": "/assets/voice/v-7168507880.m4a",
+  "Xong rồi! Tô trái cây nhiệt đới.": "/assets/voice/v-4e3492e467.m4a",
+  "Xong rồi! Trà bạc hà ấm.": "/assets/voice/v-8a85e3ecf6.m4a",
+  "Xong rồi! Trà hoa dạ hương.": "/assets/voice/v-af4c6b4f7b.m4a",
   "Xong rồi! Trà hoa hướng dương.": "/assets/voice/v-c55ad995de.m4a",
+  "Xong rồi! Trà mật ong ấm.": "/assets/voice/v-e1a78a703a.m4a",
+  "Xong rồi! Trà sen thơm ngát.": "/assets/voice/v-5b605df908.m4a",
   "Xong rồi! Trà thông ấm áp.": "/assets/voice/v-af9dcc62a7.m4a",
 };

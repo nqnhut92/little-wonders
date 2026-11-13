@@ -1,4 +1,3 @@
-import { discoveries } from "./content";
 // A region is data. Adding one means adding a row (and its content) here, never changing the rules.
 export type Region = {
   id: string;
@@ -20,6 +19,24 @@ export const luckyDiscoveries = [
   "rare_berry_heart",
   "shooting_star",
 ];
+// Every region uses the same rule: 11-14 core daytime discoveries count toward the 85% unlock threshold;
+// night scenes, kitchen dishes, pal story chapters, secondary crops and lucky variants are bonus uncounted discoveries.
+const gardenIds = [
+  "rain",
+  "sun",
+  "house",
+  "decor",
+  "apple",
+  "fish",
+  "bird",
+  "butterfly",
+  "worm",
+  "ladybug",
+  "grass",
+  "windmill",
+  "puppy",
+  "sunflower",
+];
 const pondIds = [
   "lotus",
   "waterlily",
@@ -29,8 +46,12 @@ const pondIds = [
   "dragonfly",
   "pond_lantern",
   "pal_capybara",
+  "tadpole",
+  "paper_boat",
+  "kingfisher",
+  "frog",
+  "xylophone",
 ];
-// Each later region lists its own discoveries; the garden counts everything that belongs to no other region.
 const forestIds = [
   "blueberry",
   "chestnut",
@@ -40,6 +61,9 @@ const forestIds = [
   "squirrel",
   "woodpecker",
   "mushroom_house",
+  "treehouse",
+  "fox_forest",
+  "honey",
 ];
 const beachIds = [
   "coconut",
@@ -49,6 +73,12 @@ const beachIds = [
   "waves",
   "turtle",
   "seagull",
+  "pineapple",
+  "banana",
+  "harvest_pineapple",
+  "harvest_banana",
+  "starfish",
+  "dolphin",
 ];
 const snowIds = [
   "pinecone",
@@ -57,39 +87,26 @@ const snowIds = [
   "penguin",
   "sled",
   "snowflake",
+  "mint",
+  "cranberry",
+  "harvest_mint",
+  "harvest_cranberry",
+  "igloo",
+  "arctic_fox",
+  "hot_spring",
 ];
-const starIds = ["telescope", "moon_face", "constellation", "star_lantern"];
-// Seen only at night or found in other regions' scenes: never part of a count.
-const uncounted = [
-  "firefly_forest",
-  "dish_coconut",
-  "dish_chestnut",
-  "dish_blueberry_jam",
-  "dish_pine_tea",
-  "dish_star_cake",
-  "story_capybara_1",
-  "story_capybara_2",
-  "story_capybara_3",
-  "story_squirrel_1",
-  "story_squirrel_2",
-  "story_squirrel_3",
-  "story_turtle_1",
-  "story_turtle_2",
-  "story_turtle_3",
-  "story_penguin_1",
-  "story_penguin_2",
-  "story_penguin_3",
-  "story_owl_1",
-  "story_owl_2",
-  "story_owl_3",
-];
-const elsewhere = [
-  ...pondIds,
-  ...forestIds,
-  ...beachIds,
-  ...snowIds,
-  ...starIds,
-  ...uncounted,
+const starIds = [
+  "telescope",
+  "moon_face",
+  "constellation",
+  "star_lantern",
+  "starfruit",
+  "moonflower",
+  "harvest_starfruit",
+  "harvest_moonflower",
+  "moon_rabbit",
+  "meteor_rock",
+  "comet",
 ];
 export const regions: Region[] = [
   {
@@ -97,11 +114,7 @@ export const regions: Region[] = [
     name: "Vườn nhà",
     art: "flower",
     ready: true,
-    counted: discoveries
-      .map((d) => d.id)
-      .filter(
-        (id) => !luckyDiscoveries.includes(id) && !elsewhere.includes(id),
-      ),
+    counted: gardenIds,
   },
   {
     id: "pond",

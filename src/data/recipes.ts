@@ -66,6 +66,56 @@ export const recipes: Recipe[] = [
     name: "Bánh ánh sao",
     needs: ["apple", "blueberry", "sunflower"],
   },
+  {
+    dish: "dish_lotus_tea",
+    name: "Trà sen thơm ngát",
+    needs: ["lotus", "lotus"],
+  },
+  {
+    dish: "dish_lotus_sweet",
+    name: "Chè hạt sen bắp ngọt",
+    needs: ["corn", "lotus"],
+  },
+  {
+    dish: "dish_berry_tart",
+    name: "Bánh việt quất hạt dẻ",
+    needs: ["blueberry", "chestnut"],
+  },
+  {
+    dish: "dish_honey_tea",
+    name: "Trà mật ong ấm",
+    needs: ["honey", "sunflower"],
+  },
+  {
+    dish: "dish_pineapple_juice",
+    name: "Nước ép dứa mát",
+    needs: ["pineapple", "pineapple"],
+  },
+  {
+    dish: "dish_tropical_bowl",
+    name: "Tô trái cây nhiệt đới",
+    needs: ["banana", "coconut", "pineapple"],
+  },
+  {
+    dish: "dish_mint_cocoa",
+    name: "Trà bạc hà ấm",
+    needs: ["mint", "mint"],
+  },
+  {
+    dish: "dish_cranberry_pie",
+    name: "Bánh nam việt quất",
+    needs: ["apple", "cranberry"],
+  },
+  {
+    dish: "dish_starfruit_juice",
+    name: "Nước khế ánh sao",
+    needs: ["starfruit", "starfruit"],
+  },
+  {
+    dish: "dish_moon_tea",
+    name: "Trà hoa dạ hương",
+    needs: ["moonflower", "moonflower"],
+  },
 ];
 // Any other mix is a surprise that is always fine to eat.
 export const mysteryDish = { dish: "dish_mystery", name: "Món bất ngờ" };

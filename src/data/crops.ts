@@ -48,6 +48,48 @@ export const crops: Crop[] = [
     care: 1,
     region: "forest",
   },
+  {
+    id: "pineapple",
+    name: "Dứa thơm",
+    art: "pineapple",
+    care: 1,
+    region: "beach",
+  },
+  {
+    id: "banana",
+    name: "Chuối vàng",
+    art: "banana",
+    care: 1,
+    region: "beach",
+  },
+  {
+    id: "mint",
+    name: "Bạc hà tuyết",
+    art: "mint",
+    care: 1,
+    region: "snow",
+  },
+  {
+    id: "cranberry",
+    name: "Nam việt quất",
+    art: "cranberry",
+    care: 1,
+    region: "snow",
+  },
+  {
+    id: "starfruit",
+    name: "Khế ngôi sao",
+    art: "starfruit",
+    care: 1,
+    region: "stars",
+  },
+  {
+    id: "moonflower",
+    name: "Hoa dạ hương",
+    art: "moonflower",
+    care: 1,
+    region: "stars",
+  },
 ];
 // Names of things gathered in scenes (not grown).
 export const gatherNames: Record<string, string> = {
@@ -55,6 +97,7 @@ export const gatherNames: Record<string, string> = {
   coconut: "Dừa",
   shell: "Vỏ sò",
   pinecone: "Quả thông",
+  honey: "Mật ong rừng",
 };
 // Spoken and screen-reader name of anything a basket can hold.
 export const itemName = (kind: string) =>

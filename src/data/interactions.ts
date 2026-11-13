@@ -137,6 +137,153 @@ export const interactions: Record<
     discovery: "pond_lantern",
     effect: "glow",
   },
+  "lilypad-reveal": {
+    lines: [
+      "Lá sen rung rinh… có bạn nhỏ nào đang bơi dưới lá kìa!",
+      "Chiếc lá xanh tròn xoe như chiếc ô che nắng cho ao.",
+    ],
+    effect: "sway",
+  },
+  tadpole: {
+    lines: [
+      "Nòng nọc vẫy đuôi tí xíu chào con!",
+      "Mai mốt lớn lên nòng nọc sẽ thành bạn ếch xanh đấy.",
+    ],
+    discovery: "tadpole",
+    effect: "swim",
+  },
+  kingfisher: {
+    lines: [
+      "Bói cá xanh biếc đậu trên cành trúc ngắm mặt ao!",
+      "Bộ lông xanh lấp lánh của bạn ấy đẹp quá!",
+    ],
+    discovery: "kingfisher",
+    effect: "hop",
+  },
+  "pond-firefly": {
+    lines: [
+      "Đom đóm bay là là trên những đóa sen đêm!",
+      "Ánh đèn xanh dịu dàng soi sáng mặt ao yên tĩnh.",
+    ],
+    discovery: "firefly_pond",
+    effect: "glow",
+  },
+  "hollow-log": {
+    lines: [
+      "Trong khúc gỗ rỗng có đôi tai nhọn nhô ra kìa!",
+      "Lớp rêu xanh phủ mềm trên thân gỗ mát rượi.",
+    ],
+    effect: "rustle",
+  },
+  fox: {
+    lines: [
+      "Bạn cáo nhỏ vẫy chiếc đuôi bông xù chào con!",
+      "Cáo nhỏ thích chạy nhảy giữa thảm lá vàng trong rừng.",
+    ],
+    discovery: "fox_forest",
+    effect: "hop",
+  },
+  "night-deer": {
+    lines: [
+      "Hươu sao dạo bước nhẹ nhàng dưới ánh trăng trong rừng!",
+      "Những đốm sao trên lưng bạn ấy sáng lấp lánh.",
+    ],
+    discovery: "night_deer",
+    effect: "hop",
+  },
+  "tidal-pool": {
+    lines: [
+      "Trong vũng nước trong veo có gì năm cánh kìa!",
+      "Nước biển mát lạnh đọng lại giữa những viên đá cuội.",
+    ],
+    effect: "ripple",
+  },
+  starfish: {
+    lines: [
+      "Bạn sao biển màu cam nằm phơi mình thật êm!",
+      "Sao biển có năm cánh xinh như ngôi sao dưới biển.",
+    ],
+    discovery: "starfish",
+    effect: "sway",
+  },
+  dolphin: {
+    lines: [
+      "Cá heo nhảy vọt lên khỏi mặt biển xanh biếc!",
+      "Tõm! Bọt nước tung trắng xóa vui mắt quá!",
+    ],
+    discovery: "dolphin",
+    effect: "hop",
+  },
+  lighthouse: {
+    lines: [
+      "Ngọn hải đăng xoay đèn sáng dẫn đường cho thuyền về bờ!",
+      "Ánh đèn vàng ấm áp vươn xa trên mặt biển đêm.",
+    ],
+    discovery: "lighthouse",
+    effect: "glow",
+  },
+  "snow-drift": {
+    lines: [
+      "Đụn tuyết khẽ rung… có đôi mắt tròn đang ngó ra!",
+      "Tuyết trắng mềm xốp như bông gòn vậy!",
+    ],
+    effect: "rustle",
+  },
+  "arctic-fox": {
+    lines: [
+      "Bạn cáo tuyết trắng muốt như cục bông vẫy đuôi chào con!",
+      "Bộ lông dày giúp bạn ấy giữ ấm suốt mùa đông.",
+    ],
+    discovery: "arctic_fox",
+    effect: "hop",
+  },
+  "hot-spring": {
+    lines: [
+      "Hơi ấm bốc lên nghi ngút từ suối nước nóng giữa trời tuyết!",
+      "Ngâm chân gần suối ấm áp dễ chịu quá!",
+    ],
+    discovery: "hot_spring",
+    effect: "ripple",
+  },
+  aurora: {
+    lines: [
+      "Dải cực quang xanh tím nhảy múa trên bầu trời đêm tuyết!",
+      "Bầu trời đêm bỗng biến thành dải lụa bảy sắc.",
+    ],
+    discovery: "aurora",
+    effect: "glow",
+  },
+  "star-cloud": {
+    lines: [
+      "Trên đám mây mềm có đôi tai dài đang vẫy kìa!",
+      "Đám mây trôi bồng bềnh dưới ánh sao đêm.",
+    ],
+    effect: "sway",
+  },
+  "moon-rabbit": {
+    lines: [
+      "Thỏ ngọc mỉm cười vẫy tay chào con từ đám mây!",
+      "Thỏ ngọc thích ngắm trăng tròn cùng bạn Cú mèo.",
+    ],
+    discovery: "moon_rabbit",
+    effect: "hop",
+  },
+  "meteor-rock": {
+    lines: [
+      "Viên đá thiên thạch phát sáng lấp lánh đủ bảy sắc!",
+      "Chạm nhẹ vào đá thấy ấm áp như giữ ánh sao.",
+    ],
+    discovery: "meteor_rock",
+    effect: "glow",
+  },
+  comet: {
+    lines: [
+      "Sao chổi kéo đuôi ánh sáng dài bay ngang đỉnh núi!",
+      "Vệt sáng bạc lấp lánh vắt ngang bầu trời sao.",
+    ],
+    discovery: "comet",
+    effect: "flutter",
+  },
 };
 export const discoveryRules = [
   { id: "rainbow", requires: ["rain", "sun"] },

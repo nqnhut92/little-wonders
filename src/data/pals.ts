@@ -62,7 +62,7 @@ export const pals: Pal[] = [
     art: "capybara",
     arrives: "pal_capybara",
     freeFoods: ["watermelon", "carrot", "apple"],
-    wants: ["watermelon", "lotus", "corn", "dish_tea"],
+    wants: ["watermelon", "lotus", "dish_lotus_tea", "dish_lotus_sweet"],
     chapters: [1, 3, 6],
     stories: [
       "Bạn Capybara đội quả quýt cam tròn xoe trên đầu, ngồi thư giãn bên bờ ao sen mát rượi.",
@@ -82,7 +82,7 @@ export const pals: Pal[] = [
     art: "squirrel",
     arrives: "squirrel",
     freeFoods: ["chestnut", "blueberry", "apple"],
-    wants: ["chestnut", "blueberry", "dish_chestnut", "dish_blueberry_jam"],
+    wants: ["chestnut", "blueberry", "dish_berry_tart", "dish_honey_tea"],
     chapters: [1, 3, 6],
     stories: [
       "Sóc nhỏ ôm đầy hai má hạt dẻ thơm lừng, nhảy thoăn thoắt trên cành thông xanh.",
@@ -102,7 +102,12 @@ export const pals: Pal[] = [
     art: "turtle",
     arrives: "turtle",
     freeFoods: ["coconut", "watermelon", "apple"],
-    wants: ["coconut", "dish_coconut", "watermelon", "dish_juice"],
+    wants: [
+      "coconut",
+      "pineapple",
+      "dish_pineapple_juice",
+      "dish_tropical_bowl",
+    ],
     chapters: [1, 3, 6],
     stories: [
       "Rùa con bò thật chậm trên bãi cát vàng, lắng nghe tiếng sóng biển vỗ rì rào.",
@@ -122,7 +127,7 @@ export const pals: Pal[] = [
     art: "penguin",
     arrives: "penguin",
     freeFoods: ["apple", "corn", "carrot"],
-    wants: ["dish_pine_tea", "dish_applesauce", "dish_pumpkinsoup", "apple"],
+    wants: ["dish_pine_tea", "dish_mint_cocoa", "dish_cranberry_pie", "apple"],
     chapters: [1, 3, 6],
     stories: [
       "Bạn Cánh cụt đi lạch bạch trên đồi tuyết trắng, vỗ cánh chào từng bông tuyết rơi.",
@@ -142,7 +147,12 @@ export const pals: Pal[] = [
     art: "owl",
     arrives: "owl",
     freeFoods: ["sunflower", "blueberry", "apple"],
-    wants: ["dish_star_cake", "dish_tea", "sunflower", "dish_smoothie"],
+    wants: [
+      "dish_star_cake",
+      "dish_moon_tea",
+      "dish_starfruit_juice",
+      "sunflower",
+    ],
     chapters: [1, 3, 6],
     stories: [
       "Bạn Cú mèo mở to đôi mắt tròn xoe trên đỉnh núi sao, đếm từng ngôi sao sáng.",

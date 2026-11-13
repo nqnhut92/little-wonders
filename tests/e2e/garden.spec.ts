@@ -663,9 +663,7 @@ test("later regions: beach gathering, building a sandcastle and the starry mount
     "data-variant",
     "beach",
   );
-  await expect(page.getByRole("button", { name: "Luống đất 1" })).toHaveCount(
-    0,
-  );
+  await expect(page.getByRole("button", { name: "Luống đất 1" })).toBeVisible();
   await activate(page, "Cây dừa");
   await activate(page, "Vỏ sò");
   await expect(page.getByLabel("Giỏ của con")).toContainText("1");

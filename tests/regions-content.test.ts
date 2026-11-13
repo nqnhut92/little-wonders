@@ -80,6 +80,7 @@ describe("gathering and new dishes", () => {
       coconut: 1,
       shell: 1,
       pinecone: 1,
+      honey: 1,
     });
     expect(w.discoveries).toEqual(
       expect.arrayContaining(["coconut", "shell", "pinecone"]),

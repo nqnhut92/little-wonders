@@ -21,6 +21,12 @@ export const cropKinds = [
   "waterlily",
   "blueberry",
   "chestnut",
+  "pineapple",
+  "banana",
+  "mint",
+  "cranberry",
+  "starfruit",
+  "moonflower",
 ] as const;
 export const sceneTimes = ["day", "night"] as const;
 export const plantKinds = cropKinds;
@@ -43,10 +49,26 @@ export const dishKinds = [
   "dish_blueberry_jam",
   "dish_pine_tea",
   "dish_star_cake",
+  "dish_lotus_tea",
+  "dish_lotus_sweet",
+  "dish_berry_tart",
+  "dish_honey_tea",
+  "dish_pineapple_juice",
+  "dish_tropical_bowl",
+  "dish_mint_cocoa",
+  "dish_cranberry_pie",
+  "dish_starfruit_juice",
+  "dish_moon_tea",
   "dish_mystery",
 ] as const;
 // Things picked up in a scene rather than grown: shaken from a tree or found on the ground.
-export const gatherKinds = ["apple", "coconut", "shell", "pinecone"] as const;
+export const gatherKinds = [
+  "apple",
+  "coconut",
+  "shell",
+  "pinecone",
+  "honey",
+] as const;
 export const basketKinds = [
   ...cropKinds,
   ...gatherKinds,
