@@ -53,6 +53,7 @@ self.addEventListener("fetch", (event) => {
   if (
     event.request.method !== "GET" ||
     url.origin !== location.origin ||
+    url.pathname === "/version.json" ||
     url.pathname.startsWith("/api/") ||
     url.pathname.startsWith("/_vercel/")
   )

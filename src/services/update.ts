@@ -4,7 +4,7 @@
 // forced mid-play). Pending local progress lives in storage and survives.
 
 export const UPDATE_READY = "little-wonders:update-ready";
-export const UPDATE_CHECK_MS = 30 * 60 * 1000;
+export const UPDATE_CHECK_MS = 30 * 1000;
 const MIN_GAP_MS = 5000;
 
 interface Registration {
@@ -34,6 +34,8 @@ export interface UpdateEnv {
   notify(): void;
   now(): number;
   setInterval(fn: () => void, ms: number): unknown;
+  currentVersion?: string;
+  fetchVersion?: () => Promise<string | null>;
 }
 
 export function watchForUpdates(env: UpdateEnv) {
@@ -42,6 +44,7 @@ export function watchForUpdates(env: UpdateEnv) {
   const hadController = Boolean(container.controller);
   let expectedTakeover = false;
   let reloadPending = false;
+  let notified = false;
   let lastCheck = -Infinity;
 
   const reloadIfHidden = () => {
@@ -49,6 +52,20 @@ export function watchForUpdates(env: UpdateEnv) {
       reloadPending = false;
       env.reload();
     }
+  };
+  const announceUpdate = () => {
+    reloadPending = true;
+    if (page.hidden) {
+      reloadIfHidden();
+    } else if (!notified) {
+      notified = true;
+      env.notify();
+    }
+  };
+  const isStalePage = async () => {
+    if (!env.currentVersion || !env.fetchVersion) return true;
+    const latest = await env.fetchVersion().catch(() => null);
+    return Boolean(latest && latest !== env.currentVersion);
   };
   const activateWaiting = () => {
     if (registration.waiting && container.controller) {
@@ -61,13 +78,18 @@ export function watchForUpdates(env: UpdateEnv) {
     if (now - lastCheck < MIN_GAP_MS) return;
     lastCheck = now;
     void registration.update().catch(() => {});
+    if (env.currentVersion && env.fetchVersion) {
+      void isStalePage().then((stale) => {
+        if (stale) announceUpdate();
+      });
+    }
   };
 
   container.addEventListener("controllerchange", () => {
     if (!hadController || !expectedTakeover) return;
-    reloadPending = true;
-    if (page.hidden) reloadIfHidden();
-    else env.notify();
+    void isStalePage().then((stale) => {
+      if (stale) announceUpdate();
+    });
   });
   registration.addEventListener("updatefound", () => {
     const worker = registration.installing;
@@ -87,6 +109,16 @@ export function watchForUpdates(env: UpdateEnv) {
 
 export function registerServiceWorker() {
   if (!("serviceWorker" in navigator) || !import.meta.env.PROD) return;
+  const currentVersion =
+    document
+      .querySelector('meta[name="app-version"]')
+      ?.getAttribute("content") ?? "";
+  const fetchVersion = async () => {
+    const res = await fetch("/version.json", { cache: "no-store" });
+    if (!res.ok) return null;
+    const data = (await res.json()) as { version?: unknown };
+    return typeof data?.version === "string" ? data.version : null;
+  };
   window.addEventListener("load", () => {
     void navigator.serviceWorker.register("/sw.js").then((registration) =>
       watchForUpdates({
@@ -102,6 +134,8 @@ export function registerServiceWorker() {
         notify: () => window.dispatchEvent(new Event(UPDATE_READY)),
         now: () => Date.now(),
         setInterval: (fn, ms) => window.setInterval(fn, ms),
+        currentVersion,
+        fetchVersion,
       }),
     );
   });

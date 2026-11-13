@@ -60,6 +60,17 @@ export default defineConfig({
           hash.update(readFileSync(`public/${file}`));
         const id = hash.digest("hex").slice(0, 12);
         writeFileSync(
+          `${outDir}/index.html`,
+          html.replace(
+            "</head>",
+            `  <meta name="app-version" content="${id}" />\n  </head>`,
+          ),
+        );
+        writeFileSync(
+          `${outDir}/version.json`,
+          JSON.stringify({ version: id }),
+        );
+        writeFileSync(
           `${outDir}/sw.js`,
           sw
             .replace("__BUILD_ID__", id)
