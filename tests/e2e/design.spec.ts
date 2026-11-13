@@ -67,9 +67,12 @@ test("self-hosted Nunito renders Vietnamese and no serif remains", async ({
       faces: [...document.fonts].filter(
         (f) => f.family.includes("Nunito") && f.status === "loaded",
       ).length,
-      families: ["main", ".garden-sign", ".hud-guide p", ".seed-tray"].map(
-        (s) => getComputedStyle(document.querySelector(s)!).fontFamily,
-      ),
+      families: [
+        "main",
+        ".hud-actions button",
+        ".hud-guide p",
+        ".seed-tray",
+      ].map((s) => getComputedStyle(document.querySelector(s)!).fontFamily),
     };
   }, stress);
   expect(loaded.check).toBe(true);

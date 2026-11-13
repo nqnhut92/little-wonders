@@ -64,7 +64,7 @@ export const itemName = (kind: string) =>
   kind;
 export const cropArt = (kind: string) =>
   kind.startsWith("dish_")
-    ? kind.replace("_", "-")
+    ? kind.replaceAll("_", "-")
     : (crops.find((c) => c.id === kind)?.art ?? kind);
 // seed(1) -> sprout(2) -> grown(3) -> ripe(4); stage 0 is an empty bed.
 export const ripeStage = 4;

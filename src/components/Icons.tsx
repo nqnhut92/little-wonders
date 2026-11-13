@@ -20,7 +20,8 @@ export type IconName =
   | "no"
   | "day-sun"
   | "night-moon"
-  | "rotate";
+  | "rotate"
+  | "story";
 const speaker = (
   <path d="M4 9.5A1.5 1.5 0 0 1 5.5 8H8l4.2-3.4a1 1 0 0 1 1.6.8v13.2a1 1 0 0 1-1.6.8L8 16H5.5A1.5 1.5 0 0 1 4 14.5z" />
 );
@@ -141,6 +142,14 @@ const paths: Record<IconName, ReactNode> = {
         {...line}
         d="M7 5.5A8 8 0 0 1 12 4a8 8 0 0 1 4 1.1M14.2 2.8l2 2.4-3 .9"
       />
+    </>
+  ),
+  story: (
+    <>
+      <path d="M4.5 5.5A2.5 2.5 0 0 1 7 3h10a2.5 2.5 0 0 1 2.5 2.5v8.5A2.5 2.5 0 0 1 17 16.5H10l-4.2 3.3a.8.8 0 0 1-1.3-.6z" />
+      <circle cx="9" cy="9.8" r="1.1" fill="#fff" />
+      <circle cx="12" cy="9.8" r="1.1" fill="#fff" />
+      <circle cx="15" cy="9.8" r="1.1" fill="#fff" />
     </>
   ),
 };

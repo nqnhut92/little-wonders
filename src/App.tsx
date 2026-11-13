@@ -15,6 +15,7 @@ import { PaintFilters } from "./components/PaintFilters";
 import { Icon } from "./components/Icons";
 import { AdultCorner } from "./components/AdultCorner";
 import { regionOpenId, regions } from "./data/regions";
+import { scenes } from "./data/scenes";
 import { regionState } from "./game/regions";
 import { createScrollRegions } from "./ui/scroll-regions.js";
 import {
@@ -455,6 +456,18 @@ export default function App() {
         </button>
         {activeRegion && (
           <>
+            <button
+              type="button"
+              className={cn("kid-button")}
+              aria-label="Nghe chuyện vùng đất"
+              title="Nghe chuyện vùng đất"
+              onClick={() => {
+                const story = scenes[activeRegion]?.story;
+                if (story) say(story, "flower");
+              }}
+            >
+              <Icon name="story" size={28} />
+            </button>
             <button
               type="button"
               className={cn("kid-button")}

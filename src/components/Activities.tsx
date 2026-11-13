@@ -1,5 +1,6 @@
 import { cn } from "../styles";
 import { useState, useRef, useEffect, type PointerEvent } from "react";
+import { createPortal } from "react-dom";
 import { Art } from "./Art";
 import { palSpeak, palStatus } from "../game/lunch";
 import { playNote } from "../services/audio";
@@ -54,6 +55,7 @@ export function PalPanel({
       ? pal.thanks[gifts % pal.thanks.length]
       : `${pal.name} vui lắm! ${pal.name} vẫn chờ ${itemName(wish).toLowerCase()} nhé!`;
     setFeedback(line);
+    setStoryIndex(null);
     setReaction("happy");
     clearTimeout(reactionTimer.current);
     reactionTimer.current = setTimeout(() => setReaction("idle"), 1000);
@@ -80,8 +82,15 @@ export function PalPanel({
       >
         <Art id={cropArt(wish)} />
       </div>
-      <p role="status" className={cn("meal-feedback")}>
-        {feedback}
+      <p
+        role="status"
+        className={cn(
+          `meal-feedback ${storyIndex !== null ? "pal-story-text" : ""}`,
+        )}
+      >
+        {storyIndex !== null && storyIndex < unlockedChapters
+          ? pal.stories[storyIndex]
+          : feedback}
       </p>
       <div className={cn("lunch-scene")}>
         <div className={cn(`pal-response pal-${reaction}`)}>
@@ -115,6 +124,7 @@ export function PalPanel({
               className={cn(activeFood === f ? "selected" : "")}
               onPointerDown={(e) => {
                 if (pointer.current !== null) return;
+                e.preventDefault();
                 pointer.current = e.pointerId;
                 e.currentTarget.setPointerCapture(e.pointerId);
                 setFood(f);
@@ -141,12 +151,16 @@ export function PalPanel({
           ))}
         </div>
       )}
-      {drag && (
-        <div className={cn("drag-ghost")} style={{ left: drag.x, top: drag.y }}>
-          <Art id={cropArt(drag.kind)} />
-        </div>
-      )}
-      <p>Con kéo món ăn vào giỏ, hoặc chọn rồi chạm giỏ.</p>
+      {drag &&
+        createPortal(
+          <div
+            className={cn("drag-ghost")}
+            style={{ left: drag.x, top: drag.y }}
+          >
+            <Art id={cropArt(drag.kind)} />
+          </div>,
+          document.body,
+        )}
       <div className={cn("pal-stories")} aria-label={`Chuyện của ${pal.name}`}>
         {pal.stories.map((story, i) => {
           const openChapter = i < unlockedChapters;
@@ -171,9 +185,6 @@ export function PalPanel({
           );
         })}
       </div>
-      {storyIndex !== null && storyIndex < unlockedChapters && (
-        <p className={cn("pal-story-text")}>{pal.stories[storyIndex]}</p>
-      )}
     </div>
   );
 }
@@ -204,40 +215,45 @@ export function House({ world, act, say }: Props) {
     [],
   );
   const [choice, setChoice] = useState("flower");
+  const [dragDecor, setDragDecor] = useState<{
+    id: string;
+    x: number;
+    y: number;
+  } | null>(null);
+  const dragPointer = useRef<number | null>(null);
+  const canvasRef = useRef<HTMLDivElement | null>(null);
   const save = (a: Action) => {
     act(a);
     act({ type: "discover", id: "house" });
   };
+  const placeAt = (id: string, clientX: number, clientY: number) => {
+    const r = canvasRef.current?.getBoundingClientRect();
+    if (!r) return;
+    const item = {
+      id,
+      x: Math.max(5, Math.min(90, ((clientX - r.left) / r.width) * 100)),
+      y: Math.max(5, Math.min(85, ((clientY - r.top) / r.height) * 100)),
+    };
+    const next = [...decorations.slice(-(maxDecorations - 1)), item];
+    save({
+      type: "set",
+      key: "decorations",
+      value: next,
+    });
+    act({ type: "discover", id: "decor" });
+    if (next.length >= 3) act({ type: "discover", id: "house_decorated" });
+    say("Đẹp quá! Mình đã cất thiết kế của con rồi.", "house");
+  };
   return (
     <div className={cn("activity")}>
       <h2>Ngôi Nhà Sắc Màu</h2>
-      <p>Một ngôi nhà thật giống con. Chọn màu, rồi đặt đồ trang trí nhé!</p>
+      <p>
+        Một ngôi nhà thật giống con. Chọn màu, rồi kéo hoặc chạm đặt đồ nhé!
+      </p>
       <div
+        ref={canvasRef}
         className={cn("house-canvas")}
-        onClick={(e) => {
-          const r = e.currentTarget.getBoundingClientRect();
-          const item = {
-            id: choice,
-            x: Math.max(
-              5,
-              Math.min(90, ((e.clientX - r.left) / r.width) * 100),
-            ),
-            y: Math.max(
-              5,
-              Math.min(85, ((e.clientY - r.top) / r.height) * 100),
-            ),
-          };
-          const next = [...decorations.slice(-(maxDecorations - 1)), item];
-          save({
-            type: "set",
-            key: "decorations",
-            value: next,
-          });
-          act({ type: "discover", id: "decor" });
-          if (next.length >= 3)
-            act({ type: "discover", id: "house_decorated" });
-          say("Đẹp quá! Mình đã cất thiết kế của con rồi.", "house");
-        }}
+        onClick={(e) => placeAt(choice, e.clientX, e.clientY)}
       >
         <div className={cn("big-house")}>
           <Art id="house" color={color} night={night} />
@@ -297,6 +313,36 @@ export function House({ world, act, say }: Props) {
               className={cn(
                 `${choice === d.id ? "selected" : ""} ${!unlocked ? "locked-silhouette" : ""}`,
               )}
+              onPointerDown={(e) => {
+                if (!unlocked || dragPointer.current !== null) return;
+                e.preventDefault();
+                dragPointer.current = e.pointerId;
+                e.currentTarget.setPointerCapture(e.pointerId);
+                setChoice(d.id);
+                setDragDecor({ id: d.id, x: e.clientX, y: e.clientY });
+              }}
+              onPointerMove={(e) => {
+                if (dragPointer.current === e.pointerId)
+                  setDragDecor({ id: d.id, x: e.clientX, y: e.clientY });
+              }}
+              onPointerCancel={() => {
+                dragPointer.current = null;
+                setDragDecor(null);
+              }}
+              onPointerUp={(e) => {
+                if (dragPointer.current !== e.pointerId) return;
+                dragPointer.current = null;
+                setDragDecor(null);
+                const r = canvasRef.current?.getBoundingClientRect();
+                if (
+                  r &&
+                  e.clientX >= r.left &&
+                  e.clientX <= r.right &&
+                  e.clientY >= r.top &&
+                  e.clientY <= r.bottom
+                )
+                  placeAt(d.id, e.clientX, e.clientY);
+              }}
               onClick={() => setChoice(d.id)}
             >
               <Art id={d.id} night={night} />
@@ -313,6 +359,16 @@ export function House({ world, act, say }: Props) {
         Dọn đồ trang trí
       </button>
       <span className={cn("saved-note")}>Thiết kế được lưu tự động</span>
+      {dragDecor &&
+        createPortal(
+          <div
+            className={cn("drag-ghost")}
+            style={{ left: dragDecor.x, top: dragDecor.y }}
+          >
+            <Art id={dragDecor.id} night={night} />
+          </div>,
+          document.body,
+        )}
     </div>
   );
 }

@@ -71,7 +71,7 @@ export const recipes: Recipe[] = [
 export const mysteryDish = { dish: "dish_mystery", name: "Món bất ngờ" };
 export const dishes = [...recipes, mysteryDish];
 export const maxPot = 3;
-export const dishArt = (dish: string) => dish.replace("_", "-");
+export const dishArt = (dish: string) => dish.replaceAll("_", "-");
 export const sameItems = (a: string[], b: string[]) =>
   a.length === b.length &&
   [...a].sort().every((x, i) => x === [...b].sort()[i]);

@@ -74,7 +74,16 @@ export function Garden({
   const windTimer = useRef<ReturnType<typeof setTimeout> | undefined>(
     undefined,
   );
+  const fallTimer = useRef<ReturnType<typeof setTimeout> | undefined>(
+    undefined,
+  );
   const [reaction, setReaction] = useState("");
+  const [falling, setFalling] = useState<{
+    key: number;
+    art: string;
+    x: number;
+    y: number;
+  } | null>(null);
   const [wind, setWind] = useState(false);
   const [frogSpot, setFrogSpot] = useState(0);
   const [snailSpot, setSnailSpot] = useState(0);
@@ -168,12 +177,24 @@ export function Garden({
     }
     setDrag(null);
   };
+  const triggerFall = (art: string, x: number, y: number) => {
+    setFalling({ key: Date.now(), art, x, y });
+    clearTimeout(fallTimer.current);
+    fallTimer.current = setTimeout(() => setFalling(null), 850);
+  };
   const triggerHotspot = (h: SceneHotspot) => {
     if (h.kind === "tree") {
       act({ type: "shake" });
+      triggerFall("apple", h.x + h.w * 0.65, 61);
       react(h.id, h.line ?? "", h.discovery);
     } else if (h.kind === "gather" && h.gives) {
       act({ type: "shake", kind: h.gives });
+      if (h.gives !== "shell")
+        triggerFall(
+          cropArt(h.gives),
+          h.x + h.w * 0.5,
+          Math.min(68, h.y + h.w * 1.8),
+        );
       react(h.id, h.line ?? "");
     } else if (h.kind === "build" && h.stages) {
       const last = h.stages.length - 1;
@@ -315,6 +336,7 @@ export function Garden({
       )}
       {(world.discoveries.includes("rainbow") ||
         surprise?.kind === "rainbow") &&
+        scene.sky !== false &&
         !night && (
           <div className={cn("rainbow")}>
             <Art id="rainbow" />
@@ -338,8 +360,8 @@ export function Garden({
           style={{ left: "74%", top: "6%", width: "calc(10 * var(--u))" }}
           onPointerDown={(e) => down(e, "sun")}
           onClick={() => {
-            [0, 1, 2].forEach((slot) =>
-              act({ type: "sun", slot, region: scene.id }),
+            Array.from({ length: plotCount(world) }, (_, slot) => slot).forEach(
+              (slot) => act({ type: "sun", slot, region: scene.id }),
             );
             react("sun", "Nắng vàng ghé thăm khu vườn!");
           }}
@@ -362,8 +384,8 @@ export function Garden({
           style={{ left: "50%", top: "10%", width: "calc(15 * var(--u))" }}
           onPointerDown={(e) => down(e, "cloud")}
           onClick={() => {
-            [0, 1, 2].forEach((slot) =>
-              act({ type: "water", slot, region: scene.id }),
+            Array.from({ length: plotCount(world) }, (_, slot) => slot).forEach(
+              (slot) => act({ type: "water", slot, region: scene.id }),
             );
             react("cloud", "Mưa tí tách! Con cũng có thể kéo mây tới cây.");
           }}
@@ -405,9 +427,13 @@ export function Garden({
             pal ? cropArt(palWish(world, pal)) : undefined,
           );
         })}
-      {reaction === "tree" && (
-        <div className={cn("fallen-apple")}>
-          <Art id="apple" />
+      {falling && (
+        <div
+          key={falling.key}
+          className={cn("fallen-apple")}
+          style={{ left: `${falling.x}%`, top: `${falling.y}%` }}
+        >
+          <Art id={falling.art} />
         </div>
       )}
       {scene.hasHouse && (
@@ -563,17 +589,6 @@ export function Garden({
           <Art id={seasonal.art} night={night} />
         </button>
       )}
-      {scene.signs.map((s) => (
-        <button
-          type="button"
-          key={s.text}
-          className={cn(`garden-sign ${s.className}`)}
-          aria-label={`Nghe chuyện ${scene.title}: ${s.text}`}
-          onClick={() => say(scene.story, "flower")}
-        >
-          {s.text}
-        </button>
-      ))}
       {drag && (
         <div className={cn("drag-ghost")} style={{ left: drag.x, top: drag.y }}>
           <Art id={cropArt(drag.kind)} />

@@ -19,6 +19,7 @@ This document lists every feature, control, hotspot and rule currently implement
 - **Top-right**:
   - **Sound On/Off** (defaults to **off**, stored per browser): toggles sound effects, Vietnamese voice clips and background music (cross-fading between map and region tracks).
   - **Discovery Notebook** (`Sổ khám phá`): shows all recorded discoveries (crops, pals, events, dishes, story chapters).
+  - **Region Story** (`Nghe chuyện vùng đất`, visible only inside a region): plays/shows the opening story of the current region.
   - **Garden Kitchen** (`Bếp của vườn`, visible only inside a region).
   - **Day / Night toggle** (visible only inside a region, synced via `scene.time`): switches scene palettes and time-of-day hotspots.
 - **Bottom-right (map only)**: **Adult Corner** gear button.
@@ -85,7 +86,7 @@ There are **7 companions** (`Lucky`, `Tuần Lộc nhỏ`, `Capybara`, `Sóc nh�
 
 - **Color House** (tap the house in Vườn nhà):
   - Switch between **5 wall colors**.
-  - Place up to **30 decorations** in the garden.
+  - Drag and drop or tap to place up to **30 decorations** in the garden.
 - **Pentatonic Xylophone** (Vườn nhà & Ao sen): **8 bars**, supports multi-touch.
 - **Windmill** (Vườn nhà): Tap to spin.
 

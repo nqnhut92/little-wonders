@@ -34,10 +34,18 @@ main {
   inset: 0;
   height: 100dvh;
   overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
   --edge-top: max(12px, env(safe-area-inset-top));
   --edge-right: max(12px, env(safe-area-inset-right));
   --edge-bottom: max(12px, env(safe-area-inset-bottom));
   --edge-left: max(12px, env(safe-area-inset-left));
+}
+input,
+textarea {
+  user-select: text;
+  -webkit-user-select: text;
 }
 
 /* Shared floating material: header (canonical block), dock and scene panels. */
@@ -229,7 +237,7 @@ main {
 .basket-count {
   position: absolute;
   left: var(--edge-left);
-  top: calc(var(--edge-top) + 88px);
+  top: calc(var(--edge-top) + 94px);
   min-height: var(--tap-kid);
   z-index: 6;
   display: flex;
@@ -353,9 +361,9 @@ main {
 }
 .fallen-apple {
   position: absolute;
-  left: 20%;
-  top: 61%;
   width: 5%;
+  pointer-events: none;
+  z-index: 8;
   animation: fall 0.8s ease-out;
 }
 .drag-ghost {
@@ -387,8 +395,9 @@ main {
   display: flex;
   align-items: center;
   gap: 10px;
-  max-width: min(300px, 28vw);
+  max-width: min(360px, 38vw);
   min-height: 74px;
+  max-height: 84px;
   padding: 6px 10px 6px 12px;
   border-radius: var(--radius-l);
 }
@@ -410,9 +419,13 @@ main {
   flex: 1;
   min-width: 0;
   margin: 0;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 700;
-  line-height: 1.4;
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 .hud-actions {
   top: var(--edge-top);
@@ -529,9 +542,9 @@ main {
   display: flex;
   justify-content: center;
   gap: 45px;
-  height: 210px;
+  height: 185px;
   max-width: 580px;
-  margin: 0 auto 16px;
+  margin: 0 auto 10px;
   border-radius: var(--radius-m);
   background: linear-gradient(var(--scene-sky) 66%, var(--scene-grass) 66%);
 }
@@ -1032,6 +1045,14 @@ main {
   font-weight: 700;
   color: var(--accent);
 }
+.lunch .meal-feedback {
+  min-height: 48px;
+  max-width: 540px;
+  margin: 4px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .pal-response {
   width: 180px;
   position: relative;
@@ -1306,8 +1327,8 @@ main {
 }
 .pal-story-text {
   max-width: 540px;
-  margin: 14px auto 0;
-  padding: 14px 18px;
+  margin: 6px auto 10px;
+  padding: 10px 14px;
   border-radius: var(--radius-m);
   background: var(--surface-2);
   border: 1px solid var(--border);

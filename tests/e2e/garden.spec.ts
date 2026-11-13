@@ -744,7 +744,7 @@ test("region story sign, regional pals and seasonal events work end-to-end", asy
   ).toBeVisible();
   await activate(page, "Hoa mai ngày Tết");
   await expect(page.locator(".hud-guide p")).toContainText("Chúc mừng năm mới");
-  await activate(page, "Nghe chuyện Khu Vườn Kỳ Diệu: Nhà của mình");
+  await activate(page, "Nghe chuyện vùng đất");
   await expect(page.locator(".hud-guide p")).toContainText("Ngày xửa ngày xưa");
 
   await activate(page, "Quay lại bản đồ");
@@ -766,4 +766,97 @@ test("region story sign, regional pals and seasonal events work end-to-end", asy
   ).toBeVisible();
   await activate(page, "Đèn ông sao Trung thu");
   await expect(page.locator(".hud-guide p")).toContainText("Tết Trung thu");
+});
+
+test("drag ghost tracks pointer, pal story has no modal scrollbar, house supports drag-drop, cloud waters all 6 plots and pinecone falls", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1024, height: 768 });
+  await page.goto("/");
+  await activate(page, "Vườn nhà");
+
+  // Dragging food in Lucky's panel keeps drag ghost centered on pointer and story fits without modal scrollbar
+  await activate(page, "Góc Của Lucky");
+  const trayBtn = page.locator(".food-tray button").first();
+  const tb = (await trayBtn.boundingBox())!;
+  const startX = tb.x + tb.width / 2;
+  const startY = tb.y + tb.height / 2;
+  await page.mouse.move(startX, startY);
+  await page.mouse.down();
+  await page.mouse.move(startX + 40, startY - 60);
+  const ghostBox = (await page.locator(".drag-ghost").boundingBox())!;
+  expect(
+    Math.abs(ghostBox.x + ghostBox.width / 2 - (startX + 40)),
+  ).toBeLessThan(6);
+  expect(
+    Math.abs(ghostBox.y + ghostBox.height / 2 - (startY - 60)),
+  ).toBeLessThan(6);
+  await page.mouse.up();
+
+  await activate(page, "Giỏ thức ăn");
+  await activate(page, "Đọc chuyện 1 của Lucky");
+  await expect(page.locator(".pal-story-text")).toContainText("Lucky");
+  const overflow = await page.locator(".modal-body").evaluate((el) => ({
+    scroll: el.scrollHeight,
+    client: el.clientHeight,
+  }));
+  expect(overflow.scroll).toBeLessThanOrEqual(overflow.client + 2);
+  await activate(page, "Trở về vườn");
+
+  // Dragging a decoration from the palette onto the house canvas places it
+  await activate(page, "Ngôi Nhà Sắc Màu");
+  const decorBtn = page.getByRole("button", {
+    name: "Trang trí hoa",
+    exact: true,
+  });
+  const db = (await decorBtn.boundingBox())!;
+  const canvasBox = (await page.locator(".house-canvas").boundingBox())!;
+  await page.mouse.move(db.x + db.width / 2, db.y + db.height / 2);
+  await page.mouse.down();
+  await page.mouse.move(
+    canvasBox.x + canvasBox.width / 2,
+    canvasBox.y + canvasBox.height / 2,
+  );
+  await page.mouse.up();
+  await expect(page.locator(".house-canvas button")).toHaveCount(1);
+  await activate(page, "Trở về vườn");
+
+  // Unlock 6 plots via 3 distinct harvests, then verify tapping cloud waters plot 6
+  await activate(page, "Hạt Hướng dương");
+  await activate(page, "Luống đất 1");
+  for (let i = 0; i < 3; i++) {
+    await activate(page, "Mây tưới nước");
+    await activate(page, "Mặt trời");
+  }
+  await activate(page, "Luống đất 1");
+  await activate(page, "Hạt Cà rốt");
+  await activate(page, "Luống đất 1");
+  for (let i = 0; i < 3; i++) {
+    await activate(page, "Mây tưới nước");
+    await activate(page, "Mặt trời");
+  }
+  await activate(page, "Luống đất 1");
+  await activate(page, "Hạt Dâu");
+  await activate(page, "Luống đất 1");
+  for (let i = 0; i < 3; i++) {
+    await activate(page, "Mây tưới nước");
+    await activate(page, "Mặt trời");
+  }
+  await activate(page, "Luống đất 1");
+  await expect(page.getByRole("button", { name: "Luống đất 6" })).toBeVisible();
+  await activate(page, "Luống đất 6");
+  await activate(page, "Mây tưới nước");
+  await expect(page.locator("[data-soil='5'] .water-dot")).toBeVisible();
+
+  // Enable dev mode and verify pinecone falling animation in Đồi tuyết
+  await activate(page, "Quay lại bản đồ");
+  await activate(page, "Dành cho người lớn");
+  await activate(page, "12");
+  await page.getByRole("tab", { name: "Dọn khu vườn" }).click();
+  await activate(page, "Bật Dev mode");
+  await activate(page, "Trở về vườn");
+  await activate(page, "Đồi tuyết");
+  await activate(page, "Cây thông phủ tuyết");
+  await expect(page.locator(".fallen-apple")).toBeVisible();
+  await expect(page.getByLabel("Quả thông 1")).toBeVisible();
 });

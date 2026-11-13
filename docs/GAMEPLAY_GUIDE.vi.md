@@ -19,6 +19,7 @@ Tài liệu này mô tả chi tiết toàn bộ tính năng, nút điều khiể
 - **Góc trên phải**:
   - **Bật/Tắt âm thanh** (mặc định **tắt**, lưu theo từng trình duyệt): khi bật sẽ phát tiếng hiệu ứng, giọng đọc tiếng Việt và nhạc nền (chuyển bài êm giữa bản đồ và vùng chơi).
   - **Sổ khám phá**: xem toàn bộ mục đã khám phá (gồm nông sản, thú, sự kiện, món ăn, chương truyện).
+  - **Nghe chuyện vùng đất** (chỉ hiện khi ở trong vùng đất): nghe/đọc câu chuyện mở đầu của vùng đang chơi.
   - **Bếp của vườn** (chỉ hiện khi ở trong vùng đất).
   - **Chuyển Ngày / Đêm** (chỉ hiện khi ở trong vùng đất, đồng bộ `scene.time`): chuyển bảng màu và các điểm chạm riêng của ban ngày / ban đêm.
 - **Góc dưới phải (chỉ trên bản đồ)**: Nút bánh răng **Góc người lớn**.
@@ -85,7 +86,7 @@ Hiện có **7 bạn đồng hành** (`Lucky`, `Tuần Lộc nhỏ`, `Capybara`,
 
 - **Ngôi nhà sắc màu** (chạm vào nhà ở Vườn nhà):
   - Đổi **5 màu sơn tường**.
-  - Đặt tối đa **30 món trang trí** lên sân vườn.
+  - Kéo thả hoặc chạm để đặt tối đa **30 món trang trí** lên sân vườn.
 - **Đàn gỗ ngũ cung** (chạm vào đàn gỗ ở Vườn nhà hoặc Ao sen): Gồm **8 thanh**, hỗ trợ chạm nhiều ngón cùng lúc.
 - **Chong chóng** (Vườn nhà): Chạm để quay.
 
