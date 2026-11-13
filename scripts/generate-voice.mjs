@@ -59,10 +59,17 @@ async function writeManifest(lines) {
 function patchPython39Compat(repo) {
   const ttsEngine = join(repo, "vietvoicetts/core/tts_engine.py");
   if (existsSync(ttsEngine)) {
-    const text = readFileSync(ttsEngine, "utf8");
+    let text = readFileSync(ttsEngine, "utf8");
     if (text.includes("\nimport torch\n")) {
-      writeFileSync(ttsEngine, text.replace("\nimport torch\n", "\n"), "utf8");
+      text = text.replace("\nimport torch\n", "\n");
     }
+    if (text.includes("reference_text + chunk")) {
+      text = text.replace(
+        "reference_text + chunk",
+        'reference_text + " " + chunk',
+      );
+    }
+    writeFileSync(ttsEngine, text, "utf8");
   }
   const audioProc = join(repo, "vietvoicetts/core/audio_processor.py");
   if (existsSync(audioProc)) {
