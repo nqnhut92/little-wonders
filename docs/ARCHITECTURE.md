@@ -44,11 +44,11 @@ Recipes live in `src/data/recipes.ts` (14 sorted ingredient combinations plus `d
 
 ## Regions, companions and data-driven scenes
 
-All six regions (`garden`, `pond`, `forest`, `beach`, `snow`, `stars`) are defined in `src/data/regions.ts` (`ready`, `after`, `counted`, unlock ratio `0.7`) with scene layouts and hotspots in `src/data/scenes.ts`. Regions without soil beds (`beach`, `snow`, `stars`) hide the seed tray automatically, and `sky: false` on `stars` omits the daytime sun and rain cloud.
+All six regions (`garden`, `pond`, `forest`, `beach`, `snow`, `stars`) are defined in `src/data/regions.ts` (`ready`, `after`, `counted`, unlock ratio `0.85`) with scene layouts and hotspots in `src/data/scenes.ts`. Regions without soil beds (`beach`, `snow`, `stars`) hide the seed tray automatically, and `sky: false` on `stars` omits the daytime sun and rain cloud.
 
 Hotspot kinds include `gather` (adds `coconut`, `shell` or `pinecone` to the basket) and `build` (advances multi-stage sandcastles, snowmen and constellations on each tap and records the discovery on completion). Every region renders a tailored 1600×900 vector backdrop in `src/components/SceneBackdrop.tsx` with day and night palettes and ambient motion (ripples, falling leaves, ocean waves, snowfall, aurora and twinkling stars) that pauses under `prefers-reduced-motion: reduce`.
 
-`regionsToOpen` in `src/game/regions.ts` unlocks the next region once 70% of the previous region's `counted` discoveries are found, recording `region_<id>_open` in `discoveries` so unlocked regions merge by union and never relock. Chance-based discoveries (`rare_*`, `shooting_star`) are excluded from progression counts.
+`regionsToOpen` in `src/game/regions.ts` unlocks the next `ready` region once 85% of the previous region's `counted` discoveries are found, recording `region_<id>_open` in `discoveries` so unlocked regions merge by union and never relock. Chance-based discoveries (`rare_*`, `shooting_star`) are excluded from progression counts. Currently, only `garden` has `ready: true`; the five later regions have `ready: false` (coming soon) and can be previewed via Dev Mode in the Adult Corner.
 
 Three companions in `src/data/pals.ts` (`puppy`, `reindeer`, `capybara`) track `n.gift_<id>` and `n.wish_<id>` counters to unlock three story chapters each (`[1, 3, 6]` gifts) and rotate non-expiring food wishes.
 
@@ -56,7 +56,7 @@ Three companions in `src/data/pals.ts` (`puppy`, `reindeer`, `capybara`) track `
 
 Design tokens live in `src/styles/tokens.css` with a bright storybook Light palette across both UI chrome and scenes, while scene backdrops switch between daylight and nighttime palettes via `scene.time`.
 
-The active scene fills `100dvh` with floating glass controls: the Lucky guide and hint button at the bottom left, a top-left Back button inside regions (next to the basket counter), child action buttons (`56px+`) along the top right, and a single adult-corner gear button (`44px`) at the bottom right of the valley map only. Scene objects size proportionally with `--u: min(1cqw, 1.9cqh)`, verified by Playwright layout tests across iPad, desktop and ultra-wide viewports.
+The active scene fills `100dvh` with floating glass controls: a top-left Back button inside regions next to the Lucky guide and hint button, child action buttons (`56px+`) along the top right, and a single adult-corner gear button (`44px`) at the bottom right of the valley map only. Scene objects size proportionally with `--u: min(1cqw, 1.9cqh)`, verified by Playwright layout tests across iPad, desktop and ultra-wide viewports.
 
 ## Offline and rendering
 

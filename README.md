@@ -6,20 +6,20 @@ A Vietnamese touch-first storybook garden and valley for children aged 4–6, bu
 
 ## Features
 
-- **Six Regions across the Valley**: The game opens on the valley map with **Vườn nhà** (home garden) ready to play. Exploring ~70% of a region's counted discoveries clears the fog over the next one:
+- **Six Regions across the Valley**: The game opens on the valley map with **Vườn nhà** (home garden) ready to play. When regions are marked `ready`, exploring 85% of a region's counted discoveries clears the fog over the next one (the five later regions are currently marked `ready: false` as coming soon and can be previewed via **Dev Mode** in the Adult Corner):
   - **Ao sen** (lotus pond): grow pink lotus and purple waterlily on water pads, meet **Capybara** soaking by the bank with a tangerine on its head, and tap the duckling, dragonfly, frog, lotus lantern and lakeside xylophone.
   - **Rừng nhỏ** (small forest): grow blueberries and chestnuts, peek under autumn leaves for the hedgehog, and meet the squirrel, woodpecker, mushroom house and night fireflies.
   - **Bãi biển** (sunny beach): shake the coconut palm, gather singing shells, uncover the crab in the sand, build a three-stage sandcastle, and watch waves, a baby sea turtle and a seagull.
   - **Đồi tuyết** (snowy hill): shake pinecones from the snowy pine, build a three-stage snowman, and play with the polar bear cub, penguin, wooden sled and six-point snowflakes.
   - **Núi sao** (starry mountain): look through the brass telescope, greet the smiling crescent moon, light the four-stage puppy constellation star by star, and float a glowing star lantern.
   - Once a region opens it stays open forever, and chance-based discoveries (`rare_*`, `shooting_star`) never block progression.
-- **Gardening & Harvests**: Plant seeds, water with the rain cloud, warm with the sun, and harvest ripe crops into the basket (up to 9 per item). Up to 6 soil beds open as distinct crops are harvested. Shaking the apple tree drops apples into the basket, and holding the broom button for one second (confirmed with a checkmark) clears beds, basket and decorations while keeping the notebook, pals and unlocked regions.
+- **Gardening & Harvests**: Plant seeds, water with the rain cloud, warm with the sun, and harvest ripe crops into the basket (up to 9 per item). Up to 6 soil beds open as distinct crops are harvested. Shaking the apple tree drops apples into the basket, and the Adult Corner ("Dọn khu vườn") lets parents clear an individual region's beds and decorations (while keeping the notebook, pals, basket and unlocked regions) or reset all progress.
 - **Three Companions (`Pals`)**:
   - **Lucky**: a chubby white puppy wearing a small purple bow who loves chilled watermelon, always present in the garden with basic table snacks available even when the basket is empty.
   - **Tuần Lộc nhỏ** (little reindeer): wearing a festive red collar and golden sleigh bell, arriving in the garden after the first harvest.
   - **Capybara**: relaxing by the lotus pond with a tangerine balanced on its head, and visiting the home garden once discovered.
   - Each companion has non-expiring food wishes and three unlockable Vietnamese story chapters. Any gift counts toward stories; matching the current wish rotates to the next one.
-- **Garden Kitchen**: Combine one to three basket ingredients in the cooking pot across 14 recipes (soups, jam, salad, pie, juice, corn cake, applesauce, fruit bowl, sunflower tea, smoothie, coconut water and roasted chestnuts, plus an always-edible surprise dish).
+- **Garden Kitchen**: Combine one to three basket ingredients in the cooking pot across 17 recipes (soups, jams, salad, pie, juice, corn cake, applesauce, fruit bowl, sunflower tea, smoothie, coconut water, roasted chestnuts, pine tea and star cake, plus an always-edible surprise dish).
 - **Color House & Free Play**: Paint the house across five wall colors and place up to 30 decorations. Toggle synced Day/Night (`scene.time`) with moon, stars, interactive fireflies, sleeping flowers and night owl; play the 8-bar pentatonic xylophone with multi-touch; spin the windmill; and discover gentle idle surprise events. Audio and Vietnamese speech synthesis default to off and persist per browser; gentle background music plays while sound is on.
 - **Child-First Interface & Cloud Sync**: Bright storybook light palette across both scenes and UI chrome; full-screen responsive layout (`56px+` child buttons, top-left Back button inside regions, `44px` adult gear corner on the valley map only); self-hosted Nunito with Vietnamese glyphs; immediate `localStorage` persistence with multi-tab and serverless PostgreSQL (`merge_world` schema v2) synchronization via Google OpenID Connect for parents.
 

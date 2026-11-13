@@ -9,15 +9,22 @@
   "README.md": {
     "vi": "README.vi.md",
     "hashes": [
-      "6c9363102fb7bc0981446b2a10946cedd2abe3f61fac071e31d9b86462d6fc78",
-      "fad8f358ce33294b449e25ca5d298fea7690260fa5c65d8a66b033ca639dcd16"
+      "104852c4a9561009ddd1bf1093bd21f4fa8d755ec292912c69588b50afea27b5",
+      "8dcf0dadecd24df27b6511b6fb093e386a1932b75c04370e2569e181238e088d"
     ]
   },
   "docs/ARCHITECTURE.md": {
     "vi": "docs/ARCHITECTURE.vi.md",
     "hashes": [
-      "3b8fd078090086cba1e5c813b76417b26fc85d2b44b9108d07d1bec7a96223c8",
-      "88c06f645ee64805f15cf95a47eaf944b83eb5d485a35a1887c4dc6c56a36dd9"
+      "e9a5d32c4e8e6f9e0fb502c890230f6d03053d6fd6592b43f5fcb7a53426bedc",
+      "dc97c88c06f4e22fedd12829cec4371115c80862af8cccce1dd9513e5d0a9936"
+    ]
+  },
+  "docs/GAMEPLAY_GUIDE.md": {
+    "vi": "docs/GAMEPLAY_GUIDE.vi.md",
+    "hashes": [
+      "0a920a4ecda7b91f6cb6d519fdeda5fcbf50b74a9242bfd177bae70b260bd6c0",
+      "19fe322b0c2046c81fb94c38897a007bf1e66fb96ad0fcda232465952e111671"
     ]
   },
   "public/assets/PROVENANCE.md": {

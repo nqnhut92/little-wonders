@@ -44,11 +44,11 @@ Công thức nấu ăn được khai báo trong `src/data/recipes.ts` (14 công 
 
 ## Vùng đất, bạn đồng hành và cảnh theo dữ liệu
 
-Cả sáu vùng đất (`garden`, `pond`, `forest`, `beach`, `snow`, `stars`) được định nghĩa trong `src/data/regions.ts` (`ready`, `after`, `counted`, ngưỡng mở `0.7`) cùng bố cục điểm chạm trong `src/data/scenes.ts`. Những vùng không trồng cây (`beach`, `snow`, `stars`) tự động ẩn khay hạt giống, và `sky: false` ở `stars` ẩn mặt trời cùng mây mưa ban ngày.
+Cả sáu vùng đất (`garden`, `pond`, `forest`, `beach`, `snow`, `stars`) được định nghĩa trong `src/data/regions.ts` (`ready`, `after`, `counted`, ngưỡng mở `0.85`) cùng bố cục điểm chạm trong `src/data/scenes.ts`. Những vùng không trồng cây (`beach`, `snow`, `stars`) tự động ẩn khay hạt giống, và `sky: false` ở `stars` ẩn mặt trời cùng mây mưa ban ngày.
 
 Các loại điểm chạm gồm có `gather` (thêm `coconut`, `shell` hoặc `pinecone` vào giỏ) và `build` (đắp lâu đài cát, người tuyết hoặc nối chòm sao lớn dần qua từng lần chạm và ghi nhận khám phá ở bước cuối). Mỗi vùng đất có cảnh nền vector 1600×900 riêng trong `src/components/SceneBackdrop.tsx` với bảng màu Ngày/Đêm và chuyển động môi trường (gợn nước, lá thu rơi, sóng biển, tuyết rơi, cực quang và sao lấp lánh) tự động dừng khi bật `prefers-reduced-motion: reduce`.
 
-Hàm thuần `regionsToOpen` trong `src/game/regions.ts` mở khóa vùng tiếp theo ngay khi đạt 70% khám phá có tính điểm của vùng trước đó và ghi `region_<id>_open` vào `discoveries`, giúp trạng thái mở vùng được gộp theo phép hợp và không bao giờ khóa lại. Các khám phá may rủi (`rare_*`, `shooting_star`) không tính vào mẫu số mở vùng.
+Hàm thuần `regionsToOpen` trong `src/game/regions.ts` mở khóa vùng tiếp theo (nếu `ready`) ngay khi đạt 85% khám phá có tính điểm của vùng trước đó và ghi `region_<id>_open` vào `discoveries`, giúp trạng thái mở vùng được gộp theo phép hợp và không bao giờ khóa lại. Các khám phá may rủi (`rare_*`, `shooting_star`) không tính vào mẫu số mở vùng. Hiện tại chỉ có `garden` đặt `ready: true`; năm vùng sau đặt `ready: false` (sắp có) và có thể mở xem thử qua Chế độ nhà phát triển trong Góc người lớn.
 
 Ba người bạn đồng hành trong `src/data/pals.ts` (`puppy`, `reindeer`, `capybara`) dùng các bộ đếm đơn điệu `n.gift_<id>` và `n.wish_<id>` để mở khóa 3 chương truyện cho mỗi bạn (`[1, 3, 6]` lần tặng quà) và xoay vòng Lời mời món ăn không hết hạn.
 
@@ -56,7 +56,7 @@ Ba người bạn đồng hành trong `src/data/pals.ts` (`puppy`, `reindeer`, `
 
 Toàn bộ màu sắc, độ bo góc và font chữ được định nghĩa bằng biến CSS trong `src/styles/tokens.css` với bảng màu Sáng kiểu truyện tranh đồng nhất cho cả khung điều khiển lẫn khung cảnh, còn nền cảnh tự chuyển giữa bảng màu Ngày/Đêm theo trạng thái `scene.time` trong game.
 
-Màn hình cảnh phủ kín `100dvh` với các cụm nút nổi hiệu ứng kính mờ: cún Lucky hướng dẫn kèm nút gợi ý ở góc dưới trái, nút quay lại ở góc trên trái khi đang ở trong vùng đất (nằm cạnh bộ đếm giỏ đồ), dải nút hoạt động của bé (`56px+`) dọc góc trên phải, và duy nhất một nút bánh răng Góc người lớn (`44px`) ở góc dưới phải tại màn hình bản đồ thung lũng. Các vật thể trong cảnh co giãn theo đơn vị `--u: min(1cqw, 1.9cqh)`, được kiểm chứng bằng Playwright trên các kích thước màn hình iPad, desktop và màn hình siêu rộng.
+Màn hình cảnh phủ kín `100dvh` với các cụm nút nổi hiệu ứng kính mờ: nút quay lại ở góc trên trái khi đang ở trong vùng đất nằm cạnh cún Lucky hướng dẫn kèm nút gợi ý, dải nút hoạt động của bé (`56px+`) dọc góc trên phải, và duy nhất một nút bánh răng Góc người lớn (`44px`) ở góc dưới phải tại màn hình bản đồ thung lũng. Các vật thể trong cảnh co giãn theo đơn vị `--u: min(1cqw, 1.9cqh)`, được kiểm chứng bằng Playwright trên các kích thước màn hình iPad, desktop và màn hình siêu rộng.
 
 ## Hoạt động ngoại tuyến và hiển thị
 
