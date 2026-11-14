@@ -425,16 +425,16 @@ test("map is the home screen, shows locked regions in order and keeps them close
   await expect(
     page.getByRole("button", { name: "Vườn nhà", exact: true }),
   ).toBeVisible();
-  const locked = page.getByRole("button", { name: "Ao sen, sắp có" });
+  const locked = page.getByRole("button", { name: "Ao sen, chưa mở" });
   await expect(locked).toBeVisible();
   await locked.click();
   await expect(page.locator(".valley-map")).toBeVisible();
-  // Later regions stay covered as coming soon until opened for players (or in Dev mode).
+  // Later regions stay locked in order until the previous region reaches 85% (or in Dev mode).
   for (const name of ["Rừng nhỏ", "Bãi biển", "Đồi tuyết", "Núi sao"])
     await expect(
-      page.getByRole("button", { name: `${name}, sắp có` }),
+      page.getByRole("button", { name: `${name}, chưa mở` }),
     ).toBeVisible();
-  await page.getByRole("button", { name: "Rừng nhỏ, sắp có" }).click();
+  await page.getByRole("button", { name: "Rừng nhỏ, chưa mở" }).click();
   await expect(page.locator(".valley-map")).toBeVisible();
   await activate(page, "Vườn nhà");
   await expect(page.locator(".garden")).toBeVisible();
@@ -607,15 +607,19 @@ test("fog clears on the map when a region opens, including under reduced motion"
   await activate(page, "Vườn nhà");
   await activate(page, "Chim trên cành");
   await activate(page, "Quay lại bản đồ");
-  const pondSoon = page.getByRole("button", { name: "Ao sen, sắp có" });
-  await expect(pondSoon).toHaveAttribute("data-state", "soon");
+  const pond = page.getByRole("button", { name: "Ao sen", exact: true });
+  await expect(pond).toHaveAttribute("data-state", "open");
+  await expect(pond).toHaveAttribute("data-clearing", "true");
+  const forestLocked = page.getByRole("button", { name: "Rừng nhỏ, chưa mở" });
+  await expect(forestLocked).toHaveAttribute("data-state", "locked");
   await activate(page, "Dành cho người lớn");
   await activate(page, "12");
   await page.getByRole("tab", { name: "Dọn khu vườn" }).click();
   await activate(page, "Bật Dev mode");
   await activate(page, "Trở về vườn");
-  const pond = page.getByRole("button", { name: "Ao sen", exact: true });
-  await expect(pond).toHaveAttribute("data-state", "open");
+  await expect(
+    page.getByRole("button", { name: "Rừng nhỏ", exact: true }),
+  ).toHaveAttribute("data-state", "open");
   await pond.click();
   await expect(page.getByRole("button", { name: "Mặt ao sen" })).toBeVisible();
   await activate(page, "Bạn Capybara");

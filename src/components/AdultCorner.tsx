@@ -18,6 +18,7 @@ type Props = {
   signed: boolean;
   profiles: { id: string; nickname: string }[];
   currentProfile?: string;
+  showDevMode?: boolean;
   devMode: boolean;
   onToggleDevMode: () => void;
   nickname: string;
@@ -259,18 +260,24 @@ export function AdultCorner(p: Props) {
               >
                 <Icon name="broom" size={20} /> Bắt đầu lại tất cả
               </button>
-              <h3>Chế độ thử nghiệm (Dev mode)</h3>
-              <p className={cn("footnote")}>
-                Mở tạm tất cả các khu để kiểm tra, không lưu tiến độ.
-              </p>
-              <button
-                type="button"
-                aria-pressed={p.devMode}
-                className={cn(p.devMode ? "quiet-primary" : "wide-button")}
-                onClick={p.onToggleDevMode}
-              >
-                {p.devMode ? "Đang bật Dev mode (bấm để tắt)" : "Bật Dev mode"}
-              </button>
+              {p.showDevMode && (
+                <>
+                  <h3>Chế độ thử nghiệm (Dev mode)</h3>
+                  <p className={cn("footnote")}>
+                    Mở tạm tất cả các khu để kiểm tra, không lưu tiến độ.
+                  </p>
+                  <button
+                    type="button"
+                    aria-pressed={p.devMode}
+                    className={cn(p.devMode ? "quiet-primary" : "wide-button")}
+                    onClick={p.onToggleDevMode}
+                  >
+                    {p.devMode
+                      ? "Đang bật Dev mode (bấm để tắt)"
+                      : "Bật Dev mode"}
+                  </button>
+                </>
+              )}
             </>
           )}
           {target && (

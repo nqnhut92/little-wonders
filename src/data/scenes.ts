@@ -190,7 +190,7 @@ export const scenes: Record<string, RegionScene> = {
       {
         id: "puppy",
         art: "puppy",
-        x: 68,
+        x: 69,
         y: 64,
         w: 9,
         label: "Góc Của Lucky",
@@ -200,7 +200,7 @@ export const scenes: Record<string, RegionScene> = {
       {
         id: "reindeer",
         art: "reindeer",
-        x: 68,
+        x: 69,
         y: 64,
         w: 9,
         label: "Bạn Tuần Lộc nhỏ",

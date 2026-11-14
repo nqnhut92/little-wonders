@@ -49,7 +49,7 @@ describe("regions", () => {
     for (const id of luckyDiscoveries) expect(garden.counted).not.toContain(id);
     expect(regionsToOpen(ids(5), demo, 0.5)).toEqual([regionOpenId("b")]);
   });
-  it("lists every region in order, with only the garden open to players right now", () => {
+  it("lists every region in order, all ready for sequential unlocking", () => {
     expect(regions.map((r) => r.id)).toEqual([
       "garden",
       "pond",
@@ -58,8 +58,7 @@ describe("regions", () => {
       "snow",
       "stars",
     ]);
-    expect(regions[0].ready).toBe(true);
-    expect(regions.slice(1).every((r) => !r.ready)).toBe(true);
+    expect(regions.every((r) => r.ready)).toBe(true);
   });
   it("supports planting and harvesting lotus in the pond region without touching garden beds", () => {
     let w = apply(

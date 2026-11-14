@@ -53,6 +53,11 @@ import {
 import { currentSeasonalEvent } from "./game/seasons";
 import { SeasonalFrame } from "./components/SeasonalFrame";
 type SaveKind = "local" | "synced" | "waiting";
+const isLocalDev =
+  import.meta.env.DEV ||
+  (typeof window !== "undefined" &&
+    (window.location.hostname === "localhost" ||
+      window.location.hostname === "127.0.0.1"));
 function mapGreeting(world: World) {
   const extraOpen = regions.some(
     (r) => r.after && regionState(world.discoveries, r) === "open",
@@ -96,7 +101,8 @@ export default function App() {
     [],
   );
   const [signed, setSigned] = useState(false);
-  const [devMode, setDevMode] = useState(false);
+  const [devModeState, setDevMode] = useState(false);
+  const devMode = isLocalDev && devModeState;
   const [attempts, setAttempts] = useState(0);
   const syncing = useRef(false);
   const selectionRequest = useRef(0);
@@ -573,8 +579,10 @@ export default function App() {
                   signed={signed}
                   profiles={profiles}
                   currentProfile={local.profile}
+                  showDevMode={isLocalDev}
                   devMode={devMode}
                   onToggleDevMode={() => {
+                    if (!isLocalDev) return;
                     setDevMode((was) => {
                       if (was)
                         setLocal((old) => ({ ...load(), device: old.device }));
