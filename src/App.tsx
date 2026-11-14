@@ -50,6 +50,8 @@ import {
   pickSurpriseEvent,
   type SurpriseEvent,
 } from "./game/events";
+import { currentSeasonalEvent } from "./game/seasons";
+import { SeasonalFrame } from "./components/SeasonalFrame";
 type SaveKind = "local" | "synced" | "waiting";
 function mapGreeting(world: World) {
   const extraOpen = regions.some(
@@ -199,7 +201,11 @@ export default function App() {
     let hide: ReturnType<typeof setTimeout> | undefined;
     const timer = setTimeout(() => {
       if (!panel && activeRegion && Date.now() - lastTouch.current >= 45_000) {
-        const event = pickSurpriseEvent(current.current.world);
+        const event = pickSurpriseEvent(
+          current.current.world,
+          Math.random,
+          activeRegion ?? "garden",
+        );
         if (event) {
           setSurprise(event);
           say(
@@ -347,6 +353,11 @@ export default function App() {
     }
   };
   const night = value<string>(local.world, "scene.time", "day") === "night";
+  const seasonParam =
+    typeof window !== "undefined"
+      ? new URLSearchParams(window.location.search).get("season")
+      : null;
+  const season = currentSeasonalEvent(new Date(), seasonParam);
   return (
     <main
       onPointerDown={() => {
@@ -354,6 +365,7 @@ export default function App() {
       }}
     >
       <PaintFilters />
+      <SeasonalFrame season={season} />
       {activeRegion ? (
         <Garden
           regionId={activeRegion}
@@ -477,28 +489,30 @@ export default function App() {
             >
               <Icon name="pot" size={28} />
             </button>
-            <button
-              type="button"
-              className={cn("kid-button")}
-              aria-label={
-                night ? "Chuyển sang ban ngày" : "Chuyển sang ban đêm"
-              }
-              title={night ? "Chuyển sang ban ngày" : "Chuyển sang ban đêm"}
-              aria-pressed={night}
-              onClick={() => {
-                const next = night ? "day" : "night";
-                act({ type: "set", key: "scene.time", value: next });
-                if (next === "night") {
-                  act({ type: "discover", id: "night" });
-                  say(
-                    "Bầu trời chuyển sang ban đêm rồi, có sao và đom đóm kìa!",
-                    "owl",
-                  );
-                } else say("Trời sáng rồi! Nắng ấm quay lại vườn!", "sun");
-              }}
-            >
-              <Icon name={night ? "day-sun" : "night-moon"} size={28} />
-            </button>
+            {activeRegion !== "stars" && (
+              <button
+                type="button"
+                className={cn("kid-button")}
+                aria-label={
+                  night ? "Chuyển sang ban ngày" : "Chuyển sang ban đêm"
+                }
+                title={night ? "Chuyển sang ban ngày" : "Chuyển sang ban đêm"}
+                aria-pressed={night}
+                onClick={() => {
+                  const next = night ? "day" : "night";
+                  act({ type: "set", key: "scene.time", value: next });
+                  if (next === "night") {
+                    act({ type: "discover", id: "night" });
+                    say(
+                      "Bầu trời chuyển sang ban đêm rồi, có sao và đom đóm kìa!",
+                      "owl",
+                    );
+                  } else say("Trời sáng rồi! Nắng ấm quay lại vườn!", "sun");
+                }}
+              >
+                <Icon name={night ? "day-sun" : "night-moon"} size={28} />
+              </button>
+            )}
           </>
         )}
       </nav>

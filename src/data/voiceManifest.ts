@@ -15,6 +15,7 @@ export const voiceFiles: Record<string, string> = {
   "Bạn cá bơi một vòng rồi nghỉ dưới lá.": "/assets/voice/v-df1e297c1a.m4a",
   "Bạn Cánh cụt đi lạch bạch trên đồi tuyết trắng, vỗ cánh chào từng bông tuyết rơi.":
     "/assets/voice/v-9c87be4cb7.m4a",
+  "Bạn Cánh cụt vỗ cánh lạch bạch chào con!": "/assets/voice/v-de7271cee8.m4a",
   "bạn Cánh cụt vui lắm! bạn Cánh cụt vẫn chờ bánh nam việt quất nhé!":
     "/assets/voice/v-553e98a654.m4a",
   "bạn Cánh cụt vui lắm! bạn Cánh cụt vẫn chờ táo nhé!":
@@ -39,6 +40,7 @@ export const voiceFiles: Record<string, string> = {
     "/assets/voice/v-c57827f6a3.m4a",
   "bạn Capybara vui lắm! bạn Capybara vẫn chờ trà sen thơm ngát nhé!":
     "/assets/voice/v-41f7e2d110.m4a",
+  "Bạn Cú mèo chớp mắt tròn xoe chào con!": "/assets/voice/v-ff16adbefb.m4a",
   "Bạn Cú mèo mở to đôi mắt tròn xoe trên đỉnh núi sao, đếm từng ngôi sao sáng.":
     "/assets/voice/v-c4d950c9a3.m4a",
   "bạn Cú mèo thuộc tên mọi chòm sao trên trời để kể cho con và Lucky nghe mỗi tối.":
@@ -57,6 +59,7 @@ export const voiceFiles: Record<string, string> = {
     "/assets/voice/v-c5277a0a8a.m4a",
   "bạn Rùa con bò thật chậm trên bãi cát vàng, lắng nghe tiếng sóng biển vỗ rì rào.":
     "/assets/voice/v-965b67cc48.m4a",
+  "Bạn Rùa con vẫy tay chào con!": "/assets/voice/v-c53b5bc84e.m4a",
   "bạn Rùa con vui lắm! bạn Rùa con vẫn chờ dừa nhé!":
     "/assets/voice/v-c7097f056f.m4a",
   "bạn Rùa con vui lắm! bạn Rùa con vẫn chờ dứa thơm nhé!":
@@ -74,6 +77,7 @@ export const voiceFiles: Record<string, string> = {
     "/assets/voice/v-b59251a44c.m4a",
   "bạn Sóc nhỏ ôm đầy hai má hạt dẻ thơm lừng, nhảy thoăn thoắt trên cành thông xanh.":
     "/assets/voice/v-55d8a588c4.m4a",
+  "Bạn Sóc nhỏ vẫy chiếc đuôi xù chào con!": "/assets/voice/v-737b146282.m4a",
   "bạn Sóc nhỏ vui lắm! bạn Sóc nhỏ vẫn chờ bánh việt quất hạt dẻ nhé!":
     "/assets/voice/v-eab2096a27.m4a",
   "bạn Sóc nhỏ vui lắm! bạn Sóc nhỏ vẫn chờ hạt dẻ nhé!":

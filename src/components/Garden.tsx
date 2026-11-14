@@ -16,7 +16,6 @@ import { palWish } from "../game/lunch";
 import { interactions } from "../data/interactions";
 import { scenes, type SceneHotspot } from "../data/scenes";
 import { gardenVisitors } from "../game/visitors";
-import { currentSeasonalEvent, seasonalInfo } from "../game/seasons";
 import { SceneBackdrop, drawnVariants } from "./SceneBackdrop";
 import type { SurpriseEvent } from "../game/events";
 type Props = {
@@ -107,12 +106,6 @@ export function Garden({
       : 0);
   const hasCrops = regionCrops.length > 0;
   const visitors = gardenVisitors(world, scene.id);
-  const seasonParam =
-    typeof window !== "undefined"
-      ? new URLSearchParams(window.location.search).get("season")
-      : null;
-  const season = currentSeasonalEvent(new Date(), seasonParam);
-  const seasonal = season ? seasonalInfo(season) : null;
   const react = (id: string, text: string, discovery?: string) => {
     setReaction(id);
     clearTimeout(reactionTimer.current);
@@ -194,7 +187,7 @@ export function Garden({
         triggerFall(
           cropArt(h.gives),
           h.x + h.w * 0.5,
-          Math.min(68, h.y + h.w * 1.8),
+          h.gives === "honey" ? 64 : Math.min(68, h.y + h.w * 1.8),
         );
       react(h.id, h.line ?? "");
     } else if (h.kind === "build" && h.stages) {
@@ -376,13 +369,17 @@ export function Garden({
           react("moon", "Trăng tròn sáng dịu trên bầu trời đêm!", "moon");
         })
       )}
-      {scene.sky !== false && (
+      {(scene.sky !== false || scene.hasCloud) && (
         <button
           aria-label="Mây tưới nước"
           className={cn(
             `object cloud ${reaction === "cloud" ? "react-cloud" : ""} ${highlight ? "hint-glow" : ""}`,
           )}
-          style={{ left: "50%", top: "10%", width: "calc(15 * var(--u))" }}
+          style={{
+            left: `${scene.cloud?.x ?? 50}%`,
+            top: `${scene.cloud?.y ?? 10}%`,
+            width: "calc(15 * var(--u))",
+          }}
           onPointerDown={(e) => down(e, "cloud")}
           onClick={() => {
             Array.from({ length: plotCount(world) }, (_, slot) => slot).forEach(
@@ -391,7 +388,7 @@ export function Garden({
             react("cloud", "Mưa tí tách! Con cũng có thể kéo mây tới cây.");
           }}
         >
-          <Art id="cloud" />
+          <Art id="cloud" night={night} />
         </button>
       )}
       {scene.hotspots
@@ -578,17 +575,6 @@ export function Garden({
             ))}
           </div>
         </div>
-      )}
-      {seasonal && (
-        <button
-          type="button"
-          className={cn("object seasonal-ornament")}
-          aria-label={seasonal.label}
-          title={seasonal.label}
-          onClick={() => say(seasonal.line, seasonal.art)}
-        >
-          <Art id={seasonal.art} night={night} />
-        </button>
       )}
       {drag && (
         <div className={cn("drag-ghost")} style={{ left: drag.x, top: drag.y }}>

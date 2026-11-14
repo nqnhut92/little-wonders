@@ -14,6 +14,7 @@ export const assetIds = [
   "bird",
   "puppy",
   "reindeer",
+  "deer",
   "capybara",
   "fish",
   "apple",

@@ -262,6 +262,86 @@ export const flatArt: Record<string, Draw> = {
       <ellipse cx="83" cy="55" rx="6" ry="4.2" fill={BLUSH} opacity="0.85" />
     </>
   ),
+  deer: () => (
+    <>
+      {/* Rounded velvety fawn antlers */}
+      <g
+        fill="none"
+        stroke="#7a4724"
+        strokeWidth="6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M44 25c-6-8-6-16-2-21m1 12-9-4M76 25c6-8 6-16 2-21m-1 12 9-4" />
+      </g>
+      {/* Fluffy little tail */}
+      <path d="M83 96c10-2 15-10 12-17-6 0-11 5-12 17Z" fill="#fdf0dd" />
+      {/* Chubby body & cream chest fur */}
+      <path d="M33 111c-4-23 7-41 27-41s31 18 27 41Z" fill="#ba773b" />
+      <ellipse cx="60" cy="96" rx="16" ry="14" fill="#fae8d0" />
+      {/* Distinct starry fawn spots on the flanks */}
+      <circle cx="41" cy="88" r="3" fill="#ffffff" opacity="0.9" />
+      <circle cx="79" cy="88" r="3" fill="#ffffff" opacity="0.9" />
+      <circle cx="48" cy="96" r="2.5" fill="#ffffff" opacity="0.9" />
+      <circle cx="72" cy="96" r="2.5" fill="#ffffff" opacity="0.9" />
+      <circle cx="39" cy="101" r="2.2" fill="#ffffff" opacity="0.85" />
+      <circle cx="81" cy="101" r="2.2" fill="#ffffff" opacity="0.85" />
+      {/* Cloven hooves */}
+      <rect x="36" y="104" width="16" height="9" rx="4.5" fill="#522f16" />
+      <rect x="68" y="104" width="16" height="9" rx="4.5" fill="#522f16" />
+      <path
+        d="M44 108v5m32-5v5"
+        stroke="#3d2210"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+      {/* Leaf-shaped ears */}
+      <ellipse
+        cx="27"
+        cy="37"
+        rx="14"
+        ry="8.5"
+        fill="#ba773b"
+        transform="rotate(-24 27 37)"
+      />
+      <ellipse
+        cx="93"
+        cy="37"
+        rx="14"
+        ry="8.5"
+        fill="#ba773b"
+        transform="rotate(24 93 37)"
+      />
+      <ellipse
+        cx="27"
+        cy="37"
+        rx="8.5"
+        ry="4.8"
+        fill={BLUSH}
+        transform="rotate(-24 27 37)"
+      />
+      <ellipse
+        cx="93"
+        cy="37"
+        rx="8.5"
+        ry="4.8"
+        fill={BLUSH}
+        transform="rotate(24 93 37)"
+      />
+      {/* Round head & cream muzzle */}
+      <ellipse cx="60" cy="47" rx="32" ry="28" fill="#ba773b" />
+      <path
+        d="M31 56c6 13 19 19 29 19s23-6 29-19c-6 16-17 21-29 21S37 72 31 56Z"
+        fill="#a6672f"
+      />
+      <ellipse cx="60" cy="58" rx="17" ry="12.5" fill="#fae8d0" />
+      <Face y={44} dx={14} mouthY={60} />
+      <ellipse cx="60" cy="52" rx="5.5" ry="3.8" fill="#522f16" />
+      <ellipse cx="58" cy="50.8" rx="1.8" ry="0.9" fill="#fff" opacity="0.65" />
+      <ellipse cx="37" cy="55" rx="6" ry="4.2" fill={BLUSH} opacity="0.85" />
+      <ellipse cx="83" cy="55" rx="6" ry="4.2" fill={BLUSH} opacity="0.85" />
+    </>
+  ),
   capybara: () => (
     <>
       {/* Ground shadow under the flat loaf */}

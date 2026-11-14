@@ -14,6 +14,7 @@ export function ttsPrompt(text) {
     .replace(/Lắc-ki|Lucky/gi, "Lắc ki")
     .replace(/Ca-pi-ba-ra|Capybara/gi, "Ca pi ba ra")
     .replace(/Salad/gi, "Sa lát")
+    .replace(/\bÀo\b/g, "ào")
     .replace(/…/g, ", ")
     .replaceAll("!", ".")
     .replace(/\s+/g, " ")
@@ -48,7 +49,8 @@ export async function collectVoiceLines() {
         import { crops, itemName } from "./src/data/crops";
         import { seasonalInfo } from "./src/game/seasons";
         import { voiceKey } from "./src/services/voice";
-        export { discoveries, hints, pals, regions, dishes, scenes, interactions, palSpeak, crops, itemName, seasonalInfo, voiceKey };
+        import { palWaveByRegion } from "./src/game/events";
+        export { discoveries, hints, pals, regions, dishes, scenes, interactions, palSpeak, crops, itemName, seasonalInfo, voiceKey, palWaveByRegion };
       `,
       resolveDir: process.cwd(),
       loader: "ts",
@@ -74,6 +76,7 @@ export async function collectVoiceLines() {
     itemName,
     seasonalInfo,
     voiceKey,
+    palWaveByRegion,
   } = mod;
 
   const byKey = new Map();
@@ -95,6 +98,8 @@ export async function collectVoiceLines() {
       url: `/assets/voice/${filename}`,
     });
   };
+
+  for (const line of Object.values(palWaveByRegion)) add(line);
 
   // Priority 1: Greetings, hints, ValleyMap, and core UI lines.
   add("Chào con! Khu vườn đang đợi con đó!");

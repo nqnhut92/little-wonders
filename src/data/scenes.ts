@@ -38,8 +38,10 @@ export type RegionScene = {
   title: string;
   variant: "garden" | "pond" | "forest" | "beach" | "snow" | "stars";
   story: string;
-  // Cloud and sun in the sky; the starry mountain has none.
+  // Cloud and sun in the sky; the starry mountain has none by default.
   sky?: boolean;
+  hasCloud?: boolean;
+  cloud?: { x: number; y: number };
   hasHouse: boolean;
   hasCritters: boolean;
   signs: { text: string; className: string }[];
@@ -290,9 +292,9 @@ export const scenes: Record<string, RegionScene> = {
       {
         id: "duck",
         art: "duck",
-        x: 72,
+        x: 70,
         y: 62,
-        w: 11,
+        w: 10,
         label: "Vịt con",
         kind: "interact",
         line: "Cạp cạp! Vịt con bơi vòng quanh lá sen!",
@@ -302,7 +304,7 @@ export const scenes: Record<string, RegionScene> = {
         id: "capybara",
         art: "capybara",
         x: 54,
-        y: 41,
+        y: 28,
         w: 11,
         label: "Bạn Capybara",
         kind: "pal",
@@ -313,8 +315,8 @@ export const scenes: Record<string, RegionScene> = {
       {
         id: "dragonfly",
         art: "dragonfly",
-        x: 82,
-        y: 35,
+        x: 78,
+        y: 22,
         w: 7,
         label: "Chuồn chuồn",
         kind: "interact",
@@ -324,9 +326,9 @@ export const scenes: Record<string, RegionScene> = {
       {
         id: "pond-lantern",
         art: "pond-lantern",
-        x: 24,
-        y: 62,
-        w: 9,
+        x: 26,
+        y: 42,
+        w: 8,
         label: "Đèn hoa đăng",
         kind: "interact",
         line: "Đèn hoa đăng lung linh trên mặt ao!",
@@ -346,8 +348,8 @@ export const scenes: Record<string, RegionScene> = {
       {
         id: "xylophone",
         art: "xylophone",
-        x: 86,
-        y: 62,
+        x: 88,
+        y: 44,
         w: 7,
         label: "Đàn gỗ bên ao",
         kind: "xylophone",
@@ -380,9 +382,9 @@ export const scenes: Record<string, RegionScene> = {
       {
         id: "paper-boat",
         art: "paper-boat-3",
-        x: 74,
-        y: 74,
-        w: 10,
+        x: 82,
+        y: 64,
+        w: 9,
         label: "Thuyền giấy",
         kind: "build",
         stages: ["paper-boat-1", "paper-boat-2", "paper-boat-3"],
@@ -409,7 +411,7 @@ export const scenes: Record<string, RegionScene> = {
         id: "pond-firefly",
         art: "fx-firefly",
         x: 68,
-        y: 28,
+        y: 22,
         w: 6,
         label: "Đom đóm bên ao",
         kind: "interact",
@@ -562,7 +564,7 @@ export const scenes: Record<string, RegionScene> = {
       },
       {
         id: "night-deer",
-        art: "reindeer",
+        art: "deer",
         x: 62,
         y: 40,
         w: 10,
@@ -769,9 +771,9 @@ export const scenes: Record<string, RegionScene> = {
       {
         id: "polar-bear",
         art: "polar-bear",
-        x: 54,
-        y: 36,
-        w: 14,
+        x: 52,
+        y: 20,
+        w: 13,
         label: "Gấu bông tuyết",
         kind: "interact",
         line: "Gấu bông tuyết ôm con một cái thật ấm!",
@@ -792,9 +794,9 @@ export const scenes: Record<string, RegionScene> = {
       {
         id: "sled",
         art: "sled",
-        x: 76,
-        y: 66,
-        w: 12,
+        x: 72,
+        y: 70,
+        w: 11,
         label: "Xe trượt tuyết",
         kind: "interact",
         line: "Vèo! Xe trượt tuyết lướt xuống đồi thật nhanh!",
@@ -814,9 +816,9 @@ export const scenes: Record<string, RegionScene> = {
       {
         id: "igloo",
         art: "igloo-3",
-        x: 68,
-        y: 26,
-        w: 16,
+        x: 83,
+        y: 38,
+        w: 14,
         label: "Lều tuyết Iglu",
         kind: "build",
         stages: ["igloo-1", "igloo-2", "igloo-3"],
@@ -853,9 +855,9 @@ export const scenes: Record<string, RegionScene> = {
       {
         id: "hot-spring",
         art: "hot-spring",
-        x: 72,
-        y: 48,
-        w: 13,
+        x: 70,
+        y: 44,
+        w: 12,
         label: "Suối nước nóng",
         kind: "interact",
         line: "Hơi ấm bốc lên nghi ngút từ suối nước nóng giữa trời tuyết!",
@@ -882,6 +884,8 @@ export const scenes: Record<string, RegionScene> = {
     story:
       "Trên đỉnh núi cao gần bầu trời đêm, bạn Cú mèo thắp đèn ngôi sao và kể chuyện về từng chòm sao sáng.",
     sky: false,
+    hasCloud: true,
+    cloud: { x: 50, y: 8 },
     hasHouse: false,
     hasCritters: false,
     signs: [{ text: "Đỉnh núi ngắm sao", className: "sign-stars" }],

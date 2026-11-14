@@ -125,7 +125,7 @@ export const discoveries = [
   ["treehouse", "Nhà cây nhỏ", "treehouse-3"],
   ["fox_forest", "Bạn cáo nhỏ", "fox"],
   ["honey", "Mật ong rừng", "honey"],
-  ["night_deer", "Hươu sao ban đêm", "reindeer"],
+  ["night_deer", "Hươu sao ban đêm", "deer"],
   ["dish_berry_tart", "Bánh việt quất hạt dẻ", "dish-berry-tart"],
   ["dish_honey_tea", "Trà mật ong ấm", "dish-honey-tea"],
   ["pineapple", "Dứa thơm chín vàng", "pineapple"],

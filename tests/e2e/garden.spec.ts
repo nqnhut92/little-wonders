@@ -737,11 +737,7 @@ test("region story sign, regional pals and seasonal events work end-to-end", asy
   });
   await page.reload();
   await activate(page, "Vườn nhà");
-  await expect(
-    page.getByRole("button", { name: "Hoa mai ngày Tết" }),
-  ).toBeVisible();
-  await activate(page, "Hoa mai ngày Tết");
-  await expect(page.locator(".hud-guide p")).toContainText("Chúc mừng năm mới");
+  await expect(page.locator('[data-season="tet"]')).toBeVisible();
   await activate(page, "Nghe chuyện vùng đất");
   await expect(page.locator(".hud-guide p")).toContainText("Ngày xửa ngày xưa");
 
@@ -759,11 +755,7 @@ test("region story sign, regional pals and seasonal events work end-to-end", asy
 
   await page.goto("/?season=mid_autumn");
   await activate(page, "Vườn nhà");
-  await expect(
-    page.getByRole("button", { name: "Đèn ông sao Trung thu" }),
-  ).toBeVisible();
-  await activate(page, "Đèn ông sao Trung thu");
-  await expect(page.locator(".hud-guide p")).toContainText("Tết Trung thu");
+  await expect(page.locator('[data-season="mid_autumn"]')).toBeVisible();
 });
 
 test("drag ghost tracks pointer, pal story has no modal scrollbar, house supports drag-drop, cloud waters all 6 plots and pinecone falls", async ({

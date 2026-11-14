@@ -5,10 +5,20 @@ export type SurpriseEvent = {
   message: string;
   discovery?: string;
 };
+export const palWaveByRegion: Record<string, string> = {
+  garden: "Cún Lucky vẫy đuôi chào con thật vui!",
+  pond: "Bạn Capybara đội quýt cam vẫy tay chào con!",
+  forest: "Bạn Sóc nhỏ vẫy chiếc đuôi xù chào con!",
+  beach: "Bạn Rùa con vẫy tay chào con!",
+  snow: "Bạn Cánh cụt vỗ cánh lạch bạch chào con!",
+  stars: "Bạn Cú mèo chớp mắt tròn xoe chào con!",
+};
+
 // Pure surprise selector; takes an injected random function so tests stay deterministic.
 export function pickSurpriseEvent(
   world: World,
   random: () => number = Math.random,
+  regionId: string = "garden",
 ): SurpriseEvent | null {
   const time = value<string>(world, "scene.time", "day");
   const candidates: SurpriseEvent[] = [];
@@ -35,7 +45,7 @@ export function pickSurpriseEvent(
   candidates.push({
     id: "pal_wave",
     kind: "pal_wave",
-    message: "Cún Lucky vẫy đuôi chào con thật vui!",
+    message: palWaveByRegion[regionId] ?? palWaveByRegion.garden,
   });
   return candidates[Math.floor(random() * candidates.length)] ?? null;
 }
