@@ -268,22 +268,17 @@ export const flatArt: Record<string, Draw> = {
       <path d="M86 86c8-1 14-8 11-15-5 0-9 4-11 15Z" fill="#ffffff" />
       <path d="M85 85c6-1 11-6 9-12-4 0-7 3-9 12Z" fill="#ba7234" />
 
-      {/* Symmetrical seated hindquarters (haunches) */}
-      <ellipse cx="36" cy="94" rx="14" ry="13" fill="#ba7234" />
-      <ellipse cx="84" cy="94" rx="14" ry="13" fill="#ba7234" />
+      {/* Continuous sculpted deer body: smoothly connecting neck, chest, belly and wide haunches */}
       <path
-        d="M26 106c4-12 14-22 34-22s30 10 34 22c-8 6-60 6-68 0Z"
+        d="M48 46 C44 58 38 72 32 84 C24 94 24 106 34 108 C46 110 74 110 86 108 C96 106 96 94 88 84 C82 72 76 58 72 46 Z"
         fill="#ba7234"
       />
-
-      {/* Slender neck connecting chest to head */}
-      <path d="M48 48 L44 80 Q60 84 76 80 L72 48 Z" fill="#ba7234" />
+      {/* Seated hindquarters volume */}
+      <ellipse cx="34" cy="94" rx="13" ry="12" fill="#ba7234" />
+      <ellipse cx="86" cy="94" rx="13" ry="12" fill="#ba7234" />
 
       {/* Soft cream chest and throat bib */}
-      <path
-        d="M52 50 Q60 50 68 50 Q72 74 60 84 Q48 74 52 50 Z"
-        fill="#fff1db"
-      />
+      <path d="M52 48 C48 64 50 82 60 86 C70 82 72 64 68 48 Z" fill="#fff1db" />
 
       {/* Distinct star-shaped white spots along both flanks */}
       <circle cx="34" cy="88" r="2.6" fill="#ffffff" opacity="0.95" />
@@ -301,12 +296,12 @@ export const flatArt: Record<string, Draw> = {
       {/* Symmetrical front legs side-by-side with clear definition */}
       <g>
         {/* Subtle leg shadow separation */}
-        <rect x="46" y="84" width="11" height="23" rx="5.5" fill="#8d4a18" />
-        <rect x="63" y="84" width="11" height="23" rx="5.5" fill="#8d4a18" />
+        <rect x="46" y="82" width="11" height="25" rx="5.5" fill="#8d4a18" />
+        <rect x="63" y="82" width="11" height="25" rx="5.5" fill="#8d4a18" />
 
         {/* Both front legs with matching, clear warm fawn tone */}
-        <rect x="47" y="83" width="9.5" height="23" rx="4.7" fill="#a45f26" />
-        <rect x="63.5" y="83" width="9.5" height="23" rx="4.7" fill="#a45f26" />
+        <rect x="47" y="81" width="9.5" height="25" rx="4.7" fill="#a45f26" />
+        <rect x="63.5" y="81" width="9.5" height="25" rx="4.7" fill="#a45f26" />
 
         {/* Matching cloven hooves */}
         <rect x="47" y="104" width="9.5" height="6.5" rx="2" fill="#3a1f0d" />

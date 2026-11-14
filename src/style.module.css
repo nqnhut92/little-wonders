@@ -375,9 +375,10 @@ textarea {
 }
 .seasonal-corner {
   position: absolute;
-  width: 22px;
-  height: 22px;
+  width: 36px;
+  height: 36px;
   pointer-events: none;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.25));
 }
 .seasonal-corner.tl {
   top: -2px;
@@ -386,20 +387,49 @@ textarea {
 .seasonal-corner.tr {
   top: -2px;
   right: -2px;
+  transform: scaleX(-1);
 }
 .seasonal-corner.bl {
   bottom: -2px;
   left: -2px;
+  transform: scaleY(-1);
 }
 .seasonal-corner.br {
   bottom: -2px;
   right: -2px;
+  transform: scale(-1, -1);
 }
 .seasonal-corner-ornament {
   width: 100%;
   height: 100%;
   display: block;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.25));
+}
+.seasonal-center-garland {
+  position: absolute;
+  top: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(280px, 42vw);
+  height: 44px;
+  display: block;
+  pointer-events: none;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.25));
+}
+.seasonal-side-streamer {
+  position: absolute;
+  top: 42%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 72px;
+  display: block;
+  pointer-events: none;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+.seasonal-side-streamer.left {
+  left: 2px;
+}
+.seasonal-side-streamer.right {
+  right: 2px;
 }
 .sign-pond {
   left: 10%;
@@ -422,7 +452,7 @@ textarea {
   width: 5%;
   pointer-events: none;
   z-index: 8;
-  animation: fall 0.8s ease-out;
+  animation: fall 0.85s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
 }
 .drag-ghost {
   position: fixed;
@@ -955,18 +985,27 @@ textarea {
   0% {
     top: var(--drop-from);
     transform: translateY(0);
+    opacity: 1;
   }
   75% {
     top: var(--drop-to);
     transform: translateY(0);
+    opacity: 1;
   }
   88% {
     top: var(--drop-to);
     transform: translateY(-8px);
+    opacity: 1;
+  }
+  96% {
+    top: var(--drop-to);
+    transform: translateY(0);
+    opacity: 1;
   }
   100% {
     top: var(--drop-to);
     transform: translateY(0);
+    opacity: 0;
   }
 }
 @keyframes shimmer {

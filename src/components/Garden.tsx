@@ -451,6 +451,7 @@ export function Garden({
           className={cn("fallen-apple")}
           style={{
             left: `${falling.x}%`,
+            top: `${falling.y}%`,
             ["--drop-from" as any]: `${falling.startY ?? falling.y}%`,
             ["--drop-to" as any]: `${falling.y}%`,
           }}

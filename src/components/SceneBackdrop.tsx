@@ -341,12 +341,12 @@ function Beach({ night }: { night: boolean }) {
           />
         ))}
         <path
-          d="M1080 410 q70 -70 150 -20 q60 -30 110 20Z"
+          d="M1080 370 q70 -70 150 -20 q60 -30 110 20Z"
           fill="#81c57c"
           opacity="0.7"
         />
-        <rect y="405" width="1600" height="225" fill="url(#bd-beach-sea)" />
-        {scatter(40, 31, [0, 420, 1600, 600]).map((p, i) => (
+        <rect y="360" width="1600" height="115" fill="url(#bd-beach-sea)" />
+        {scatter(40, 31, [0, 370, 1600, 460]).map((p, i) => (
           <path
             key={"sp" + i}
             d={`M${p.x} ${p.y}h${10 + p.r * 6}`}
@@ -357,20 +357,20 @@ function Beach({ night }: { night: boolean }) {
           />
         ))}
         <path
-          d="M0 610 Q200 585 420 610 T860 605 T1300 610 T1600 600 V980 H-80Z"
+          d="M0 460 Q200 440 420 460 T860 455 T1300 460 T1600 450 V980 H-80Z"
           fill="#c3e0c1"
           opacity="0.9"
         />
         <path
-          d="M0 628 Q300 605 640 632 T1240 622 T1600 632 V980 H-80Z"
+          d="M0 472 Q300 452 640 476 T1240 468 T1600 476 V980 H-80Z"
           fill="url(#bd-beach-sand)"
         />
         <path
-          d="M0 645 Q300 625 640 650 T1240 640 T1600 650 V690 Q900 660 0 690Z"
+          d="M0 488 Q300 470 640 492 T1240 484 T1600 492 V530 Q900 500 0 530Z"
           fill="#f5bf5b"
           opacity="0.45"
         />
-        {scatter(55, 11, [0, 690, 1600, 890]).map((p, i) => (
+        {scatter(55, 11, [0, 530, 1600, 890]).map((p, i) => (
           <circle
             key={i}
             cx={p.x}
@@ -393,7 +393,7 @@ function Beach({ night }: { night: boolean }) {
         ))}
       </g>
       <g className={cn("backdrop-waves")}>
-        {[452, 500, 548, 596].map((y, i) => (
+        {[375, 405, 435].map((y, i) => (
           <path
             key={y}
             className={cn("slide")}
@@ -403,12 +403,12 @@ function Beach({ night }: { night: boolean }) {
             stroke="#ffffff"
             strokeWidth="5"
             strokeLinecap="round"
-            opacity={0.6 - i * 0.1}
+            opacity={0.6 - i * 0.12}
           />
         ))}
         <path
           className={cn("foam")}
-          d="M-100 620 Q200 598 420 620 T860 615 T1300 620 T1800 610"
+          d="M-100 468 Q200 448 420 468 T860 463 T1300 468 T1800 458"
           fill="none"
           stroke="#ffffff"
           strokeWidth="9"
