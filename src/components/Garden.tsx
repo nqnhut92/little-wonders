@@ -179,14 +179,14 @@ export function Garden({
     setDrag(null);
   };
   const triggerFall = (art: string, x: number, y: number, startY?: number) => {
-    setFalling({ key: Date.now(), art, x, y, startY: startY ?? y - 20 });
+    setFalling({ key: Date.now(), art, x, y, startY: startY ?? y });
     clearTimeout(fallTimer.current);
     fallTimer.current = setTimeout(() => setFalling(null), 850);
   };
   const triggerHotspot = (h: SceneHotspot) => {
     if (h.kind === "tree") {
       act({ type: "shake" });
-      triggerFall("apple", h.x + h.w * 0.65, 61, h.y + h.w * 0.35);
+      triggerFall("apple", h.x + h.w * 0.65, 61, h.y + h.w * 0.2);
       react(h.id, h.line ?? "", h.discovery);
     } else if (h.kind === "gather" && h.gives) {
       act({ type: "shake", kind: h.gives });
@@ -195,7 +195,7 @@ export function Garden({
           cropArt(h.gives),
           h.x + h.w * 0.5 - 2,
           h.gives === "honey" ? 60 : Math.min(68, h.y + h.w * 1.8),
-          h.y + h.w * 0.35,
+          h.y,
         );
       react(h.id, h.line ?? "");
     } else if (h.kind === "build" && h.stages) {
@@ -451,8 +451,8 @@ export function Garden({
           className={cn("fallen-apple")}
           style={{
             left: `${falling.x}%`,
-            top: `${falling.y}%`,
-            ["--fall-start" as any]: `${(falling.startY !== undefined ? falling.startY - falling.y : -20) * 1.2}vh`,
+            ["--drop-from" as any]: `${falling.startY ?? falling.y}%`,
+            ["--drop-to" as any]: `${falling.y}%`,
           }}
         >
           <Art id={falling.art} />

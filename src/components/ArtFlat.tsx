@@ -265,12 +265,14 @@ export const flatArt: Record<string, Draw> = {
   deer: () => (
     <>
       {/* Little white-tipped fawn tail */}
-      <path d="M84 88c8-1 14-8 11-15-5 0-9 4-11 15Z" fill="#ffffff" />
-      <path d="M83 87c6-1 11-6 9-12-4 0-7 3-9 12Z" fill="#ba7234" />
+      <path d="M86 86c8-1 14-8 11-15-5 0-9 4-11 15Z" fill="#ffffff" />
+      <path d="M85 85c6-1 11-6 9-12-4 0-7 3-9 12Z" fill="#ba7234" />
 
-      {/* Graceful seated hindquarters and arched back */}
+      {/* Symmetrical seated hindquarters (haunches) */}
+      <ellipse cx="36" cy="94" rx="14" ry="13" fill="#ba7234" />
+      <ellipse cx="84" cy="94" rx="14" ry="13" fill="#ba7234" />
       <path
-        d="M36 108c-6-16 2-36 18-42 14-6 26 2 34 16 6 10 6 22-2 26-10 5-42 6-50 0Z"
+        d="M26 106c4-12 14-22 34-22s30 10 34 22c-8 6-60 6-68 0Z"
         fill="#ba7234"
       />
 
@@ -279,28 +281,38 @@ export const flatArt: Record<string, Draw> = {
 
       {/* Soft cream chest and throat bib */}
       <path
-        d="M52 52 Q60 52 68 52 Q72 74 60 84 Q48 74 52 52 Z"
+        d="M52 50 Q60 50 68 50 Q72 74 60 84 Q48 74 52 50 Z"
         fill="#fff1db"
       />
 
-      {/* Distinct star-shaped white spots along the back & flank */}
-      <circle cx="48" cy="80" r="2.6" fill="#ffffff" opacity="0.95" />
-      <circle cx="56" cy="82" r="2.6" fill="#ffffff" opacity="0.95" />
-      <circle cx="64" cy="82" r="2.6" fill="#ffffff" opacity="0.95" />
-      <circle cx="72" cy="80" r="2.6" fill="#ffffff" opacity="0.95" />
-      <circle cx="44" cy="88" r="2.4" fill="#ffffff" opacity="0.95" />
-      <circle cx="52" cy="90" r="2.4" fill="#ffffff" opacity="0.95" />
-      <circle cx="68" cy="90" r="2.4" fill="#ffffff" opacity="0.95" />
-      <circle cx="76" cy="88" r="2.4" fill="#ffffff" opacity="0.95" />
-      <circle cx="48" cy="97" r="2.2" fill="#ffffff" opacity="0.9" />
-      <circle cx="72" cy="97" r="2.2" fill="#ffffff" opacity="0.9" />
+      {/* Distinct star-shaped white spots along both flanks */}
+      <circle cx="34" cy="88" r="2.6" fill="#ffffff" opacity="0.95" />
+      <circle cx="42" cy="88" r="2.6" fill="#ffffff" opacity="0.95" />
+      <circle cx="32" cy="95" r="2.4" fill="#ffffff" opacity="0.95" />
+      <circle cx="40" cy="96" r="2.4" fill="#ffffff" opacity="0.95" />
+      <circle cx="36" cy="102" r="2.2" fill="#ffffff" opacity="0.9" />
 
-      {/* Dainty slender front legs and cloven hooves */}
-      <rect x="47" y="86" width="9" height="24" rx="4.5" fill="#a45f26" />
-      <rect x="64" y="86" width="9" height="24" rx="4.5" fill="#ba7234" />
-      <rect x="47" y="105" width="9" height="6" rx="2" fill="#422510" />
-      <rect x="64" y="105" width="9" height="6" rx="2" fill="#422510" />
-      <path d="M51.5 107v4m17-4v4" stroke="#2b1507" strokeWidth="1.2" />
+      <circle cx="78" cy="88" r="2.6" fill="#ffffff" opacity="0.95" />
+      <circle cx="86" cy="88" r="2.6" fill="#ffffff" opacity="0.95" />
+      <circle cx="80" cy="96" r="2.4" fill="#ffffff" opacity="0.95" />
+      <circle cx="88" cy="95" r="2.4" fill="#ffffff" opacity="0.95" />
+      <circle cx="84" cy="102" r="2.2" fill="#ffffff" opacity="0.9" />
+
+      {/* Symmetrical front legs side-by-side with clear definition */}
+      <g>
+        {/* Subtle leg shadow separation */}
+        <rect x="46" y="84" width="11" height="23" rx="5.5" fill="#8d4a18" />
+        <rect x="63" y="84" width="11" height="23" rx="5.5" fill="#8d4a18" />
+
+        {/* Both front legs with matching, clear warm fawn tone */}
+        <rect x="47" y="83" width="9.5" height="23" rx="4.7" fill="#a45f26" />
+        <rect x="63.5" y="83" width="9.5" height="23" rx="4.7" fill="#a45f26" />
+
+        {/* Matching cloven hooves */}
+        <rect x="47" y="104" width="9.5" height="6.5" rx="2" fill="#3a1f0d" />
+        <rect x="63.5" y="104" width="9.5" height="6.5" rx="2" fill="#3a1f0d" />
+        <path d="M51.8 105v5m16.5-5v5" stroke="#241206" strokeWidth="1.2" />
+      </g>
 
       {/* Tall leaf-shaped alert ears with fluffy cream inner ear */}
       <g transform="rotate(-28 36 28)">
