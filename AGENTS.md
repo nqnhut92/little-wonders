@@ -14,4 +14,6 @@ Spoken Southern Vietnamese voice clips in `public/assets/voice/*.m4a` are pre-ge
 
 Use stable asset IDs across `src/components/Art.tsx`, `src/components/ArtFlat.tsx`, `src/components/ArtFlatMore.tsx` and `src/components/SceneBackdrop.tsx`. No logic or text baked into art. No advertising, behavioral tracking, penalties, streaks, countdowns or Parent Mode.
 
+Keep gameplay scenes responsive and aligned with background artwork across aspect ratios (iPad 4:3, iPad Pro ~1.43, PC 16:9) by encapsulating backdrop SVGs and interactive hotspots/characters within a centered 16:9 stage (`.garden-stage`, height 100vh/100dvh). Keep hotspot coordinates within the visible 4:3 boundary (x between 13% and 87%) so interactive items never clip off-screen. For touch drag-and-drop interactions, enforce `touch-action: none` (CSS and inline styles), prevent default on `pointerdown` to block WebKit gesture scrolling, wrap `setPointerCapture`/`releasePointerCapture` in `try / catch`, and allow boundary touch margins for child fingers.
+
 Commit identity: Nicholas Nguyen <134213451+nqnhut92@users.noreply.github.com>. Do not sign commits. Push only when authorized in the current conversation, directly to main according to git-main-workflow.

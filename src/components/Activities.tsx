@@ -232,10 +232,14 @@ export function House({ world, act, say }: Props) {
     act(a);
     act({ type: "discover", id: "house" });
   };
-  const decorCoords = (r: DOMRect, clientX: number, clientY: number) => ({
-    x: Math.max(6, Math.min(94, ((clientX - r.left) / r.width) * 100)),
-    y: Math.max(10, Math.min(90, ((clientY - r.top) / r.height) * 100)),
-  });
+  const decorCoords = (r: DOMRect, clientX: number, clientY: number) => {
+    const width = Math.max(r.width, 1);
+    const height = Math.max(r.height, 1);
+    return {
+      x: Math.max(6, Math.min(94, ((clientX - r.left) / width) * 100)),
+      y: Math.max(10, Math.min(90, ((clientY - r.top) / height) * 100)),
+    };
+  };
   const placeAt = (id: string, clientX: number, clientY: number) => {
     const r = canvasRef.current?.getBoundingClientRect();
     if (!r) return;
@@ -259,7 +263,12 @@ export function House({ world, act, say }: Props) {
       <div
         ref={canvasRef}
         className={cn("house-canvas")}
-        onClick={(e) => placeAt(choice, e.clientX, e.clientY)}
+        style={{ touchAction: "none" }}
+        onClick={(e) => {
+          if (dragPointer.current !== null || movePointer.current !== null)
+            return;
+          placeAt(choice, e.clientX, e.clientY);
+        }}
       >
         <div className={cn("big-house")}>
           <Art id="house" color={color} night={night} />
@@ -269,20 +278,39 @@ export function House({ world, act, say }: Props) {
           const pos = isMoving ? movingDecor : d;
           return (
             <button
+              type="button"
               aria-label="Di chuyển đồ trang trí"
               key={i}
               className={cn(isMoving ? "house-decor-dragging" : "")}
-              style={{ left: pos.x + "%", top: pos.y + "%" }}
+              style={{
+                left: pos.x + "%",
+                top: pos.y + "%",
+                touchAction: "none",
+              }}
               onClick={(e) => e.stopPropagation()}
               onPointerDown={(e) => {
                 if (movePointer.current !== null) return;
+                e.preventDefault();
                 e.stopPropagation();
                 movePointer.current = e.pointerId;
-                e.currentTarget.setPointerCapture(e.pointerId);
-                setMovingDecor({ index: i, x: d.x, y: d.y });
+                try {
+                  e.currentTarget.setPointerCapture(e.pointerId);
+                } catch {
+                  /* pointer capture may fail if released early */
+                }
+                const r = canvasRef.current?.getBoundingClientRect();
+                if (r) {
+                  setMovingDecor({
+                    index: i,
+                    ...decorCoords(r, e.clientX, e.clientY),
+                  });
+                } else {
+                  setMovingDecor({ index: i, x: d.x, y: d.y });
+                }
               }}
               onPointerMove={(e) => {
                 if (movePointer.current !== e.pointerId) return;
+                e.preventDefault();
                 const r = canvasRef.current?.getBoundingClientRect();
                 if (!r) return;
                 setMovingDecor({
@@ -292,12 +320,23 @@ export function House({ world, act, say }: Props) {
               }}
               onPointerCancel={(e) => {
                 if (movePointer.current !== e.pointerId) return;
+                try {
+                  e.currentTarget.releasePointerCapture(e.pointerId);
+                } catch {
+                  /* pointer capture may fail if released early */
+                }
                 movePointer.current = null;
                 setMovingDecor(null);
               }}
               onPointerUp={(e) => {
                 if (movePointer.current !== e.pointerId) return;
+                e.preventDefault();
                 e.stopPropagation();
+                try {
+                  e.currentTarget.releasePointerCapture(e.pointerId);
+                } catch {
+                  /* pointer capture may fail if released early */
+                }
                 movePointer.current = null;
                 setMovingDecor(null);
                 const r = canvasRef.current?.getBoundingClientRect();
@@ -314,12 +353,13 @@ export function House({ world, act, say }: Props) {
           );
         })}
       </div>
-      <div className={cn("palette")}>
+      <div className={cn("palette")} style={{ touchAction: "none" }}>
         {["#efcf9d", "#d7a6b5", "#a5bca0", "#a2becb", "#e7bc7b"].map((c, i) => (
           <button
+            type="button"
             aria-label={`Màu ${["kem", "hồng", "xanh lá", "xanh trời", "vàng"][i]}`}
             key={c}
-            style={{ background: c }}
+            style={{ background: c, touchAction: "none" }}
             className={cn(color === c ? "selected" : "")}
             onClick={() => save({ type: "set", key: "houseColor", value: c })}
           />
@@ -329,41 +369,64 @@ export function House({ world, act, say }: Props) {
             !d.requires || world.discoveries.includes(d.requires);
           return (
             <button
+              type="button"
               key={d.id}
               disabled={!unlocked}
               aria-label={unlocked ? d.label : `${d.label} chưa mở`}
               className={cn(
                 `${choice === d.id ? "selected" : ""} ${!unlocked ? "locked-silhouette" : ""}`,
               )}
+              style={{ touchAction: "none" }}
               onPointerDown={(e) => {
                 if (!unlocked || dragPointer.current !== null) return;
                 e.preventDefault();
                 dragPointer.current = e.pointerId;
-                e.currentTarget.setPointerCapture(e.pointerId);
+                try {
+                  e.currentTarget.setPointerCapture(e.pointerId);
+                } catch {
+                  /* pointer capture may fail if released early */
+                }
                 setChoice(d.id);
                 setDragDecor({ id: d.id, x: e.clientX, y: e.clientY });
               }}
               onPointerMove={(e) => {
-                if (dragPointer.current === e.pointerId)
+                if (dragPointer.current === e.pointerId) {
+                  e.preventDefault();
                   setDragDecor({ id: d.id, x: e.clientX, y: e.clientY });
+                }
               }}
-              onPointerCancel={() => {
+              onPointerCancel={(e) => {
+                if (dragPointer.current !== e.pointerId) return;
+                try {
+                  e.currentTarget.releasePointerCapture(e.pointerId);
+                } catch {
+                  /* pointer capture may fail if released early */
+                }
                 dragPointer.current = null;
                 setDragDecor(null);
               }}
               onPointerUp={(e) => {
                 if (dragPointer.current !== e.pointerId) return;
+                e.preventDefault();
+                try {
+                  e.currentTarget.releasePointerCapture(e.pointerId);
+                } catch {
+                  /* pointer capture may fail if released early */
+                }
                 dragPointer.current = null;
                 setDragDecor(null);
                 const r = canvasRef.current?.getBoundingClientRect();
-                if (
-                  r &&
-                  e.clientX >= r.left &&
-                  e.clientX <= r.right &&
-                  e.clientY >= r.top &&
-                  e.clientY <= r.bottom
-                )
-                  placeAt(d.id, e.clientX, e.clientY);
+                if (r) {
+                  const buffer = 24;
+                  if (
+                    e.clientX >= r.left - buffer &&
+                    e.clientX <= r.right + buffer &&
+                    e.clientY >= r.top - buffer &&
+                    e.clientY <= r.bottom + buffer
+                  ) {
+                    placeAt(d.id, e.clientX, e.clientY);
+                  }
+                }
               }}
               onClick={() => setChoice(d.id)}
             >

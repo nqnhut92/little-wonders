@@ -184,7 +184,7 @@ test("the scene fills the screen and floating controls stay inside it", async ({
       .evaluateAll((els) =>
         els.map((el) => el.getBoundingClientRect().toJSON()),
       );
-    for (const object of await page.locator(".garden > .object").all()) {
+    for (const object of await page.locator(".garden .object").all()) {
       const o = (await object.boundingBox())!;
       for (const c of controls)
         expect(

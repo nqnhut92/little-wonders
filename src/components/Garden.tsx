@@ -316,252 +316,265 @@ export function Garden({
           <Art id={scene.variant === "stars" ? "moon-face" : "sun"} />
         </div>
       )}
-      <div className={cn("hill hill-back")} />
-      <div className={cn("hill hill-front")} />
-      <div className={cn("path")} />
-      <h1 className={cn("sr-only")}>{scene.title}</h1>
-      {drawnVariants.includes(scene.variant) && (
-        <SceneBackdrop variant={scene.variant} night={night} />
-      )}
-      {night && scene.variant !== "stars" && (
-        <>
-          <div className={cn("night-stars")} aria-hidden="true">
-            {[
-              [22, 18],
-              [37, 14],
-              [62, 16],
-              [44, 26],
-              [70, 24],
-            ].map(([sx, sy], i) => (
-              <span key={i} style={{ left: sx + "%", top: sy + "%" }}>
-                <Art id="star" />
+      <div className={cn("garden-stage")}>
+        <div className={cn("hill hill-back")} />
+        <div className={cn("hill hill-front")} />
+        <div className={cn("path")} />
+        <h1 className={cn("sr-only")}>{scene.title}</h1>
+        {drawnVariants.includes(scene.variant) && (
+          <SceneBackdrop variant={scene.variant} night={night} />
+        )}
+        {night && scene.variant !== "stars" && (
+          <>
+            <div className={cn("night-stars")} aria-hidden="true">
+              {[
+                [22, 18],
+                [37, 14],
+                [62, 16],
+                [44, 26],
+                [70, 24],
+              ].map(([sx, sy], i) => (
+                <span key={i} style={{ left: sx + "%", top: sy + "%" }}>
+                  <Art id="star" />
+                </span>
+              ))}
+            </div>
+            <div
+              className={cn("firefly")}
+              style={{ left: fireflyPos.x + "%", top: fireflyPos.y + "%" }}
+              aria-hidden="true"
+            >
+              <Art id="fx-firefly" />
+            </div>
+          </>
+        )}
+        {(world.discoveries.includes("rainbow") ||
+          surprise?.kind === "rainbow") &&
+          scene.sky !== false &&
+          !night && (
+            <div className={cn("rainbow")}>
+              <Art id="rainbow" />
+            </div>
+          )}
+        {surprise?.kind === "shooting_star" && (
+          <div className={cn("shooting-star")} aria-hidden="true">
+            <Art id="fx-shooting-star" />
+          </div>
+        )}
+        {surprise?.kind === "butterflies" && (
+          <div className={cn("butterfly-flock")} aria-hidden="true">
+            <Art id="butterfly" />
+            <Art id="butterfly" />
+          </div>
+        )}
+        {scene.sky === false ? null : !night ? (
+          <button
+            aria-label="Mặt trời"
+            className={cn(
+              `object sun ${reaction === "sun" ? "react-sun" : ""}`,
+            )}
+            style={{ left: "63%", top: "6%", width: "calc(10 * var(--u))" }}
+            onPointerDown={(e) => down(e, "sun")}
+            onClick={() => {
+              Array.from(
+                { length: plotCount(world) },
+                (_, slot) => slot,
+              ).forEach((slot) => act({ type: "sun", slot, region: scene.id }));
+              react("sun", "Nắng vàng ghé thăm khu vườn!");
+            }}
+          >
+            <Art id="sun" />
+          </button>
+        ) : (
+          object("moon", "fx-moon", 63, 6, 9, "Mặt trăng", () => {
+            act({ type: "discover", id: "moon" });
+            act({ type: "discover", id: "stars" });
+            react("moon", "Trăng tròn sáng dịu trên bầu trời đêm!", "moon");
+          })
+        )}
+        {(scene.sky !== false || scene.hasCloud) && (
+          <button
+            aria-label="Mây tưới nước"
+            className={cn(
+              `object cloud ${reaction === "cloud" ? "react-cloud" : ""} ${highlight ? "hint-glow" : ""}`,
+            )}
+            style={{
+              left: `${scene.cloud?.x ?? 50}%`,
+              top: `${scene.cloud?.y ?? 10}%`,
+              width: "calc(15 * var(--u))",
+            }}
+            onPointerDown={(e) => down(e, "cloud")}
+            onClick={() => {
+              Array.from(
+                { length: plotCount(world) },
+                (_, slot) => slot,
+              ).forEach((slot) =>
+                act({ type: "water", slot, region: scene.id }),
+              );
+              react("cloud", "Mưa tí tách! Con cũng có thể kéo mây tới cây.");
+            }}
+          >
+            <Art id="cloud" night={night} />
+          </button>
+        )}
+        {scene.hotspots
+          .filter((h) => {
+            if (h.requires && !world.discoveries.includes(h.requires))
+              return false;
+            if (h.dayOnly && night) return false;
+            if (h.nightOnly && !night) return false;
+            if (h.kind === "revealed") {
+              const unlockedByDiscovery =
+                h.revealedWhen === "butterfly" &&
+                world.discoveries.includes("butterfly");
+              if (revealed !== h.revealedWhen && !unlockedByDiscovery)
+                return false;
+            }
+            return true;
+          })
+          .map((h) => {
+            const pal =
+              h.kind === "pal" && h.palId && h.palId !== "puppy"
+                ? pals.find((p) => p.id === h.palId)
+                : undefined;
+            const pos =
+              h.id === "bird" ? birdSpots[birdSpot] : { x: h.x, y: h.y };
+            return object(
+              h.id,
+              h.kind === "build" && h.stages ? h.stages[buildStage(h)] : h.art,
+              pos.x,
+              pos.y,
+              h.w,
+              h.label,
+              () => triggerHotspot(h),
+              undefined,
+              pal ? cropArt(palWish(world, pal)) : undefined,
+              h.id === "moon-face" ? (e) => down(e, "moon") : undefined,
+            );
+          })}
+        {falling && (
+          <div
+            key={falling.key}
+            className={cn("fallen-apple")}
+            style={{
+              left: `${falling.x}%`,
+              top: `${falling.y}%`,
+              ["--drop-from" as any]: `${falling.startY ?? falling.y}%`,
+              ["--drop-to" as any]: `${falling.y}%`,
+            }}
+          >
+            <Art id={falling.art} />
+          </div>
+        )}
+        {scene.hasHouse && (
+          <div
+            className={cn("garden-decorations")}
+            aria-label="Đồ trang trí đã đặt"
+          >
+            {value<{ id: string; x: number; y: number }[]>(
+              world,
+              "decorations",
+              [],
+            ).map((d, i) => (
+              <span key={i} style={{ left: d.x + "%", top: d.y + "%" }}>
+                <Art id={d.id} night={night} />
               </span>
             ))}
           </div>
-          <div
-            className={cn("firefly")}
-            style={{ left: fireflyPos.x + "%", top: fireflyPos.y + "%" }}
-            aria-hidden="true"
-          >
-            <Art id="fx-firefly" />
-          </div>
-        </>
-      )}
-      {(world.discoveries.includes("rainbow") ||
-        surprise?.kind === "rainbow") &&
-        scene.sky !== false &&
-        !night && (
-          <div className={cn("rainbow")}>
-            <Art id="rainbow" />
+        )}
+        {scene.hasCritters && (
+          <>
+            {object(
+              "critter-frog",
+              "frog",
+              frogSpots[frogSpot].x,
+              frogSpots[frogSpot].y,
+              5.5,
+              "Ếch nhỏ",
+              () => {
+                setFrogSpot((i) => (i + 1) % frogSpots.length);
+                react("frog", "Ộp ộp! Bạn ếch nhảy sang chỗ mới!", "frog");
+              },
+            )}
+            {object(
+              "critter-snail",
+              "snail",
+              snailSpots[snailSpot].x,
+              snailSpots[snailSpot].y,
+              5,
+              "Ốc sên",
+              () => {
+                setSnailSpot((i) => (i + 1) % snailSpots.length);
+                react("snail", "Ốc sên bò thật chậm rãi!", "snail");
+              },
+            )}
+          </>
+        )}
+        {visitors.map((v) =>
+          object(v.id, v.art, v.x, v.y, 5.5, v.label, () =>
+            react(v.art, `${v.label}!`),
+          ),
+        )}
+        {hasCrops && (
+          <div className={cn("plots")} aria-label="Hạt Giống Bí Ẩn">
+            {Array.from({ length: plotCount(world) }, (_, slot) => {
+              const p = value<Plot | undefined>(
+                world,
+                plotKey(slot, scene.id),
+                undefined,
+              );
+              const growing = p && p.stage > 0 ? p : undefined;
+              const art = cropArt(growing?.kind ?? "");
+              return (
+                <button
+                  data-soil={slot}
+                  key={slot}
+                  aria-label={`Luống đất ${slot + 1}`}
+                  className={cn(
+                    `soil ${reaction === "soil" ? "react-soil" : ""}`,
+                  )}
+                  onClick={() => {
+                    if (!growing) {
+                      act({
+                        type: "plant",
+                        slot,
+                        kind: seed,
+                        region: scene.id,
+                      });
+                      say("Hạt xuống đất rồi. Con đưa mây tới đây nhé!");
+                    } else if (growing.stage === ripeStage) {
+                      act({ type: "harvest", slot, region: scene.id });
+                      say("Hái được rồi! Con bỏ vào giỏ nhé.", "flower");
+                    } else
+                      say(
+                        !growing.water
+                          ? "Mầm cây đang khát nước!"
+                          : scene.variant === "stars"
+                            ? "Cây cần thêm ánh trăng sáng!"
+                            : "Cây cần thêm nắng ấm!",
+                      );
+                  }}
+                >
+                  {growing ? (
+                    <div
+                      className={cn(
+                        `plant stage-${growing.stage} ${growing.stage === ripeStage ? "ripe" : ""}`,
+                      )}
+                    >
+                      <Art id={growing.stage >= 3 ? art : "grass"} />
+                      {growing.water && (
+                        <span className={cn("water-dot")}>●</span>
+                      )}
+                    </div>
+                  ) : (
+                    <span className={cn("soil-mark")}>＋</span>
+                  )}
+                </button>
+              );
+            })}
           </div>
         )}
-      {surprise?.kind === "shooting_star" && (
-        <div className={cn("shooting-star")} aria-hidden="true">
-          <Art id="fx-shooting-star" />
-        </div>
-      )}
-      {surprise?.kind === "butterflies" && (
-        <div className={cn("butterfly-flock")} aria-hidden="true">
-          <Art id="butterfly" />
-          <Art id="butterfly" />
-        </div>
-      )}
-      {scene.sky === false ? null : !night ? (
-        <button
-          aria-label="Mặt trời"
-          className={cn(`object sun ${reaction === "sun" ? "react-sun" : ""}`)}
-          style={{ left: "74%", top: "6%", width: "calc(10 * var(--u))" }}
-          onPointerDown={(e) => down(e, "sun")}
-          onClick={() => {
-            Array.from({ length: plotCount(world) }, (_, slot) => slot).forEach(
-              (slot) => act({ type: "sun", slot, region: scene.id }),
-            );
-            react("sun", "Nắng vàng ghé thăm khu vườn!");
-          }}
-        >
-          <Art id="sun" />
-        </button>
-      ) : (
-        object("moon", "fx-moon", 74, 6, 9, "Mặt trăng", () => {
-          act({ type: "discover", id: "moon" });
-          act({ type: "discover", id: "stars" });
-          react("moon", "Trăng tròn sáng dịu trên bầu trời đêm!", "moon");
-        })
-      )}
-      {(scene.sky !== false || scene.hasCloud) && (
-        <button
-          aria-label="Mây tưới nước"
-          className={cn(
-            `object cloud ${reaction === "cloud" ? "react-cloud" : ""} ${highlight ? "hint-glow" : ""}`,
-          )}
-          style={{
-            left: `${scene.cloud?.x ?? 50}%`,
-            top: `${scene.cloud?.y ?? 10}%`,
-            width: "calc(15 * var(--u))",
-          }}
-          onPointerDown={(e) => down(e, "cloud")}
-          onClick={() => {
-            Array.from({ length: plotCount(world) }, (_, slot) => slot).forEach(
-              (slot) => act({ type: "water", slot, region: scene.id }),
-            );
-            react("cloud", "Mưa tí tách! Con cũng có thể kéo mây tới cây.");
-          }}
-        >
-          <Art id="cloud" night={night} />
-        </button>
-      )}
-      {scene.hotspots
-        .filter((h) => {
-          if (h.requires && !world.discoveries.includes(h.requires))
-            return false;
-          if (h.dayOnly && night) return false;
-          if (h.nightOnly && !night) return false;
-          if (h.kind === "revealed") {
-            const unlockedByDiscovery =
-              h.revealedWhen === "butterfly" &&
-              world.discoveries.includes("butterfly");
-            if (revealed !== h.revealedWhen && !unlockedByDiscovery)
-              return false;
-          }
-          return true;
-        })
-        .map((h) => {
-          const pal =
-            h.kind === "pal" && h.palId && h.palId !== "puppy"
-              ? pals.find((p) => p.id === h.palId)
-              : undefined;
-          const pos =
-            h.id === "bird" ? birdSpots[birdSpot] : { x: h.x, y: h.y };
-          return object(
-            h.id,
-            h.kind === "build" && h.stages ? h.stages[buildStage(h)] : h.art,
-            pos.x,
-            pos.y,
-            h.w,
-            h.label,
-            () => triggerHotspot(h),
-            undefined,
-            pal ? cropArt(palWish(world, pal)) : undefined,
-            h.id === "moon-face" ? (e) => down(e, "moon") : undefined,
-          );
-        })}
-      {falling && (
-        <div
-          key={falling.key}
-          className={cn("fallen-apple")}
-          style={{
-            left: `${falling.x}%`,
-            top: `${falling.y}%`,
-            ["--drop-from" as any]: `${falling.startY ?? falling.y}%`,
-            ["--drop-to" as any]: `${falling.y}%`,
-          }}
-        >
-          <Art id={falling.art} />
-        </div>
-      )}
-      {scene.hasHouse && (
-        <div
-          className={cn("garden-decorations")}
-          aria-label="Đồ trang trí đã đặt"
-        >
-          {value<{ id: string; x: number; y: number }[]>(
-            world,
-            "decorations",
-            [],
-          ).map((d, i) => (
-            <span key={i} style={{ left: d.x + "%", top: d.y + "%" }}>
-              <Art id={d.id} night={night} />
-            </span>
-          ))}
-        </div>
-      )}
-      {scene.hasCritters && (
-        <>
-          {object(
-            "critter-frog",
-            "frog",
-            frogSpots[frogSpot].x,
-            frogSpots[frogSpot].y,
-            5.5,
-            "Ếch nhỏ",
-            () => {
-              setFrogSpot((i) => (i + 1) % frogSpots.length);
-              react("frog", "Ộp ộp! Bạn ếch nhảy sang chỗ mới!", "frog");
-            },
-          )}
-          {object(
-            "critter-snail",
-            "snail",
-            snailSpots[snailSpot].x,
-            snailSpots[snailSpot].y,
-            5,
-            "Ốc sên",
-            () => {
-              setSnailSpot((i) => (i + 1) % snailSpots.length);
-              react("snail", "Ốc sên bò thật chậm rãi!", "snail");
-            },
-          )}
-        </>
-      )}
-      {visitors.map((v) =>
-        object(v.id, v.art, v.x, v.y, 5.5, v.label, () =>
-          react(v.art, `${v.label}!`),
-        ),
-      )}
-      {hasCrops && (
-        <div className={cn("plots")} aria-label="Hạt Giống Bí Ẩn">
-          {Array.from({ length: plotCount(world) }, (_, slot) => {
-            const p = value<Plot | undefined>(
-              world,
-              plotKey(slot, scene.id),
-              undefined,
-            );
-            const growing = p && p.stage > 0 ? p : undefined;
-            const art = cropArt(growing?.kind ?? "");
-            return (
-              <button
-                data-soil={slot}
-                key={slot}
-                aria-label={`Luống đất ${slot + 1}`}
-                className={cn(
-                  `soil ${reaction === "soil" ? "react-soil" : ""}`,
-                )}
-                onClick={() => {
-                  if (!growing) {
-                    act({ type: "plant", slot, kind: seed, region: scene.id });
-                    say("Hạt xuống đất rồi. Con đưa mây tới đây nhé!");
-                  } else if (growing.stage === ripeStage) {
-                    act({ type: "harvest", slot, region: scene.id });
-                    say("Hái được rồi! Con bỏ vào giỏ nhé.", "flower");
-                  } else
-                    say(
-                      !growing.water
-                        ? "Mầm cây đang khát nước!"
-                        : scene.variant === "stars"
-                          ? "Cây cần thêm ánh trăng sáng!"
-                          : "Cây cần thêm nắng ấm!",
-                    );
-                }}
-              >
-                {growing ? (
-                  <div
-                    className={cn(
-                      `plant stage-${growing.stage} ${growing.stage === ripeStage ? "ripe" : ""}`,
-                    )}
-                  >
-                    <Art id={growing.stage >= 3 ? art : "grass"} />
-                    {growing.water && (
-                      <span className={cn("water-dot")}>●</span>
-                    )}
-                  </div>
-                ) : (
-                  <span className={cn("soil-mark")}>＋</span>
-                )}
-              </button>
-            );
-          })}
-        </div>
-      )}
+      </div>
       {Object.entries(basketOf(world)).some(([, n]) => n > 0) && (
         <div className={cn("basket-count")} aria-label="Giỏ của con">
           <Art id="basket" />

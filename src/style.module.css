@@ -99,6 +99,24 @@ textarea {
 .garden .path {
   display: none;
 }
+.garden-stage {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  width: calc(100vh * 16 / 9);
+  width: calc(100dvh * 16 / 9);
+  left: 50%;
+  transform: translateX(-50%);
+  overflow: visible;
+  touch-action: none;
+  pointer-events: none;
+  --u: calc(100vh * 16 / 900);
+  --u: calc(100dvh * 16 / 900);
+}
+.garden-stage > * {
+  pointer-events: auto;
+}
 .hill {
   position: absolute;
   border-radius: 50% 50% 0 0;
@@ -699,6 +717,9 @@ textarea {
   border-radius: var(--radius-m);
   overflow: hidden;
   touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
 }
 .big-house {
   position: absolute;
@@ -713,6 +734,9 @@ textarea {
   padding: 0;
   background: transparent;
   touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
   transform: translate(-50%, -50%);
   transition: transform 0.12s ease;
 }
@@ -729,6 +753,10 @@ textarea {
   flex-wrap: wrap;
   gap: 10px;
   margin: 20px 0;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
 }
 .palette button {
   width: var(--tap-kid);
@@ -737,6 +765,10 @@ textarea {
   border: 2px solid var(--plate-border);
   background: var(--plate);
   padding: 6px;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
 }
 .palette button.selected {
   box-shadow:

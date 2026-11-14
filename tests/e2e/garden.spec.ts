@@ -161,7 +161,7 @@ test("garden touch targets stay inside the scene at iPad and wide desktop sizes"
     await openGarden(page);
     const scene = await page.locator(".garden").boundingBox();
     if (!scene) throw Error("scene missing");
-    for (const object of await page.locator(".garden>.object").all()) {
+    for (const object of await page.locator(".garden .object").all()) {
       const b = await object.boundingBox();
       if (!b) throw Error("object missing");
       expect(b.x).toBeGreaterThanOrEqual(scene.x - 1);
