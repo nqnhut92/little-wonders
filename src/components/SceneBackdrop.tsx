@@ -462,18 +462,6 @@ function Snow({ night }: { night: boolean }) {
           />
         ))}
         <path d="M0 560 Q380 480 820 560 T1600 540 V980 H-80Z" fill="#dcebfa" />
-        <g>
-          <path d="M1060 560 v-60 l60 -46 l60 46 v60Z" fill="#e98544" />
-          <path
-            d="M1050 504 l70 -56 l70 56"
-            fill="none"
-            stroke="#ffffff"
-            strokeWidth="18"
-            strokeLinecap="round"
-          />
-          <rect x="1100" y="516" width="34" height="30" rx="4" fill="#ffd37a" />
-          <path d="M1160 470 v-40 h18 v40" fill="#b56236" />
-        </g>
         <path d="M0 690 Q420 630 900 700 T1600 680 V980 H-80Z" fill="#cbe0f6" />
         <path d="M200 900 Q520 740 980 900" fill="#b9d4f1" />
         {[
@@ -490,20 +478,6 @@ function Snow({ night }: { night: boolean }) {
             fill="#4ca182"
             light="#7fc8a4"
             snow
-          />
-        ))}
-      </g>
-      <g className={cn("backdrop-smoke")}>
-        {[0, 1, 2].map((i) => (
-          <circle
-            key={i}
-            className={cn("rise")}
-            style={{ animationDelay: `${-i * 1.4}s` }}
-            cx="1169"
-            cy="420"
-            r={12 + i * 4}
-            fill="#ffffff"
-            opacity="0.7"
           />
         ))}
       </g>

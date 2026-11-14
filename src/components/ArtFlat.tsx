@@ -264,82 +264,102 @@ export const flatArt: Record<string, Draw> = {
   ),
   deer: () => (
     <>
-      {/* Rounded velvety fawn antlers */}
-      <g
-        fill="none"
-        stroke="#7a4724"
-        strokeWidth="6"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <path d="M44 25c-6-8-6-16-2-21m1 12-9-4M76 25c6-8 6-16 2-21m-1 12 9-4" />
+      {/* Little white-tipped fawn tail */}
+      <path d="M84 88c8-1 14-8 11-15-5 0-9 4-11 15Z" fill="#ffffff" />
+      <path d="M83 87c6-1 11-6 9-12-4 0-7 3-9 12Z" fill="#ba7234" />
+
+      {/* Graceful seated hindquarters and arched back */}
+      <path
+        d="M36 108c-6-16 2-36 18-42 14-6 26 2 34 16 6 10 6 22-2 26-10 5-42 6-50 0Z"
+        fill="#ba7234"
+      />
+
+      {/* Slender neck connecting chest to head */}
+      <path d="M48 48 L44 80 Q60 84 76 80 L72 48 Z" fill="#ba7234" />
+
+      {/* Soft cream chest and throat bib */}
+      <path
+        d="M52 52 Q60 52 68 52 Q72 74 60 84 Q48 74 52 52 Z"
+        fill="#fff1db"
+      />
+
+      {/* Distinct star-shaped white spots along the back & flank */}
+      <circle cx="48" cy="80" r="2.6" fill="#ffffff" opacity="0.95" />
+      <circle cx="56" cy="82" r="2.6" fill="#ffffff" opacity="0.95" />
+      <circle cx="64" cy="82" r="2.6" fill="#ffffff" opacity="0.95" />
+      <circle cx="72" cy="80" r="2.6" fill="#ffffff" opacity="0.95" />
+      <circle cx="44" cy="88" r="2.4" fill="#ffffff" opacity="0.95" />
+      <circle cx="52" cy="90" r="2.4" fill="#ffffff" opacity="0.95" />
+      <circle cx="68" cy="90" r="2.4" fill="#ffffff" opacity="0.95" />
+      <circle cx="76" cy="88" r="2.4" fill="#ffffff" opacity="0.95" />
+      <circle cx="48" cy="97" r="2.2" fill="#ffffff" opacity="0.9" />
+      <circle cx="72" cy="97" r="2.2" fill="#ffffff" opacity="0.9" />
+
+      {/* Dainty slender front legs and cloven hooves */}
+      <rect x="47" y="86" width="9" height="24" rx="4.5" fill="#a45f26" />
+      <rect x="64" y="86" width="9" height="24" rx="4.5" fill="#ba7234" />
+      <rect x="47" y="105" width="9" height="6" rx="2" fill="#422510" />
+      <rect x="64" y="105" width="9" height="6" rx="2" fill="#422510" />
+      <path d="M51.5 107v4m17-4v4" stroke="#2b1507" strokeWidth="1.2" />
+
+      {/* Tall leaf-shaped alert ears with fluffy cream inner ear */}
+      <g transform="rotate(-28 36 28)">
+        <path d="M36 8 C26 18 28 38 36 44 C44 38 46 18 36 8 Z" fill="#ba7234" />
+        <path
+          d="M36 14 C30 22 31 34 36 38 C41 34 42 22 36 14 Z"
+          fill="#fff1db"
+        />
       </g>
-      {/* Fluffy little tail */}
-      <path d="M83 96c10-2 15-10 12-17-6 0-11 5-12 17Z" fill="#fdf0dd" />
-      {/* Chubby body & cream chest fur */}
-      <path d="M33 111c-4-23 7-41 27-41s31 18 27 41Z" fill="#ba773b" />
-      <ellipse cx="60" cy="96" rx="16" ry="14" fill="#fae8d0" />
-      {/* Distinct starry fawn spots on the flanks */}
-      <circle cx="41" cy="88" r="3" fill="#ffffff" opacity="0.9" />
-      <circle cx="79" cy="88" r="3" fill="#ffffff" opacity="0.9" />
-      <circle cx="48" cy="96" r="2.5" fill="#ffffff" opacity="0.9" />
-      <circle cx="72" cy="96" r="2.5" fill="#ffffff" opacity="0.9" />
-      <circle cx="39" cy="101" r="2.2" fill="#ffffff" opacity="0.85" />
-      <circle cx="81" cy="101" r="2.2" fill="#ffffff" opacity="0.85" />
-      {/* Cloven hooves */}
-      <rect x="36" y="104" width="16" height="9" rx="4.5" fill="#522f16" />
-      <rect x="68" y="104" width="16" height="9" rx="4.5" fill="#522f16" />
+      <g transform="rotate(28 84 28)">
+        <path d="M84 8 C74 18 76 38 84 44 C92 38 94 18 84 8 Z" fill="#ba7234" />
+        <path
+          d="M84 14 C78 22 79 34 84 38 C89 34 90 22 84 14 Z"
+          fill="#fff1db"
+        />
+      </g>
+
+      {/* Delicate tiny velvet antler tips (spotted fawn) */}
       <path
-        d="M44 108v5m32-5v5"
-        stroke="#3d2210"
-        strokeWidth="2"
+        d="M48 24 Q46 12 42 7 M72 24 Q74 12 78 7"
+        stroke="#824c20"
+        strokeWidth="3.5"
         strokeLinecap="round"
       />
-      {/* Leaf-shaped ears */}
-      <ellipse
-        cx="27"
-        cy="37"
-        rx="14"
-        ry="8.5"
-        fill="#ba773b"
-        transform="rotate(-24 27 37)"
-      />
-      <ellipse
-        cx="93"
-        cy="37"
-        rx="14"
-        ry="8.5"
-        fill="#ba773b"
-        transform="rotate(24 93 37)"
-      />
-      <ellipse
-        cx="27"
-        cy="37"
-        rx="8.5"
-        ry="4.8"
-        fill={BLUSH}
-        transform="rotate(-24 27 37)"
-      />
-      <ellipse
-        cx="93"
-        cy="37"
-        rx="8.5"
-        ry="4.8"
-        fill={BLUSH}
-        transform="rotate(24 93 37)"
-      />
-      {/* Round head & cream muzzle */}
-      <ellipse cx="60" cy="47" rx="32" ry="28" fill="#ba773b" />
+      <circle cx="42" cy="7" r="2.5" fill="#9c5e2a" />
+      <circle cx="78" cy="7" r="2.5" fill="#9c5e2a" />
+
+      {/* Elegant deer head */}
       <path
-        d="M31 56c6 13 19 19 29 19s23-6 29-19c-6 16-17 21-29 21S37 72 31 56Z"
-        fill="#a6672f"
+        d="M40 34 C36 46 44 60 60 62 C76 60 84 46 80 34 C76 22 44 22 40 34 Z"
+        fill="#ba7234"
       />
-      <ellipse cx="60" cy="58" rx="17" ry="12.5" fill="#fae8d0" />
-      <Face y={44} dx={14} mouthY={60} />
-      <ellipse cx="60" cy="52" rx="5.5" ry="3.8" fill="#522f16" />
-      <ellipse cx="58" cy="50.8" rx="1.8" ry="0.9" fill="#fff" opacity="0.65" />
-      <ellipse cx="37" cy="55" rx="6" ry="4.2" fill={BLUSH} opacity="0.85" />
-      <ellipse cx="83" cy="55" rx="6" ry="4.2" fill={BLUSH} opacity="0.85" />
+
+      {/* Soft cream muzzle & cheeks */}
+      <ellipse cx="60" cy="50" rx="14" ry="10" fill="#fff1db" />
+
+      {/* Large expressive doe eyes with cream contour and double catchlights */}
+      <ellipse cx="46" cy="38" rx="6.5" ry="7.5" fill="#fff1db" />
+      <ellipse cx="74" cy="38" rx="6.5" ry="7.5" fill="#fff1db" />
+      <ellipse cx="46.5" cy="38" rx="5" ry="6" fill="#2d170b" />
+      <ellipse cx="73.5" cy="38" rx="5" ry="6" fill="#2d170b" />
+      <circle cx="45" cy="36" r="2" fill="#ffffff" />
+      <circle cx="72" cy="36" r="2" fill="#ffffff" />
+      <circle cx="48" cy="40.5" r="1" fill="#ffffff" opacity="0.8" />
+      <circle cx="75" cy="40.5" r="1" fill="#ffffff" opacity="0.8" />
+
+      {/* Soft rosy blush */}
+      <ellipse cx="38" cy="47" rx="5" ry="3.2" fill={BLUSH} opacity="0.75" />
+      <ellipse cx="82" cy="47" rx="5" ry="3.2" fill={BLUSH} opacity="0.75" />
+
+      {/* Cute dark button nose & gentle smile */}
+      <path d="M56 46 Q60 44 64 46 Q60 49 56 46 Z" fill="#3d200f" />
+      <path
+        d="M57 52 Q60 55 63 52"
+        fill="none"
+        stroke="#3d200f"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+      />
     </>
   ),
   capybara: () => (

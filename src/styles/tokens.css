@@ -55,6 +55,12 @@
   --scene-pine: #6d9c68;
   --scene-peak: #7e8da8;
   --scene-star-gold: #f5d36b;
+  --season-tet-border: #c62828;
+  --season-tet-gold: #ffd54f;
+  --season-tet-shade: rgba(183, 28, 28, 0.4);
+  --season-mid-autumn-border: #1a237e;
+  --season-mid-autumn-gold: #ffd54f;
+  --season-mid-autumn-shade: rgba(13, 71, 161, 0.4);
 }
 
 /* Light tokens. Scene containers repeat them so artwork panels stay light in Dark mode. */

@@ -82,6 +82,7 @@ export function Garden({
     art: string;
     x: number;
     y: number;
+    startY?: number;
   } | null>(null);
   const [wind, setWind] = useState(false);
   const [frogSpot, setFrogSpot] = useState(0);
@@ -152,7 +153,11 @@ export function Garden({
       ?.closest("[data-soil]");
     if (target && drag) {
       const slot = Number(target.getAttribute("data-soil"));
-      if (drag.kind === "cloud" || drag.kind === "sun") {
+      if (
+        drag.kind === "cloud" ||
+        drag.kind === "sun" ||
+        drag.kind === "moon"
+      ) {
         act({
           type: drag.kind === "cloud" ? "water" : "sun",
           slot,
@@ -162,7 +167,9 @@ export function Garden({
           drag.kind,
           drag.kind === "cloud"
             ? "Mưa tí tách! Mầm cây uống nước rồi!"
-            : "Nắng ấm giúp cây nở hoa!",
+            : drag.kind === "moon"
+              ? "Ánh trăng dịu mát chiếu sáng cho cây nở hoa!"
+              : "Nắng ấm giúp cây nở hoa!",
         );
       } else {
         act({ type: "plant", slot, kind: drag.kind, region: scene.id });
@@ -171,23 +178,24 @@ export function Garden({
     }
     setDrag(null);
   };
-  const triggerFall = (art: string, x: number, y: number) => {
-    setFalling({ key: Date.now(), art, x, y });
+  const triggerFall = (art: string, x: number, y: number, startY?: number) => {
+    setFalling({ key: Date.now(), art, x, y, startY: startY ?? y - 20 });
     clearTimeout(fallTimer.current);
     fallTimer.current = setTimeout(() => setFalling(null), 850);
   };
   const triggerHotspot = (h: SceneHotspot) => {
     if (h.kind === "tree") {
       act({ type: "shake" });
-      triggerFall("apple", h.x + h.w * 0.65, 61);
+      triggerFall("apple", h.x + h.w * 0.65, 61, h.y + h.w * 0.35);
       react(h.id, h.line ?? "", h.discovery);
     } else if (h.kind === "gather" && h.gives) {
       act({ type: "shake", kind: h.gives });
       if (h.gives !== "shell")
         triggerFall(
           cropArt(h.gives),
-          h.x + h.w * 0.5,
-          h.gives === "honey" ? 64 : Math.min(68, h.y + h.w * 1.8),
+          h.x + h.w * 0.5 - 2,
+          h.gives === "honey" ? 60 : Math.min(68, h.y + h.w * 1.8),
+          h.y + h.w * 0.35,
         );
       react(h.id, h.line ?? "");
     } else if (h.kind === "build" && h.stages) {
@@ -198,6 +206,11 @@ export function Garden({
       react(h.id, h.stageLines?.[next] ?? h.line ?? "");
       if (next === last && h.discovery)
         act({ type: "discover", id: h.discovery });
+    } else if (h.id === "moon-face" || h.id === "moon") {
+      Array.from({ length: plotCount(world) }, (_, slot) => slot).forEach(
+        (slot) => act({ type: "sun", slot, region: scene.id }),
+      );
+      react(h.id, "Ánh trăng dịu mát chiếu sáng cho cây nở hoa!", h.discovery);
     } else if (h.kind === "house") {
       open("house");
     } else if (h.kind === "pal" && h.palId) {
@@ -232,12 +245,13 @@ export function Garden({
     fn: () => void,
     extra?: CSSProperties,
     badge?: string,
+    onDown?: (e: React.PointerEvent) => void,
   ) => (
     <button
       key={id}
       aria-label={label}
       className={cn(
-        `object ${art === "pond" ? "object-pond" : ""} ${reaction === id ? "react-" + id : ""} ${highlight && ["cloud", "rock", "puppy"].includes(id) ? "hint-glow" : ""} ${id === "windmill" && wind ? "spin-windmill" : ""}`,
+        `object ${art === "pond" ? "object-pond" : ""} ${art === "hot-spring" ? "object-hot-spring" : ""} ${reaction === id ? "react-" + id : ""} ${highlight && ["cloud", "rock", "puppy"].includes(id) ? "hint-glow" : ""} ${id === "windmill" && wind ? "spin-windmill" : ""}`,
       )}
       style={{
         left: x + "%",
@@ -245,6 +259,7 @@ export function Garden({
         width: `calc(${w} * var(--u))`,
         ...extra,
       }}
+      onPointerDown={onDown}
       onClick={fn}
     >
       <Art
@@ -288,13 +303,17 @@ export function Garden({
       {showSteps && (
         <div
           className={cn("visual-hint")}
-          aria-label="Chọn hạt, tưới nước, thêm nắng"
+          aria-label={
+            scene.variant === "stars"
+              ? "Chọn hạt, tưới nước, thêm ánh trăng"
+              : "Chọn hạt, tưới nước, thêm nắng"
+          }
         >
           <Art id="flower" />
           <span>→</span>
           <Art id="cloud" />
           <span>→</span>
-          <Art id="sun" />
+          <Art id={scene.variant === "stars" ? "moon-face" : "sun"} />
         </div>
       )}
       <div className={cn("hill hill-back")} />
@@ -423,13 +442,18 @@ export function Garden({
             () => triggerHotspot(h),
             undefined,
             pal ? cropArt(palWish(world, pal)) : undefined,
+            h.id === "moon-face" ? (e) => down(e, "moon") : undefined,
           );
         })}
       {falling && (
         <div
           key={falling.key}
           className={cn("fallen-apple")}
-          style={{ left: `${falling.x}%`, top: `${falling.y}%` }}
+          style={{
+            left: `${falling.x}%`,
+            top: `${falling.y}%`,
+            ["--fall-start" as any]: `${(falling.startY !== undefined ? falling.startY - falling.y : -20) * 1.2}vh`,
+          }}
         >
           <Art id={falling.art} />
         </div>
@@ -512,7 +536,9 @@ export function Garden({
                     say(
                       !growing.water
                         ? "Mầm cây đang khát nước!"
-                        : "Cây cần thêm nắng ấm!",
+                        : scene.variant === "stars"
+                          ? "Cây cần thêm ánh trăng sáng!"
+                          : "Cây cần thêm nắng ấm!",
                     );
                 }}
               >
@@ -578,7 +604,17 @@ export function Garden({
       )}
       {drag && (
         <div className={cn("drag-ghost")} style={{ left: drag.x, top: drag.y }}>
-          <Art id={cropArt(drag.kind)} />
+          <Art
+            id={
+              drag.kind === "cloud"
+                ? "cloud"
+                : drag.kind === "sun"
+                  ? "sun"
+                  : drag.kind === "moon"
+                    ? "moon-face"
+                    : cropArt(drag.kind)
+            }
+          />
         </div>
       )}
     </section>

@@ -2342,6 +2342,52 @@ export const flatMore: Record<string, Draw> = {
       />
     </>
   ),
+  cabin: () => (
+    <>
+      {/* Brick chimney */}
+      <rect x="74" y="24" width="14" height="24" rx="2" fill="#b56236" />
+      <rect x="72" y="22" width="18" height="5" rx="1.5" fill="#8d431c" />
+      {/* Rising smoke puff */}
+      <circle cx="81" cy="14" r="5" fill="#ffffff" opacity="0.75" />
+      <circle cx="85" cy="6" r="6.5" fill="#ffffff" opacity="0.6" />
+      {/* Wooden cabin walls */}
+      <path d="M24 94 V52 L60 22 L96 52 V94 Z" fill="#e98544" />
+      {/* Horizontal log planks texture */}
+      <path
+        d="M24 64 H96 M24 76 H96 M24 88 H96"
+        stroke="#c86725"
+        strokeWidth="2"
+      />
+      {/* Thick snow-covered eaves and roof */}
+      <path
+        d="M18 54 L60 20 L102 54"
+        fill="none"
+        stroke="#ffffff"
+        strokeWidth="14"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M20 54 Q40 58 60 54 Q80 58 100 54"
+        fill="none"
+        stroke="#e2edf8"
+        strokeWidth="3"
+        strokeLinecap="round"
+      />
+      {/* Warm glowing window */}
+      <rect
+        x="47"
+        y="58"
+        width="26"
+        height="24"
+        rx="4"
+        fill="#ffd37a"
+        stroke="#ffffff"
+        strokeWidth="2.5"
+      />
+      <path d="M60 58 V82 M47 70 H73" stroke="#e98544" strokeWidth="2" />
+    </>
+  ),
   aurora: () => (
     <>
       <path

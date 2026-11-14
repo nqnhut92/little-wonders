@@ -145,10 +145,13 @@ textarea {
   backface-visibility: hidden;
 }
 .object-pond,
-.object-pond > .art {
+.object-pond > .art,
+.object-hot-spring,
+.object-hot-spring > .art {
   pointer-events: none;
 }
-.object-pond > .art * {
+.object-pond > .art *,
+.object-hot-spring > .art * {
   pointer-events: visiblePainted;
 }
 .art {
@@ -351,26 +354,52 @@ textarea {
   z-index: 25;
   overflow: hidden;
 }
-.seasonal-corner-tl,
-.seasonal-corner-tr {
+.seasonal-border {
   position: absolute;
-  top: 0;
-  width: min(22vw, 32dvh, 220px);
-  aspect-ratio: 1;
+  inset: 3px;
+  border-radius: 10px;
   pointer-events: none;
-  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.15));
+  box-sizing: border-box;
 }
-.seasonal-corner-tl {
-  left: 0;
+[data-season="tet"] .seasonal-border {
+  border: 4px solid var(--season-tet-border);
+  box-shadow:
+    inset 0 0 0 1.5px var(--season-tet-gold),
+    0 0 0 1px var(--season-tet-shade);
 }
-.seasonal-corner-tr {
-  right: 0;
-  transform: scaleX(-1);
+[data-season="mid_autumn"] .seasonal-border {
+  border: 4px solid var(--season-mid-autumn-border);
+  box-shadow:
+    inset 0 0 0 1.5px var(--season-mid-autumn-gold),
+    0 0 0 1px var(--season-mid-autumn-shade);
 }
-.seasonal-svg {
+.seasonal-corner {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  pointer-events: none;
+}
+.seasonal-corner.tl {
+  top: -2px;
+  left: -2px;
+}
+.seasonal-corner.tr {
+  top: -2px;
+  right: -2px;
+}
+.seasonal-corner.bl {
+  bottom: -2px;
+  left: -2px;
+}
+.seasonal-corner.br {
+  bottom: -2px;
+  right: -2px;
+}
+.seasonal-corner-ornament {
   width: 100%;
   height: 100%;
   display: block;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.25));
 }
 .sign-pond {
   left: 10%;
@@ -864,30 +893,23 @@ textarea {
   animation: glow 0.8s ease;
 }
 .react-sled {
-  animation: sled-whoosh 0.85s cubic-bezier(0.2, 0.8, 0.3, 1);
+  animation: sled-slide 0.75s ease-in-out;
 }
-@keyframes sled-whoosh {
+@keyframes sled-slide {
   0% {
     transform: translate3d(0, 0, 0) rotate(0deg);
   }
-  35% {
-    transform: translate3d(40%, 10%, 0) rotate(4deg);
+  30% {
+    transform: translate3d(18px, 6px, 0) rotate(3deg);
   }
-  65% {
-    transform: translate3d(70%, 16%, 0) rotate(2deg);
-    opacity: 0.85;
-  }
-  75% {
-    transform: translate3d(85%, 20%, 0);
-    opacity: 0;
+  60% {
+    transform: translate3d(24px, 8px, 0) rotate(2deg);
   }
   80% {
-    transform: translate3d(-30%, -6%, 0);
-    opacity: 0;
+    transform: translate3d(8px, 2px, 0) rotate(-1deg);
   }
   100% {
     transform: translate3d(0, 0, 0) rotate(0deg);
-    opacity: 1;
   }
 }
 @keyframes float {
@@ -931,10 +953,10 @@ textarea {
 }
 @keyframes fall {
   from {
-    transform: translateY(-130px);
+    transform: translate3d(0, var(--fall-start, -120px), 0);
   }
   to {
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
   }
 }
 @keyframes shimmer {

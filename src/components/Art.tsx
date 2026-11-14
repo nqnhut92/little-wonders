@@ -134,6 +134,7 @@ export const assetIds = [
   "snow-drift",
   "arctic-fox",
   "hot-spring",
+  "cabin",
   "aurora",
   "star-cloud",
   "moon-rabbit",

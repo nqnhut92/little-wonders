@@ -14,7 +14,7 @@ export function ttsPrompt(text) {
     .replace(/Lắc-ki|Lucky/gi, "Lắc ki")
     .replace(/Ca-pi-ba-ra|Capybara/gi, "Ca pi ba ra")
     .replace(/Salad/gi, "Sa lát")
-    .replace(/\bÀo\b/g, "ào")
+    .replaceAll("Ào", "ào")
     .replace(/…/g, ", ")
     .replaceAll("!", ".")
     .replace(/\s+/g, " ")
@@ -121,6 +121,8 @@ export async function collectVoiceLines() {
   add("Nắng ấm giúp cây nở hoa!");
   add("Mầm cây đang khát nước!");
   add("Cây cần thêm nắng ấm!");
+  add("Cây cần thêm ánh trăng sáng!");
+  add("Ánh trăng dịu mát chiếu sáng cho cây nở hoa!");
   for (const h of hints) add(h);
 
   // Priority 2: Garden scene, seed prompts & interactions.

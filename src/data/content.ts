@@ -144,6 +144,7 @@ export const discoveries = [
   ["igloo", "Lều tuyết Iglu", "igloo-3"],
   ["arctic_fox", "Cáo tuyết trắng", "arctic-fox"],
   ["hot_spring", "Suối nước nóng", "hot-spring"],
+  ["cabin", "Ngôi nhà gỗ ấm áp", "cabin"],
   ["aurora", "Cực quang lung linh", "aurora"],
   ["dish_mint_cocoa", "Trà bạc hà ấm", "dish-mint-cocoa"],
   ["dish_cranberry_pie", "Bánh nam việt quất", "dish-cranberry-pie"],

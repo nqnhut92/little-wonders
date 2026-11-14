@@ -8,8 +8,10 @@ export const voiceFiles: Record<string, string> = {
   "Ánh đèn xanh dịu dàng soi sáng mặt ao yên tĩnh.":
     "/assets/voice/v-0d3037264f.m4a",
   "Ánh sáng ấm áp soi cả ao sen.": "/assets/voice/v-a82758eb78.m4a",
+  "Ánh trăng dịu mát chiếu sáng cho cây nở hoa!":
+    "/assets/voice/v-37d81de67c.m4a",
   "Ao sen đã mở ra rồi! Sương đang tan đó!": "/assets/voice/v-84e634a171.m4a",
-  "Ào… ào… sóng vỗ nhẹ vào bờ cát.": "/assets/voice/v-3f627c9404.m4a",
+  "Ào… ào… sóng vỗ nhẹ vào bờ cát.": "/assets/voice/v-7c2da3312e.m4a",
   "Bắc một chiếc thang gỗ lên cành cây nào!": "/assets/voice/v-1cbff02726.m4a",
   "Bãi biển đã mở ra rồi! Sương đang tan đó!": "/assets/voice/v-381c73e036.m4a",
   "Bạn cá bơi một vòng rồi nghỉ dưới lá.": "/assets/voice/v-df1e297c1a.m4a",
@@ -132,6 +134,7 @@ export const voiceFiles: Record<string, string> = {
   "Cạp cạp! Vịt con bơi vòng quanh lá sen!": "/assets/voice/v-5b5a985b5a.m4a",
   "Cát động đậy… ai đang trốn dưới đó vậy ta?":
     "/assets/voice/v-8e7138666a.m4a",
+  "Cây cần thêm ánh trăng sáng!": "/assets/voice/v-c54a6f68f2.m4a",
   "Cây cần thêm nắng ấm!": "/assets/voice/v-007cc615e5.m4a",
   "Chạm nhẹ vào đá thấy ấm áp như giữ ánh sao.":
     "/assets/voice/v-7034b5fbfe.m4a",
@@ -274,6 +277,7 @@ export const voiceFiles: Record<string, string> = {
   "Con đã khám phá nam việt quất!": "/assets/voice/v-9955d39332.m4a",
   "Con đã khám phá nắng ấm!": "/assets/voice/v-6e25446350.m4a",
   "Con đã khám phá ngôi nhà của bé!": "/assets/voice/v-e84759413d.m4a",
+  "Con đã khám phá ngôi nhà gỗ ấm áp!": "/assets/voice/v-1b9bb99e43.m4a",
   "Con đã khám phá ngọn hải đăng!": "/assets/voice/v-397d7339fa.m4a",
   "Con đã khám phá người tuyết!": "/assets/voice/v-aa8d2fec86.m4a",
   "Con đã khám phá nhà cây nhỏ!": "/assets/voice/v-d3736794a3.m4a",
@@ -360,6 +364,8 @@ export const voiceFiles: Record<string, string> = {
     "/assets/voice/v-e1c1908911.m4a",
   "Dải cực quang xanh tím nhảy múa trên bầu trời đêm tuyết!":
     "/assets/voice/v-adb75dc47f.m4a",
+  "Dải cực quang xanh tím nhảy múa trên bầu trời tuyết!":
+    "/assets/voice/v-644617f0c0.m4a",
   "Đám mây trôi bồng bềnh dưới ánh sao đêm.": "/assets/voice/v-b90ea1e3b4.m4a",
   "Đàn bướm rực rỡ vừa bay ngang qua vườn!": "/assets/voice/v-3e107fa520.m4a",
   "Đắp mái vòm trắng muốt lên nào!": "/assets/voice/v-19bc22350d.m4a",
@@ -465,6 +471,8 @@ export const voiceFiles: Record<string, string> = {
   "Ngâm chân gần suối ấm áp dễ chịu quá!": "/assets/voice/v-d6e37ea972.m4a",
   "Ngày xửa ngày xưa, dưới nắng mai ấm áp, khu vườn nhỏ luôn mở cửa đón các bạn thú và những mầm xanh biết lớn.":
     "/assets/voice/v-78cd855abe.m4a",
+  "Ngôi nhà gỗ ấm áp bên bếp lửa hồng, khói trắng bay lên từ ống khói!":
+    "/assets/voice/v-c3553fb2aa.m4a",
   "Ngọn hải đăng xoay đèn sáng dẫn đường cho thuyền về bờ!":
     "/assets/voice/v-dfb829b709.m4a",
   "Ngon lành quá! Bạn Capybara híp mắt cảm ơn con nhé!":
@@ -560,8 +568,7 @@ export const voiceFiles: Record<string, string> = {
   "Tuyết rơi lả tả, một quả thông lăn xuống. Mình nhặt vào giỏ nhé!":
     "/assets/voice/v-eb585332b1.m4a",
   "Tuyết trắng mềm xốp như bông gòn vậy!": "/assets/voice/v-eb05c0eb7c.m4a",
-  "Vèo! Xe trượt tuyết lướt xuống đồi thật nhanh!":
-    "/assets/voice/v-8813f355f6.m4a",
+  "Vào nhà sưởi ấm bên lò sưởi thôi con ơi!": "/assets/voice/v-e94c89e87d.m4a",
   "Vệt sáng bạc lấp lánh vắt ngang bầu trời sao.":
     "/assets/voice/v-cd5d6e54d0.m4a",
   "Viên đá thiên thạch phát sáng lấp lánh đủ bảy sắc!":
@@ -572,6 +579,8 @@ export const voiceFiles: Record<string, string> = {
   "Vỏ sò xinh quá! Áp vào tai nghe tiếng biển rì rào.":
     "/assets/voice/v-be9a141571.m4a",
   "Vù vù! Chong chóng quay theo làn gió mát!": "/assets/voice/v-1fb1f25acc.m4a",
+  "Xe trượt tuyết lướt vèo xuống đồi thật nhanh!":
+    "/assets/voice/v-3c340787b8.m4a",
   "Xếp vòng gạch tuyết đầu tiên thật tròn!": "/assets/voice/v-981eec345e.m4a",
   "Xong rồi! Bánh ánh sao.": "/assets/voice/v-8d069f6d5b.m4a",
   "Xong rồi! Bánh bắp ngọt.": "/assets/voice/v-90f300c8ed.m4a",

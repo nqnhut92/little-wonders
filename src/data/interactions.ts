@@ -249,6 +249,14 @@ export const interactions: Record<
     discovery: "hot_spring",
     effect: "ripple",
   },
+  cabin: {
+    lines: [
+      "Ngôi nhà gỗ ấm áp bên bếp lửa hồng, khói trắng bay lên từ ống khói!",
+      "Vào nhà sưởi ấm bên lò sưởi thôi con ơi!",
+    ],
+    discovery: "cabin",
+    effect: "bounce",
+  },
   aurora: {
     lines: [
       "Dải cực quang xanh tím nhảy múa trên bầu trời đêm tuyết!",
